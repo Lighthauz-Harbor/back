@@ -1,0 +1,30 @@
+{
+  "name": "lighthauz-server",
+  "version": "0.0.1",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Lighthauz-Harbor/lighthauz-server.git"
+  },
+  "keywords": [],
+  "contributors": [
+    "Baskoro Indrayana <baskoroindrayana@outlook.com>",
+    "David Ryan <dvid.ryan.k@hotmail.com>",
+    "Richentra Zinwie Wijaya <richentra@yahoo.co.id>"
+  ],
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/Lighthauz-Harbor/lighthauz-server/issues"
+  },
+  "homepage": "https://github.com/Lighthauz-Harbor/lighthauz-server#readme",
+  "dependencies": {
+    "body-parser": "^1.15.2",
+    "cookie-parser": "^1.4.3",
+    "express": "^4.14.0",
+    "mongoose": "^4.6.5",
+    "morgan": "^1.7.0"
+  }
+}
