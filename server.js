@@ -1,17 +1,18 @@
-/**
- * Created by Baskoro Indrayana on 10/28/2016.
- */
 var express = require('express');
 var logger = require('morgan');
 var bodyParser = require('body-parser');
+
+var index = require('./server/routes/index');
+var users = require('./server/routes/users');
+var ideas = require('./server/routes/ideas');
+var reports = require('./server/routes/reports');
 
 var app = express();
 
 app.use(logger('dev'));
 app.use(bodyParser.json());
-app.get('/', function(req, res) {
-    res.send('Hello, world!');
-});
+
+app.use('/', index);
 
 var PORT = process.env.PORT || 3000;
 var server = app.listen(PORT, function() {
