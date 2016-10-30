@@ -1,0 +1,10 @@
+{
+  "name": "lighthauz-server",
+  "dependencies": {
+    "es6-promise": "registry:common/es6-promise#4.0.0+20161003185919"
+  },
+  "globalDependencies": {
+    "jasmine": "registry:dt/jasmine#2.5.0+20161003201800",
+    "node": "registry:env/node#6.0.0+20161019193037"
+  }
+}
