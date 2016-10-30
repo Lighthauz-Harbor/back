@@ -1,3 +1,11 @@
+# Build or public directories
+public/
+
+# NPM
 node_modules/
+
+# logs
 *.log
-.idea/
+logs
+*.logs
+npm-debug.log*

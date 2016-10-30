@@ -1,24 +1,33 @@
 var webpack = require("webpack");
 var path = require("path");
 
-const HtmlWebpack = require("html-webpack-plugin");
-const ChunkWebpack = webpack.optimize.CommonsChunkPlugin;
+var HtmlWebpack = require("html-webpack-plugin");
+var ChunkWebpack = webpack.optimize.CommonsChunkPlugin;
+var ExtractTextPlugin = require("extract-text-webpack-plugin");
 
 module.exports = {
     entry: {
-        app: [ path.resolve(__dirname, "app", "bootstrap") ],
-        vendor: [ path.resolve(__dirname, "app", "vendor") ]
+        app: [ 
+            path.resolve(__dirname, "app", "bootstrap"), 
+        ],
+        vendor: [ 
+            path.resolve(__dirname, "app", "vendor") 
+        ],
     },
     module: {
         loaders: [
             {
-                test: /\.(css|html)$/,
+                test: /\.css$/,
+                loader: ExtractTextPlugin.extract("style-loader", "css-loader")
+            },
+            {
+                test: /\.html$/,
                 loader: "raw"
             },
             {
                 exclude: /node_modules/,
                 test: /\.ts$/,
-                loader: "ts"
+                loaders: ["ts", "angular2-template-loader"]
             }
         ]
     },
@@ -37,7 +46,8 @@ module.exports = {
             filename: "index.html",
             inject: "body",
             template: path.resolve(__dirname, "app", "index.html")
-        })
+        }),
+        new ExtractTextPlugin("styles.css")
     ],
     resolve: {
         extensions: [ "", ".js", ".ts" ]

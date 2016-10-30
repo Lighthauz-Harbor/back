@@ -1,0 +1,131 @@
+@import url(https://fonts.googleapis.com/css?family=Raleway);body, body * {
+    margin: 0;
+    padding: 0;
+    font-family: 'Raleway', sans-serif;
+}
+
+.content {
+}header {
+    background-color: #157299;
+    color: #fff;
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 9999;
+    width: 100%;
+    height: 36px;
+}
+
+header a,
+header a:visited {
+    display: block;
+    color: #fff;
+    text-decoration: none;
+}
+
+.nav-left { 
+    float: left;
+}
+
+.nav-left a {
+    margin-top: 3px;
+    margin-left: 16px;
+    font-size: 18pt;
+}
+
+.nav-right {
+    float: right;
+}
+
+.nav-right a {
+    margin-top: 8px;
+    margin-right: 16px;
+    font-size: 12pt;
+}
+
+.clearfix {
+    clear: both;
+}.login {
+    margin-top: 80px;
+}
+
+.half {
+    width: -webkit-calc(50% - 2px);
+    width: -moz-calc(50% - 2px);
+    width: -o-calc(50% - 2px);
+    width: calc(50% - 2px); 
+
+    height: 400px;
+    float: left;
+
+}
+
+.login-left, .login-right {
+}
+
+.login-left {
+    text-align: center;
+    border-right: 1px solid #e41a26;
+}
+
+.login-pic {
+    margin-top: 15px;
+    width: 280px;
+}
+
+.login-right {
+    border-left: 1px solid #e41a26;
+}
+
+.login-right h1 {
+    margin-top: 80px;
+}
+
+.login-right h1, .login-form {
+    margin-left: 40px;
+}
+
+.login-form {
+    margin-top: 16px;
+}
+
+.txt-login {
+    display: block;
+    width: 400px;
+    height: 24px;
+    margin-bottom: 8px;
+    padding-left: 8px;
+    padding-right: 8px;
+}
+
+.btn-login {
+    display: block;
+    padding: 8px;
+    font-size: 12pt;
+}
+
+.login-right h1 {
+    font-weight: 300;
+}
+
+/* .login-pic {
+    display: block;
+    margin-left: 20%;
+    margin-top: 5%;
+    width: 300px;
+} */footer {
+    width: 100%;
+    height: 30px;
+    margin-top: 40px;
+
+    background-color: #157299;
+    color: #fff;
+
+    font-size: 10pt;
+    text-align: center;
+    overflow: hidden;
+}
+
+footer p {
+    margin-top: 6px;
+}
