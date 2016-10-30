@@ -1,14 +1,12 @@
-webpackJsonp([0],{
-
-/***/ 0:
+webpackJsonp([0],[
+/* 0 */
 /***/ function(module, exports, __webpack_require__) {
 
 	module.exports = __webpack_require__(1);
 
 
 /***/ },
-
-/***/ 1:
+/* 1 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -18,8 +16,7 @@ webpackJsonp([0],{
 
 
 /***/ },
-
-/***/ 2:
+/* 2 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(global) {/**
@@ -188,8 +185,7 @@ webpackJsonp([0],{
 	/* WEBPACK VAR INJECTION */}.call(exports, (function() { return this; }())))
 
 /***/ },
-
-/***/ 3:
+/* 3 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -18241,8 +18237,27 @@ webpackJsonp([0],{
 
 
 /***/ },
-
-/***/ 24:
+/* 4 */,
+/* 5 */,
+/* 6 */,
+/* 7 */,
+/* 8 */,
+/* 9 */,
+/* 10 */,
+/* 11 */,
+/* 12 */,
+/* 13 */,
+/* 14 */,
+/* 15 */,
+/* 16 */,
+/* 17 */,
+/* 18 */,
+/* 19 */,
+/* 20 */,
+/* 21 */,
+/* 22 */,
+/* 23 */,
+/* 24 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -18257,12 +18272,12 @@ webpackJsonp([0],{
 	};
 	var core_1 = __webpack_require__(4);
 	var platform_browser_1 = __webpack_require__(22);
-	var forms_1 = __webpack_require__(372);
-	var app_component_1 = __webpack_require__(25);
-	var header_component_1 = __webpack_require__(31);
-	var login_component_1 = __webpack_require__(368);
-	var footer_component_1 = __webpack_require__(373);
-	__webpack_require__(35);
+	var forms_1 = __webpack_require__(25);
+	var app_component_1 = __webpack_require__(29);
+	var header_component_1 = __webpack_require__(35);
+	var login_component_1 = __webpack_require__(39);
+	var footer_component_1 = __webpack_require__(43);
+	__webpack_require__(47);
 	var AppModule = (function () {
 	    function AppModule() {
 	    }
@@ -18285,152 +18300,7 @@ webpackJsonp([0],{
 
 
 /***/ },
-
-/***/ 25:
-/***/ function(module, exports, __webpack_require__) {
-
-	"use strict";
-	var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
-	    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
-	    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
-	    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
-	    return c > 3 && r && Object.defineProperty(target, key, r), r;
-	};
-	var __metadata = (this && this.__metadata) || function (k, v) {
-	    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
-	};
-	var core_1 = __webpack_require__(4);
-	var AppComponent = (function () {
-	    function AppComponent() {
-	    }
-	    AppComponent = __decorate([
-	        core_1.Component({
-	            selector: "admin-app",
-	            template: __webpack_require__(26),
-	            styles: [
-	                __webpack_require__(27).toString()
-	            ]
-	        }), 
-	        __metadata('design:paramtypes', [])
-	    ], AppComponent);
-	    return AppComponent;
-	}());
-	exports.AppComponent = AppComponent;
-
-
-/***/ },
-
-/***/ 26:
-/***/ function(module, exports) {
-
-	module.exports = "<lh-header></lh-header>\r\n<div class=\"content\">\r\n    <lh-login></lh-login> \r\n</div>\r\n<lh-footer></lh-footer>"
-
-/***/ },
-
-/***/ 27:
-/***/ function(module, exports) {
-
-	// removed by extract-text-webpack-plugin
-
-/***/ },
-
-/***/ 31:
-/***/ function(module, exports, __webpack_require__) {
-
-	"use strict";
-	var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
-	    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
-	    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
-	    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
-	    return c > 3 && r && Object.defineProperty(target, key, r), r;
-	};
-	var __metadata = (this && this.__metadata) || function (k, v) {
-	    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
-	};
-	var core_1 = __webpack_require__(4);
-	var HeaderComponent = (function () {
-	    function HeaderComponent() {
-	    }
-	    HeaderComponent = __decorate([
-	        core_1.Component({
-	            selector: "lh-header",
-	            template: __webpack_require__(32),
-	            styles: [
-	                __webpack_require__(33).toString()
-	            ]
-	        }), 
-	        __metadata('design:paramtypes', [])
-	    ], HeaderComponent);
-	    return HeaderComponent;
-	}());
-	exports.HeaderComponent = HeaderComponent;
-
-
-/***/ },
-
-/***/ 32:
-/***/ function(module, exports) {
-
-	module.exports = "<header id=\"header\">\r\n    <div class=\"nav-left\">\r\n        <a href=\"/\" class=\"home-link\">L I G H T H A U Z</a> \r\n    </div>\r\n    <nav class=\"nav-right\">\r\n        <a href=\"/\" class=\"btn-nav\">Sign in</a>\r\n    </nav>\r\n    <div class=\"clearfix\"></div>\r\n</header>"
-
-/***/ },
-
-/***/ 33:
-/***/ function(module, exports) {
-
-	// removed by extract-text-webpack-plugin
-
-/***/ },
-
-/***/ 368:
-/***/ function(module, exports, __webpack_require__) {
-
-	"use strict";
-	var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
-	    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
-	    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
-	    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
-	    return c > 3 && r && Object.defineProperty(target, key, r), r;
-	};
-	var __metadata = (this && this.__metadata) || function (k, v) {
-	    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
-	};
-	var core_1 = __webpack_require__(4);
-	var LoginComponent = (function () {
-	    function LoginComponent() {
-	    }
-	    LoginComponent = __decorate([
-	        core_1.Component({
-	            selector: "lh-login",
-	            template: __webpack_require__(369),
-	            styles: [
-	                __webpack_require__(370).toString()
-	            ]
-	        }), 
-	        __metadata('design:paramtypes', [])
-	    ], LoginComponent);
-	    return LoginComponent;
-	}());
-	exports.LoginComponent = LoginComponent;
-
-
-/***/ },
-
-/***/ 369:
-/***/ function(module, exports) {
-
-	module.exports = "<div class=\"login\">\r\n    <div class=\"login-left half\">\r\n        <img src=\"http://res.cloudinary.com/baskoroi/image/upload/v1477821375/lighthauz-logo.small_bpotsx.png\" alt=\"Lighthauz: Connecting the Unconnected\" class=\"login-pic\">\r\n    </div>\r\n    <div class=\"login-right half\">\r\n        <h1>Enter as Admin</h1>\r\n        <form name=\"form\" class=\"login-form\" accept-charset=\"utf-8\">\r\n            <input type=\"text\" name=\"username\" class=\"txt-login\" placeholder=\"Username\">\r\n            <input type=\"password\" name=\"password\" class=\"txt-login\" placeholder=\"Password\">\r\n            <input type=\"submit\" class=\"btn-login\" value=\"Login\">\r\n        </form>\r\n    </div>\r\n</div>\r\n<div class=\"clearfix\"></div>"
-
-/***/ },
-
-/***/ 370:
-/***/ function(module, exports) {
-
-	// removed by extract-text-webpack-plugin
-
-/***/ },
-
-/***/ 372:
+/* 25 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -18439,7 +18309,7 @@ webpackJsonp([0],{
 	 * License: MIT
 	 */
 	(function (global, factory) {
-	     true ? factory(exports, __webpack_require__(4), __webpack_require__(341), __webpack_require__(5), __webpack_require__(6), __webpack_require__(88)) :
+	     true ? factory(exports, __webpack_require__(4), __webpack_require__(26), __webpack_require__(5), __webpack_require__(6), __webpack_require__(27)) :
 	    typeof define === 'function' && define.amd ? define(['exports', '@angular/core', 'rxjs/operator/toPromise', 'rxjs/Subject', 'rxjs/Observable', 'rxjs/observable/fromPromise'], factory) :
 	    (factory((global.ng = global.ng || {}, global.ng.forms = global.ng.forms || {}),global.ng.core,global.Rx.Observable.prototype,global.Rx,global.Rx,global.Rx.Observable));
 	}(this, function (exports,_angular_core,rxjs_operator_toPromise,rxjs_Subject,rxjs_Observable,rxjs_observable_fromPromise) { 'use strict';
@@ -22873,8 +22743,150 @@ webpackJsonp([0],{
 
 
 /***/ },
+/* 26 */,
+/* 27 */,
+/* 28 */,
+/* 29 */
+/***/ function(module, exports, __webpack_require__) {
 
-/***/ 373:
+	"use strict";
+	var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+	    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+	    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+	    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+	    return c > 3 && r && Object.defineProperty(target, key, r), r;
+	};
+	var __metadata = (this && this.__metadata) || function (k, v) {
+	    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+	};
+	var core_1 = __webpack_require__(4);
+	var AppComponent = (function () {
+	    function AppComponent() {
+	    }
+	    AppComponent = __decorate([
+	        core_1.Component({
+	            selector: "admin-app",
+	            template: __webpack_require__(30),
+	            styles: [
+	                __webpack_require__(31).toString()
+	            ]
+	        }), 
+	        __metadata('design:paramtypes', [])
+	    ], AppComponent);
+	    return AppComponent;
+	}());
+	exports.AppComponent = AppComponent;
+
+
+/***/ },
+/* 30 */
+/***/ function(module, exports) {
+
+	module.exports = "<lh-header></lh-header>\r\n<div class=\"content\">\r\n    <lh-login></lh-login> \r\n</div>\r\n<lh-footer></lh-footer>"
+
+/***/ },
+/* 31 */
+/***/ function(module, exports) {
+
+	// removed by extract-text-webpack-plugin
+
+/***/ },
+/* 32 */,
+/* 33 */,
+/* 34 */,
+/* 35 */
+/***/ function(module, exports, __webpack_require__) {
+
+	"use strict";
+	var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+	    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+	    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+	    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+	    return c > 3 && r && Object.defineProperty(target, key, r), r;
+	};
+	var __metadata = (this && this.__metadata) || function (k, v) {
+	    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+	};
+	var core_1 = __webpack_require__(4);
+	var HeaderComponent = (function () {
+	    function HeaderComponent() {
+	    }
+	    HeaderComponent = __decorate([
+	        core_1.Component({
+	            selector: "lh-header",
+	            template: __webpack_require__(36),
+	            styles: [
+	                __webpack_require__(37).toString()
+	            ]
+	        }), 
+	        __metadata('design:paramtypes', [])
+	    ], HeaderComponent);
+	    return HeaderComponent;
+	}());
+	exports.HeaderComponent = HeaderComponent;
+
+
+/***/ },
+/* 36 */
+/***/ function(module, exports) {
+
+	module.exports = "<header id=\"header\">\r\n    <div class=\"nav-left\">\r\n        <a href=\"/\" class=\"home-link\">L I G H T H A U Z</a> \r\n    </div>\r\n    <nav class=\"nav-right\">\r\n        <a href=\"/\" class=\"btn-nav\">Sign in</a>\r\n    </nav>\r\n    <div class=\"clearfix\"></div>\r\n</header>"
+
+/***/ },
+/* 37 */
+/***/ function(module, exports) {
+
+	// removed by extract-text-webpack-plugin
+
+/***/ },
+/* 38 */,
+/* 39 */
+/***/ function(module, exports, __webpack_require__) {
+
+	"use strict";
+	var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+	    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+	    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+	    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+	    return c > 3 && r && Object.defineProperty(target, key, r), r;
+	};
+	var __metadata = (this && this.__metadata) || function (k, v) {
+	    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+	};
+	var core_1 = __webpack_require__(4);
+	var LoginComponent = (function () {
+	    function LoginComponent() {
+	    }
+	    LoginComponent = __decorate([
+	        core_1.Component({
+	            selector: "lh-login",
+	            template: __webpack_require__(40),
+	            styles: [
+	                __webpack_require__(41).toString()
+	            ]
+	        }), 
+	        __metadata('design:paramtypes', [])
+	    ], LoginComponent);
+	    return LoginComponent;
+	}());
+	exports.LoginComponent = LoginComponent;
+
+
+/***/ },
+/* 40 */
+/***/ function(module, exports) {
+
+	module.exports = "<div class=\"login\">\r\n    <div class=\"login-left half\">\r\n        <img src=\"http://res.cloudinary.com/baskoroi/image/upload/v1477821375/lighthauz-logo.small_bpotsx.png\" alt=\"Lighthauz: Connecting the Unconnected\" class=\"login-pic\">\r\n    </div>\r\n    <div class=\"login-right half\">\r\n        <h1>Enter as Admin</h1>\r\n        <form name=\"form\" class=\"login-form\" accept-charset=\"utf-8\">\r\n            <input type=\"text\" name=\"username\" class=\"txt-login\" placeholder=\"Username\">\r\n            <input type=\"password\" name=\"password\" class=\"txt-login\" placeholder=\"Password\">\r\n            <input type=\"submit\" class=\"btn-login\" value=\"Login\">\r\n        </form>\r\n    </div>\r\n</div>\r\n<div class=\"clearfix\"></div>"
+
+/***/ },
+/* 41 */
+/***/ function(module, exports) {
+
+	// removed by extract-text-webpack-plugin
+
+/***/ },
+/* 42 */,
+/* 43 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -22894,8 +22906,8 @@ webpackJsonp([0],{
 	    FooterComponent = __decorate([
 	        core_1.Component({
 	            selector: "lh-footer",
-	            template: __webpack_require__(374),
-	            styles: [__webpack_require__(375).toString()]
+	            template: __webpack_require__(44),
+	            styles: [__webpack_require__(45).toString()]
 	        }), 
 	        __metadata('design:paramtypes', [])
 	    ], FooterComponent);
@@ -22905,19 +22917,16 @@ webpackJsonp([0],{
 
 
 /***/ },
-
-/***/ 374:
+/* 44 */
 /***/ function(module, exports) {
 
 	module.exports = "<footer>\r\n    <p>Copyright &copy; 2016 - Lighthauz. All rights reserved.</p>\r\n</footer>"
 
 /***/ },
-
-/***/ 375:
+/* 45 */
 /***/ function(module, exports) {
 
 	// removed by extract-text-webpack-plugin
 
 /***/ }
-
-});
+]);

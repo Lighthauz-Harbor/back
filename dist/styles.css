@@ -57,19 +57,16 @@ header a:visited {
 
     height: 400px;
     float: left;
-
-}
-
-.login-left, .login-right {
 }
 
 .login-left {
-    text-align: center;
+    text-align: right;
     border-right: 1px solid #e41a26;
 }
 
 .login-pic {
     margin-top: 15px;
+    margin-right: 100px;
     width: 280px;
 }
 
@@ -106,14 +103,7 @@ header a:visited {
 
 .login-right h1 {
     font-weight: 300;
-}
-
-/* .login-pic {
-    display: block;
-    margin-left: 20%;
-    margin-top: 5%;
-    width: 300px;
-} */footer {
+}footer {
     width: 100%;
     height: 30px;
     margin-top: 40px;
