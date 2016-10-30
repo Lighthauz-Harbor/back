@@ -3,7 +3,10 @@
   "version": "0.0.1",
   "main": "server.js",
   "scripts": {
-    "start": "nodemon server.js"
+    "start": "concurrently --kill-others \"webpack --watch\" \"nodemon server.js\"",
+    "watch": "webpack --watch",
+    "serve": "nodemon server.js",
+    "lint": "tslint ./app/**/*.ts"
   },
   "repository": {
     "type": "git",
@@ -27,6 +30,7 @@
     "@angular/platform-browser": "^2.1.2",
     "@angular/platform-browser-dynamic": "^2.1.2",
     "body-parser": "^1.15.2",
+    "concurrently": "^3.1.0",
     "cookie-parser": "^1.4.3",
     "es6-shim": "^0.35.1",
     "express": "^4.14.0",
