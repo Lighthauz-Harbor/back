@@ -25,7 +25,9 @@ export class LoginComponent implements OnInit {
     }
 
     ngOnInit(): void {
-
+        this.authService.logout().subscribe(result => {
+            this.eventsManager.showNavBar.emit(false);
+        });
     }
 
     onSubmitLogin(): void {

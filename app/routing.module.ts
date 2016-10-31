@@ -4,21 +4,21 @@ import { RouterModule, Routes } from "@angular/router";
 import { LoginComponent } from "./components/login/login.component";
 import { DashboardComponent } from "./components/dashboard/dashboard.component";
 
+import { AuthenticationGuard } from "./services/authentication.guard";
+
 const routes: Routes = [
     {
-        path: "",
-        // TODO validate whether user is authenticated or not:
-        // inject AuthenticationService inside here
-        redirectTo: "/login",
-        pathMatch: "full",
+        path: "dashboard",
+        component: DashboardComponent,
+        canActivate: [AuthenticationGuard],
     },
     {
         path: "login",
         component: LoginComponent
     },
     {
-        path: "dashboard",
-        component: DashboardComponent
+        path: "**",
+        redirectTo: "/dashboard"
     }
 ];
 

@@ -12,7 +12,6 @@ import { AuthenticationService } from "../../services/authentication.service";
 })
 export class DashboardComponent implements OnInit {
     user: User;
-    isLoggedIn: boolean;
 
     constructor(
         private router: Router,
@@ -20,13 +19,6 @@ export class DashboardComponent implements OnInit {
     }
 
     ngOnInit(): void {
-        this.isLoggedIn = this.authService.isLoggedIn();
-
-        this.user = this.isLoggedIn ? 
-            this.authService.getCurrentUser() : null;
-
-        if (this.user == null) {
-            this.router.navigate(["/login"]);
-        }
+        this.user = this.authService.getCurrentUser();
     }
 }

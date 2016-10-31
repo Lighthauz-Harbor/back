@@ -18275,14 +18275,15 @@ webpackJsonp([0],[
 	var forms_1 = __webpack_require__(25);
 	var http_1 = __webpack_require__(29);
 	var routing_module_1 = __webpack_require__(30);
-	var app_component_1 = __webpack_require__(75);
-	var header_component_1 = __webpack_require__(79);
+	var app_component_1 = __webpack_require__(76);
+	var header_component_1 = __webpack_require__(80);
 	var login_component_1 = __webpack_require__(61);
 	var dashboard_component_1 = __webpack_require__(71);
-	var footer_component_1 = __webpack_require__(83);
+	var footer_component_1 = __webpack_require__(84);
+	var authentication_guard_1 = __webpack_require__(75);
 	var authentication_service_1 = __webpack_require__(62);
 	var events_manager_service_1 = __webpack_require__(65);
-	__webpack_require__(87);
+	__webpack_require__(88);
 	var AppModule = (function () {
 	    function AppModule() {
 	    }
@@ -18302,6 +18303,7 @@ webpackJsonp([0],[
 	                footer_component_1.FooterComponent
 	            ],
 	            providers: [
+	                authentication_guard_1.AuthenticationGuard,
 	                authentication_service_1.AuthenticationService,
 	                events_manager_service_1.GlobalEventsManager
 	            ],
@@ -24639,21 +24641,20 @@ webpackJsonp([0],[
 	var router_1 = __webpack_require__(31);
 	var login_component_1 = __webpack_require__(61);
 	var dashboard_component_1 = __webpack_require__(71);
+	var authentication_guard_1 = __webpack_require__(75);
 	var routes = [
 	    {
-	        path: "",
-	        // TODO validate whether user is authenticated or not:
-	        // inject AuthenticationService inside here
-	        redirectTo: "/login",
-	        pathMatch: "full",
+	        path: "dashboard",
+	        component: dashboard_component_1.DashboardComponent,
+	        canActivate: [authentication_guard_1.AuthenticationGuard],
 	    },
 	    {
 	        path: "login",
 	        component: login_component_1.LoginComponent
 	    },
 	    {
-	        path: "dashboard",
-	        component: dashboard_component_1.DashboardComponent
+	        path: "**",
+	        redirectTo: "/dashboard"
 	    }
 	];
 	var RoutingModule = (function () {
@@ -28562,6 +28563,10 @@ webpackJsonp([0],[
 	        this.message = "";
 	    }
 	    LoginComponent.prototype.ngOnInit = function () {
+	        var _this = this;
+	        this.authService.logout().subscribe(function (result) {
+	            _this.eventsManager.showNavBar.emit(false);
+	        });
 	    };
 	    LoginComponent.prototype.onSubmitLogin = function () {
 	        var _this = this;
@@ -28743,12 +28748,7 @@ webpackJsonp([0],[
 	        this.authService = authService;
 	    }
 	    DashboardComponent.prototype.ngOnInit = function () {
-	        this.isLoggedIn = this.authService.isLoggedIn();
-	        this.user = this.isLoggedIn ?
-	            this.authService.getCurrentUser() : null;
-	        if (this.user == null) {
-	            this.router.navigate(["/login"]);
-	        }
+	        this.user = this.authService.getCurrentUser();
 	    };
 	    DashboardComponent = __decorate([
 	        core_1.Component({
@@ -28767,7 +28767,7 @@ webpackJsonp([0],[
 /* 72 */
 /***/ function(module, exports) {
 
-	module.exports = "<h1>Logged In! :D</h1>\r\n<div *ngIf=\"isLoggedIn\">\r\n    <p>Your username: {{user.username}}</p>\r\n</div>"
+	module.exports = "<h1>Logged In! :D</h1>\r\n<p>Your username: {{user.username}}</p>"
 
 /***/ },
 /* 73 */
@@ -28791,15 +28791,53 @@ webpackJsonp([0],[
 	    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 	};
 	var core_1 = __webpack_require__(4);
+	var router_1 = __webpack_require__(31);
+	var authentication_service_1 = __webpack_require__(62);
+	var AuthenticationGuard = (function () {
+	    function AuthenticationGuard(router, authService) {
+	        this.router = router;
+	        this.authService = authService;
+	    }
+	    AuthenticationGuard.prototype.canActivate = function () {
+	        if (this.authService.isLoggedIn()) {
+	            return true;
+	        }
+	        this.router.navigate(["/login"]);
+	        return false;
+	    };
+	    AuthenticationGuard = __decorate([
+	        core_1.Injectable(), 
+	        __metadata('design:paramtypes', [router_1.Router, authentication_service_1.AuthenticationService])
+	    ], AuthenticationGuard);
+	    return AuthenticationGuard;
+	}());
+	exports.AuthenticationGuard = AuthenticationGuard;
+
+
+/***/ },
+/* 76 */
+/***/ function(module, exports, __webpack_require__) {
+
+	"use strict";
+	var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+	    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+	    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+	    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+	    return c > 3 && r && Object.defineProperty(target, key, r), r;
+	};
+	var __metadata = (this && this.__metadata) || function (k, v) {
+	    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+	};
+	var core_1 = __webpack_require__(4);
 	var AppComponent = (function () {
 	    function AppComponent() {
 	    }
 	    AppComponent = __decorate([
 	        core_1.Component({
 	            selector: "admin-app",
-	            template: __webpack_require__(76),
+	            template: __webpack_require__(77),
 	            styles: [
-	                __webpack_require__(77).toString()
+	                __webpack_require__(78).toString()
 	            ]
 	        }), 
 	        __metadata('design:paramtypes', [])
@@ -28810,20 +28848,20 @@ webpackJsonp([0],[
 
 
 /***/ },
-/* 76 */
+/* 77 */
 /***/ function(module, exports) {
 
 	module.exports = "<lh-header></lh-header>\r\n<div class=\"content\">\r\n    <router-outlet></router-outlet>\r\n</div>\r\n<lh-footer></lh-footer>"
 
 /***/ },
-/* 77 */
+/* 78 */
 /***/ function(module, exports) {
 
 	// removed by extract-text-webpack-plugin
 
 /***/ },
-/* 78 */,
-/* 79 */
+/* 79 */,
+/* 80 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -28863,9 +28901,9 @@ webpackJsonp([0],[
 	    HeaderComponent = __decorate([
 	        core_1.Component({
 	            selector: "lh-header",
-	            template: __webpack_require__(80),
+	            template: __webpack_require__(81),
 	            styles: [
-	                __webpack_require__(81).toString()
+	                __webpack_require__(82).toString()
 	            ]
 	        }), 
 	        __metadata('design:paramtypes', [router_1.Router, authentication_service_1.AuthenticationService, events_manager_service_1.GlobalEventsManager])
@@ -28876,20 +28914,20 @@ webpackJsonp([0],[
 
 
 /***/ },
-/* 80 */
+/* 81 */
 /***/ function(module, exports) {
 
 	module.exports = "<header id=\"header\">\r\n    <div class=\"nav-left\">\r\n        <a routerLink=\"/\" class=\"home-link\">L I G H T H A U Z</a> \r\n    </div>\r\n    <nav class=\"nav-right\">\r\n        <div *ngIf=\"isLoggedIn\">\r\n            <a class=\"btn-nav\" (click)=\"logout()\">Sign out</a>\r\n        </div>\r\n        <div *ngIf=\"!isLoggedIn\">\r\n            <a routerLink=\"/login\" class=\"btn-nav\">Sign in</a>\r\n        </div>\r\n    </nav>\r\n    <div class=\"clearfix\"></div>\r\n</header>"
 
 /***/ },
-/* 81 */
+/* 82 */
 /***/ function(module, exports) {
 
 	// removed by extract-text-webpack-plugin
 
 /***/ },
-/* 82 */,
-/* 83 */
+/* 83 */,
+/* 84 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -28909,8 +28947,8 @@ webpackJsonp([0],[
 	    FooterComponent = __decorate([
 	        core_1.Component({
 	            selector: "lh-footer",
-	            template: __webpack_require__(84),
-	            styles: [__webpack_require__(85).toString()]
+	            template: __webpack_require__(85),
+	            styles: [__webpack_require__(86).toString()]
 	        }), 
 	        __metadata('design:paramtypes', [])
 	    ], FooterComponent);
@@ -28920,13 +28958,13 @@ webpackJsonp([0],[
 
 
 /***/ },
-/* 84 */
+/* 85 */
 /***/ function(module, exports) {
 
 	module.exports = "<footer>\r\n    <p>Copyright &copy; 2016 - Lighthauz. All rights reserved.</p>\r\n</footer>"
 
 /***/ },
-/* 85 */
+/* 86 */
 /***/ function(module, exports) {
 
 	// removed by extract-text-webpack-plugin
