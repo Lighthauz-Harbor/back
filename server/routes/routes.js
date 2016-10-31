@@ -30,6 +30,6 @@ module.exports = function(app, router, passport) {
 
     // in case the current route does not match any of the above
     router.get("*", function(req, res) {
-        res.sendfile(path.resolve(rootDir, "dist", "index.html"));
+        res.sendFile(path.resolve(rootDir, "dist", "index.html"));
     });
 };

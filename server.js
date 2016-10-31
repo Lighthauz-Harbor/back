@@ -5,6 +5,7 @@ var logger = require("morgan");
 var bodyParser = require("body-parser");
 var methodOverride = require("method-override");
 var session = require("express-session");
+var flash = require("flash");
 
 var path = require("path");
 
@@ -32,14 +33,14 @@ app.use(methodOverride("X-HTTP-Method-Override"));
 app.use(express.static(path.resolve(__dirname, "dist")));
 
 /**
- * Sessions + Passport
+ * Passport and its deps
  */
 app.use(session({
     secret: "i am a keyboard cat",
     resave: true,
     saveUninitialized: false
 }));
-
+app.use(flash());
 app.use(passport.initialize());
 app.use(passport.session());
 

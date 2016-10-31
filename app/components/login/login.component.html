@@ -4,10 +4,25 @@
     </div>
     <div class="login-right half">
         <h1>Enter as Admin</h1>
-        <form name="form" class="login-form" accept-charset="utf-8">
-            <input type="text" name="username" class="txt-login" placeholder="Username">
-            <input type="password" name="password" class="txt-login" placeholder="Password">
-            <input type="submit" class="btn-login" value="Login">
+        <form name="form-login" class="form-login"
+            (ngSubmit)="onSubmitLogin()" #f="ngForm">
+
+            <!-- TODO: display failure/error message here, if any -->
+            <div *ngIf="message !== ''">
+                {{message}}
+            </div>
+            <input type="text" class="txt-login" 
+                name="username"
+                placeholder="Username" 
+                [(ngModel)]="model.username" #username="ngModel"
+                required>
+            <input type="password" class="txt-login" 
+                name="password"
+                placeholder="Password" 
+                [(ngModel)]="model.password" #password="ngModel"
+                required>
+            <button type="submit" class="btn-login"
+                [disabled]="loading">Login</button>
         </form>
     </div>
 </div>

@@ -36,6 +36,10 @@ header a:visited {
     font-size: 12pt;
 }
 
+.btn-nav {
+    cursor: pointer;
+}
+
 .clearfix {
     clear: both;
 }

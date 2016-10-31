@@ -1,4 +1,5 @@
 .login {
+    overflow: hidden;
     margin-top: 80px;
 }
 
@@ -31,11 +32,11 @@
     margin-top: 80px;
 }
 
-.login-right h1, .login-form {
+.login-right h1, .form-login {
     margin-left: 40px;
 }
 
-.login-form {
+.form-login {
     margin-top: 16px;
 }
 

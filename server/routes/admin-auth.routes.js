@@ -37,11 +37,20 @@ module.exports = function(app, router, passport, authMid, adminMid) {
         res.send(req.isAuthenticated() ? req.user : "0");
     });
 
+    router.get("/admin/auth/fail", function(req, res) {
+        req.logOut();
+        res.json({
+            fail: "Cannot login: invalid username/password."
+        });
+    });
+
     router.post("/admin/auth/login", 
         passport.authenticate("local", {
-            successRedirect: "/admin/auth/loggedIn",
-            failureRedirect: "/"
-        })
+            failureRedirect: "/admin/auth/fail"
+        }),
+        function(req, res) {
+            res.send(req.user);
+        }
     );
 
     router.post("/admin/auth/signup", function(req, res, next) {

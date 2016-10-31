@@ -1,9 +1,14 @@
 <header id="header">
     <div class="nav-left">
-        <a href="/" class="home-link">L I G H T H A U Z</a> 
+        <a routerLink="/" class="home-link">L I G H T H A U Z</a> 
     </div>
     <nav class="nav-right">
-        <a href="/" class="btn-nav">Sign in</a>
+        <div *ngIf="isLoggedIn">
+            <a class="btn-nav" (click)="logout()">Sign out</a>
+        </div>
+        <div *ngIf="!isLoggedIn">
+            <a routerLink="/login" class="btn-nav">Sign in</a>
+        </div>
     </nav>
     <div class="clearfix"></div>
 </header>
