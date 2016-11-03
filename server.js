@@ -32,15 +32,13 @@ app.use(methodOverride("X-HTTP-Method-Override"));
 
 app.use(express.static(path.resolve(__dirname, "dist")));
 
-/**
- * Passport and its deps
- */
 app.use(session({
     secret: "i am a keyboard cat",
     resave: true,
     saveUninitialized: false
 }));
 app.use(flash());
+
 app.use(passport.initialize());
 app.use(passport.session());
 

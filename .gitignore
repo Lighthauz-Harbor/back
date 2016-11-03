@@ -4,6 +4,9 @@ public/
 # NPM
 node_modules/
 
+# Neo4j DB files
+default.graphdb/
+
 # logs
 *.log
 logs

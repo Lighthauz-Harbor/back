@@ -14,7 +14,7 @@ module.exports = function(app, router, passport) {
         } else {
             next();
         }
-    }
+    };
 
     var adminMid = function(req, res, next) {
         if (!req.isAuthenticated() || req.user.role !== "admin") {
@@ -22,7 +22,7 @@ module.exports = function(app, router, passport) {
         } else {
             next();
         }
-    }
+    };
 
     adminAuthRoutes(app, router, passport, authMid, adminMid);
 
