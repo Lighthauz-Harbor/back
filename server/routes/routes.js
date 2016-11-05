@@ -18,7 +18,10 @@ module.exports = function(app, router, dbDriver, passport) {
 
     var adminMid = function(req, res, next) {
         if (!req.isAuthenticated() || req.user.role !== "admin") {
-            res.send(401);
+            req.logOut();
+            res.json({
+                fail: "Unauthorized user. Only admins are allowed to log in."
+            }); 
         } else {
             next();
         }

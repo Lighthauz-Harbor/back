@@ -34,6 +34,7 @@ module.exports = function(app, router, dbDriver,
         passport.authenticate("local", {
             failureRedirect: "/admin/auth/fail"
         }),
+        adminMid,
         function(req, res) {
             res.send(req.user);
         }
