@@ -109,28 +109,6 @@ var UserSchema = function(dbDriver) {
             });
     };
 
-    /*this.adminStrategy = function(username, password, done) {
-        var session = this.driver.session();
-
-        session
-            .run("MATCH (u:User) WHERE u.username = {username} RETURN u", 
-                {username: username})
-            .then(function(result) {
-                var user = result.records[0].get(0).properties;
-                if (result.records.length === 0) {
-                    return done(null, false, { message: "Incorrect username." });
-                } else if (!this._comparePassword(password, user.password)) {
-                    return done(null, false, { message: "Incorrect password." });
-                } else if (user.role !== "admin") {
-                    return done(null, false, { message: "Unauthorized user!" });
-                }
-                return done(null, user);
-            })
-            .catch(function(err) {
-                return done(err);
-            });
-    };*/
-
     this.find = function(req, res) {
         var session = this.driver.session();
         console.log(req.params.username);
@@ -150,29 +128,3 @@ var UserSchema = function(dbDriver) {
 };
 
 module.exports = UserSchema;
-
-/*var mongoose = require("mongoose");
-var bcrypt = require("bcrypt-nodejs");
-
-var userSchema = mongoose.Schema({
-    local: {
-        username: {
-            type: String,
-            unique: true
-        },
-        password: String
-    },
-    role: {
-        type: String
-    }
-});
-
-userSchema.methods.generateHash = function(password) {
-    return bcrypt.hashSync(password, bcrypt.genSaltSync(8));
-}
-
-userSchema.methods.validPassword = function(password) {
-    return bcrypt.compareSync(password, this.local.password);
-}
-
-module.exports = mongoose.model("User", userSchema);*/

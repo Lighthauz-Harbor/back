@@ -29,7 +29,7 @@ module.exports = function(app, router, dbDriver, passport) {
 
     app.use("/", router);
 
-    // in case the current route does not match any of the above
+    // fallback route (other route handling is handled in Angular 2)
     router.get("*", function(req, res) {
         res.sendFile(path.resolve(rootDir, "dist", "index.html"));
     });
