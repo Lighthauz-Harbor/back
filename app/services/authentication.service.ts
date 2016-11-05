@@ -32,7 +32,7 @@ export class AuthenticationService {
 
                 console.log("json.fail = ", json.fail);
                 if (!json.fail) {
-                    this.currentUser = new User(json.local.username, json.role);
+                    this.currentUser = new User(json.username, json.role);
                 }
 
                 return json;

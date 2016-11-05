@@ -28644,7 +28644,7 @@ webpackJsonp([0],[
 	            var json = JSON.parse(res.text());
 	            console.log("json.fail = ", json.fail);
 	            if (!json.fail) {
-	                _this.currentUser = new user_model_app_1.User(json.local.username, json.role);
+	                _this.currentUser = new user_model_app_1.User(json.username, json.role);
 	            }
 	            return json;
 	        });

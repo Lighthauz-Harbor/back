@@ -7,16 +7,20 @@ var UserSchema = function(dbDriver) {
         return bcrypt.hashSync(password, bcrypt.genSaltSync(8));
     };
 
+    this._comparePassword = function(password, hash) {
+        return bcrypt.compareSync(password, hash);
+    };
+
     this._checkParams = function(params) {
         if (!params.role || !params.name ||
-            !params.email || !params.password) {
+            !params.username || !params.password) {
 
             return false;
         }
 
         if (typeof params.role !== "string" ||
             typeof params.name !== "string" ||
-            typeof params.email !== "string" ||
+            typeof params.username !== "string" ||
             typeof params.password !== "string") {
 
             return false;
@@ -32,7 +36,7 @@ var UserSchema = function(dbDriver) {
 
         var params = {
             name: req.body.name,
-            email: req.body.email,
+            username: req.body.username,
             role: req.body.role,
             password: this._generateHash(req.body.password),
         };
@@ -40,15 +44,15 @@ var UserSchema = function(dbDriver) {
         var session = this.driver.session();
 
         session
-            .run("MATCH (u:User) WHERE u.email = {email} RETURN u", 
-                {email: params.email})
+            .run("MATCH (u:User) WHERE u.username = {username} RETURN u", 
+                {username: params.username})
             .then(function(result) {
                 if (result.records.length > 0) {
                     res.status(501).send("Duplicate user!");
                 } else {
                     session
                         .run(
-                            "CREATE (:User {email: {email}, password: {password}," +
+                            "CREATE (:User {username: {username}, password: {password}," +
                             "name: {name}, role: {role}})", params)
                         .then(function() {
                             res.status(201).send("User successfully created!");
@@ -62,6 +66,84 @@ var UserSchema = function(dbDriver) {
             })
             .catch(function(err) {
                 res.status(501).send("Error finding user availability!");
+                session.close();
+            });
+    };
+
+    this.strategy = function(username, password, done) {
+        var session = this.driver.session();
+        var that = this;
+
+        session
+            .run("MATCH (u:User) WHERE u.username = {username} RETURN u", 
+                {username: username})
+            .then(function(result) {
+                if (result.records.length === 0) {
+                    return done(null, false, { message: "Incorrect username." });
+                }
+
+                var user = result.records[0].get(0).properties;
+                if (!that._comparePassword(password, user.password)) {
+                    return done(null, false, { message: "Incorrect password." });
+                }
+                return done(null, user);
+            })
+            .catch(function(err) {
+                return done(err);
+            });
+    };
+
+    this.deserialize = function(id, done) {
+        var session = this.driver.session();
+        session
+            .run("MATCH (u:User) WHERE u.username = {username} RETURN u", 
+                {username: id})
+            .then(function(result) {
+                var user = result.records[0].get(0).properties;
+                done(null, user);
+                session.close();
+            })
+            .catch(function(err) {
+                done(err, false);
+                session.close();
+            });
+    };
+
+    /*this.adminStrategy = function(username, password, done) {
+        var session = this.driver.session();
+
+        session
+            .run("MATCH (u:User) WHERE u.username = {username} RETURN u", 
+                {username: username})
+            .then(function(result) {
+                var user = result.records[0].get(0).properties;
+                if (result.records.length === 0) {
+                    return done(null, false, { message: "Incorrect username." });
+                } else if (!this._comparePassword(password, user.password)) {
+                    return done(null, false, { message: "Incorrect password." });
+                } else if (user.role !== "admin") {
+                    return done(null, false, { message: "Unauthorized user!" });
+                }
+                return done(null, user);
+            })
+            .catch(function(err) {
+                return done(err);
+            });
+    };*/
+
+    this.find = function(req, res) {
+        var session = this.driver.session();
+        console.log(req.params.username);
+        session
+            .run("MATCH (u:User) WHERE u.username = {username} RETURN u", 
+                {username: req.params.username})
+            .then(function(result) {
+                var user = result.records[0].get(0).properties;
+                res.send(user);
+                session.close();
+            })
+            .catch(function(err) {
+                res.send(err);
                 session.close();
             });
     };
