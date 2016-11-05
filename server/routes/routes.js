@@ -10,7 +10,10 @@ module.exports = function(app, router, dbDriver, passport) {
 
     var authMid = function(req, res, next) {
         if (!req.isAuthenticated()) {
-            res.send(401);
+            req.logOut();
+            res.json({
+                fail: "Unauthenticated user. Please log in again."
+            });
         } else {
             next();
         }
@@ -27,8 +30,7 @@ module.exports = function(app, router, dbDriver, passport) {
         }
     };
 
-    adminAuthRoutes(app, router, dbDriver, 
-        passport, authMid, adminMid);
+    adminAuthRoutes(app, router, dbDriver, passport, adminMid);
 
     app.use("/", router);
 

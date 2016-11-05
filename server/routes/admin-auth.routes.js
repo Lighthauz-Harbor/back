@@ -3,7 +3,7 @@ var LocalStrategy = require("passport-local").Strategy;
 var UserSchema = require("../models/user.model.server");
 
 module.exports = function(app, router, dbDriver, 
-                          passport, authMid, adminMid) {
+                          passport, adminMid) {
 
     var userSchema = new UserSchema(dbDriver);
 
