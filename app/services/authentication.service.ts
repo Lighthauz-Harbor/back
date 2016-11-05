@@ -29,12 +29,9 @@ export class AuthenticationService {
             { username, password })
             .map((res: Response) => {
                 var json = JSON.parse(res.text());
-
-                console.log("json.fail = ", json.fail);
                 if (!json.fail) {
                     this.currentUser = new User(json.username, json.role);
                 }
-
                 return json;
             }
         );

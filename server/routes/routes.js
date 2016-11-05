@@ -8,6 +8,7 @@ var rootDir = path.resolve(__dirname, "..", "..");
 
 module.exports = function(app, router, dbDriver, passport) {
 
+    // Authentication middleware for user login
     var authMid = function(req, res, next) {
         if (!req.isAuthenticated()) {
             req.logOut();
@@ -19,6 +20,7 @@ module.exports = function(app, router, dbDriver, passport) {
         }
     };
 
+    // Authentication middleware for admin login
     var adminMid = function(req, res, next) {
         if (!req.isAuthenticated() || req.user.role !== "admin") {
             req.logOut();
@@ -30,11 +32,11 @@ module.exports = function(app, router, dbDriver, passport) {
         }
     };
 
+    // Assign routes to app and router
     adminAuthRoutes(app, router, dbDriver, passport, adminMid);
-
     app.use("/", router);
 
-    // fallback route (other route handling is handled in Angular 2)
+    // Fallback route (other route handling is handled in Angular 2)
     router.get("*", function(req, res) {
         res.sendFile(path.resolve(rootDir, "dist", "index.html"));
     });

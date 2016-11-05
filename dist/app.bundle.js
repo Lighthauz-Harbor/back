@@ -28574,13 +28574,11 @@ webpackJsonp([0],[
 	        this.authService.login(this.model.username, this.model.password)
 	            .subscribe(function (result) {
 	            if (result.fail) {
-	                // TODO redirect/navigate to login screen again
 	                _this.message = result.fail; // set message
 	                _this.loading = false; // re-enable the login button
 	                _this.router.navigate(["/login"]);
 	            }
 	            else {
-	                // TODO navigate to dashboard
 	                _this.message = "";
 	                _this.eventsManager.showNavBar.emit(true);
 	                _this.router.navigate(["/dashboard"]);
@@ -28642,7 +28640,6 @@ webpackJsonp([0],[
 	        return this.http.post("/admin/auth/login", { username: username, password: password })
 	            .map(function (res) {
 	            var json = JSON.parse(res.text());
-	            console.log("json.fail = ", json.fail);
 	            if (!json.fail) {
 	                _this.currentUser = new user_model_app_1.User(json.username, json.role);
 	            }

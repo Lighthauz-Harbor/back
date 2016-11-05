@@ -36,12 +36,10 @@ export class LoginComponent implements OnInit {
         this.authService.login(this.model.username, this.model.password)
             .subscribe(result => {
                 if (result.fail) {
-                    // TODO redirect/navigate to login screen again
                     this.message = result.fail; // set message
                     this.loading = false; // re-enable the login button
                     this.router.navigate(["/login"]);
                 } else {
-                    // TODO navigate to dashboard
                     this.message = "";
                     this.eventsManager.showNavBar.emit(true);
                     this.router.navigate(["/dashboard"]);
