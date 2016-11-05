@@ -1,13 +1,16 @@
-var User = require("../models/user.model.server");
-var ObjectId = require("mongoose").Types.ObjectId;
-
 var LocalStrategy = require("passport-local").Strategy;
 
-module.exports = function(app, router, passport, authMid, adminMid) {
+var UserSchema = require("../models/user.model.server");
+
+module.exports = function(app, router, dbDriver, 
+                          passport, authMid, adminMid) {
 
     passport.use(new LocalStrategy(
         function(username, password, done) {
-            User.findOne({ "local.username": username }, function(err, user) {
+
+            var session = dbDriver.session();
+
+            /*User.findOne({ "local.username": username }, function(err, user) {
                 if (err) return done(err);
                 if (!user) {
                     return done(null, false, { message: "Incorrect username." });
@@ -19,11 +22,11 @@ module.exports = function(app, router, passport, authMid, adminMid) {
                     return done(null, false, { message: "Unauthorized user!" });
                 }
                 return done(null, user);
-            });
+            });*/
         }
     ));
 
-    passport.serializeUser(function(user, done) {
+    /*passport.serializeUser(function(user, done) {
         done(null, user.id);
     });
 
@@ -51,47 +54,14 @@ module.exports = function(app, router, passport, authMid, adminMid) {
         function(req, res) {
             res.send(req.user);
         }
-    );
+    );*/
 
     router.post("/admin/auth/signup", function(req, res, next) {
-        if (!req.body.local || 
-            !req.body.local.username || 
-            !req.body.local.password || 
-            !req.body.role) {
-            res.sendStatus(400);
-        } else {
-            var username = req.body.local.username;
-
-            User.findOne({ username: username }, function(err, doc) {
-                if (err) return next(err);
-
-                if (doc) {
-                    return res.send("Username has been taken!");
-                }
-            });
-
-            var role = req.body.role;
-            var user = new User({
-                local: {
-                    username: username
-                },
-                role: role
-            });
-
-            user.local.password = user.generateHash(req.body.local.password);
-
-            user.save(function(err, doc) {
-                if (err) { // error saving the user
-                    console.error("Error saving user", err);
-                    res.sendStatus(501);
-                } else { // successful creating the user
-                    res.sendStatus(201);
-                }
-            });
-        }
+        var userSchema = new UserSchema(dbDriver);
+        userSchema.create(req, res);
     });
 
-    router.post("/admin/auth/logout", function(req, res) {
+    /*router.post("/admin/auth/logout", function(req, res) {
         req.logOut();
 
         res.sendStatus(204);
@@ -112,5 +82,5 @@ module.exports = function(app, router, passport, authMid, adminMid) {
 
             res.sendStatus(204);
         });
-    });
+    });*/
 };

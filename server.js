@@ -1,5 +1,4 @@
 var express = require("express");
-var mongoose = require("mongoose");
 var passport = require("passport");
 var logger = require("morgan");
 var bodyParser = require("body-parser");
@@ -12,10 +11,11 @@ var path = require("path");
 var routes = require("./server/routes/routes");
 
 /**
- * Mongoose/MongoDB
+ * Neo4j configuration
  */
-var MONGO_URI = process.env.MONGO_URI || "mongodb://localhost/lighthauz";
-mongoose.connect(MONGO_URI);
+var neo4j = require("neo4j-driver").v1;
+var dbDriver = neo4j.driver("bolt://localhost", 
+    neo4j.auth.basic("neo4j", "neo4j"));
 
 /**
  * Express
@@ -43,7 +43,7 @@ app.use(passport.initialize());
 app.use(passport.session());
 
 var router = express.Router();
-routes(app, router, passport);
+routes(app, router, dbDriver, passport);
 
 var host = "localhost";
 var PORT = process.env.PORT || 3000;

@@ -6,7 +6,7 @@ var reportsRoutes = require("./reports.routes");
 var path = require("path");
 var rootDir = path.resolve(__dirname, "..", "..");
 
-module.exports = function(app, router, passport) {
+module.exports = function(app, router, dbDriver, passport) {
 
     var authMid = function(req, res, next) {
         if (!req.isAuthenticated()) {
@@ -24,7 +24,8 @@ module.exports = function(app, router, passport) {
         }
     };
 
-    adminAuthRoutes(app, router, passport, authMid, adminMid);
+    adminAuthRoutes(app, router, dbDriver, 
+        passport, authMid, adminMid);
 
     app.use("/", router);
 
