@@ -1,12 +1,14 @@
-webpackJsonp([0],[
-/* 0 */
+webpackJsonp([0],{
+
+/***/ 0:
 /***/ function(module, exports, __webpack_require__) {
 
 	module.exports = __webpack_require__(1);
 
 
 /***/ },
-/* 1 */
+
+/***/ 1:
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -16,7 +18,8 @@ webpackJsonp([0],[
 
 
 /***/ },
-/* 2 */
+
+/***/ 2:
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(global) {/**
@@ -185,7 +188,8 @@ webpackJsonp([0],[
 	/* WEBPACK VAR INJECTION */}.call(exports, (function() { return this; }())))
 
 /***/ },
-/* 3 */
+
+/***/ 3:
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -18237,27 +18241,8 @@ webpackJsonp([0],[
 
 
 /***/ },
-/* 4 */,
-/* 5 */,
-/* 6 */,
-/* 7 */,
-/* 8 */,
-/* 9 */,
-/* 10 */,
-/* 11 */,
-/* 12 */,
-/* 13 */,
-/* 14 */,
-/* 15 */,
-/* 16 */,
-/* 17 */,
-/* 18 */,
-/* 19 */,
-/* 20 */,
-/* 21 */,
-/* 22 */,
-/* 23 */,
-/* 24 */
+
+/***/ 24:
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -18280,6 +18265,8 @@ webpackJsonp([0],[
 	var login_component_1 = __webpack_require__(61);
 	var dashboard_component_1 = __webpack_require__(71);
 	var footer_component_1 = __webpack_require__(84);
+	var sidebar_component_1 = __webpack_require__(388);
+	var users_list_component_1 = __webpack_require__(392);
 	var authentication_guard_1 = __webpack_require__(75);
 	var authentication_service_1 = __webpack_require__(62);
 	var events_manager_service_1 = __webpack_require__(65);
@@ -18300,7 +18287,9 @@ webpackJsonp([0],[
 	                header_component_1.HeaderComponent,
 	                login_component_1.LoginComponent,
 	                dashboard_component_1.DashboardComponent,
-	                footer_component_1.FooterComponent
+	                footer_component_1.FooterComponent,
+	                sidebar_component_1.SidebarComponent,
+	                users_list_component_1.UsersListComponent
 	            ],
 	            providers: [
 	                authentication_guard_1.AuthenticationGuard,
@@ -18317,7 +18306,8 @@ webpackJsonp([0],[
 
 
 /***/ },
-/* 25 */
+
+/***/ 25:
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -22760,10 +22750,8 @@ webpackJsonp([0],[
 
 
 /***/ },
-/* 26 */,
-/* 27 */,
-/* 28 */,
-/* 29 */
+
+/***/ 29:
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(global) {/**
@@ -24624,7 +24612,8 @@ webpackJsonp([0],[
 	/* WEBPACK VAR INJECTION */}.call(exports, (function() { return this; }())))
 
 /***/ },
-/* 30 */
+
+/***/ 30:
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -24641,12 +24630,18 @@ webpackJsonp([0],[
 	var router_1 = __webpack_require__(31);
 	var login_component_1 = __webpack_require__(61);
 	var dashboard_component_1 = __webpack_require__(71);
+	var users_list_component_1 = __webpack_require__(392);
 	var authentication_guard_1 = __webpack_require__(75);
 	var routes = [
 	    {
 	        path: "dashboard",
 	        component: dashboard_component_1.DashboardComponent,
-	        canActivate: [authentication_guard_1.AuthenticationGuard],
+	        canActivate: [authentication_guard_1.AuthenticationGuard]
+	    },
+	    {
+	        path: "users",
+	        component: users_list_component_1.UsersListComponent,
+	        canActivate: [authentication_guard_1.AuthenticationGuard]
 	    },
 	    {
 	        path: "login",
@@ -24673,7 +24668,8 @@ webpackJsonp([0],[
 
 
 /***/ },
-/* 31 */
+
+/***/ 31:
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -28507,36 +28503,8 @@ webpackJsonp([0],[
 
 
 /***/ },
-/* 32 */,
-/* 33 */,
-/* 34 */,
-/* 35 */,
-/* 36 */,
-/* 37 */,
-/* 38 */,
-/* 39 */,
-/* 40 */,
-/* 41 */,
-/* 42 */,
-/* 43 */,
-/* 44 */,
-/* 45 */,
-/* 46 */,
-/* 47 */,
-/* 48 */,
-/* 49 */,
-/* 50 */,
-/* 51 */,
-/* 52 */,
-/* 53 */,
-/* 54 */,
-/* 55 */,
-/* 56 */,
-/* 57 */,
-/* 58 */,
-/* 59 */,
-/* 60 */,
-/* 61 */
+
+/***/ 61:
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -28565,7 +28533,7 @@ webpackJsonp([0],[
 	    LoginComponent.prototype.ngOnInit = function () {
 	        var _this = this;
 	        this.authService.logout().subscribe(function (result) {
-	            _this.eventsManager.showNavBar.emit(false);
+	            _this.eventsManager.loggedInEmitter.emit(false);
 	        });
 	    };
 	    LoginComponent.prototype.onSubmitLogin = function () {
@@ -28580,7 +28548,7 @@ webpackJsonp([0],[
 	            }
 	            else {
 	                _this.message = "";
-	                _this.eventsManager.showNavBar.emit(true);
+	                _this.eventsManager.loggedInEmitter.emit(true);
 	                _this.router.navigate(["/dashboard"]);
 	            }
 	        });
@@ -28608,7 +28576,8 @@ webpackJsonp([0],[
 
 
 /***/ },
-/* 62 */
+
+/***/ 62:
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -28662,7 +28631,8 @@ webpackJsonp([0],[
 
 
 /***/ },
-/* 63 */
+
+/***/ 63:
 /***/ function(module, exports) {
 
 	"use strict";
@@ -28679,8 +28649,8 @@ webpackJsonp([0],[
 
 
 /***/ },
-/* 64 */,
-/* 65 */
+
+/***/ 65:
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -28696,7 +28666,7 @@ webpackJsonp([0],[
 	var core_1 = __webpack_require__(4);
 	var GlobalEventsManager = (function () {
 	    function GlobalEventsManager() {
-	        this.showNavBar = new core_1.EventEmitter();
+	        this.loggedInEmitter = new core_1.EventEmitter();
 	    }
 	    GlobalEventsManager = __decorate([
 	        core_1.Injectable(), 
@@ -28708,22 +28678,22 @@ webpackJsonp([0],[
 
 
 /***/ },
-/* 66 */
+
+/***/ 66:
 /***/ function(module, exports) {
 
 	module.exports = "<div class=\"login\">\r\n    <div class=\"login-left half\">\r\n        <img src=\"http://res.cloudinary.com/baskoroi/image/upload/v1477821375/lighthauz-logo.small_bpotsx.png\" alt=\"Lighthauz: Connecting the Unconnected\" class=\"login-pic\">\r\n    </div>\r\n    <div class=\"login-right half\">\r\n        <h1>Enter as Admin</h1>\r\n        <form name=\"form-login\" class=\"form-login\"\r\n            (ngSubmit)=\"onSubmitLogin()\" #f=\"ngForm\">\r\n\r\n            <!-- TODO: display failure/error message here, if any -->\r\n            <div *ngIf=\"message !== ''\">\r\n                {{message}}\r\n            </div>\r\n            <input type=\"text\" class=\"txt-login\" \r\n                name=\"username\"\r\n                placeholder=\"Username\" \r\n                [(ngModel)]=\"model.username\" #username=\"ngModel\"\r\n                required>\r\n            <input type=\"password\" class=\"txt-login\" \r\n                name=\"password\"\r\n                placeholder=\"Password\" \r\n                [(ngModel)]=\"model.password\" #password=\"ngModel\"\r\n                required>\r\n            <button type=\"submit\" class=\"btn-login\"\r\n                [disabled]=\"loading\">Login</button>\r\n        </form>\r\n    </div>\r\n</div>\r\n<div class=\"clearfix\"></div>"
 
 /***/ },
-/* 67 */
+
+/***/ 67:
 /***/ function(module, exports) {
 
 	// removed by extract-text-webpack-plugin
 
 /***/ },
-/* 68 */,
-/* 69 */,
-/* 70 */,
-/* 71 */
+
+/***/ 71:
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -28761,20 +28731,22 @@ webpackJsonp([0],[
 
 
 /***/ },
-/* 72 */
+
+/***/ 72:
 /***/ function(module, exports) {
 
-	module.exports = "<h1>Logged In! :D</h1>\r\n<p>Your username: {{user.username}}</p>"
+	module.exports = "<div class=\"content-dashboard\">\r\n    <div class=\"title-dashboard\">\r\n        <h1>Dashboard</h1>\r\n        <h2>View recent users, ideas, and reports.</h2>\r\n    </div>\r\n</div>"
 
 /***/ },
-/* 73 */
+
+/***/ 73:
 /***/ function(module, exports) {
 
 	// removed by extract-text-webpack-plugin
 
 /***/ },
-/* 74 */,
-/* 75 */
+
+/***/ 75:
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -28812,7 +28784,8 @@ webpackJsonp([0],[
 
 
 /***/ },
-/* 76 */
+
+/***/ 76:
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -28826,8 +28799,14 @@ webpackJsonp([0],[
 	    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 	};
 	var core_1 = __webpack_require__(4);
+	var events_manager_service_1 = __webpack_require__(65);
 	var AppComponent = (function () {
-	    function AppComponent() {
+	    function AppComponent(eventsManager) {
+	        var _this = this;
+	        this.eventsManager = eventsManager;
+	        this.eventsManager.loggedInEmitter.subscribe(function (mode) {
+	            _this.isLoggedIn = !!mode;
+	        });
 	    }
 	    AppComponent = __decorate([
 	        core_1.Component({
@@ -28837,7 +28816,7 @@ webpackJsonp([0],[
 	                __webpack_require__(78).toString()
 	            ]
 	        }), 
-	        __metadata('design:paramtypes', [])
+	        __metadata('design:paramtypes', [events_manager_service_1.GlobalEventsManager])
 	    ], AppComponent);
 	    return AppComponent;
 	}());
@@ -28845,20 +28824,22 @@ webpackJsonp([0],[
 
 
 /***/ },
-/* 77 */
+
+/***/ 77:
 /***/ function(module, exports) {
 
-	module.exports = "<lh-header></lh-header>\r\n<div class=\"content\">\r\n    <router-outlet></router-outlet>\r\n</div>\r\n<lh-footer></lh-footer>"
+	module.exports = "<lh-header></lh-header>\r\n<div class=\"content\">\r\n    <div *ngIf=\"isLoggedIn\" class=\"sidebar-wrapper\">\r\n        <sidebar></sidebar>\r\n    </div>\r\n    <router-outlet></router-outlet>\r\n</div>\r\n<div class=\"clearfix\"></div>\r\n<lh-footer></lh-footer>"
 
 /***/ },
-/* 78 */
+
+/***/ 78:
 /***/ function(module, exports) {
 
 	// removed by extract-text-webpack-plugin
 
 /***/ },
-/* 79 */,
-/* 80 */
+
+/***/ 80:
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -28881,7 +28862,7 @@ webpackJsonp([0],[
 	        this.router = router;
 	        this.authService = authService;
 	        this.eventsManager = eventsManager;
-	        this.eventsManager.showNavBar.subscribe(function (mode) {
+	        this.eventsManager.loggedInEmitter.subscribe(function (mode) {
 	            _this.isLoggedIn = !!mode;
 	        });
 	    }
@@ -28890,7 +28871,7 @@ webpackJsonp([0],[
 	    HeaderComponent.prototype.logout = function () {
 	        var _this = this;
 	        this.authService.logout().subscribe(function (result) {
-	            _this.eventsManager.showNavBar.emit(false);
+	            _this.eventsManager.loggedInEmitter.emit(false);
 	        });
 	        this.isLoggedIn = false;
 	        this.router.navigate(["/login"]);
@@ -28911,20 +28892,22 @@ webpackJsonp([0],[
 
 
 /***/ },
-/* 81 */
+
+/***/ 81:
 /***/ function(module, exports) {
 
 	module.exports = "<header id=\"header\">\r\n    <div class=\"nav-left\">\r\n        <a routerLink=\"/\" class=\"home-link\">L I G H T H A U Z</a> \r\n    </div>\r\n    <nav class=\"nav-right\">\r\n        <div *ngIf=\"isLoggedIn\">\r\n            <a class=\"btn-nav\" (click)=\"logout()\">Sign out</a>\r\n        </div>\r\n        <div *ngIf=\"!isLoggedIn\">\r\n            <a routerLink=\"/login\" class=\"btn-nav\">Sign in</a>\r\n        </div>\r\n    </nav>\r\n    <div class=\"clearfix\"></div>\r\n</header>"
 
 /***/ },
-/* 82 */
+
+/***/ 82:
 /***/ function(module, exports) {
 
 	// removed by extract-text-webpack-plugin
 
 /***/ },
-/* 83 */,
-/* 84 */
+
+/***/ 84:
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -28955,16 +28938,115 @@ webpackJsonp([0],[
 
 
 /***/ },
-/* 85 */
+
+/***/ 85:
 /***/ function(module, exports) {
 
 	module.exports = "<footer>\r\n    <p>Copyright &copy; 2016 - Lighthauz. All rights reserved.</p>\r\n</footer>"
 
 /***/ },
-/* 86 */
+
+/***/ 86:
+/***/ function(module, exports) {
+
+	// removed by extract-text-webpack-plugin
+
+/***/ },
+
+/***/ 388:
+/***/ function(module, exports, __webpack_require__) {
+
+	"use strict";
+	var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+	    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+	    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+	    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+	    return c > 3 && r && Object.defineProperty(target, key, r), r;
+	};
+	var __metadata = (this && this.__metadata) || function (k, v) {
+	    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+	};
+	var core_1 = __webpack_require__(4);
+	var SidebarComponent = (function () {
+	    function SidebarComponent() {
+	    }
+	    SidebarComponent = __decorate([
+	        core_1.Component({
+	            selector: "sidebar",
+	            template: __webpack_require__(389),
+	            styles: [__webpack_require__(390).toString()]
+	        }), 
+	        __metadata('design:paramtypes', [])
+	    ], SidebarComponent);
+	    return SidebarComponent;
+	}());
+	exports.SidebarComponent = SidebarComponent;
+
+
+/***/ },
+
+/***/ 389:
+/***/ function(module, exports) {
+
+	module.exports = "<div class=\"sidebar\">\r\n    <a class=\"link-sidebar\" routerLink=\"/dashboard\" routerLinkActive=\"active-sidebar\">\r\n        <span class=\"icon-link-sidebar\"><i class=\"fa fa-home\" aria-hidden=\"true\"></i></span>\r\n        <span class=\"text-link-sidebar\">Dashboard</span>\r\n    </a>\r\n    <a class=\"link-sidebar\" routerLink=\"/users\" routerLinkActive=\"active-sidebar\">\r\n        <span class=\"icon-link-sidebar\"><i class=\"fa fa-users\" aria-hidden=\"true\"></i></span>\r\n        <span class=\"text-link-sidebar\">Users</span>\r\n    </a>\r\n    <a class=\"link-sidebar\" routerLink=\"/ideas\" routerLinkActive=\"active-sidebar\">\r\n        <span class=\"icon-link-sidebar\"><i class=\"fa fa-lightbulb-o\" aria-hidden=\"true\"></i></span>\r\n        <span class=\"text-link-sidebar\">Ideas</span>\r\n    </a>\r\n    <a class=\"link-sidebar\" routerLink=\"/reports\" routerLinkActive=\"active-sidebar\">\r\n        <span class=\"icon-link-sidebar\"><i class=\"fa fa-flag\" aria-hidden=\"true\"></i></span>\r\n        <span class=\"text-link-sidebar\">Reports</span>\r\n    </a>\r\n</div>"
+
+/***/ },
+
+/***/ 390:
+/***/ function(module, exports) {
+
+	// removed by extract-text-webpack-plugin
+
+/***/ },
+
+/***/ 392:
+/***/ function(module, exports, __webpack_require__) {
+
+	"use strict";
+	var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+	    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+	    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+	    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+	    return c > 3 && r && Object.defineProperty(target, key, r), r;
+	};
+	var __metadata = (this && this.__metadata) || function (k, v) {
+	    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+	};
+	var core_1 = __webpack_require__(4);
+	var router_1 = __webpack_require__(31);
+	var UsersListComponent = (function () {
+	    function UsersListComponent(router) {
+	        this.router = router;
+	    }
+	    UsersListComponent.prototype.ngOnInit = function () {
+	    };
+	    UsersListComponent = __decorate([
+	        core_1.Component({
+	            selector: "users-list",
+	            template: __webpack_require__(393),
+	            styles: [__webpack_require__(394).toString()]
+	        }), 
+	        __metadata('design:paramtypes', [router_1.Router])
+	    ], UsersListComponent);
+	    return UsersListComponent;
+	}());
+	exports.UsersListComponent = UsersListComponent;
+
+
+/***/ },
+
+/***/ 393:
+/***/ function(module, exports) {
+
+	module.exports = "<div class=\"content-dashboard\">\r\n    <div class=\"title-dashboard\">\r\n        <h1>List of Users</h1>\r\n        <h2>Click on a user's name to read and edit their profile. Click the checkboxes to select multiple users and delete them.</h2>\r\n    </div>\r\n\r\n    <div class=\"body-dashboard\">\r\n        <table>\r\n            <thead>\r\n                <tr>\r\n                    <th>Name</th>\r\n                    <th>Email</th>\r\n                    <th>Last activity</th>\r\n                    <th>Last created at</th>\r\n                </tr>\r\n            </thead>\r\n            <tbody>\r\n                <tr>\r\n                    <td>Aaron Patterson</td>\r\n                    <td>apatterson0@merriam-webster.com</td>\r\n                    <td>Reported a user</td>\r\n                    <td>10/27/2016</td>\r\n                </tr>\r\n            </tbody>\r\n        </table>\r\n    </div>\r\n</div>"
+
+/***/ },
+
+/***/ 394:
 /***/ function(module, exports) {
 
 	// removed by extract-text-webpack-plugin
 
 /***/ }
-]);
+
+});

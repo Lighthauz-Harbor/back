@@ -9,6 +9,8 @@ import { HeaderComponent } from "./components/header/header.component";
 import { LoginComponent } from "./components/login/login.component";
 import { DashboardComponent } from "./components/dashboard/dashboard.component";
 import { FooterComponent } from "./components/footer/footer.component";
+import { SidebarComponent } from "./components/sidebar/sidebar.component";
+import { UsersListComponent } from "./components/users-list/users-list.component";
 
 import { AuthenticationGuard } from "./services/authentication.guard";
 import { AuthenticationService } from "./services/authentication.service";
@@ -28,7 +30,9 @@ import "./vendor";
         HeaderComponent, 
         LoginComponent, 
         DashboardComponent,
-        FooterComponent
+        FooterComponent,
+        SidebarComponent,
+        UsersListComponent
     ],
     providers: [ 
         AuthenticationGuard,

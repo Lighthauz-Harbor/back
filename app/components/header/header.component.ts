@@ -12,14 +12,15 @@ import { GlobalEventsManager } from "../../services/events-manager.service";
     ]
 })
 export class HeaderComponent implements OnInit {
-    isLoggedIn: boolean;
+
+    private isLoggedIn: boolean;
 
     constructor(
         private router: Router,
         private authService: AuthenticationService,
         private eventsManager: GlobalEventsManager) {
 
-        this.eventsManager.showNavBar.subscribe((mode: any) => {
+        this.eventsManager.loggedInEmitter.subscribe((mode: any) => {
             this.isLoggedIn = !!mode;
         });
     }
@@ -29,7 +30,7 @@ export class HeaderComponent implements OnInit {
 
     logout(): void {
         this.authService.logout().subscribe(result => {
-            this.eventsManager.showNavBar.emit(false);
+            this.eventsManager.loggedInEmitter.emit(false);
         });
 
         this.isLoggedIn = false;

@@ -13,9 +13,9 @@ import { GlobalEventsManager } from "../../services/events-manager.service";
     ]
 })
 export class LoginComponent implements OnInit {
-    model: any = {};
-    loading: boolean = false;
-    message: string = "";
+    private model: any = {};
+    private loading: boolean = false;
+    private message: string = "";
 
     constructor(
         private router: Router,
@@ -26,7 +26,7 @@ export class LoginComponent implements OnInit {
 
     ngOnInit(): void {
         this.authService.logout().subscribe(result => {
-            this.eventsManager.showNavBar.emit(false);
+            this.eventsManager.loggedInEmitter.emit(false);
         });
     }
 
@@ -41,7 +41,7 @@ export class LoginComponent implements OnInit {
                     this.router.navigate(["/login"]);
                 } else {
                     this.message = "";
-                    this.eventsManager.showNavBar.emit(true);
+                    this.eventsManager.loggedInEmitter.emit(true);
                     this.router.navigate(["/dashboard"]);
                 }
             });

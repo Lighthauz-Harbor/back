@@ -1,4 +1,5 @@
 import { Component } from "@angular/core";
+import { GlobalEventsManager } from "../services/events-manager.service";
 
 @Component({
     selector: "admin-app",
@@ -8,5 +9,13 @@ import { Component } from "@angular/core";
     ]
 })
 export class AppComponent {
+
+    private isLoggedIn: boolean;
+
+    constructor(private eventsManager: GlobalEventsManager) {
+        this.eventsManager.loggedInEmitter.subscribe((mode: any) => {
+            this.isLoggedIn = !!mode;
+        });
+    }
 
 }

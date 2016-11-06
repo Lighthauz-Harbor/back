@@ -1,5 +1,9 @@
 <lh-header></lh-header>
 <div class="content">
+    <div *ngIf="isLoggedIn" class="sidebar-wrapper">
+        <sidebar></sidebar>
+    </div>
     <router-outlet></router-outlet>
 </div>
+<div class="clearfix"></div>
 <lh-footer></lh-footer>

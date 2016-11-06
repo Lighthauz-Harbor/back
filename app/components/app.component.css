@@ -1,4 +1,6 @@
-@import url('https://fonts.googleapis.com/css?family=Raleway');
+html, body {
+    height: 100%;
+}
 
 body, body * {
     margin: 0;
@@ -7,5 +9,16 @@ body, body * {
 }
 
 .content {
+    height: -webkit-calc(100% - 110px);
+    height: -moz-calc(100% - 110px);
+    height: -o-calc(100% - 110px);
+    height: calc(100% - 110px);
     margin-top: 36px;
+}
+
+.sidebar-wrapper {
+    width: 240px;
+    height: 100%;
+    overflow: hidden;
+    float: left;
 }

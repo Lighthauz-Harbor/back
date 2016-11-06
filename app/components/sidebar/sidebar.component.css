@@ -1,0 +1,44 @@
+.sidebar {
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+}
+
+.sidebar, .link-sidebar {
+    background-color: #cacaca;
+}
+
+.link-sidebar {
+    display: block;
+    padding: 6px 0;
+
+    text-decoration: none;
+    color: #303030;
+    border-bottom: 1px solid #303030;
+}
+
+.link-sidebar:hover {
+    background-color: #606060;
+    color: #cacaca;
+}
+
+.active-sidebar {
+    background-color: #303030;
+    color: #cacaca;
+}
+
+.link-sidebar,
+.icon-link-sidebar,
+.text-link-sidebar {
+    width: 100%;
+    display: block;
+}
+
+.icon-link-sidebar,
+.text-link-sidebar {
+    text-align: center;
+}
+
+.icon-link-sidebar {
+    font-size: 20pt;
+}

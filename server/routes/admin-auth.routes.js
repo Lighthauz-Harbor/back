@@ -12,7 +12,7 @@ module.exports = function(app, router, dbDriver,
     }));
 
     passport.serializeUser(function(user, done) {
-        done(null, user.username);
+        done(null, user.id);
     });
 
     passport.deserializeUser(function(id, done) {

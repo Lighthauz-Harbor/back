@@ -1,3 +1,4 @@
+var uuid = require("uuid");
 var bcrypt = require("bcrypt-nodejs");
 
 var UserSchema = function(dbDriver) {
@@ -35,6 +36,7 @@ var UserSchema = function(dbDriver) {
         }
 
         var params = {
+            id: uuid.v4(),
             name: req.body.name,
             username: req.body.username,
             role: req.body.role,
@@ -52,8 +54,9 @@ var UserSchema = function(dbDriver) {
                 } else {
                     session
                         .run(
-                            "CREATE (:User {username: {username}, password: {password}," +
-                            "name: {name}, role: {role}})", params)
+                            "CREATE (:User {id: {id}, username: {username}," +
+                            "password: {password}, name: {name}, " + 
+                            "role: {role}})", params)
                         .then(function() {
                             res.status(201).send("User successfully created!");
                             session.close();
@@ -96,8 +99,8 @@ var UserSchema = function(dbDriver) {
     this.deserialize = function(id, done) {
         var session = this.driver.session();
         session
-            .run("MATCH (u:User) WHERE u.username = {username} RETURN u", 
-                {username: id})
+            .run("MATCH (u:User) WHERE u.id = {id} RETURN u", 
+                {id: id})
             .then(function(result) {
                 var user = result.records[0].get(0).properties;
                 done(null, user);
