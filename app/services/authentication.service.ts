@@ -33,8 +33,7 @@ export class AuthenticationService {
                     this.currentUser = new User(json.username, json.role);
                 }
                 return json;
-            }
-        );
+            });
     }
 
     logout(): Observable<any> {

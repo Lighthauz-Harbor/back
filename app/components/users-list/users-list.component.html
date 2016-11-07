@@ -14,12 +14,14 @@
                     <th>Last created at</th>
                 </tr>
             </thead>
-            <tbody>
+            <tbody *ngIf="!list">
                 <tr>
-                    <td>Aaron Patterson</td>
-                    <td>apatterson0@merriam-webster.com</td>
-                    <td>Reported a user</td>
-                    <td>10/27/2016</td>
+                    <td class="table-message" colspan="4">{{message}}</td>
+                </tr>
+            </tbody>
+            <tbody *ngIf="list">
+                <tr>
+                    <td colspan="4">We have the results. Change this line</td>
                 </tr>
             </tbody>
         </table>

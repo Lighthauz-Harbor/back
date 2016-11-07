@@ -6,6 +6,7 @@ export class User {
     bio: string;
     profilePic: string; // URL to the file in image server
     dateOfBirth: Date;
+    createdAt: Date;
 
     constructor(
         username: string, 
@@ -14,6 +15,7 @@ export class User {
         bio: string = "This is some bio",
         profilePic: string = "http://res.cloudinary.com/lighthauz-harbor/image/upload/v1478504599/default-profile-pic_hroujz.png",
         dateOfBirth: Date = new Date(),
+        createdAt: Date = new Date(0),
         password: string = "") {
         
         this.username = username;

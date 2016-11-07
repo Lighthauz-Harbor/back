@@ -167,14 +167,17 @@ var UserSchema = function(dbDriver) {
                             bio: user.bio,
                             profilePic: user.profilePic,
                             dateOfBirth: (new Date(user.dateOfBirth)).toDateString(),
-                            createdAt: (new Date(user.createdAt)).toDateString()
+                            createdAt: (new Date(user.createdAt)).toDateString(),
+                            // TODO insert user's last activity below
                         };
                     })
                 });
                 session.close();
             })
             .catch(function(err) {
-                res.send(err);
+                res.send({
+                    fail: "Failed fetching list of users."
+                });
                 session.close();
             });
     };

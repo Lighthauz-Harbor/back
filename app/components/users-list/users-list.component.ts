@@ -12,6 +12,7 @@ import { UsersService } from "../../services/users.service";
 export class UsersListComponent implements OnInit {
 
     private list: User[];
+    private message: string = "";
 
     constructor(
         private router: Router,
@@ -20,6 +21,19 @@ export class UsersListComponent implements OnInit {
     }
 
     ngOnInit(): void {
-        this.list = this.usersService.getList();
+        this.usersService.getList().subscribe((json: any) => {
+            if (json.fail) {
+                this.message = json.fail;
+            } else if (json.results.length === 0) {
+                this.message = "No users have been created, yet.";
+            } else {
+                json.results.map((u: any) => {
+                    this.list.push(
+                        new User(u.username, u.role, u.name, u.bio, 
+                            u.profilePic, u.dateOfBirth, u.createdAt));
+                });
+            }
+        });
+
     }
 }
