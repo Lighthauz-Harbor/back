@@ -1,5 +1,9 @@
 .body-dashboard table {
     width: 100%;
+}
+
+.body-dashboard table,
+.panel-dashboard {
     padding: 6px;
 
     background-color: #ffffff;
@@ -7,6 +11,49 @@
     -webkit-box-shadow: 1px 1px 2px 0px rgba(0,0,0,0.55);
     -moz-box-shadow: 1px 1px 2px 0px rgba(0,0,0,0.55);
     box-shadow: 1px 1px 2px 0px rgba(0,0,0,0.55); 
+}
+
+.panel-dashboard {
+    margin-bottom: 12px;
+    overflow: hidden;
+}
+
+.search-panel,
+.btn-create, .btn-delete {
+    display: block;
+    float: left;
+
+    padding: 4px 8px;
+    margin-right: 12px;
+}
+
+.btn-create, .btn-delete {
+    border: 0;
+    border-radius: 4px;
+    color: #ffffff;
+
+    text-decoration: none;
+    cursor: pointer;
+}
+
+.btn-create {
+    background-color: #22baa0;
+}
+
+.btn-delete {
+    background-color: #ce4949;
+}
+
+.body-dashboard table tr {
+    line-height: 1.4em;
+}
+
+.body-dashboard table td:nth-child(2) {
+    color: #000000;
+}
+
+.body-dashboard table td:first-child {
+    text-align: center;
 }
 
 .table-message {

@@ -4,10 +4,25 @@
         <h2>Click on a user's name to read and edit their profile. Click the checkboxes to select multiple users and delete them.</h2>
     </div>
 
+    <div class="panel-dashboard">
+        <input type="text" 
+            name="search-user" 
+            class="search-panel"
+            placeholder="Search user...">
+        <a routerLink="/users/create" class="btn-create">Create user</a>
+        <a (click)="deleteSelectedUsers()" class="btn-delete">Delete user(s)</a>
+    </div>
+
     <div class="body-dashboard">
         <table>
             <thead>
                 <tr>
+                    <th>
+                        <input type="checkbox"
+                            class="cb-toggle-all" 
+                            [checked]="toggleAll"
+                            (change)="toggleAllUsers()">
+                    </th>
                     <th>Name</th>
                     <th>Email</th>
                     <th>Last activity</th>
@@ -16,13 +31,20 @@
             </thead>
             <tbody *ngIf="!list">
                 <tr>
-                    <td class="table-message" colspan="4">{{message}}</td>
+                    <td class="table-message" colspan="5">
+                        {{message || "Unknown error. Please refresh."}}
+                    </td>
                 </tr>
             </tbody>
             <tbody *ngIf="list">
                 <tr *ngFor="let user of list">
+                    <td>
+                        <input type="checkbox" 
+                            class="cb-select"
+                            [(ngModel)]="user.selected">
+                    </td>
                     <td>{{user.name}}</td>
-                    <td>{{user.username}}</td>
+                    <td><a href="mailto:{{user.username}}">{{user.username}}</a></td>
                     <td>{{user.lastActivity || "No user activity"}}</td>
                     <td>{{user.createdAt.toDateString()}}</td>
                 </tr>

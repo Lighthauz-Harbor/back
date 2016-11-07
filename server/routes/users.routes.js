@@ -12,4 +12,8 @@ module.exports = function(router, dbDriver, passport, authMiddleware) {
         userSchema.listUsers(req, res);
     });
 
+    router.post("/users/delete", function(req, res) {
+        userSchema.deleteUsers(req, res);
+    });
+
 };

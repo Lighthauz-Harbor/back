@@ -12,6 +12,8 @@ import { UsersService } from "../../services/users.service";
 export class UsersListComponent implements OnInit {
 
     private list: User[] = [];
+    private toggleAll: boolean = false;
+
     private message: string = "";
 
     constructor(
@@ -21,6 +23,13 @@ export class UsersListComponent implements OnInit {
     }
 
     ngOnInit(): void {
+        this.loadUsersList();
+    }
+
+    private loadUsersList(): void {
+        // renew list every load (esp. in case of deletion)
+        this.list = []; 
+
         this.usersService.getList().subscribe((json: any) => {
             if (json.fail) {
                 this.message = json.fail;
@@ -35,6 +44,29 @@ export class UsersListComponent implements OnInit {
                 });
             }
         });
+    }
 
+    toggleAllUsers(): void {
+        this.toggleAll = !this.toggleAll;
+        this.list.map((row) => {
+            row.selected = this.toggleAll;
+        });
+    }
+
+    deleteSelectedUsers(): void {
+        let selectedUsernames = this.list.filter((row) => {
+            return row.selected;
+        }).map((user) => {
+            return user.username;
+        });
+
+        if (selectedUsernames.length === 0) {
+            alert("Please select the users first!");
+        } else {
+            this.usersService.deleteUsers(selectedUsernames).subscribe((json: any) => {
+                alert(json.message);
+                this.loadUsersList(); // reload the users list
+            });
+        }
     }
 }

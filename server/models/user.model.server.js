@@ -76,10 +76,10 @@ var UserSchema = function(dbDriver) {
                 } else {
                     session
                         .run(
-                            "CREATE (:User {id: {id}, username: {username}," +
-                            "password: {password}, name: {name}, role: {role}," +
-                            "bio: {bio}, profilePic: {profilePic}," +
-                            "dateOfBirth: {dateOfBirth}, createdAt: {createdAt}})", params)
+                            "CREATE (:User {id: {id}, username: {username}, \
+                            password: {password}, name: {name}, role: {role}, \
+                            bio: {bio}, profilePic: {profilePic}, \
+                            dateOfBirth: {dateOfBirth}, createdAt: {createdAt}})", params)
                         .then(function() {
                             res.status(201).send("User successfully created!");
                             session.close();
@@ -154,10 +154,11 @@ var UserSchema = function(dbDriver) {
     this.listUsers = function(req, res) {
         var session = this.driver.session();
         session
-            .run("MATCH (u:User) WHERE u.role = 'user' RETURN u")
+            .run("MATCH (u:User) WHERE u.role = 'user' RETURN u \
+                ORDER BY u.createdAt DESC")
             .then(function(result) {
                 res.send({
-                    results: result.records.map(function(record, idx) {
+                    results: result.records.map(function(record) {
                         var user = record.get(0).properties;
                         // don't send id and password in this response
                         return {
@@ -168,7 +169,8 @@ var UserSchema = function(dbDriver) {
                             profilePic: user.profilePic,
                             dateOfBirth: (new Date(user.dateOfBirth)).toDateString(),
                             createdAt: (new Date(user.createdAt)).toDateString(),
-                            // TODO insert user's last activity below
+                            // TODO insert user's last activity below 
+                            // (in `lastActivity` property)
                         };
                     })
                 });
@@ -177,6 +179,26 @@ var UserSchema = function(dbDriver) {
             .catch(function(err) {
                 res.send({
                     fail: "Failed fetching list of users."
+                });
+                session.close();
+            });
+    };
+
+    this.deleteUsers = function(req, res) {
+        var session = this.driver.session();
+        var usernames = req.body.usernames;
+        session
+            .run("MATCH (u:User) WHERE u.username IN {usernames} DETACH DELETE u",
+                {usernames: usernames})
+            .then(function(result) {
+                res.send({
+                    message: "Successfully deleted users!"
+                });
+                session.close();
+            })
+            .catch(function(err) {
+                res.send({
+                    message: "Failed deleting selected users. Please try again."
                 });
                 session.close();
             });

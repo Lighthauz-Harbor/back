@@ -7,6 +7,7 @@ export class User {
     private _profilePic: string; // URL to the file in image server
     private _dateOfBirth: Date;
     private _createdAt: Date;
+    private _selected: boolean;
 
     constructor(
         username: string, 
@@ -18,13 +19,14 @@ export class User {
         createdAt: Date = new Date(0),
         password: string = "") {
         
-        this.name = name;
-        this.username = username;
-        this.role = role;
-        this.bio = bio;
-        this.profilePic = profilePic;
-        this.dateOfBirth = dateOfBirth;
-        this.createdAt = createdAt;
+        this._name = name;
+        this._username = username;
+        this._role = role;
+        this._bio = bio;
+        this._profilePic = profilePic;
+        this._dateOfBirth = dateOfBirth;
+        this._createdAt = createdAt;
+        this._selected = false; // for selection in users list table
         // don't assign passwords for security purposes
     }
 
@@ -86,6 +88,14 @@ export class User {
 
     set createdAt(newCreatedAt: Date) {
         this._createdAt = newCreatedAt;
+    }
+
+    get selected(): boolean {
+        return this._selected;
+    }
+
+    set selected(newSelected: boolean) {
+        this._selected = newSelected;
     }
 
 }
