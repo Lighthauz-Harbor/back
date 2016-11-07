@@ -27,6 +27,13 @@ var UserSchema = function(dbDriver) {
             return false;
         }
 
+        // date of birth has to be a string first, ("YYYY-MM-DD")
+        // it will later be converted into a Date object, then saved in
+        // Neo4j timestamp (milliseconds since Jan 1, 1970 UTC)
+        if (params.dateOfBirth && typeof params.dateOfBirth !== "string") {
+            return false;
+        }
+
         if (params.bio && typeof params.bio !== "string") {
             return false;
         }
@@ -49,9 +56,13 @@ var UserSchema = function(dbDriver) {
             username: req.body.username,
             password: this._generateHash(req.body.password),
             role: req.body.role,
+            dateOfBirth: req.body.dateOfBirth ? 
+                (new Date(req.body.dateOfBirth)).getTime() : 
+                (new Date()).getTime(),
             bio: req.body.bio || "This is some bio",
             profilePic: req.body.profilePic || 
-                "http://res.cloudinary.com/lighthauz-harbor/image/upload/v1478504599/default-profile-pic_hroujz.png"
+                "http://res.cloudinary.com/lighthauz-harbor/image/upload/v1478504599/default-profile-pic_hroujz.png",
+            createdAt: (new Date()).getTime()
         };
 
         var session = this.driver.session();
@@ -67,13 +78,14 @@ var UserSchema = function(dbDriver) {
                         .run(
                             "CREATE (:User {id: {id}, username: {username}," +
                             "password: {password}, name: {name}, role: {role}," +
-                            "bio: {bio}, profilePic: {profilePic}})", params)
+                            "bio: {bio}, profilePic: {profilePic}," +
+                            "dateOfBirth: {dateOfBirth}, createdAt: {createdAt}})", params)
                         .then(function() {
                             res.status(201).send("User successfully created!");
                             session.close();
                         })
                         .catch(function(err) {
-                            res.status(501).send("Failed creating user!");
+                            res.status(501).send(err);
                             session.close();
                         });
                 }
@@ -125,13 +137,39 @@ var UserSchema = function(dbDriver) {
 
     this.find = function(req, res) {
         var session = this.driver.session();
-        console.log(req.params.username);
         session
             .run("MATCH (u:User) WHERE u.username = {username} RETURN u", 
                 {username: req.params.username})
             .then(function(result) {
                 var user = result.records[0].get(0).properties;
                 res.send(user);
+                session.close();
+            })
+            .catch(function(err) {
+                res.send(err);
+                session.close();
+            });
+    };
+
+    this.listUsers = function(req, res) {
+        var session = this.driver.session();
+        session
+            .run("MATCH (u:User) WHERE u.role = 'user' RETURN u")
+            .then(function(result) {
+                res.send({
+                    results: result.records.map(function(record, idx) {
+                        var user = record.get(0).properties;
+                        // don't send id and password in this response
+                        return {
+                            name: user.name,
+                            username: user.username,
+                            role: user.role,
+                            bio: user.bio,
+                            profilePic: user.profilePic,
+                            dateOfBirth: (new Date(user.dateOfBirth)).toDateString()
+                        };
+                    })
+                });
                 session.close();
             })
             .catch(function(err) {
