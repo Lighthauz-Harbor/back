@@ -166,7 +166,8 @@ var UserSchema = function(dbDriver) {
                             role: user.role,
                             bio: user.bio,
                             profilePic: user.profilePic,
-                            dateOfBirth: (new Date(user.dateOfBirth)).toDateString()
+                            dateOfBirth: (new Date(user.dateOfBirth)).toDateString(),
+                            createdAt: (new Date(user.createdAt)).toDateString()
                         };
                     })
                 });
