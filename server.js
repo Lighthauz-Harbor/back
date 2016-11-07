@@ -42,7 +42,6 @@ app.use(flash());
 app.use(passport.initialize());
 app.use(passport.session());
 
-/*var router = express.Router();*/
 routes(app, dbDriver, passport);
 
 var host = "localhost";

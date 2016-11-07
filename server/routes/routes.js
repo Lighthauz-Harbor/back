@@ -43,7 +43,6 @@ module.exports = function(app, dbDriver, passport) {
 
     app.use("/admin/auth", adminRouter);
     app.use("/api", apiRouter);
-    /*app.use("/", router);*/
 
     // Fallback route (other route handling is handled in Angular 2)
     app.get("*", function(req, res) {
