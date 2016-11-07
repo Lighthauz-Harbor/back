@@ -42,8 +42,8 @@ app.use(flash());
 app.use(passport.initialize());
 app.use(passport.session());
 
-var router = express.Router();
-routes(app, router, dbDriver, passport);
+/*var router = express.Router();*/
+routes(app, dbDriver, passport);
 
 var host = "localhost";
 var PORT = process.env.PORT || 3000;

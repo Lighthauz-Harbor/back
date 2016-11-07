@@ -1,6 +1,6 @@
 import { Injectable } from "@angular/core";
-
 import { Http, Headers, Response } from "@angular/http";
+
 import { Observable } from "rxjs";
 
 import { User } from "../models/user.model.app";
@@ -10,7 +10,7 @@ import "rxjs/add/operator/map";
 @Injectable()
 export class AuthenticationService {
 
-    currentUser: User;
+    private currentUser: User;
 
     constructor(private http: Http) {
 

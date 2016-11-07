@@ -3,7 +3,7 @@ var LocalStrategy = require("passport-local").Strategy;
 var UserSchema = require("../models/user.model.server");
 
 module.exports = function(app, router, dbDriver, 
-                          passport, adminMid) {
+                          passport, adminMiddleware) {
 
     var userSchema = new UserSchema(dbDriver);
 
@@ -19,38 +19,39 @@ module.exports = function(app, router, dbDriver,
         userSchema.deserialize(id, done);
     });
 
-    router.get("/admin/auth/loggedIn", function(req, res) {
+    router.get("/loggedIn", function(req, res) {
         res.send(req.isAuthenticated() ? req.user : "0");
     });
 
-    router.get("/admin/auth/fail", function(req, res) {
+    router.get("/fail", function(req, res) {
         req.logOut();
         res.json({
             fail: "Cannot login: invalid username/password."
         });
     });
 
-    router.post("/admin/auth/login", 
+    router.post("/login", 
         passport.authenticate("local", {
             failureRedirect: "/admin/auth/fail"
         }),
-        adminMid,
+        adminMiddleware,
         function(req, res) {
             res.send(req.user);
         }
     );
 
-    router.post("/admin/auth/signup", function(req, res, next) {
+    router.post("/signup", function(req, res, next) {
         userSchema.create(req, res);
     });
 
-    router.get("/admin/auth/getUser/:username", function(req, res) {
+    router.get("/getUser/:username", function(req, res) {
         userSchema.find(req, res);
     });
 
-    router.post("/admin/auth/logout", function(req, res) {
+    router.post("/logout", function(req, res) {
         req.logOut();
 
         res.sendStatus(204);
     });
+
 };

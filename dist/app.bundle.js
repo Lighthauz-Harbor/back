@@ -18260,17 +18260,18 @@ webpackJsonp([0],{
 	var forms_1 = __webpack_require__(25);
 	var http_1 = __webpack_require__(29);
 	var routing_module_1 = __webpack_require__(30);
-	var app_component_1 = __webpack_require__(76);
-	var header_component_1 = __webpack_require__(80);
+	var app_component_1 = __webpack_require__(80);
+	var header_component_1 = __webpack_require__(84);
 	var login_component_1 = __webpack_require__(61);
 	var dashboard_component_1 = __webpack_require__(71);
-	var footer_component_1 = __webpack_require__(84);
-	var sidebar_component_1 = __webpack_require__(388);
-	var users_list_component_1 = __webpack_require__(392);
-	var authentication_guard_1 = __webpack_require__(75);
+	var footer_component_1 = __webpack_require__(88);
+	var sidebar_component_1 = __webpack_require__(92);
+	var users_list_component_1 = __webpack_require__(75);
+	var authentication_guard_1 = __webpack_require__(79);
 	var authentication_service_1 = __webpack_require__(62);
+	var users_service_1 = __webpack_require__(396);
 	var events_manager_service_1 = __webpack_require__(65);
-	__webpack_require__(88);
+	__webpack_require__(96);
 	var AppModule = (function () {
 	    function AppModule() {
 	    }
@@ -18294,6 +18295,7 @@ webpackJsonp([0],{
 	            providers: [
 	                authentication_guard_1.AuthenticationGuard,
 	                authentication_service_1.AuthenticationService,
+	                users_service_1.UsersService,
 	                events_manager_service_1.GlobalEventsManager
 	            ],
 	            bootstrap: [app_component_1.AppComponent]
@@ -24630,8 +24632,8 @@ webpackJsonp([0],{
 	var router_1 = __webpack_require__(31);
 	var login_component_1 = __webpack_require__(61);
 	var dashboard_component_1 = __webpack_require__(71);
-	var users_list_component_1 = __webpack_require__(392);
-	var authentication_guard_1 = __webpack_require__(75);
+	var users_list_component_1 = __webpack_require__(75);
+	var authentication_guard_1 = __webpack_require__(79);
 	var routes = [
 	    {
 	        path: "dashboard",
@@ -28637,11 +28639,13 @@ webpackJsonp([0],{
 
 	"use strict";
 	var User = (function () {
-	    function User(username, role) {
+	    function User(username, role, fullName, password, bio, dateOfBirth) {
+	        if (fullName === void 0) { fullName = "Some Name"; }
+	        if (password === void 0) { password = ""; }
+	        if (bio === void 0) { bio = "Some Bio"; }
+	        if (dateOfBirth === void 0) { dateOfBirth = new Date(); }
 	        this.username = username;
 	        this.role = role;
-	        // set password to empty string for privacy
-	        this.password = "";
 	    }
 	    return User;
 	}());
@@ -28761,6 +28765,56 @@ webpackJsonp([0],{
 	};
 	var core_1 = __webpack_require__(4);
 	var router_1 = __webpack_require__(31);
+	var UsersListComponent = (function () {
+	    function UsersListComponent(router) {
+	        this.router = router;
+	    }
+	    UsersListComponent.prototype.ngOnInit = function () {
+	    };
+	    UsersListComponent = __decorate([
+	        core_1.Component({
+	            selector: "users-list",
+	            template: __webpack_require__(76),
+	            styles: [__webpack_require__(77).toString()]
+	        }), 
+	        __metadata('design:paramtypes', [router_1.Router])
+	    ], UsersListComponent);
+	    return UsersListComponent;
+	}());
+	exports.UsersListComponent = UsersListComponent;
+
+
+/***/ },
+
+/***/ 76:
+/***/ function(module, exports) {
+
+	module.exports = "<div class=\"content-dashboard\">\r\n    <div class=\"title-dashboard\">\r\n        <h1>List of Users</h1>\r\n        <h2>Click on a user's name to read and edit their profile. Click the checkboxes to select multiple users and delete them.</h2>\r\n    </div>\r\n\r\n    <div class=\"body-dashboard\">\r\n        <table>\r\n            <thead>\r\n                <tr>\r\n                    <th>Name</th>\r\n                    <th>Email</th>\r\n                    <th>Last activity</th>\r\n                    <th>Last created at</th>\r\n                </tr>\r\n            </thead>\r\n            <tbody>\r\n                <tr>\r\n                    <td>Aaron Patterson</td>\r\n                    <td>apatterson0@merriam-webster.com</td>\r\n                    <td>Reported a user</td>\r\n                    <td>10/27/2016</td>\r\n                </tr>\r\n            </tbody>\r\n        </table>\r\n    </div>\r\n</div>"
+
+/***/ },
+
+/***/ 77:
+/***/ function(module, exports) {
+
+	// removed by extract-text-webpack-plugin
+
+/***/ },
+
+/***/ 79:
+/***/ function(module, exports, __webpack_require__) {
+
+	"use strict";
+	var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+	    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+	    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+	    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+	    return c > 3 && r && Object.defineProperty(target, key, r), r;
+	};
+	var __metadata = (this && this.__metadata) || function (k, v) {
+	    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+	};
+	var core_1 = __webpack_require__(4);
+	var router_1 = __webpack_require__(31);
 	var authentication_service_1 = __webpack_require__(62);
 	var AuthenticationGuard = (function () {
 	    function AuthenticationGuard(router, authService) {
@@ -28785,7 +28839,7 @@ webpackJsonp([0],{
 
 /***/ },
 
-/***/ 76:
+/***/ 80:
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -28811,9 +28865,9 @@ webpackJsonp([0],{
 	    AppComponent = __decorate([
 	        core_1.Component({
 	            selector: "admin-app",
-	            template: __webpack_require__(77),
+	            template: __webpack_require__(81),
 	            styles: [
-	                __webpack_require__(78).toString()
+	                __webpack_require__(82).toString()
 	            ]
 	        }), 
 	        __metadata('design:paramtypes', [events_manager_service_1.GlobalEventsManager])
@@ -28825,21 +28879,21 @@ webpackJsonp([0],{
 
 /***/ },
 
-/***/ 77:
+/***/ 81:
 /***/ function(module, exports) {
 
 	module.exports = "<lh-header></lh-header>\r\n<div class=\"content\">\r\n    <div *ngIf=\"isLoggedIn\" class=\"sidebar-wrapper\">\r\n        <sidebar></sidebar>\r\n    </div>\r\n    <router-outlet></router-outlet>\r\n</div>\r\n<div class=\"clearfix\"></div>\r\n<lh-footer></lh-footer>"
 
 /***/ },
 
-/***/ 78:
+/***/ 82:
 /***/ function(module, exports) {
 
 	// removed by extract-text-webpack-plugin
 
 /***/ },
 
-/***/ 80:
+/***/ 84:
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -28879,9 +28933,9 @@ webpackJsonp([0],{
 	    HeaderComponent = __decorate([
 	        core_1.Component({
 	            selector: "lh-header",
-	            template: __webpack_require__(81),
+	            template: __webpack_require__(85),
 	            styles: [
-	                __webpack_require__(82).toString()
+	                __webpack_require__(86).toString()
 	            ]
 	        }), 
 	        __metadata('design:paramtypes', [router_1.Router, authentication_service_1.AuthenticationService, events_manager_service_1.GlobalEventsManager])
@@ -28893,21 +28947,21 @@ webpackJsonp([0],{
 
 /***/ },
 
-/***/ 81:
+/***/ 85:
 /***/ function(module, exports) {
 
 	module.exports = "<header id=\"header\">\r\n    <div class=\"nav-left\">\r\n        <a routerLink=\"/\" class=\"home-link\">L I G H T H A U Z</a> \r\n    </div>\r\n    <nav class=\"nav-right\">\r\n        <div *ngIf=\"isLoggedIn\">\r\n            <a class=\"btn-nav\" (click)=\"logout()\">Sign out</a>\r\n        </div>\r\n        <div *ngIf=\"!isLoggedIn\">\r\n            <a routerLink=\"/login\" class=\"btn-nav\">Sign in</a>\r\n        </div>\r\n    </nav>\r\n    <div class=\"clearfix\"></div>\r\n</header>"
 
 /***/ },
 
-/***/ 82:
+/***/ 86:
 /***/ function(module, exports) {
 
 	// removed by extract-text-webpack-plugin
 
 /***/ },
 
-/***/ 84:
+/***/ 88:
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -28927,8 +28981,8 @@ webpackJsonp([0],{
 	    FooterComponent = __decorate([
 	        core_1.Component({
 	            selector: "lh-footer",
-	            template: __webpack_require__(85),
-	            styles: [__webpack_require__(86).toString()]
+	            template: __webpack_require__(89),
+	            styles: [__webpack_require__(90).toString()]
 	        }), 
 	        __metadata('design:paramtypes', [])
 	    ], FooterComponent);
@@ -28939,21 +28993,21 @@ webpackJsonp([0],{
 
 /***/ },
 
-/***/ 85:
+/***/ 89:
 /***/ function(module, exports) {
 
 	module.exports = "<footer>\r\n    <p>Copyright &copy; 2016 - Lighthauz. All rights reserved.</p>\r\n</footer>"
 
 /***/ },
 
-/***/ 86:
+/***/ 90:
 /***/ function(module, exports) {
 
 	// removed by extract-text-webpack-plugin
 
 /***/ },
 
-/***/ 388:
+/***/ 92:
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -28973,8 +29027,8 @@ webpackJsonp([0],{
 	    SidebarComponent = __decorate([
 	        core_1.Component({
 	            selector: "sidebar",
-	            template: __webpack_require__(389),
-	            styles: [__webpack_require__(390).toString()]
+	            template: __webpack_require__(93),
+	            styles: [__webpack_require__(94).toString()]
 	        }), 
 	        __metadata('design:paramtypes', [])
 	    ], SidebarComponent);
@@ -28985,21 +29039,21 @@ webpackJsonp([0],{
 
 /***/ },
 
-/***/ 389:
+/***/ 93:
 /***/ function(module, exports) {
 
 	module.exports = "<div class=\"sidebar\">\r\n    <a class=\"link-sidebar\" routerLink=\"/dashboard\" routerLinkActive=\"active-sidebar\">\r\n        <span class=\"icon-link-sidebar\"><i class=\"fa fa-home\" aria-hidden=\"true\"></i></span>\r\n        <span class=\"text-link-sidebar\">Dashboard</span>\r\n    </a>\r\n    <a class=\"link-sidebar\" routerLink=\"/users\" routerLinkActive=\"active-sidebar\">\r\n        <span class=\"icon-link-sidebar\"><i class=\"fa fa-users\" aria-hidden=\"true\"></i></span>\r\n        <span class=\"text-link-sidebar\">Users</span>\r\n    </a>\r\n    <a class=\"link-sidebar\" routerLink=\"/ideas\" routerLinkActive=\"active-sidebar\">\r\n        <span class=\"icon-link-sidebar\"><i class=\"fa fa-lightbulb-o\" aria-hidden=\"true\"></i></span>\r\n        <span class=\"text-link-sidebar\">Ideas</span>\r\n    </a>\r\n    <a class=\"link-sidebar\" routerLink=\"/reports\" routerLinkActive=\"active-sidebar\">\r\n        <span class=\"icon-link-sidebar\"><i class=\"fa fa-flag\" aria-hidden=\"true\"></i></span>\r\n        <span class=\"text-link-sidebar\">Reports</span>\r\n    </a>\r\n</div>"
 
 /***/ },
 
-/***/ 390:
+/***/ 94:
 /***/ function(module, exports) {
 
 	// removed by extract-text-webpack-plugin
 
 /***/ },
 
-/***/ 392:
+/***/ 396:
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -29013,39 +29067,19 @@ webpackJsonp([0],{
 	    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 	};
 	var core_1 = __webpack_require__(4);
-	var router_1 = __webpack_require__(31);
-	var UsersListComponent = (function () {
-	    function UsersListComponent(router) {
-	        this.router = router;
+	var http_1 = __webpack_require__(29);
+	var UsersService = (function () {
+	    function UsersService(http) {
+	        this.http = http;
 	    }
-	    UsersListComponent.prototype.ngOnInit = function () {
-	    };
-	    UsersListComponent = __decorate([
-	        core_1.Component({
-	            selector: "users-list",
-	            template: __webpack_require__(393),
-	            styles: [__webpack_require__(394).toString()]
-	        }), 
-	        __metadata('design:paramtypes', [router_1.Router])
-	    ], UsersListComponent);
-	    return UsersListComponent;
+	    UsersService = __decorate([
+	        core_1.Injectable(), 
+	        __metadata('design:paramtypes', [http_1.Http])
+	    ], UsersService);
+	    return UsersService;
 	}());
-	exports.UsersListComponent = UsersListComponent;
+	exports.UsersService = UsersService;
 
-
-/***/ },
-
-/***/ 393:
-/***/ function(module, exports) {
-
-	module.exports = "<div class=\"content-dashboard\">\r\n    <div class=\"title-dashboard\">\r\n        <h1>List of Users</h1>\r\n        <h2>Click on a user's name to read and edit their profile. Click the checkboxes to select multiple users and delete them.</h2>\r\n    </div>\r\n\r\n    <div class=\"body-dashboard\">\r\n        <table>\r\n            <thead>\r\n                <tr>\r\n                    <th>Name</th>\r\n                    <th>Email</th>\r\n                    <th>Last activity</th>\r\n                    <th>Last created at</th>\r\n                </tr>\r\n            </thead>\r\n            <tbody>\r\n                <tr>\r\n                    <td>Aaron Patterson</td>\r\n                    <td>apatterson0@merriam-webster.com</td>\r\n                    <td>Reported a user</td>\r\n                    <td>10/27/2016</td>\r\n                </tr>\r\n            </tbody>\r\n        </table>\r\n    </div>\r\n</div>"
-
-/***/ },
-
-/***/ 394:
-/***/ function(module, exports) {
-
-	// removed by extract-text-webpack-plugin
 
 /***/ }
 

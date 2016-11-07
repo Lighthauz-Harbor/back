@@ -14,6 +14,7 @@ import { UsersListComponent } from "./components/users-list/users-list.component
 
 import { AuthenticationGuard } from "./services/authentication.guard";
 import { AuthenticationService } from "./services/authentication.service";
+import { UsersService } from "./services/users.service";
 import { GlobalEventsManager } from "./services/events-manager.service";
 
 import "./vendor";
@@ -37,6 +38,7 @@ import "./vendor";
     providers: [ 
         AuthenticationGuard,
         AuthenticationService,
+        UsersService,
         GlobalEventsManager
     ],
     bootstrap: [ AppComponent ]

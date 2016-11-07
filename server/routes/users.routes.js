@@ -1,3 +1,3 @@
-module.exports = function(app, router) {
+module.exports = function(app, router, dbDriver, passport, authMiddleware) {
 
 };
