@@ -11,7 +11,7 @@ import { UsersService } from "../../services/users.service";
 })
 export class UsersListComponent implements OnInit {
 
-    private list: User[];
+    private list: User[] = [];
     private message: string = "";
 
     constructor(
@@ -30,7 +30,8 @@ export class UsersListComponent implements OnInit {
                 json.results.map((u: any) => {
                     this.list.push(
                         new User(u.username, u.role, u.name, u.bio, 
-                            u.profilePic, u.dateOfBirth, u.createdAt));
+                            u.profilePic, new Date(u.dateOfBirth), 
+                            new Date(u.createdAt)));
                 });
             }
         });
