@@ -1,5 +1,5 @@
 # Build or public directories
-public/
+dist/
 
 # NPM
 node_modules/

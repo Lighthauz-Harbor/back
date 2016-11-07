@@ -36,12 +36,13 @@ module.exports = function(app, dbDriver, passport) {
 
     // Assign routes to app and router
     var adminRouter = express.Router();
-    adminAuthRoutes(app, adminRouter, dbDriver, passport, adminMiddleware);
+    adminAuthRoutes(adminRouter, dbDriver, passport, adminMiddleware);
 
-    /*var apiRouter = express.Router();
-    usersRoutes(app, apiRouter, dbDriver, passport, authMiddleware);*/
+    var apiRouter = express.Router();
+    usersRoutes(apiRouter, dbDriver, passport, authMiddleware);
 
     app.use("/admin/auth", adminRouter);
+    app.use("/api", apiRouter);
     /*app.use("/", router);*/
 
     // Fallback route (other route handling is handled in Angular 2)

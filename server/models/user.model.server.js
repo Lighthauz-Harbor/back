@@ -27,6 +27,14 @@ var UserSchema = function(dbDriver) {
             return false;
         }
 
+        if (params.bio && typeof params.bio !== "string") {
+            return false;
+        }
+
+        if (params.profilePic && typeof params.profilePic !== "string") {
+            return false;
+        }
+
         return true;
     };
 
@@ -39,8 +47,11 @@ var UserSchema = function(dbDriver) {
             id: uuid.v4(),
             name: req.body.name,
             username: req.body.username,
-            role: req.body.role,
             password: this._generateHash(req.body.password),
+            role: req.body.role,
+            bio: req.body.bio || "This is some bio",
+            profilePic: req.body.profilePic || 
+                "http://res.cloudinary.com/lighthauz-harbor/image/upload/v1478504599/default-profile-pic_hroujz.png"
         };
 
         var session = this.driver.session();
@@ -55,8 +66,8 @@ var UserSchema = function(dbDriver) {
                     session
                         .run(
                             "CREATE (:User {id: {id}, username: {username}," +
-                            "password: {password}, name: {name}, " + 
-                            "role: {role}})", params)
+                            "password: {password}, name: {name}, role: {role}," +
+                            "bio: {bio}, profilePic: {profilePic}})", params)
                         .then(function() {
                             res.status(201).send("User successfully created!");
                             session.close();

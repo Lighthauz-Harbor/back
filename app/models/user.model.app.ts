@@ -1,7 +1,7 @@
 export class User {
     username: string;
     password: string;
-    fullName: string;
+    name: string;
     bio: string;
     dateOfBirth: Date;
     role: string;
@@ -9,7 +9,7 @@ export class User {
     constructor(
         username: string, 
         role: string,
-        fullName: string = "Some Name",
+        name: string = "Some Name",
         password: string = "",
         bio: string = "Some Bio",
         dateOfBirth: Date = new Date()) {
