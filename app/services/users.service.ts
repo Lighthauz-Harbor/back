@@ -12,6 +12,15 @@ export class UsersService {
 
     }
 
+    createUser(details: any): Observable<any> {
+        console.log("Now on createUser()");
+        return this.http.post("/api/users/create", details)
+            .map((res: Response) => {
+                console.log("Response:", res);
+                return res.text();
+            });
+    }
+
     getList(): Observable<any> {
         return this.http.get("/api/users/list")
             .map((res: Response) => {

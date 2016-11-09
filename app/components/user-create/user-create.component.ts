@@ -1,6 +1,5 @@
 import { Component } from "@angular/core";
 import { Router } from "@angular/router";
-import { Http, Headers, Response } from "@angular/http";
 
 import { User } from "../../models/user.model.app";
 
@@ -22,7 +21,6 @@ export class CreateUserComponent {
     private bio: string;
 
     constructor(
-        private http: Http,
         private router: Router,
         private usersService: UsersService) {
 
@@ -30,14 +28,28 @@ export class CreateUserComponent {
 
     onSubmitUser(): void {
         if (this.isValidInput()) {
-            // submit input to server
-            this.router.navigate(["/users"]);
-        } else {
-            this.router.navigate(["/users/create"]);
+            this.usersService.createUser({
+                name: this.firstName + " " + this.lastName, 
+                username: this.email, 
+                password: this.password, 
+                dateOfBirth: (new Date(this.dateOfBirth)).toISOString().slice(0, 10), 
+                bio: this.bio,
+                role: "user"
+            }).subscribe(result => {
+                console.log("Result:", result);
+                // matching result string with that from the API
+                if (result === "User successfully created!") {
+                    alert("Successfully created user!");
+                    this.router.navigate(["/users"]);
+                } else {
+                    alert("Error creating user: redirecting back to creation form.");
+                    this.router.navigate(["/users/create", null]);
+                }
+            });
         }
     }
 
-    private isValidInput(): boolean {
+    isValidInput(): boolean {
         if (this.password !== this.repeatPassword) {
             alert("Both passwords must be the same. Please input again.");
             return false;
@@ -53,11 +65,12 @@ export class CreateUserComponent {
 
     private isEligibleAge(): boolean {
         let today = new Date();
-        let age = today.getFullYear() - this.dateOfBirth.getFullYear();
-        let month = today.getMonth() - this.dateOfBirth.getMonth();
+        let dob = new Date(this.dateOfBirth);
+        let age = today.getFullYear() - dob.getFullYear();
+        let month = today.getMonth() - dob.getMonth();
 
         if (month < 0 || 
-            (month === 0 && today.getDate() < this.dateOfBirth.getDate())) {
+            (month === 0 && today.getDate() < dob.getDate())) {
 
             age--;
         }

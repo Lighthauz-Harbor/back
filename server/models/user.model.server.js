@@ -192,13 +192,13 @@ var UserSchema = function(dbDriver) {
                 {usernames: usernames})
             .then(function(result) {
                 res.send({
-                    message: "Successfully deleted users!"
+                    message: "Successfully deleted user(s)!"
                 });
                 session.close();
             })
             .catch(function(err) {
                 res.send({
-                    message: "Failed deleting selected users. Please try again."
+                    message: "Failed deleting selected user(s). Please try again."
                 });
                 session.close();
             });
