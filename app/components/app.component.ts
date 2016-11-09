@@ -1,5 +1,6 @@
 import { Component } from "@angular/core";
-import { GlobalEventsManager } from "../services/events-manager.service";
+
+import { AuthenticationService } from "../services/authentication.service";
 
 @Component({
     selector: "admin-app",
@@ -12,9 +13,9 @@ export class AppComponent {
 
     private isLoggedIn: boolean;
 
-    constructor(private eventsManager: GlobalEventsManager) {
-        this.eventsManager.loggedInEmitter.subscribe((mode: any) => {
-            this.isLoggedIn = !!mode;
+    constructor(private authService: AuthenticationService) {
+        this.authService.isLoggedInObservable().subscribe((val) => {
+            this.isLoggedIn = val;
         });
     }
 

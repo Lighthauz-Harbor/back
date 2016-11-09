@@ -2,7 +2,6 @@ import { Component, OnInit } from "@angular/core";
 import { Router } from "@angular/router";
 
 import { AuthenticationService } from "../../services/authentication.service";
-import { GlobalEventsManager } from "../../services/events-manager.service";
 
 @Component({
     selector: "lh-header",
@@ -17,11 +16,10 @@ export class HeaderComponent implements OnInit {
 
     constructor(
         private router: Router,
-        private authService: AuthenticationService,
-        private eventsManager: GlobalEventsManager) {
+        private authService: AuthenticationService) {
 
-        this.eventsManager.loggedInEmitter.subscribe((mode: any) => {
-            this.isLoggedIn = !!mode;
+        this.authService.isLoggedInObservable().subscribe((val: boolean) => {
+            this.isLoggedIn = val;
         });
     }
 
@@ -29,9 +27,7 @@ export class HeaderComponent implements OnInit {
     }
 
     logout(): void {
-        this.authService.logout().subscribe(result => {
-            this.eventsManager.loggedInEmitter.emit(false);
-        });
+        this.authService.logout();
 
         this.isLoggedIn = false;
         this.router.navigate(["/login"]);

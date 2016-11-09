@@ -1,3 +1,4 @@
+var jwt = require("jsonwebtoken");
 var LocalStrategy = require("passport-local").Strategy;
 
 var UserSchema = require("../models/user.model.server");
@@ -36,7 +37,10 @@ module.exports = function(router, dbDriver,
         }),
         adminMiddleware,
         function(req, res) {
-            res.send(req.user);
+            res.send({
+                username: req.user.username,
+                token: jwt.sign(req.user, "i am a keyboard cat")
+            });
         }
     );
 

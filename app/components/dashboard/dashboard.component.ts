@@ -11,14 +11,12 @@ import { AuthenticationService } from "../../services/authentication.service";
     styles: [ require("./dashboard.component.css").toString() ]
 })
 export class DashboardComponent implements OnInit {
-    user: User;
-
     constructor(
         private router: Router,
         private authService: AuthenticationService) {
     }
 
     ngOnInit(): void {
-        this.user = this.authService.getCurrentUser();
+        //
     }
 }

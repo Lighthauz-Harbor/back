@@ -10,12 +10,13 @@ import { LoginComponent } from "./components/login/login.component";
 import { DashboardComponent } from "./components/dashboard/dashboard.component";
 import { FooterComponent } from "./components/footer/footer.component";
 import { SidebarComponent } from "./components/sidebar/sidebar.component";
+
 import { UsersListComponent } from "./components/users-list/users-list.component";
+import { CreateUserComponent } from "./components/user-create/user-create.component";
 
 import { AuthenticationGuard } from "./services/authentication.guard";
 import { AuthenticationService } from "./services/authentication.service";
 import { UsersService } from "./services/users.service";
-import { GlobalEventsManager } from "./services/events-manager.service";
 
 import "./vendor";
 
@@ -33,13 +34,13 @@ import "./vendor";
         DashboardComponent,
         FooterComponent,
         SidebarComponent,
-        UsersListComponent
+        UsersListComponent,
+        CreateUserComponent
     ],
     providers: [ 
         AuthenticationGuard,
         AuthenticationService,
         UsersService,
-        GlobalEventsManager
     ],
     bootstrap: [ AppComponent ]
 })

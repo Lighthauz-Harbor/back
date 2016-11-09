@@ -1,0 +1,41 @@
+.form-dashboard,
+.form-group {
+    overflow: hidden;
+}
+
+.form-group {
+    width: 100%;
+    padding: 6px 12px;
+}
+
+.form-col-1 {
+    width: 50%;
+    float: left;
+}
+
+.form-dashboard label {
+    display: block;
+}
+
+.form-dashboard input[type="text"],
+.form-dashboard input[type="email"],
+.form-dashboard input[type="password"] {
+    padding: 2px 4px;
+    border-radius: 2px;
+    border: 1px solid #505050;
+}
+
+.form-col-1 input[type="text"] {
+    width: 80%;
+}
+
+.form-col-2 input[type="text"],
+.form-col-2 input[type="email"],
+.form-col-2 input[type="password"] {
+    width: 90%;
+}
+
+.form-group input[type="submit"] {
+    padding: 4px 8px;
+    font-size: 12pt;
+}

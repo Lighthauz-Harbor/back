@@ -1,7 +1,7 @@
 import { Injectable } from "@angular/core";
-import { Http, Headers, Response } from "@angular/http";
+import { Http, Response } from "@angular/http";
 
-import { Observable } from "rxjs";
+import { Observable, BehaviorSubject } from "rxjs";
 
 import { User } from "../models/user.model.app";
 
@@ -10,18 +10,29 @@ import "rxjs/add/operator/map";
 @Injectable()
 export class AuthenticationService {
 
-    private currentUser: User;
+    private _token: string;
+
+    private _isLoggedInEvent: BehaviorSubject<boolean>;
+    private _isLoggedInObservable: Observable<boolean>;
 
     constructor(private http: Http) {
+        let currentUser = JSON.parse(localStorage.getItem("currentUser"));
+        this.token = currentUser && currentUser.token;
 
+        this._isLoggedInEvent = new BehaviorSubject<boolean>(!!currentUser);
+        this._isLoggedInObservable = this._isLoggedInEvent.asObservable();
     }
 
-    isLoggedIn(): boolean {
-        return this.currentUser != null;
+    get token(): string {
+        return this._token;
     }
 
-    getCurrentUser(): any {
-        return this.currentUser;
+    set token(t: string) {
+        this._token = t;
+    }
+
+    isLoggedInObservable(): Observable<boolean> {
+        return this._isLoggedInObservable;
     }
 
     login(username: string, password: string): Observable<any> {
@@ -30,15 +41,19 @@ export class AuthenticationService {
             .map((res: Response) => {
                 var json = JSON.parse(res.text());
                 if (!json.fail) {
-                    this.currentUser = new User(json.username, json.role);
+                    localStorage.setItem("currentUser", JSON.stringify(json));
+                    this._isLoggedInEvent.next(true);
+                    this._isLoggedInObservable = this._isLoggedInEvent.asObservable();
                 }
                 return json;
             });
     }
 
     logout(): Observable<any> {
-        this.currentUser = null;
+        localStorage.removeItem("currentUser");
         return this.http.post("/admin/auth/logout", {}).map((res: Response) => {
+            this._isLoggedInEvent.next(false);
+            this._isLoggedInObservable = this._isLoggedInEvent.asObservable();
             return res;
         });
     }
