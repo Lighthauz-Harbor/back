@@ -13,7 +13,6 @@ export class UsersService {
     }
 
     createUser(details: any): Observable<any> {
-        console.log("Now on createUser()");
         return this.http.post("/api/users/create", details)
             .map((res: Response) => {
                 console.log("Response:", res);
@@ -28,9 +27,8 @@ export class UsersService {
             });
     }
 
-    deleteUsers(usernames: string[]): Observable<any> {
-        return this.http.post("/api/users/delete",
-            { usernames })
+    getSingleUser(username: string): Observable<any> {
+        return this.http.get("/api/users/get/" + username)
             .map((res: Response) => {
                 return JSON.parse(res.text());
             });
@@ -46,5 +44,22 @@ export class UsersService {
                 return JSON.parse(res.text());
             });
     }
+
+    updateUser(details: any): Observable<any> {
+        return this.http.put(
+            "/api/users/update/" + details.oldUsername, 
+            details)
+                .map((res: Response) => {
+                    return JSON.parse(res.text());
+                });
+    }
+
+    deleteUsers(usernames: string[]): Observable<any> {
+        return this.http.post("/api/users/delete",
+            { usernames })
+            .map((res: Response) => {
+                return JSON.parse(res.text());
+            });
+    } 
 
 }

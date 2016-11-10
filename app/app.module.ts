@@ -13,6 +13,7 @@ import { SidebarComponent } from "./components/sidebar/sidebar.component";
 
 import { UsersListComponent } from "./components/users-list/users-list.component";
 import { CreateUserComponent } from "./components/user-create/user-create.component";
+import { UpdateUserComponent } from "./components/user-update/user-update.component";
 
 import { AuthenticationGuard } from "./services/authentication.guard";
 import { AuthenticationService } from "./services/authentication.service";
@@ -35,7 +36,8 @@ import "./vendor";
         FooterComponent,
         SidebarComponent,
         UsersListComponent,
-        CreateUserComponent
+        CreateUserComponent,
+        UpdateUserComponent,
     ],
     providers: [ 
         AuthenticationGuard,

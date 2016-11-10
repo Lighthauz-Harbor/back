@@ -35,7 +35,7 @@
     width: 90%;
 }
 
-.form-group input[type="submit"] {
+.form-group button[type="submit"] {
     padding: 4px 8px;
     font-size: 12pt;
 }

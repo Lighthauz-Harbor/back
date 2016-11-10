@@ -146,7 +146,9 @@ var UserSchema = function(dbDriver) {
                 session.close();
             })
             .catch(function(err) {
-                res.send(err);
+                res.send({
+                    fail: "Failed finding user with that username. Please try again."
+                });
                 session.close();
             });
     };
@@ -212,6 +214,66 @@ var UserSchema = function(dbDriver) {
                 session.close();
             });
     };
+
+    this.update = function(req, res) {
+        var session = this.driver.session();
+
+        if (req.body.password === "") { // password is unchanged
+            session
+                .run("MATCH (u:User) WHERE u.username = {oldUsername} \
+                    SET u.name = {name}, \
+                        u.username = {username}, \
+                        u.dateOfBirth = {dateOfBirth}, \
+                        u.bio = {bio}",
+                        {
+                            name: req.body.name,
+                            oldUsername: req.body.oldUsername,
+                            username: req.body.username,
+                            dateOfBirth: req.body.dateOfBirth,
+                            bio: req.body.bio
+                        })
+                .then(function() {
+                    res.send({
+                        message: "Successfully updated user! (Without changing password)"
+                    });
+                    session.close();
+                })
+                .catch(function(err) {
+                    res.send({
+                        message: "Failed updating user. Please try again."
+                    });
+                    session.close();
+                });
+        } else {
+            session
+                .run("MATCH (u:User) WHERE u.username = {oldUsername} \
+                    SET u.name = {name}, \
+                        u.username = {username}, \
+                        u.dateOfBirth = {dateOfBirth}, \
+                        u.bio = {bio}, \
+                        u.password = {password}", 
+                        {
+                            name: req.body.name,
+                            oldUsername: req.body.oldUsername,
+                            username: req.body.username,
+                            password: this._generateHash(req.body.password),
+                            dateOfBirth: req.body.dateOfBirth,
+                            bio: req.body.bio
+                        })
+                .then(function() {
+                    res.send({
+                        message: "Successfully updated user! The password has also been changed."
+                    });
+                    session.close();
+                })
+                .catch(function(err) {
+                    res.send({
+                        message: "Failed updating user. Please try again."
+                    });
+                    session.close();
+                });
+        }
+    }
 
     this.deleteUsers = function(req, res) {
         var session = this.driver.session();

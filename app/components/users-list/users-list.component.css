@@ -57,7 +57,7 @@
     text-align: left;
 }
 
-.body-dashboard table td:nth-child(2) {
+.body-dashboard table td:nth-child(2) a {
     color: #000000;
 }
 
