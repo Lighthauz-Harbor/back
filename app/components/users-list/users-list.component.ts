@@ -1,6 +1,8 @@
 import { Component, OnInit } from "@angular/core";
 import { Router } from "@angular/router";
 
+import { Observable, Subject } from "rxjs";
+
 import { User } from "../../models/user.model.app";
 import { UsersService } from "../../services/users.service";
 
@@ -12,6 +14,9 @@ import { UsersService } from "../../services/users.service";
 export class UsersListComponent implements OnInit {
 
     private list: User[] = [];
+
+    private searchTerms = new Subject<string>();
+
     private toggleAll: boolean = false;
 
     private message: string = "";
@@ -24,6 +29,7 @@ export class UsersListComponent implements OnInit {
 
     ngOnInit(): void {
         this.loadUsersList();
+        // this.loadUsersListByTerm();
     }
 
     private loadUsersList(): void {
@@ -37,13 +43,47 @@ export class UsersListComponent implements OnInit {
                 this.message = "No users have been created, yet.";
             } else {
                 json.results.map((u: any) => {
+                    // some arguments are left empty or 0 because
+                    // they are not needed at the moment
                     this.list.push(
-                        new User(u.username, u.role, u.name, u.bio, 
-                            u.profilePic, new Date(u.dateOfBirth), 
-                            new Date(u.createdAt)));
+                        new User(u.username, "user", u.name, "", 
+                            "", new Date(0), new Date(u.createdAt)));
                 });
             }
         });
+    }
+
+    search(term: string): void {
+        if (term === "") this.loadUsersList();
+        else this.loadUsersListByTerm(term);
+    }
+
+    private loadUsersListByTerm(term: string): void {
+        // renew list every load
+        this.list = [];
+
+        this.usersService.searchUser(term)
+            .subscribe((result: any) => {
+                if (result === Observable.of<User[]>([])) {
+                    this.loadUsersList();
+                } else {
+                    if (result.fail) {
+                        this.message = result.fail;
+                    } else if (result.results.length === 0) {
+                        this.message = 
+                            "User not found. Please try again.";
+                    } else {
+                        result.results.map((u: any) => {
+                            // some arguments are left empty or 0 because
+                            // they are not needed at the moment
+                            this.list.push(
+                                new User(u.username, "user", u.name, 
+                                    "", "", new Date(0), 
+                                    new Date(u.createdAt)));
+                        });
+                    }
+                }
+            });
     }
 
     toggleAllUsers(): void {

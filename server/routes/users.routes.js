@@ -4,6 +4,10 @@ module.exports = function(router, dbDriver, passport, authMiddleware) {
 
     var userSchema = new UserSchema(dbDriver);
 
+    router.get("/users/search/:term", function(req, res) {
+        userSchema.search(req, res);
+    });
+
     router.post("/users/create", function(req, res) {
         userSchema.create(req, res);
     });

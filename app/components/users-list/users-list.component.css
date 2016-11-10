@@ -2,6 +2,10 @@
     width: 100%;
 }
 
+.search-panel {
+    width: 240px;
+}
+
 .body-dashboard table,
 .panel-dashboard {
     padding: 6px;
@@ -48,12 +52,13 @@
     line-height: 1.4em;
 }
 
-.body-dashboard table td:nth-child(2) {
-    color: #000000;
+.body-dashboard table th,
+.body-dashboard table td {
+    text-align: left;
 }
 
-.body-dashboard table td:first-child {
-    text-align: center;
+.body-dashboard table td:nth-child(2) {
+    color: #000000;
 }
 
 .table-message {

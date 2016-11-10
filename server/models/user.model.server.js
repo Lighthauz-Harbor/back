@@ -164,10 +164,7 @@ var UserSchema = function(dbDriver) {
                         return {
                             name: user.name,
                             username: user.username,
-                            role: user.role,
-                            bio: user.bio,
                             profilePic: user.profilePic,
-                            dateOfBirth: (new Date(user.dateOfBirth)).toDateString(),
                             createdAt: (new Date(user.createdAt)).toDateString(),
                             // TODO insert user's last activity below 
                             // (in `lastActivity` property)
@@ -179,6 +176,38 @@ var UserSchema = function(dbDriver) {
             .catch(function(err) {
                 res.send({
                     fail: "Failed fetching list of users."
+                });
+                session.close();
+            });
+    };
+
+    this.search = function(req, res) {
+        var nameRegex = "(?i).*" + req.params.term + ".*";
+        var session = this.driver.session();
+        session
+            .run("MATCH (u:User) WHERE u.name =~ {nameRegex} AND \
+                u.role = 'user' RETURN u ORDER BY u.name ASC", 
+                { nameRegex: nameRegex })
+            .then(function(result) {
+                res.send({
+                    results: result.records.map(function(record) {
+                        var user = record.get(0).properties;
+
+                        return {
+                            name: user.name,
+                            username: user.username,
+                            createdAt: user.createdAt,
+                            profilePic: user.profilePic
+                            // TODO insert user's last activity below 
+                            // (in `lastActivity` property)                            
+                        };
+                    })
+                });
+                session.close();
+            })
+            .catch(function(err) {
+                res.send({
+                    fail: "Failed searching for user. Please try again."
                 });
                 session.close();
             });
