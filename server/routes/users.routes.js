@@ -1,6 +1,6 @@
 var UserSchema = require("../models/user.model.server");
 
-module.exports = function(router, dbDriver, passport, authMiddleware) {
+module.exports = function(router, dbDriver) {
 
     var userSchema = new UserSchema(dbDriver);
 

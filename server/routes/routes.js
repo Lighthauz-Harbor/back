@@ -39,7 +39,7 @@ module.exports = function(app, dbDriver, passport) {
     adminAuthRoutes(adminRouter, dbDriver, passport, adminMiddleware);
 
     var apiRouter = express.Router();
-    usersRoutes(apiRouter, dbDriver, passport, authMiddleware);
+    usersRoutes(apiRouter, dbDriver);
 
     app.use("/admin/auth", adminRouter);
     app.use("/api", apiRouter);

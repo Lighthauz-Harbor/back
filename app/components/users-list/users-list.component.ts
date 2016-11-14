@@ -1,5 +1,4 @@
 import { Component, OnInit } from "@angular/core";
-import { Router } from "@angular/router";
 
 import { Observable, Subject } from "rxjs";
 
@@ -21,15 +20,12 @@ export class UsersListComponent implements OnInit {
 
     private message: string = "";
 
-    constructor(
-        private router: Router,
-        private usersService: UsersService) {
+    constructor(private usersService: UsersService) {
 
     }
 
     ngOnInit(): void {
         this.loadUsersList();
-        // this.loadUsersListByTerm();
     }
 
     private loadUsersList(): void {

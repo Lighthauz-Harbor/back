@@ -44,14 +44,6 @@ module.exports = function(router, dbDriver,
         }
     );
 
-    router.post("/signup", function(req, res, next) {
-        userSchema.create(req, res);
-    });
-
-    router.get("/getUser/:username", function(req, res) {
-        userSchema.find(req, res);
-    });
-
     router.post("/logout", function(req, res) {
         req.logOut();
 
