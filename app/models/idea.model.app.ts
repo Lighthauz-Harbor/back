@@ -23,12 +23,12 @@ export class Idea {
     private _threats: string;
     private _author: string; // author's username / email
     private _category: string;
-    private _createdAt: Date;
+    private _modifiedAt: Date;
 
     constructor(id: string = "", info: any = {}, bmc: any = {}, swot: any = {},
         author: string = "Unknown author", 
         category: string = "Unknown category",
-        createdAt: Date = new Date(0)) {
+        modifiedAt: Date = new Date(0)) {
 
         this._id = id;
         this._visibility = info.visibility || 1;
@@ -54,7 +54,7 @@ export class Idea {
         this._threats = swot.threats || "";
         this._author = author;
         this._category = category;
-        this._createdAt = createdAt;
+        this._modifiedAt = modifiedAt;
     }
 
     get id() {
@@ -129,8 +129,8 @@ export class Idea {
     get category() {
         return this._category;
     }
-    get createdAt() {
-        return this._createdAt;
+    get modifiedAt() {
+        return this._modifiedAt;
     }
 
     set id(i: string) {
@@ -205,7 +205,7 @@ export class Idea {
     set category(c: string) {
         this._category = c;
     }
-    set createdAt(ca: Date) {
-        this._createdAt = ca;
+    set modifiedAt(ca: Date) {
+        this._modifiedAt = ca;
     }
 }

@@ -36,7 +36,6 @@ export class CreateUserComponent {
                 bio: this.bio,
                 role: "user"
             }).subscribe(result => {
-                console.log("Result:", result);
                 // matching result string with that from the API
                 if (result === "User successfully created!") {
                     alert("Successfully created user!");

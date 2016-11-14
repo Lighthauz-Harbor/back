@@ -8,4 +8,8 @@ module.exports = function(router, dbDriver) {
         ideaSchema.listIdeas(req, res);
     });
 
+    router.post("/ideas/create", function(req, res) {
+        ideaSchema.create(req, res);
+    });
+
 };

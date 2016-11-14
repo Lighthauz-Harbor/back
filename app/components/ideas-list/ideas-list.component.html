@@ -27,21 +27,24 @@
                     <th>Description</th>
                     <th>Author</th>
                     <th>Last modified at</th>
-                    <th>Last created at</th>
                 </tr>
             </thead>
             <tbody *ngIf="list.length <= 0">
                 <tr>
-                    <td class="table-message" colspan="6">
+                    <td class="table-message" colspan="5">
                         {{message || "Unknown error. Please refresh."}}
                     </td>
                 </tr>
             </tbody>
             <tbody *ngIf="list.length > 0">
-                <tr>
-                    <td class="table-message" colspan="6">
-                        {{"List has been populated. Display them now."}}
+                <tr *ngFor="let idea of list">
+                    <td>
+                        <input type="checkbox" class="cb-select">
                     </td>
+                    <td>{{idea.title}}</td>
+                    <td>{{idea.description}}</td>
+                    <td><a href="mailto:{{idea.author}}">{{idea.author}}</a></td>
+                    <td>{{idea.modifiedAt}}</td>
                 </tr>
             </tbody>
         </table>
