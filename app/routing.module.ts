@@ -9,6 +9,7 @@ import { CreateUserComponent } from "./components/user-create/user-create.compon
 import { UpdateUserComponent } from "./components/user-update/user-update.component";
 
 import { IdeasListComponent } from "./components/ideas-list/ideas-list.component";
+import { CreateIdeaComponent } from "./components/idea-create/idea-create.component";
 
 import { AuthenticationGuard } from "./services/authentication.guard";
 
@@ -43,6 +44,10 @@ const routes: Routes = [
             {
                 path: "",
                 component: IdeasListComponent
+            },
+            {
+                path: "create",
+                component: CreateIdeaComponent
             }
         ]
     },

@@ -32,14 +32,14 @@
                     <th>Last created at</th>
                 </tr>
             </thead>
-            <tbody *ngIf="!list">
+            <tbody *ngIf="list.length <= 0">
                 <tr>
                     <td class="table-message" colspan="5">
                         {{message || "Unknown error. Please refresh."}}
                     </td>
                 </tr>
             </tbody>
-            <tbody *ngIf="list">
+            <tbody *ngIf="list.length > 0">
                 <tr *ngFor="let user of list">
                     <td>
                         <input type="checkbox" 

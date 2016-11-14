@@ -1,9 +1,15 @@
-<lh-header></lh-header>
-<div class="content">
-    <div *ngIf="isLoggedIn" class="sidebar-wrapper">
-        <sidebar></sidebar>
+<div class="container">
+    <div class="header">
+        <lh-header></lh-header>
     </div>
-    <router-outlet></router-outlet>
+    <div class="content">
+        <div *ngIf="isLoggedIn" class="sidebar-wrapper">
+            <sidebar></sidebar>
+        </div>
+        <router-outlet></router-outlet>
+        <div class="clearfix"></div>
+    </div>
+    <div class="footer">
+        <lh-footer></lh-footer>
+    </div>
 </div>
-<div class="clearfix"></div>
-<lh-footer></lh-footer>

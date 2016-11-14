@@ -33,6 +33,7 @@ export class IdeasListComponent implements OnInit {
                 this.message = "No ideas have been created, yet.";
             } else {
                 // load the ideas into the list
+                console.log(json.results);
             }
         });
     }

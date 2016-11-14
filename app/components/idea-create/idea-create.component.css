@@ -1,0 +1,27 @@
+.form-dashboard h2 {
+    font-weight: 100;
+}
+
+.form-dashboard textarea {
+    padding: 2px 4px;
+    border-radius: 2px;
+    border: 1px solid #505050;
+}
+
+.form-col-1 textarea {
+    width: 80%;
+    height: 60px;
+}
+
+.form-col-2 textarea {
+    width: 90%;
+    height: 72px;
+}
+
+.bmc-form textarea[name="valueProposition"] {
+    height: 48px;
+}
+
+.submit-form {
+    margin-bottom: 36px;
+}

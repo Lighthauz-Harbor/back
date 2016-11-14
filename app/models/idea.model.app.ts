@@ -1,62 +1,70 @@
 export class Idea {
-    private _visibility: number;
-    private _name: string;
-    private _picture: string;
+    private _id: string;
+    private _visibility: number; // 1: public, 2: exclusive
+    private _title: string;
+    private _picture: string; // picture URL
     private _description: string;
     private _background: string;
     private _problem: string;
     private _solution: string;
     private _extraLink: string;
     private _valueProposition: string;
-    private _customerSegment: string;
-    private _customerRelationship: string;
-    private _channel: string;
+    private _customerSegments: string;
+    private _customerRelationships: string;
+    private _channels: string;
     private _keyActivities: string;
     private _keyResources: string;
-    private _keyPartner: string;
+    private _keyPartners: string;
     private _costStructure: string;
-    private _revenueStream: string;
-    private _strength: string;
-    private _weakness: string;
+    private _revenueStreams: string;
+    private _strengths: string;
+    private _weaknesses: string;
     private _opportunities: string;
-    private _threat: string;
-    private _author: string;
+    private _threats: string;
+    private _author: string; // author's username / email
     private _category: string;
+    private _createdAt: Date;
 
-    constructor(info: any = {}, bmc: any = {}, swot: any = {}, 
+    constructor(id: string = "", info: any = {}, bmc: any = {}, swot: any = {},
         author: string = "Unknown author", 
-        category: string = "Unknown category") {
+        category: string = "Unknown category",
+        createdAt: Date = new Date(0)) {
 
-        this._visibility = info.visibility || 1; // 1: public, 2: exclusive
-        this._name = info.name || "";
-        this._picture = info.picture || ""; // picture URL
+        this._id = id;
+        this._visibility = info.visibility || 1;
+        this._title = info.title || "";
+        this._picture = info.picture || "";
         this._description = info.description || "";
         this._background = info.background || "";
         this._problem = info.problem || "";
         this._solution = info.solution || "";
         this._extraLink = info.extraLink || "";
         this._valueProposition = bmc.valueProposition || "";
-        this._customerSegment = bmc.customerSegment || "";
-        this._customerRelationship = bmc.customerRelationship || "";
-        this._channel = bmc.channel || "";
+        this._customerSegments = bmc.customerSegments || "";
+        this._customerRelationships = bmc.customerRelationships || "";
+        this._channels = bmc.channels || "";
         this._keyActivities = bmc.keyActivities || "";
         this._keyResources = bmc.keyResources || "";
-        this._keyPartner = bmc.keyPartner || "";
+        this._keyPartners = bmc.keyPartners || "";
         this._costStructure = bmc.costStructure || "";
-        this._revenueStream = bmc.revenueStream || "";
-        this._strength = swot.strength || "";
-        this._weakness = swot.weakness || "";
+        this._revenueStreams = bmc.revenueStreams || "";
+        this._strengths = swot.strengths || "";
+        this._weaknesses = swot.weaknesses || "";
         this._opportunities = swot.opportunities || "";
-        this._threat = swot.threat || "";
+        this._threats = swot.threats || "";
         this._author = author;
         this._category = category;
+        this._createdAt = createdAt;
     }
 
+    get id() {
+        return this._id;
+    }
     get visibility() {
         return this._visibility;
     }
-    get name() {
-        return this._name;
+    get title() {
+        return this._title;
     }
     get picture() {
         return this._picture;
@@ -79,14 +87,14 @@ export class Idea {
     get valueProposition() {
         return this._valueProposition;
     }
-    get customerSegment() {
-        return this._customerSegment;
+    get customerSegments() {
+        return this._customerSegments;
     }
-    get customerRelationship() {
-        return this._customerRelationship;
+    get customerRelationships() {
+        return this._customerRelationships;
     }
-    get channel() {
-        return this._channel;
+    get channels() {
+        return this._channels;
     }
     get keyActivities() {
         return this._keyActivities;
@@ -94,26 +102,26 @@ export class Idea {
     get keyResources() {
         return this._keyResources;
     }
-    get keyPartner() {
-        return this._keyPartner;
+    get keyPartners() {
+        return this._keyPartners;
     }
     get costStructure() {
         return this._costStructure;
     }
-    get revenueStream() {
-        return this._revenueStream;
+    get revenueStreams() {
+        return this._revenueStreams;
     }
-    get strength() {
-        return this._strength;
+    get strengths() {
+        return this._strengths;
     }
-    get weakness() {
-        return this._weakness;
+    get weaknesses() {
+        return this._weaknesses;
     }
     get opportunities() {
         return this._opportunities;
     }
-    get threat() {
-        return this._threat;
+    get threats() {
+        return this._threats;
     }
     get author() {
         return this._author;
@@ -121,12 +129,18 @@ export class Idea {
     get category() {
         return this._category;
     }
+    get createdAt() {
+        return this._createdAt;
+    }
 
+    set id(i: string) {
+        this._id = i;
+    }
     set visibility(v: number) {
         this._visibility = v;
     }
-    set name(n: string) {
-        this._name = n;
+    set title(t: string) {
+        this._title = t;
     }
     set picture(p: string) {
         this._picture = p;
@@ -149,14 +163,14 @@ export class Idea {
     set valueProposition(vp: string) {
         this._valueProposition = vp;
     }
-    set customerSegment(cs: string) {
-        this._customerSegment = cs;
+    set customerSegments(cs: string) {
+        this._customerSegments = cs;
     }
-    set customerRelationship(cr: string) {
-        this._customerRelationship = cr;
+    set customerRelationships(cr: string) {
+        this._customerRelationships = cr;
     }
-    set channel(ch: string) {
-        this._channel = ch;
+    set channels(ch: string) {
+        this._channels = ch;
     }
     set keyActivities(ka: string) {
         this._keyActivities = ka;
@@ -164,31 +178,34 @@ export class Idea {
     set keyResources(kr: string) {
         this._keyResources = kr;
     }
-    set keyPartner(kp: string) {
-        this._keyPartner = kp;
+    set keyPartners(kp: string) {
+        this._keyPartners = kp;
     }
     set costStructure(cs: string) {
         this._costStructure = cs;
     }
-    set revenueStream(rs: string) {
-        this._revenueStream = rs;
+    set revenueStreams(rs: string) {
+        this._revenueStreams = rs;
     }
-    set strength(s: string) {
-        this._strength = s;
+    set strengths(s: string) {
+        this._strengths = s;
     }
-    set weakness(w: string) {
-        this._weakness = w;
+    set weaknesses(w: string) {
+        this._weaknesses = w;
     }
     set opportunities(o: string) {
         this._opportunities = o;
     }
-    set threat(t: string) {
-        this._threat = t;
+    set threats(t: string) {
+        this._threats = t;
     }
     set author(a: string) {
         this._author = a;
     }
     set category(c: string) {
         this._category = c;
+    }
+    set createdAt(ca: Date) {
+        this._createdAt = ca;
     }
 }
