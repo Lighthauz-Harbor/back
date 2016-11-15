@@ -7,7 +7,7 @@ export class User {
     private _profilePic: string; // URL to the file in image server
     private _dateOfBirth: Date;
     private _createdAt: Date;
-    private _selected: boolean;
+    private _selected: boolean; // for selection in users list table
 
     constructor(
         username: string, 
@@ -26,7 +26,7 @@ export class User {
         this._profilePic = profilePic;
         this._dateOfBirth = dateOfBirth;
         this._createdAt = createdAt;
-        this._selected = false; // for selection in users list table
+        this._selected = false;
         // don't assign passwords for security purposes
     }
 

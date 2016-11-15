@@ -13,11 +13,8 @@ import { UsersService } from "../../services/users.service";
 export class UsersListComponent implements OnInit {
 
     private list: User[] = [];
-
     private searchTerms = new Subject<string>();
-
     private toggleAll: boolean = false;
-
     private message: string = "";
 
     constructor(private usersService: UsersService) {
@@ -89,6 +86,10 @@ export class UsersListComponent implements OnInit {
         });
     }
 
+    cancelToggleAll(): void {
+        this.toggleAll = false;
+    }
+
     deleteSelectedUsers(): void {
         let selectedUsernames = this.list.filter((row) => {
             return row.selected;
@@ -97,12 +98,13 @@ export class UsersListComponent implements OnInit {
         });
 
         if (selectedUsernames.length === 0) {
-            alert("Please select the users first!");
+            alert("Please select the users to delete first!");
         } else {
-            this.usersService.deleteUsers(selectedUsernames).subscribe((json: any) => {
-                alert(json.message);
-                this.loadUsersList(); // reload the users list
-            });
+            this.usersService.deleteUsers(selectedUsernames)
+                .subscribe((json: any) => {
+                    alert(json.message);
+                    this.loadUsersList(); // reload the users list
+                });
         }
     }
 }

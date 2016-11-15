@@ -44,10 +44,19 @@
                     <td>
                         <input type="checkbox" 
                             class="cb-select"
-                            [(ngModel)]="user.selected">
+                            [(ngModel)]="user.selected"
+                            (change)="cancelToggleAll()">
                     </td>
-                    <td><a [routerLink]="['update', user.username]">{{user.name}}</a></td>
-                    <td><a href="mailto:{{user.username}}">{{user.username}}</a></td>
+                    <td>
+                        <a [routerLink]="['update', user.username]">
+                            {{user.name}}
+                        </a>
+                    </td>
+                    <td>
+                        <a href="mailto:{{user.username}}">
+                            {{user.username}}
+                        </a>
+                    </td>
                     <td>{{user.lastActivity || "No user activity"}}</td>
                     <td>{{user.createdAt.toDateString()}}</td>
                 </tr>

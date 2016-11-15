@@ -1,6 +1,6 @@
 export class Idea {
     private _id: string;
-    private _visibility: number; // 1: public, 2: exclusive
+    private _visibility: number; // 0: not published, 1: exclusive, 2: public
     private _title: string;
     private _picture: string; // picture URL
     private _description: string;
@@ -23,12 +23,13 @@ export class Idea {
     private _threats: string;
     private _author: string; // author's username / email
     private _category: string;
-    private _modifiedAt: Date;
+    private _lastChanged: Date;
+    private _selected: boolean; // for selection in users list table
 
     constructor(id: string = "", info: any = {}, bmc: any = {}, swot: any = {},
         author: string = "Unknown author", 
         category: string = "Unknown category",
-        modifiedAt: Date = new Date(0)) {
+        lastChanged: Date = new Date(0)) {
 
         this._id = id;
         this._visibility = info.visibility || 1;
@@ -54,7 +55,8 @@ export class Idea {
         this._threats = swot.threats || "";
         this._author = author;
         this._category = category;
-        this._modifiedAt = modifiedAt;
+        this._lastChanged = lastChanged;
+        this._selected = false;
     }
 
     get id() {
@@ -129,8 +131,11 @@ export class Idea {
     get category() {
         return this._category;
     }
-    get modifiedAt() {
-        return this._modifiedAt;
+    get lastChanged() {
+        return this._lastChanged;
+    }
+    get selected() {
+        return this._selected;
     }
 
     set id(i: string) {
@@ -205,7 +210,10 @@ export class Idea {
     set category(c: string) {
         this._category = c;
     }
-    set modifiedAt(ca: Date) {
-        this._modifiedAt = ca;
+    set lastChanged(lc: Date) {
+        this._lastChanged = lc;
+    }
+    set selected(s: boolean) {
+        this._selected = s;
     }
 }

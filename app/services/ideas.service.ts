@@ -23,4 +23,12 @@ export class IdeasService {
                 return JSON.parse(res.text());
             });
     }
+
+    deleteIdeas(ids: string[]): Observable<any> {
+        return this.http.post("/api/ideas/delete", 
+            { ids })
+            .map((res: Response) => {
+                return JSON.parse(res.text());
+            });
+    }
 }

@@ -8,6 +8,11 @@
     border: 1px solid #505050;
 }
 
+.form-col-1 select {
+    padding: 2px 2px;
+    width: 80%;
+}
+
 .form-col-1 textarea {
     width: 80%;
     height: 60px;

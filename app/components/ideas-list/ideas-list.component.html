@@ -12,7 +12,7 @@
             class="search-panel"
             placeholder="Search idea and press Enter.">
         <a routerLink="/ideas/create" class="btn-create">Create idea</a>
-        <a class="btn-delete">Delete idea(s)</a>
+        <a (click)="deleteSelectedIdeas()" class="btn-delete">Delete idea(s)</a>
     </div>
 
     <div class="body-dashboard">
@@ -21,7 +21,9 @@
                 <tr>
                     <th>
                         <input type="checkbox"
-                            class="cb-toggle-all">
+                            class="cb-toggle-all"
+                            [checked]="toggleAll"
+                            (change)="toggleAllIdeas()">
                     </th>
                     <th>Idea title</th>
                     <th>Description</th>
@@ -39,12 +41,19 @@
             <tbody *ngIf="list.length > 0">
                 <tr *ngFor="let idea of list">
                     <td>
-                        <input type="checkbox" class="cb-select">
+                        <input type="checkbox" 
+                            class="cb-select"
+                            [(ngModel)]="idea.selected"
+                            (change)="cancelToggleAll()">
                     </td>
                     <td>{{idea.title}}</td>
                     <td>{{idea.description}}</td>
-                    <td><a href="mailto:{{idea.author}}">{{idea.author}}</a></td>
-                    <td>{{idea.modifiedAt}}</td>
+                    <td>
+                        <a href="mailto:{{idea.author}}">
+                            {{idea.author}}
+                        </a>
+                    </td>
+                    <td>{{idea.lastChanged}}</td>
                 </tr>
             </tbody>
         </table>

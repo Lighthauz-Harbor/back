@@ -12,6 +12,7 @@ import { IdeasService } from "../../services/ideas.service";
 export class IdeasListComponent implements OnInit {
 
     private list: Idea[] = [];
+    private toggleAll: boolean = false;
     private message: string = "";
 
     constructor(private ideasService: IdeasService) {
@@ -43,9 +44,38 @@ export class IdeasListComponent implements OnInit {
                         {}, 
                         result.author, 
                         "", 
-                        result.modifiedAt));
+                        result.lastChanged));
                 });
             }
         });
+    }
+
+    toggleAllIdeas(): void {
+        this.toggleAll = !this.toggleAll;
+        this.list.map((row) => {
+            row.selected = this.toggleAll;
+        });
+    }
+
+    cancelToggleAll(): void {
+        this.toggleAll = false;
+    }
+
+    deleteSelectedIdeas(): void {
+        let selectedIds = this.list.filter((row) => {
+            return row.selected;
+        }).map((idea) => {
+            return idea.id;
+        });
+
+        if (selectedIds.length === 0) {
+            alert("Please select the ideas to delete first!");
+        } else {
+            this.ideasService.deleteIdeas(selectedIds)
+                .subscribe((json: any) => {
+                    alert(json.message);
+                    this.loadIdeasList();
+                });
+        }
     }
 }

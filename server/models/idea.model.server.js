@@ -1,4 +1,5 @@
 var uuid = require("uuid");
+var neo4jInt = require("neo4j-driver").v1.int;
 
 var IdeaSchema = function(dbDriver) {
     this.driver = dbDriver;
@@ -12,12 +13,14 @@ var IdeaSchema = function(dbDriver) {
         // then check for existing category (or make a new one, 
         // if it doesn't exist)
         var createQuery = "MATCH (u: User) WHERE u.id = {authorId} \
-            MERGE (c: Category {id: {categoryId}, name: {categoryName}}) \
-            CREATE (u)-[m:MAKE {timestamp: {createdAt}}]->(i:Idea \
+            MERGE (c: Category {name: {categoryName}}) \
+            CREATE (u)-[m:MAKE {lastChanged: {createdAt}}]->(i:Idea \
                 { \
                     id: {ideaId}, \
                     title: {title}, \
                     description: {description}, \
+                    visibility: {visibility}, \
+                    background: {background}, \
                     problem: {problem}, \
                     solution: {solution}, \
                     extraLink: {extraLink}, \
@@ -45,12 +48,13 @@ var IdeaSchema = function(dbDriver) {
                 session
                     .run(createQuery, {
                         authorId: authorId,
-                        categoryId: uuid.v4(),
                         categoryName: req.body.category,
                         createdAt: (new Date()).getTime(),
                         ideaId: uuid.v4(),
                         title: req.body.title,
                         description: req.body.description,
+                        visibility: neo4jInt(req.body.visibility),
+                        background: req.body.background,
                         problem: req.body.problem,
                         solution: req.body.solution,
                         extraLink: req.body.extraLink,
@@ -91,11 +95,11 @@ var IdeaSchema = function(dbDriver) {
 
     this.listIdeas = function(req, res) {
         var session = this.driver.session();
-        // m.timestamp: "modified at", i.createdAt: "created at"
+        // m.lastChanged: "modified at", i.createdAt: "created at"
         session
             .run("MATCH (i:Idea)<-[m:MAKE]-(u:User) RETURN \
-                i.id, i.title, i.description, u.username, m.timestamp \
-                ORDER BY m.timestamp DESC")
+                i.id, i.title, i.description, u.username, m.lastChanged \
+                ORDER BY m.lastChanged DESC")
             .then(function(result) {
                 res.send({
                     results: result.records.map(function(record) {
@@ -103,14 +107,16 @@ var IdeaSchema = function(dbDriver) {
                         var title = record.get("i.title");
                         var description = record.get("i.description");
                         var author = record.get("u.username");
-                        var modifiedAt = (new Date(record.get("m.timestamp"))).toDateString();
+                        var lastChanged = (
+                            new Date(record.get("m.lastChanged"))
+                        ).toDateString();
 
                         return {
                             id: id,
                             title: title,
                             description: description,
                             author: author,
-                            modifiedAt: modifiedAt,
+                            lastChanged: lastChanged,
                         };
                     })
                 });
@@ -119,6 +125,26 @@ var IdeaSchema = function(dbDriver) {
             .catch(function(err) {
                 res.send({
                     fail: "Failed fetching list of ideas."
+                });
+                session.close();
+            });
+    };
+
+    this.deleteIdeas = function(req, res) {
+        var session = this.driver.session();
+        var ids = req.body.ids;
+        session
+            .run("MATCH (i:Idea) WHERE i.id IN {ids} DETACH DELETE i", 
+                {ids: ids})
+            .then(function(result) {
+                res.send({
+                    message: "Successfully deleted idea(s)!"
+                });
+                session.close();
+            })
+            .catch(function(err) {
+                res.send({
+                    message: "Failed deleting selected idea(s). Please try again."
                 });
                 session.close();
             });

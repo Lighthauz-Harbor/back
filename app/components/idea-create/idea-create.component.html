@@ -26,8 +26,17 @@
                 </div>
 
                 <div class="form-group">
-                    <div class="form-col-2">
-                        <label for="author">Author's email - <em>must be an existing user of Lighthauz</em>: (*)</label>
+                    <div class="form-col-1">
+                        <label for="visibility">Visibility: (*)</label>
+                        <select name="visibility"
+                            [(ngModel)]="visibility"
+                            required>
+                            <option *ngFor="let v of visibilityChoices"
+                                [value]="v">{{v}}</option>
+                        </select>
+                    </div>
+                    <div class="form-col-1">
+                        <label for="author">Author's email - <em>must be an existing user</em>: (*)</label>
                         <input type="text" name="author" [(ngModel)]="author" required>
                     </div>
                 </div>
@@ -36,6 +45,13 @@
                     <div class="form-col-2">
                         <label for="description">Description: (*)</label>
                         <textarea name="description" [(ngModel)]="description" required></textarea>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <div class="form-col-2">
+                        <label for="background">Background: (*)</label>
+                        <textarea name="background" [(ngModel)]="background" required></textarea>
                     </div>
                 </div>
 

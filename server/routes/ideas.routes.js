@@ -12,4 +12,8 @@ module.exports = function(router, dbDriver) {
         ideaSchema.create(req, res);
     });
 
+    router.post("/ideas/delete", function(req, res) {
+        ideaSchema.deleteIdeas(req, res);
+    });
+
 };

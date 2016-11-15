@@ -13,6 +13,9 @@ export class CreateIdeaComponent {
     private category: string;
     private author: string; // username or email
     private description: string;
+    private visibility: string;
+    private visibilityChoices: string[] = ["Not published", "Exclusive", "Public"];
+    private background: string;
     private problem: string;
     private solution: string;
     private extraLink: string;
@@ -38,6 +41,10 @@ export class CreateIdeaComponent {
 
     onSubmitIdea(): void {
         if (this.isValidInput()) {
+            // assign visibility to a number flag
+            let visibilityFlag = this.visibilityChoices
+                .indexOf(this.visibility);
+
             // create the idea, checking whether the author exists already occurs
             // in the server schema
             this.ideasService.createIdea({
@@ -45,9 +52,11 @@ export class CreateIdeaComponent {
                 category: this.category,
                 author: this.author,
                 description: this.description,
+                visibility: visibilityFlag,
+                background: this.background,
                 problem: this.problem,
                 solution: this.solution,
-                extraLink: this.extraLink,
+                extraLink: this.extraLink || "",
                 strengths: this.strengths,
                 weaknesses: this.weaknesses,
                 opportunities: this.opportunities,
