@@ -34,10 +34,6 @@ export class UsersService {
     }
 
     searchUser(term: string): Observable<any> {
-        if (!term || term === "") {
-            return Observable.of<User[]>([]);
-        }
-
         return this.http.get("/api/users/search/" + term)
             .map((res: Response) => {
                 return JSON.parse(res.text());

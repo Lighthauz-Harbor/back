@@ -57,24 +57,20 @@ export class UsersListComponent implements OnInit {
 
         this.usersService.searchUser(term)
             .subscribe((result: any) => {
-                if (result === Observable.of<User[]>([])) {
-                    this.loadUsersList();
+                if (result.fail) {
+                    this.message = result.fail;
+                } else if (result.results.length === 0) {
+                    this.message = 
+                        "User not found. Please try again.";
                 } else {
-                    if (result.fail) {
-                        this.message = result.fail;
-                    } else if (result.results.length === 0) {
-                        this.message = 
-                            "User not found. Please try again.";
-                    } else {
-                        result.results.map((u: any) => {
-                            // some arguments are left empty or 0 because
-                            // they are not needed at the moment
-                            this.list.push(
-                                new User(u.username, "user", u.name, 
-                                    "", "", new Date(0), 
-                                    new Date(u.createdAt)));
-                        });
-                    }
+                    result.results.map((u: any) => {
+                        // some arguments are left empty or 0 because
+                        // they are not needed at the moment
+                        this.list.push(
+                            new User(u.username, "user", u.name, 
+                                "", "", new Date(0), 
+                                new Date(u.createdAt)));
+                    });
                 }
             });
     }

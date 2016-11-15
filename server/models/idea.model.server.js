@@ -103,20 +103,14 @@ var IdeaSchema = function(dbDriver) {
             .then(function(result) {
                 res.send({
                     results: result.records.map(function(record) {
-                        var id = record.get("i.id");
-                        var title = record.get("i.title");
-                        var description = record.get("i.description");
-                        var author = record.get("u.username");
-                        var lastChanged = (
-                            new Date(record.get("m.lastChanged"))
-                        ).toDateString();
-
                         return {
-                            id: id,
-                            title: title,
-                            description: description,
-                            author: author,
-                            lastChanged: lastChanged,
+                            id: record.get("i.id"),
+                            title: record.get("i.title"),
+                            description: record.get("i.description"),
+                            author: record.get("u.username"),
+                            lastChanged: (
+                                new Date(record.get("m.lastChanged"))
+                            ).toDateString(),
                         };
                     })
                 });
@@ -147,7 +141,9 @@ var IdeaSchema = function(dbDriver) {
                             title: idea.title,
                             description: idea.description,
                             author: record.get("u.username"),
-                            lastChanged: record.get("m.lastChanged"),
+                            lastChanged: (
+                                new Date(record.get("m.lastChanged"))
+                            ).toDateString(),
                         };
                     })
                 });
