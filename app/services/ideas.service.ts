@@ -31,4 +31,11 @@ export class IdeasService {
                 return JSON.parse(res.text());
             });
     }
+
+    searchIdea(term: string): Observable<any> {
+        return this.http.get("/api/ideas/search/" + term)
+            .map((res: Response) => {
+                return JSON.parse(res.text());
+            });
+    }
 }

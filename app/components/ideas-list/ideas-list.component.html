@@ -10,7 +10,8 @@
         <input #searchIdea type="text"
             name="search-idea"
             class="search-panel"
-            placeholder="Search idea and press Enter.">
+            placeholder="Search idea title and press Enter."
+            (keyup.enter)="search(searchIdea.value)">
         <a routerLink="/ideas/create" class="btn-create">Create idea</a>
         <a (click)="deleteSelectedIdeas()" class="btn-delete">Delete idea(s)</a>
     </div>

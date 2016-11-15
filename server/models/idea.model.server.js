@@ -130,6 +130,37 @@ var IdeaSchema = function(dbDriver) {
             });
     };
 
+    this.search = function(req, res) {
+        var titleRegex = "(?i).*" + req.params.term + ".*";
+        var session = this.driver.session();
+        session
+            .run("MATCH (i:Idea)<-[m:MAKE]-(u:User) \
+                WHERE i.title =~ {titleRegex} \
+                RETURN i, m.lastChanged, u.username ORDER BY i.title ASC",
+                { titleRegex: titleRegex })
+            .then(function(result) {
+                res.send({
+                    results: result.records.map(function(record) {
+                        var idea = record.get("i").properties;
+                        return {
+                            id: idea.id,
+                            title: idea.title,
+                            description: idea.description,
+                            author: record.get("u.username"),
+                            lastChanged: record.get("m.lastChanged"),
+                        };
+                    })
+                });
+                session.close();
+            })
+            .catch(function(err) {
+                res.send({
+                    fail: "Failed searching for idea. Please try again."
+                });
+                session.close();
+            });
+    };
+
     this.deleteIdeas = function(req, res) {
         var session = this.driver.session();
         var ids = req.body.ids;

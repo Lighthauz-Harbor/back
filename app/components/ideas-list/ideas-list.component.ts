@@ -50,6 +50,38 @@ export class IdeasListComponent implements OnInit {
         });
     }
 
+    search(term: string): void {
+        if (term === "") this.loadIdeasList();
+        else this.loadIdeasListByTerm(term);
+    }
+
+    private loadIdeasListByTerm(term: string): void {
+        // renew list every load
+        this.list = [];
+
+        this.ideasService.searchIdea(term)
+            .subscribe((result: any) => {
+                if (result.fail) {
+                    this.message = result.fail;
+                } else if (result.results.length === 0) {
+                    this.message = "Idea not found. Please try again.";
+                } else {
+                    result.results.map((i: any) => {
+                        this.list.push(
+                            new Idea(i.id, {
+                                title: i.title,
+                                description: i.description
+                            }, 
+                            {}, 
+                            {}, 
+                            i.author, 
+                            "", 
+                            i.lastChanged));
+                    });
+                }
+            });
+    }
+
     toggleAllIdeas(): void {
         this.toggleAll = !this.toggleAll;
         this.list.map((row) => {
