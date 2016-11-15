@@ -13,7 +13,7 @@ module.exports = function(router, dbDriver) {
     });
 
     router.get("/users/get/:username", function(req, res) {
-        userSchema.find(req, res);
+        userSchema.getSingle(req, res);
     });
 
     router.get("/users/search/:term", function(req, res) {

@@ -135,7 +135,7 @@ var UserSchema = function(dbDriver) {
             });
     };
 
-    this.find = function(req, res) {
+    this.getSingle = function(req, res) {
         var session = this.driver.session();
         session
             .run("MATCH (u:User) WHERE u.username = {username} RETURN u", 

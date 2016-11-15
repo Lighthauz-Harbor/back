@@ -47,7 +47,11 @@
                             [(ngModel)]="idea.selected"
                             (change)="cancelToggleAll()">
                     </td>
-                    <td>{{idea.title}}</td>
+                    <td>
+                        <a [routerLink]="['update', idea.id]">
+                            {{idea.title}}
+                        </a>
+                    </td>
                     <td>{{idea.description}}</td>
                     <td>
                         <a href="mailto:{{idea.author}}">

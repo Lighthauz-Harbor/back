@@ -24,9 +24,8 @@ export class IdeasService {
             });
     }
 
-    deleteIdeas(ids: string[]): Observable<any> {
-        return this.http.post("/api/ideas/delete", 
-            { ids })
+    getSingleIdea(id: string): Observable<any> {
+        return this.http.get("/api/ideas/get/" + id)
             .map((res: Response) => {
                 return JSON.parse(res.text());
             });
@@ -34,6 +33,23 @@ export class IdeasService {
 
     searchIdea(term: string): Observable<any> {
         return this.http.get("/api/ideas/search/" + term)
+            .map((res: Response) => {
+                return JSON.parse(res.text());
+            });
+    }
+
+    updateIdea(details: any): Observable<any> {
+        return this.http.put(
+            "/api/ideas/update/" + details.id,
+            details)
+                .map((res: Response) => {
+                    return JSON.parse(res.text());
+                });
+    }
+
+    deleteIdeas(ids: string[]): Observable<any> {
+        return this.http.post("/api/ideas/delete", 
+            { ids })
             .map((res: Response) => {
                 return JSON.parse(res.text());
             });

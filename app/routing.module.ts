@@ -10,6 +10,7 @@ import { UpdateUserComponent } from "./components/user-update/user-update.compon
 
 import { IdeasListComponent } from "./components/ideas-list/ideas-list.component";
 import { CreateIdeaComponent } from "./components/idea-create/idea-create.component";
+import { UpdateIdeaComponent } from "./components/idea-update/idea-update.component";
 
 import { AuthenticationGuard } from "./services/authentication.guard";
 
@@ -48,6 +49,10 @@ const routes: Routes = [
             {
                 path: "create",
                 component: CreateIdeaComponent
+            },
+            {
+                path: "update/:id",
+                component: UpdateIdeaComponent
             }
         ]
     },

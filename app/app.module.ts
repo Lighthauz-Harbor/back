@@ -17,6 +17,7 @@ import { UpdateUserComponent } from "./components/user-update/user-update.compon
 
 import { IdeasListComponent } from "./components/ideas-list/ideas-list.component";
 import { CreateIdeaComponent } from "./components/idea-create/idea-create.component";
+import { UpdateIdeaComponent } from "./components/idea-update/idea-update.component";
 
 import { AuthenticationGuard } from "./services/authentication.guard";
 import { AuthenticationService } from "./services/authentication.service";
@@ -43,7 +44,8 @@ import "./vendor";
         CreateUserComponent,
         UpdateUserComponent,
         IdeasListComponent,
-        CreateIdeaComponent
+        CreateIdeaComponent,
+        UpdateIdeaComponent,
     ],
     providers: [ 
         AuthenticationGuard,

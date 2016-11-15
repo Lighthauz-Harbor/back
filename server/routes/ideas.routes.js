@@ -12,8 +12,16 @@ module.exports = function(router, dbDriver) {
         ideaSchema.create(req, res);
     });
 
+    router.get("/ideas/get/:id", function(req, res) {
+        ideaSchema.getSingle(req, res);
+    });
+
     router.get("/ideas/search/:term", function(req, res) {
         ideaSchema.search(req, res);
+    });
+
+    router.put("/ideas/update/:id", function(req, res) {
+        ideaSchema.update(req, res);
     });
 
     router.post("/ideas/delete", function(req, res) {

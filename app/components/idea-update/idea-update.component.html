@@ -1,0 +1,172 @@
+<div class="content-dashboard">
+    <div class="title-dashboard">
+        <h1>Update an idea</h1>
+        <h2>
+            <strong>NOTE:</strong> Updating an idea is for development purposes or other urgent matters. So use with care.
+            <br>
+            Enter the details below to update an new idea. Fields marked with (*) are <strong>required.</strong>
+            <br>
+            Only edit the fields you want to update, leave the rest untouched.
+        </h2>
+    </div>
+
+    <div class="form-wrapper-dashboard">
+        <form class="form-dashboard form-idea" (ngSubmit)="onSubmitIdea()" #ideaForm="ngForm">
+
+            <div class="basic-info-form">
+                <h2>Basic information</h2>
+
+                <div class="form-group">
+                    <div class="form-col-1">
+                        <label for="title">Title: (*)</label>
+                        <input type="text" name="title" [(ngModel)]="title" required>
+                    </div>
+                    <div class="form-col-1">
+                        <label for="category">Category: (*)</label>
+                        <input type="text" name="category" [(ngModel)]="category" required>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <div class="form-col-1">
+                        <label for="visibility">Visibility: (*)</label>
+                        <select name="visibility"
+                            [(ngModel)]="visibility"
+                            required>
+                            <option *ngFor="let v of visibilityChoices"
+                                [value]="v">{{v}}</option>
+                        </select>
+                    </div>
+                    <div class="form-col-1">
+                        <label for="author">Author's email - <em>must be an existing user</em>: (*)</label>
+                        <input type="text" name="author" [(ngModel)]="author" required>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <div class="form-col-2">
+                        <label for="description">Description: (*)</label>
+                        <textarea name="description" [(ngModel)]="description" required></textarea>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <div class="form-col-2">
+                        <label for="background">Background: (*)</label>
+                        <textarea name="background" [(ngModel)]="background" required></textarea>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <div class="form-col-1">
+                        <label for="problem">Problem: (*)</label>
+                        <textarea name="problem" [(ngModel)]="problem" required></textarea>
+                    </div>
+                    <div class="form-col-1">
+                        <label for="solution">Solution: (*)</label>
+                        <textarea name="solution" [(ngModel)]="solution" required></textarea> 
+                    </div>
+                </div>
+            </div>
+
+            <div class="extra-info-form">
+                <h2>Extra information (optional)</h2>
+
+                <div class="form-group">
+                    <div class="form-col-2">
+                        <label for="extraLink">Extra link: (in valid URL format)</label>
+                        <input type="text" name="extraLink" [(ngModel)]="extraLink">
+                    </div>
+                </div>
+            </div> 
+
+            <div class="swot-form">
+                <h2>SWOT Analysis</h2>
+
+                <div class="form-group">
+                    <div class="form-col-1">
+                        <label for="strengths">Strengths: (*)</label>
+                        <textarea name="strengths" [(ngModel)]="strengths" required></textarea>
+                    </div>
+                    <div class="form-col-1">
+                        <label for="weaknesses">Weaknesses: (*)</label>
+                        <textarea name="weaknesses" [(ngModel)]="weaknesses" required></textarea> 
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <div class="form-col-1">
+                        <label for="opportunities">Opportunities: (*)</label>
+                        <textarea name="opportunities" [(ngModel)]="opportunities" required></textarea>
+                    </div>
+                    <div class="form-col-1">
+                        <label for="threats">Threats: (*)</label>
+                        <textarea name="threats" [(ngModel)]="threats" required></textarea> 
+                    </div>
+                </div> 
+            </div>
+
+            <div class="bmc-form">
+                <h2>Business Model Canvas</h2>
+
+                <div class="form-group">
+                    <div class="form-col-2">
+                        <label for="valueProposition">Value proposition: (*)</label>
+                        <textarea name="valueProposition" [(ngModel)]="valueProposition" required></textarea>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <div class="form-col-1">
+                        <label for="customerSegments">Customer segments: (*)</label>
+                        <textarea name="customerSegments" [(ngModel)]="customerSegments" required></textarea>
+                    </div>
+                    <div class="form-col-1">
+                        <label for="customerRelationships">Customer relationships: (*)</label>
+                        <textarea name="customerRelationships" [(ngModel)]="customerRelationships" required></textarea>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <div class="form-col-1">
+                        <label for="channels">Channels: (*)</label>
+                        <textarea name="channels" [(ngModel)]="channels" required></textarea>
+                    </div>
+                    <div class="form-col-1">
+                        <label for="keyActivities">Key activities: (*)</label>
+                        <textarea name="keyActivities" [(ngModel)]="keyActivities" required></textarea>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <div class="form-col-1">
+                        <label for="keyResources">Key resources: (*)</label>
+                        <textarea name="keyResources" [(ngModel)]="keyResources" required></textarea>
+                    </div>
+                    <div class="form-col-1">
+                        <label for="keyPartners">Key partners: (*)</label>
+                        <textarea name="keyPartners" [(ngModel)]="keyPartners" required></textarea>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <div class="form-col-1">
+                        <label for="costStructure">Cost structure: (*)</label>
+                        <textarea name="costStructure" [(ngModel)]="costStructure" required></textarea>
+                    </div>
+                    <div class="form-col-1">
+                        <label for="revenueStreams">Revenue streams: (*)</label>
+                        <textarea name="revenueStreams" [(ngModel)]="revenueStreams" required></textarea>
+                    </div>
+                </div>
+            </div>
+
+            <div class="submit-form">
+                <div class="form-group">
+                    <button type="submit">Submit</button>
+                </div>
+            </div>
+
+        </form>
+    </div>
+</div>
