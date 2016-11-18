@@ -195,7 +195,6 @@ var IdeaSchema = function(dbDriver) {
         session
             .run("MATCH (i:Idea) WHERE i.id = {ideaId} \
                 SET \
-                i.id = {ideaId}, \
                 i.title = {title}, \
                 i.description = {description}, \
                 i.visibility = {visibility}, \
@@ -293,7 +292,6 @@ var IdeaSchema = function(dbDriver) {
                                 that._updateIdeaValues(session, req, res);
                             })
                             .catch(function(err) {
-                                console.log(err);
                                 that._catchUpdateError(session, res);
                             });
                     } else if (oldAuthor === newAuthor && 
@@ -315,7 +313,6 @@ var IdeaSchema = function(dbDriver) {
                                 that._updateIdeaValues(session, req, res);
                             })
                             .catch(function(err) {
-                                console.log(err);
                                 that._catchUpdateError(session, res);
                             });
                     } else if (oldAuthor !== newAuthor && 
@@ -347,7 +344,6 @@ var IdeaSchema = function(dbDriver) {
                                 that._updateIdeaValues(session, req, res);
                             })
                             .catch(function(err) {
-                                console.log(err);
                                 that._catchUpdateError(session, res);
                             });
                     } else {
@@ -358,7 +354,6 @@ var IdeaSchema = function(dbDriver) {
                 }
             })
             .catch(function(err) {
-                console.log(err);
                 that._catchUpdateError(session, res);
             });
     };

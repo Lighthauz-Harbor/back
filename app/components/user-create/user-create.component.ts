@@ -37,12 +37,12 @@ export class CreateUserComponent {
                 role: "user"
             }).subscribe(result => {
                 // matching result string with that from the API
-                if (result === "User successfully created!") {
-                    alert("Successfully created user!");
-                    this.router.navigate(["/users"]);
-                } else {
-                    alert("Error creating user: redirecting back to creation form.");
+                if (result.fail) {
+                    alert(result.fail);
                     this.router.navigate(["/users/create", null]);
+                } else {
+                    alert(result.message);
+                    this.router.navigate(["/users"]);
                 }
             });
         }

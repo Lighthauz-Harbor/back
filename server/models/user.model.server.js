@@ -47,53 +47,63 @@ var UserSchema = function(dbDriver) {
 
     this.create = function(req, res) {
         if (!this._checkParams(req.body)) {
-            res.status(400).send("Wrong parameters: please check the request.");
-        }
-
-        var params = {
-            id: uuid.v4(),
-            name: req.body.name,
-            username: req.body.username,
-            password: this._generateHash(req.body.password),
-            role: req.body.role,
-            dateOfBirth: req.body.dateOfBirth ? 
-                (new Date(req.body.dateOfBirth)).getTime() : 
-                (new Date()).getTime(),
-            bio: req.body.bio || "This is some bio",
-            profilePic: req.body.profilePic || 
-                "http://res.cloudinary.com/lighthauz-harbor/image/upload/v1478504599/default-profile-pic_hroujz.png",
-            createdAt: (new Date()).getTime()
-        };
-
-        var session = this.driver.session();
-
-        session
-            .run("MATCH (u:User) WHERE u.username = {username} RETURN u", 
-                {username: params.username})
-            .then(function(result) {
-                if (result.records.length > 0) {
-                    res.status(501).send("Duplicate user!");
-                } else {
-                    session
-                        .run(
-                            "CREATE (:User {id: {id}, username: {username}, \
-                            password: {password}, name: {name}, role: {role}, \
-                            bio: {bio}, profilePic: {profilePic}, \
-                            dateOfBirth: {dateOfBirth}, createdAt: {createdAt}})", params)
-                        .then(function() {
-                            res.status(201).send("User successfully created!");
-                            session.close();
-                        })
-                        .catch(function(err) {
-                            res.status(501).send(err);
-                            session.close();
-                        });
-                }
-            })
-            .catch(function(err) {
-                res.status(501).send("Error finding user availability!");
-                session.close();
+            res.send({
+                fail: "Wrong parameters in the request. Please contact the developer."
             });
+        } else {
+            var params = {
+                id: uuid.v4(),
+                name: req.body.name,
+                username: req.body.username,
+                password: this._generateHash(req.body.password),
+                role: req.body.role,
+                dateOfBirth: req.body.dateOfBirth ? 
+                    (new Date(req.body.dateOfBirth)).getTime() : 
+                    (new Date()).getTime(),
+                bio: req.body.bio || "This is some bio",
+                profilePic: req.body.profilePic || 
+                    "http://res.cloudinary.com/lighthauz-harbor/image/upload/v1478504599/default-profile-pic_hroujz.png",
+                createdAt: (new Date()).getTime()
+            };
+
+            var session = this.driver.session();
+
+            session
+                .run("MATCH (u:User) WHERE u.username = {username} RETURN u", 
+                    {username: params.username})
+                .then(function(result) {
+                    if (result.records.length > 0) {
+                        res.send({
+                            fail: "Duplicate user! Please find another username."
+                        });
+                    } else {
+                        session
+                            .run(
+                                "CREATE (:User {id: {id}, username: {username}, \
+                                password: {password}, name: {name}, role: {role}, \
+                                bio: {bio}, profilePic: {profilePic}, \
+                                dateOfBirth: {dateOfBirth}, createdAt: {createdAt}})", params)
+                            .then(function() {
+                                res.send({
+                                    message: "User successfully created!"
+                                });
+                                session.close();
+                            })
+                            .catch(function(err) {
+                                res.send({
+                                    fail: "Error creating user! Please try again."
+                                });
+                                session.close();
+                            });
+                    }
+                })
+                .catch(function(err) {
+                    res.send({
+                        fail: "Error finding user availability!"
+                    });
+                    session.close();
+                });
+        }
     };
 
     this.strategy = function(username, password, done) {
