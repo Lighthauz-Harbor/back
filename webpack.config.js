@@ -11,7 +11,7 @@ module.exports = {
             path.resolve(__dirname, "app", "bootstrap"), 
         ],
         vendor: [ 
-            path.resolve(__dirname, "app", "vendor") 
+            path.resolve(__dirname, "app", "vendor", "vendor"),
         ],
     },
     module: {

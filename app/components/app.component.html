@@ -9,7 +9,7 @@
         <router-outlet></router-outlet>
         <div class="clearfix"></div>
     </div>
-    <div class="footer">
+    <div *ngIf="!isLoggedIn" class="footer">
         <lh-footer></lh-footer>
     </div>
 </div>

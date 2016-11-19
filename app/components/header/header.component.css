@@ -1,5 +1,5 @@
 header {
-    background-color: #157299;
+    background-color: #223962;
     color: #fff;
     position: fixed;
     top: 0;
@@ -23,6 +23,7 @@ header a:visited {
 .nav-left a {
     margin-top: 3px;
     margin-left: 16px;
+
     font-size: 18pt;
 }
 

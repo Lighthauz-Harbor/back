@@ -1,7 +1,11 @@
 .sidebar {
-    width: 100%;
-    height: 100%;
+    width: 240px;
     overflow: hidden;
+
+    position: fixed;
+    left: 0;
+    top: 36px;
+    bottom: 0;
 }
 
 .sidebar, .link-sidebar {
@@ -41,4 +45,18 @@
 
 .icon-link-sidebar {
     font-size: 20pt;
+}
+
+.copyright {
+    position: absolute;
+    bottom: 0;
+
+    padding: 8px 0;
+    background-color: #223962;
+}
+
+.copyright p {
+    text-align: center;
+    font-size: 10pt;
+    color: #fff;
 }

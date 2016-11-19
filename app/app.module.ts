@@ -23,8 +23,9 @@ import { AuthenticationGuard } from "./services/authentication.guard";
 import { AuthenticationService } from "./services/authentication.service";
 import { UsersService } from "./services/users.service";
 import { IdeasService } from "./services/ideas.service";
+import { ImageService } from "./services/image.service";
 
-import "./vendor";
+import "./vendor/vendor"; // vendor.ts file
 
 @NgModule({
     imports: [ 
@@ -52,6 +53,7 @@ import "./vendor";
         AuthenticationService,
         UsersService,
         IdeasService,
+        ImageService,
     ],
     bootstrap: [ AppComponent ]
 })

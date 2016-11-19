@@ -4,6 +4,7 @@ import { Router } from "@angular/router";
 import { User } from "../../models/user.model.app";
 
 import { UsersService } from "../../services/users.service";
+import { ImageService } from "../../services/image.service";
 
 @Component({
     selector: "user-create",
@@ -20,35 +21,74 @@ export class CreateUserComponent {
     private dateOfBirth: Date;
     private bio: string;
 
+    private profilePicImg: any;
+    private profilePicFile: Array<File> = [];
+
     constructor(
         private router: Router,
-        private usersService: UsersService) {
+        private usersService: UsersService,
+        private imageService: ImageService) {
 
-    }
+   } 
 
     onSubmitUser(): void {
         if (this.isValidInput()) {
-            this.usersService.createUser({
+            // create request body
+            let reqBody: any = {
                 name: this.firstName + " " + this.lastName, 
                 username: this.email, 
                 password: this.password, 
                 dateOfBirth: (new Date(this.dateOfBirth)).toISOString().slice(0, 10), 
                 bio: this.bio,
                 role: "user"
-            }).subscribe(result => {
-                // matching result string with that from the API
-                if (result.fail) {
-                    alert(result.fail);
-                    this.router.navigate(["/users/create", null]);
-                } else {
-                    alert(result.message);
-                    this.router.navigate(["/users"]);
-                }
-            });
+            };
+
+            // upload profile picture first
+            if (this.profilePicFile.length === 1) {
+                var file: File = this.profilePicFile[0];
+                var reader: FileReader = new FileReader();
+
+                reader.onloadend = (e) => {
+                    this.profilePicImg = reader.result;
+                    this.imageService
+                        .upload(this.profilePicImg)
+                        .subscribe(result => {
+                            if (result.error) {
+                                alert("Upload picture error. Default profile picture will be used.");
+                            } else {
+                                reqBody.profilePic = result.secure_url;
+                            }
+
+                            // request to create user after picture upload
+                            this.requestToCreate(reqBody);
+                        });
+                };
+                reader.readAsDataURL(file);
+            } else {
+                // simply request to create user without uploading profile pic
+                this.requestToCreate(reqBody);
+            }
         }
+}
+
+    private requestToCreate(reqBody: any) {
+        this.usersService.createUser(reqBody).subscribe(result => {
+            // matching result string with that from the API
+            if (result.fail) {
+                alert(result.fail);
+                this.router.navigate(["/users/create", null]);
+            } else {
+                alert(result.message);
+                this.router.navigate(["/users"]);
+            }
+        });
     }
 
-    isValidInput(): boolean {
+    fileChangeEvent(fileInput: any): void {
+        this.profilePicFile = <Array<File>> fileInput.target.files;
+    }
+
+    private isValidInput(): boolean {
         if (this.password !== this.repeatPassword) {
             alert("Both passwords must be the same. Please input again.");
             return false;
@@ -56,6 +96,11 @@ export class CreateUserComponent {
 
         if (!this.isEligibleAge()) {
             alert("User must be 13 years old or older. Please input again.");
+            return false;
+        }
+
+        if (this.profilePicFile.length > 1) {
+            alert("Invalid number of pictures (not 0 or 1). Please input again.");
             return false;
         }
 

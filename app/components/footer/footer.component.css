@@ -1,8 +1,8 @@
-footer {
+.lh-footer {
     width: 100%;
     height: 30px;
 
-    background-color: #157299;
+    background-color: #223962;
     color: #fff;
 
     font-size: 10pt;
@@ -10,6 +10,6 @@ footer {
     overflow: hidden;
 }
 
-footer p {
+.lh-footer p {
     margin-top: 6px;
 }
