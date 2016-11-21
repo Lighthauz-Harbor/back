@@ -93,16 +93,15 @@ export class UpdateUserComponent implements OnInit {
                             reqBody.profilePic = result.secure_url;
                         }
 
+                        // start request to update user with new profile pic
                         this.requestToUpdate(reqBody);
                     });
             };
             reader.readAsDataURL(file);
         } else {
-            // simply request to create user without uploading profile pic
+            // simply request to upload user without uploading profile pic
             this.requestToUpdate(reqBody);
         }
-
-        this.requestToUpdate(reqBody);
     }
 
     fileChangeEvent(fileInput: any) {
