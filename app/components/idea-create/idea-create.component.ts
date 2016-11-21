@@ -2,6 +2,7 @@ import { Component } from "@angular/core";
 import { Router } from "@angular/router";
 
 import { IdeasService } from "../../services/ideas.service";
+import { ImageService } from "../../services/image.service";
 
 @Component({
     selector: "idea-create",
@@ -33,9 +34,13 @@ export class CreateIdeaComponent {
     private costStructure: string;
     private revenueStreams: string;
 
+    private picImg: any;
+    private picFile: Array<File> = [];
+
     constructor(
         private router: Router,
-        private ideasService: IdeasService) {
+        private ideasService: IdeasService,
+        private imageService: ImageService) {
 
     }
 
@@ -45,9 +50,8 @@ export class CreateIdeaComponent {
             let visibilityFlag = this.visibilityChoices
                 .indexOf(this.visibility);
 
-            // create the idea, checking whether the author exists already occurs
-            // in the server schema
-            this.ideasService.createIdea({
+            // the request body or data to save
+            let reqBody: any = {
                 title: this.title,
                 category: this.category,
                 author: this.author,
@@ -70,14 +74,50 @@ export class CreateIdeaComponent {
                 keyPartners: this.keyPartners,
                 costStructure: this.costStructure,
                 revenueStreams: this.revenueStreams,
-            }).subscribe((res: any) => {
-                alert(res.message);
-                this.router.navigate(["/ideas"]);
-            });
-        }
+            };
+
+            // upload idea picture first
+            if (this.picFile.length === 1) {
+                var file: File = this.picFile[0];
+                var reader: FileReader = new FileReader();
+
+                reader.onloadend = (e) => {
+                    this.picImg = reader.result;
+                    this.imageService
+                        .upload(this.picImg)
+                        .subscribe(result => {
+                            if (result.error) {
+                                alert("Upload idea picture error. Default idea picture will be used.");
+                            } else {
+                                // assign idea picture URL to request body
+                                // to be saved in the database
+                                reqBody.pic = result.secure_url;
+                            }
+
+                            // request to create idea after picture upload
+                            this.requestToCreate(reqBody);
+                        });
+                };
+                reader.readAsDataURL(file);
+            } else {
+                // simply request to create idea without uploading picture
+                this.requestToCreate(reqBody);
+            }
+        }    
     }
 
-    isValidInput(): boolean {
+    private requestToCreate(reqBody: any) {
+        this.ideasService.createIdea(reqBody).subscribe((res: any) => {
+            alert(res.message);
+            this.router.navigate(["/ideas"]);
+        });
+    }
+
+    fileChangeEvent(fileInput: any): void {
+        this.picFile = <Array<File>> fileInput.target.files;
+    }
+
+    private isValidInput(): boolean {
         // credits to Diego Perini for the URL regex 
         // reference: https://gist.github.com/dperini/729294
         let urlRegex = new RegExp(

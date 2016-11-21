@@ -23,6 +23,7 @@ var IdeaSchema = function(dbDriver) {
                     background: {background}, \
                     problem: {problem}, \
                     solution: {solution}, \
+                    pic: {pic}, \
                     extraLink: {extraLink}, \
                     strengths: {strengths}, \
                     weaknesses: {weaknesses}, \
@@ -58,6 +59,8 @@ var IdeaSchema = function(dbDriver) {
                         problem: req.body.problem,
                         solution: req.body.solution,
                         extraLink: req.body.extraLink,
+                        pic: req.body.pic || 
+                            "https://res.cloudinary.com/lighthauz-harbor/image/upload/v1479742560/default-idea-pic_wq1dzc.png",
                         strengths: req.body.strengths,
                         weaknesses: req.body.weaknesses,
                         opportunities: req.body.opportunities,
