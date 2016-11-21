@@ -56,6 +56,8 @@ export class CreateUserComponent {
                             if (result.error) {
                                 alert("Upload picture error. Default profile picture will be used.");
                             } else {
+                                // assign profile picture URL to request body
+                                // to be saved in the database
                                 reqBody.profilePic = result.secure_url;
                             }
 

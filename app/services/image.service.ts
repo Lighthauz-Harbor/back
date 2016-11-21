@@ -9,7 +9,7 @@ export class ImageService {
     constructor(private http: Http) {
     }
 
-    upload(picture: any) {
+    upload(picture: any): Observable<any> {
         const URL = 
             "https://api.cloudinary.com/v1_1/lighthauz-harbor/image/upload";
 

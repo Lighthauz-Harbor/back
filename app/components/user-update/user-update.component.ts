@@ -4,6 +4,7 @@ import { Router, ActivatedRoute, Params } from "@angular/router";
 import { User } from "../../models/user.model.app";
 
 import { UsersService } from "../../services/users.service";
+import { ImageService } from "../../services/image.service";
 
 @Component({
     selector: "user-update",
@@ -21,11 +22,15 @@ export class UpdateUserComponent implements OnInit {
     private dobStr: string; // to be used in the template
     private dateOfBirth: Date; 
     private bio: string;
+    
+    private profilePicImg: any;
+    private profilePicFile: Array<File> = [];
 
     constructor(
         private route: ActivatedRoute,
         private router: Router,
-        private usersService: UsersService) {
+        private usersService: UsersService,
+        private imageService: ImageService) {
 
     }
 
@@ -62,20 +67,56 @@ export class UpdateUserComponent implements OnInit {
         // update this.dateOfBirth after being changed from the template
         this.dateOfBirth = new Date(this.dobStr);
 
-        this.usersService.updateUser({
+        let reqBody: any = {
             name: this.firstName + " " + this.lastName, 
             username: this.email,
             oldUsername: this.oldEmail,
             password: this.password, 
             dateOfBirth: (new Date(this.dateOfBirth)).toISOString().slice(0, 10), 
             bio: this.bio
-        }).subscribe((result: any) => {
+        };
+
+        if (this.profilePicFile.length === 1) {
+            var file: File = this.profilePicFile[0];
+            var reader: FileReader = new FileReader();
+
+            reader.onloadend = (e) => {
+                this.profilePicImg = reader.result;
+                this.imageService
+                    .upload(this.profilePicImg)
+                    .subscribe(result => {
+                        if (result.error) {
+                            alert("Upload picture error. Default profile picture will be used.");
+                        } else {
+                            // assign profile picture URL to request body
+                            // to be saved in the database
+                            reqBody.profilePic = result.secure_url;
+                        }
+
+                        this.requestToUpdate(reqBody);
+                    });
+            };
+            reader.readAsDataURL(file);
+        } else {
+            // simply request to create user without uploading profile pic
+            this.requestToUpdate(reqBody);
+        }
+
+        this.requestToUpdate(reqBody);
+    }
+
+    fileChangeEvent(fileInput: any) {
+        this.profilePicFile = <Array<File>> fileInput.target.files;
+    }
+
+    private requestToUpdate(reqBody: any) {
+        this.usersService.updateUser(reqBody).subscribe(result => {
             alert(result.message);
             this.router.navigate(["/users"]);
         });
     }
 
-    isValidInput(): boolean {
+    private isValidInput(): boolean {
         if (this.password !== this.repeatPassword) {
             alert("Both passwords must be the same. Please input again.");
             return false;
