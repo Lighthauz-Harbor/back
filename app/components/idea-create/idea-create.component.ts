@@ -78,8 +78,8 @@ export class CreateIdeaComponent {
 
             // upload idea picture first
             if (this.picFile.length === 1) {
-                var file: File = this.picFile[0];
-                var reader: FileReader = new FileReader();
+                let file: File = this.picFile[0];
+                let reader: FileReader = new FileReader();
 
                 reader.onloadend = (e) => {
                     this.picImg = reader.result;

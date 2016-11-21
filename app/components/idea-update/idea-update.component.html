@@ -73,9 +73,13 @@
                 <h2>Extra information (optional)</h2>
 
                 <div class="form-group">
-                    <div class="form-col-2">
+                    <div class="form-col-1">
                         <label for="extraLink">Extra link: (in valid URL format)</label>
                         <input type="text" name="extraLink" [(ngModel)]="extraLink">
+                    </div>
+                    <div class="form-col-1">
+                        <label for="pic">Idea logo / picture: (optional)</label>
+                        <input type="file" name="pic" (change)="fileChangeEvent($event)">
                     </div>
                 </div>
             </div> 

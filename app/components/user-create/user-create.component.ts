@@ -45,8 +45,8 @@ export class CreateUserComponent {
 
             // upload profile picture first
             if (this.profilePicFile.length === 1) {
-                var file: File = this.profilePicFile[0];
-                var reader: FileReader = new FileReader();
+                let file: File = this.profilePicFile[0];
+                let reader: FileReader = new FileReader();
 
                 reader.onloadend = (e) => {
                     this.profilePicImg = reader.result;

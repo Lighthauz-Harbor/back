@@ -4,6 +4,7 @@ import { Router, ActivatedRoute, Params } from "@angular/router";
 import { Idea } from "../../models/idea.model.app";
 
 import { IdeasService } from "../../services/ideas.service";
+import { ImageService } from "../../services/image.service";
 
 @Component({
     selector: "idea-update",
@@ -39,10 +40,14 @@ export class UpdateIdeaComponent implements OnInit {
     private costStructure: string;
     private revenueStreams: string;
 
+    private picImg: any;
+    private picFile: Array<File> = [];
+
     constructor(
         private route: ActivatedRoute,
         private router: Router,
-        private ideasService: IdeasService) {
+        private ideasService: IdeasService,
+        private imageService: ImageService) {
 
     }
 
@@ -95,9 +100,7 @@ export class UpdateIdeaComponent implements OnInit {
             let visibilityFlag = this.visibilityChoices
                 .indexOf(this.visibility);
 
-            // create the idea, checking whether the author exists already occurs
-            // in the server schema
-            this.ideasService.updateIdea({
+            let reqBody: any = {
                 id: this.id,
                 title: this.title,
                 oldCategory: this.oldCategory,
@@ -123,14 +126,47 @@ export class UpdateIdeaComponent implements OnInit {
                 keyPartners: this.keyPartners,
                 costStructure: this.costStructure,
                 revenueStreams: this.revenueStreams,
-            }).subscribe((result: any) => {
-                alert(result.message);
-                this.router.navigate(["/ideas"]);
-            });
+            };
+
+            if (this.picFile.length === 1) {
+                let file: File = this.picFile[0];
+                let reader: FileReader = new FileReader();
+
+                reader.onloadend = (e) => {
+                    this.picImg = reader.result;
+                    this.imageService
+                        .upload(this.picImg)
+                        .subscribe(result => {
+                            if (result.error) {
+                                alert("Upload picture error. Default idea picture will be used.");
+                            } else {
+                                reqBody.pic = result.secure_url;
+                            }
+
+                            // request to create idea after picture upload
+                            this.requestToUpdate(reqBody);
+                        });
+                };
+                reader.readAsDataURL(file);
+            } else {
+                // simply update the idea without uploading new picture
+                this.requestToUpdate(reqBody);
+            }
         }
     }
 
-    isValidInput(): boolean {
+    private requestToUpdate(reqBody: any) {
+        this.ideasService.updateIdea(reqBody).subscribe((result: any) => {
+            alert(result.message);
+            this.router.navigate(["/ideas"]);
+        });
+    }
+
+    fileChangeEvent(fileInput: any): void {
+        this.picFile = <Array<File>> fileInput.target.files;
+    }
+
+    private isValidInput(): boolean {
         // credits to Diego Perini for the URL regex 
         // reference: https://gist.github.com/dperini/729294
         let urlRegex = new RegExp(
