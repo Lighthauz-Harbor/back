@@ -12,17 +12,19 @@ import { IdeasListComponent } from "./components/ideas-list/ideas-list.component
 import { CreateIdeaComponent } from "./components/idea-create/idea-create.component";
 import { UpdateIdeaComponent } from "./components/idea-update/idea-update.component";
 
+import { ReportsListComponent } from "./components/reports-list/reports-list.component";
+
 import { AuthenticationGuard } from "./services/authentication.guard";
 
 const routes: Routes = [
     {
         path: "dashboard",
         component: DashboardComponent,
-        canActivate: [AuthenticationGuard]
+        canActivate: [ AuthenticationGuard ]
     },
     {
         path: "users",
-        canActivate: [AuthenticationGuard],
+        canActivate: [ AuthenticationGuard ],
         children: [
             {
                 path: "",
@@ -40,7 +42,7 @@ const routes: Routes = [
     },
     {
         path: "ideas",
-        canActivate: [AuthenticationGuard],
+        canActivate: [ AuthenticationGuard ],
         children: [
             {
                 path: "",
@@ -53,6 +55,16 @@ const routes: Routes = [
             {
                 path: "update/:id",
                 component: UpdateIdeaComponent
+            }
+        ]
+    },
+    {
+        path: "reports",
+        canActivate: [ AuthenticationGuard ],
+        children: [
+            {
+                path: "",
+                component: ReportsListComponent
             }
         ]
     },

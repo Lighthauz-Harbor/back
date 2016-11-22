@@ -19,11 +19,14 @@ import { IdeasListComponent } from "./components/ideas-list/ideas-list.component
 import { CreateIdeaComponent } from "./components/idea-create/idea-create.component";
 import { UpdateIdeaComponent } from "./components/idea-update/idea-update.component";
 
+import { ReportsListComponent } from "./components/reports-list/reports-list.component";
+
 import { AuthenticationGuard } from "./services/authentication.guard";
 import { AuthenticationService } from "./services/authentication.service";
 import { UsersService } from "./services/users.service";
 import { IdeasService } from "./services/ideas.service";
 import { ImageService } from "./services/image.service";
+import { ReportsService } from "./services/reports.service";
 
 import "./vendor/vendor"; // vendor.ts file
 
@@ -35,9 +38,9 @@ import "./vendor/vendor"; // vendor.ts file
         RoutingModule
     ],
     declarations: [ 
-        AppComponent, 
-        HeaderComponent, 
-        LoginComponent, 
+        AppComponent,
+        HeaderComponent,
+        LoginComponent,
         DashboardComponent,
         FooterComponent,
         SidebarComponent,
@@ -47,6 +50,7 @@ import "./vendor/vendor"; // vendor.ts file
         IdeasListComponent,
         CreateIdeaComponent,
         UpdateIdeaComponent,
+        ReportsListComponent,
     ],
     providers: [ 
         AuthenticationGuard,
@@ -54,6 +58,7 @@ import "./vendor/vendor"; // vendor.ts file
         UsersService,
         IdeasService,
         ImageService,
+        ReportsService,
     ],
     bootstrap: [ AppComponent ]
 })

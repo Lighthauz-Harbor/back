@@ -1,3 +1,15 @@
-module.exports = function(app, router) {
+var ReportSchema = require("../models/report.model.server");
+
+module.exports = function(router, dbDriver) {
+
+    var reportSchema = new ReportSchema(dbDriver);
+
+    router.post("/reports/create", function(req, res) {
+        reportSchema.create(req, res);
+    });
+
+    router.get("/reports/list", function(req, res) {
+        reportSchema.listReports(req, res);
+    });
 
 };

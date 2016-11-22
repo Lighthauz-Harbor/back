@@ -41,6 +41,7 @@ module.exports = function(app, dbDriver, passport) {
     var apiRouter = express.Router();
     usersRoutes(apiRouter, dbDriver);
     ideasRoutes(apiRouter, dbDriver);
+    reportsRoutes(apiRouter, dbDriver);
 
     app.use("/admin/auth", adminRouter);
     app.use("/api", apiRouter);

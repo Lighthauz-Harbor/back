@@ -1,0 +1,31 @@
+<div class="content-dashboard">
+    <div class="title-dashboard">
+        <h1>List of reports</h1>
+        <h2>Click on the report's title to view its description. Click on the reporter's email to reply to their reports. You <strong>cannot</strong> delete reports.</h2>
+    </div>
+    <div class="body-dashboard">
+        <table>
+            <thead>
+                <tr>
+                    <th>Report message</th>
+                    <th>Reporter's email</th>
+                    <th>Last submitted at</th>
+                </tr>
+            </thead>
+            <tbody *ngIf="list.length <= 0">
+                <tr>
+                    <td class="table-message" colspan="3">
+                        {{ message || "Unknown error. Please refresh." }}
+                    </td>
+                </tr>
+            </tbody>
+            <tbody *ngIf="list.length > 0">
+                <tr *ngFor="let report of list">
+                    <td>{{ report.message.length < 40 ? report.message : report.message.slice(0, 40) + "..." }}</td>
+                    <td><a href="mailto:{{report.author}}">{{ report.author }}</a></td>
+                    <td>{{ report.createdAt.toDateString() }}</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
