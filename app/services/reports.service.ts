@@ -17,4 +17,11 @@ export class ReportsService {
             });
     }
 
+    getSingle(id: string): Observable<any> {
+        return this.http.get("/api/reports/get/" + id)
+            .map((res: Response) => {
+                return JSON.parse(res.text());
+            });
+    }
+
 }

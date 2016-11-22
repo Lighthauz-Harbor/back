@@ -22,6 +22,7 @@ var ReportSchema = function(dbDriver) {
                         author.id = {authorId} AND target.id = {targetId} \
                         CREATE (author)-[report:REPORT { \
                             id: {reportId}, \
+                            title: {title}, \
                             message: {message}, \
                             reply: \"\", \
                             solved: false, \
@@ -31,6 +32,7 @@ var ReportSchema = function(dbDriver) {
                             authorId: req.body.authorId,
                             targetId: req.body.targetId,
                             reportId: uuid.v4(),
+                            title: req.body.title,
                             message: req.body.message,
                             createdAt: (new Date()).getTime()
                         })
@@ -61,14 +63,15 @@ var ReportSchema = function(dbDriver) {
         session
             .run("MATCH (author:User)-[report:REPORT]->(target) \
                 WHERE report.solved = false \
-                RETURN author.username, report.id, report.message, report.createdAt \
+                RETURN author.username, report.id, \
+                report.title, report.createdAt \
                 ORDER BY report.createdAt DESC")
             .then(function(result) {
                 res.send({
                     reports: result.records.map(function(report) {
                         return {
                             id: report.get("report.id"),
-                            message: report.get("report.message"),
+                            title: report.get("report.title"),
                             author: report.get("author.username"),
                             createdAt: report.get("report.createdAt")
                         };
@@ -79,6 +82,37 @@ var ReportSchema = function(dbDriver) {
             .catch(function(err) {
                 res.send({
                     fail: "Failed loading list of reports. Please try again."
+                });
+                session.close();
+            });
+    };
+
+    this.getSingle = function(req, res) {
+        var session = this.driver.session();
+
+        session
+            .run("MATCH (author:User)-[report:REPORT]->(target) \
+                WHERE report.id = {id} \
+                RETURN report.title, author.username, \
+                toString(labels(target)[0]), \
+                report.message, report.solved, report.createdAt",
+                {
+                    id: req.params.id
+                })
+            .then(function(result) {
+                res.send({
+                    title: result.records[0].get("report.title"),
+                    author: result.records[0].get("author.username"),
+                    type: result.records[0].get("toString(labels(target)[0])"),
+                    message: result.records[0].get("report.message"),
+                    solved: result.records[0].get("report.solved"),
+                    createdAt: result.records[0].get("report.createdAt")
+                });
+                session.close();
+            })
+            .catch(function(err) {
+                res.send({
+                    fail: "Failed loading report. Please try again."
                 });
                 session.close();
             });

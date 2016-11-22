@@ -1,0 +1,23 @@
+.body-dashboard p {
+    margin-top: 6px;
+}
+
+.body-dashboard p:last-child {
+    margin-bottom: 6px;
+}
+
+.button-reply {
+    display: block;
+    width: 102px;
+
+    -webkit-appearance: button;
+    -moz-appearance: button;
+    appearance: button;
+
+    text-decoration: none;
+    color: #000;
+
+    margin-top: 16px;
+    font-size: 11pt;
+    padding: 6px 4px;
+}

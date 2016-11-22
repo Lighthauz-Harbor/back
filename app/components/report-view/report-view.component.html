@@ -1,0 +1,31 @@
+<div class="content-dashboard">
+    <div class="title-dashboard">
+        <h1>Report Details</h1>
+        <h2>
+            Read the description below, and take action for the problems stated within.<br>
+            After that, reply to this report, about how you solved those problems.<br>
+            The reply will be directly sent to the user's email.
+        </h2>
+    </div>
+
+    <div class="body-dashboard">
+        <p>
+            <strong>Title: </strong> {{ report.title }}
+        </p>
+        <p>
+            <strong>Reporter: </strong> {{ report.author }}
+        </p>
+        <p>
+            <strong>Report type (User or Idea): </strong> {{ report.type }}
+        </p>
+        <p>
+            <strong>Message:</strong><br>
+            {{ report.message }}
+        </p>
+        <p>
+            <strong>Solved: </strong> {{ report.solved ? "Already solved." : "Not solved yet." }}
+        </p>
+    </div>
+
+    <a class="button-reply" href="/reports/reply/{{report.id}}">Reply to report</a>
+</div>
