@@ -14,8 +14,8 @@ var routes = require("./server/routes/routes");
  * Neo4j configuration
  */
 var neo4j = require("neo4j-driver").v1;
-var dbDriver = neo4j.driver("bolt://localhost", 
-    neo4j.auth.basic("neo4j", "neo4j"));
+var dbDriver = neo4j.driver(process.env.DB_ADDR, 
+    neo4j.auth.basic(process.env.DB_USER, process.env.DB_PASS));
 
 /**
  * Express
