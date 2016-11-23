@@ -19,8 +19,12 @@
             <strong>Report type (User or Idea): </strong> {{ report.type }}
         </p>
         <p>
-            <strong>Message:</strong><br>
+            <strong>User's message:</strong><br>
             {{ report.message }}
+        </p>
+        <p>
+            <strong>Administrator's reply:</strong><br>
+            {{ report.reply === "" ? "No reply has been sent yet." : report.reply }}
         </p>
         <p>
             <strong>Solved: </strong> {{ report.solved ? "Already solved." : "Not solved yet." }}

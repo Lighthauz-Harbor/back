@@ -21,6 +21,7 @@ import { UpdateIdeaComponent } from "./components/idea-update/idea-update.compon
 
 import { ReportsListComponent } from "./components/reports-list/reports-list.component";
 import { ViewReportComponent } from "./components/report-view/report-view.component";
+import { ReplyToReportComponent } from "./components/report-reply/report-reply.component";
 
 import { AuthenticationGuard } from "./services/authentication.guard";
 import { AuthenticationService } from "./services/authentication.service";
@@ -53,6 +54,7 @@ import "./vendor/vendor"; // vendor.ts file
         UpdateIdeaComponent,
         ReportsListComponent,
         ViewReportComponent,
+        ReplyToReportComponent,
     ],
     providers: [ 
         AuthenticationGuard,

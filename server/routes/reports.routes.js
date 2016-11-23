@@ -16,4 +16,8 @@ module.exports = function(router, dbDriver) {
         reportSchema.getSingle(req, res);
     });
 
+    router.put("/reports/reply/:id", function(req, res) {
+        reportSchema.reply(req, res);
+    });
+
 };

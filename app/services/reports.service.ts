@@ -24,4 +24,12 @@ export class ReportsService {
             });
     }
 
+    replyToReport(id: string, reply: string, solved: boolean): Observable<any> {
+        return this.http.put(("/api/reports/reply/" + id), 
+            { reply, solved })
+            .map((res: Response) => {
+                return JSON.parse(res.text());
+            });
+    }
+
 }

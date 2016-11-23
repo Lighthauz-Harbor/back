@@ -1,4 +1,5 @@
 var uuid = require("uuid");
+var nodemailer = require("nodemailer");
 
 var ReportSchema = function(dbDriver) {
     this.driver = dbDriver;
@@ -94,8 +95,8 @@ var ReportSchema = function(dbDriver) {
             .run("MATCH (author:User)-[report:REPORT]->(target) \
                 WHERE report.id = {id} \
                 RETURN report.title, author.username, \
-                toString(labels(target)[0]), \
-                report.message, report.solved, report.createdAt",
+                toString(labels(target)[0]), report.message, \
+                report.reply, report.solved, report.createdAt",
                 {
                     id: req.params.id
                 })
@@ -105,6 +106,7 @@ var ReportSchema = function(dbDriver) {
                     author: result.records[0].get("author.username"),
                     type: result.records[0].get("toString(labels(target)[0])"),
                     message: result.records[0].get("report.message"),
+                    reply: result.records[0].get("report.reply"),
                     solved: result.records[0].get("report.solved"),
                     createdAt: result.records[0].get("report.createdAt")
                 });
@@ -115,6 +117,77 @@ var ReportSchema = function(dbDriver) {
                     fail: "Failed loading report. Please try again."
                 });
                 session.close();
+            });
+    };
+
+    this.reply = function(req, res) {
+        var session = this.driver.session();
+
+        session
+            .run("MATCH (author:User)-[report:REPORT]->(target) \
+                WHERE report.id = {id} \
+                SET report.reply = {reply}, \
+                report.solved = {solved} \
+                RETURN author.name, author.username, report.message", 
+                {
+                    id: req.params.id,
+                    reply: req.body.reply,
+                    solved: req.body.solved
+                })
+            .then(function(result) {
+                var authorName = result.records[0].get("author.name");
+                var authorEmail = result.records[0].get("author.username");
+                var message = result.records[0].get("report.message");
+
+                var smtpConfig = {
+                    host: process.env.EMAIL_HOST,
+                    port: process.env.EMAIL_PORT,
+                    secure: true,
+                    auth: {
+                        user: process.env.EMAIL_ADDR,
+                        pass: process.env.EMAIL_PASS
+                    }
+                };
+
+                var transporter = nodemailer.createTransport(smtpConfig);
+
+                var replyText = "Dear " + authorName + ",\n\n" +
+                    "In response to your following report:\n\n" +
+                    '"' + message + '"\n\n' +
+                    "Here's what our administrator informs, regarding what they have done to help you:\n\n" +
+                    '"' + req.body.reply + '"\n\n' +
+                    (req.body.solved ? "Therefore, your problem is all cleared." :
+                        "We apologize that we cannot solve your problem now.") + "\n\n" +
+                    "That is all from us. We hope you may understand. Thank you for your attention.\n\n" +
+                    "Regards,\n\nLighthauz Harbor team.";
+
+                var mailOptions = {
+                    from: '"Lighthauz Harbor" <' + process.env.EMAIL_ADDR + '>',
+                    to: authorEmail,
+                    subject: "Response to your previous report",
+                    text: replyText
+                };
+
+                transporter.sendMail(mailOptions, function(error, info) {
+                    if (error) {
+                        console.log(error);
+                        res.send({
+                            message: "Failed sending reply to user's email (your reply has been stored). Please try again."
+                        });
+                        session.close();
+                    } else {
+                        console.log("Message sent: " + info.response);
+                        res.send({
+                            message: "Reply successfully sent to user's email!"
+                        });
+                        session.close();
+                    }
+                });
+            })
+            .catch(function(err) {
+                res.send({
+                    message: "Failed storing reply to user in our database. Please try again."
+                });
             });
     };
 

@@ -1,0 +1,62 @@
+<div class="content-dashboard">
+    <div class="title-dashboard">
+        <h1>Reply to report</h1>
+        <h2>
+            Reply to the following report in the provided text area.<br>
+            In the reply, describe about how you fixed the problem.<br>
+            Once you submit this reply, the report along with its reply will be sent to the user's email.<br>
+            Fields marked with (*) are required.
+        </h2>
+    </div>
+
+    <div class="form-wrapper-dashboard">
+        <form class="form-dashboard form-report" (ngSubmit)="onSubmitReply()" #reportForm="ngForm">
+
+            <div class="form-group">
+                <p>
+                    <strong>Title: </strong> {{ report.title }}
+                </p>
+                <p>
+                    <strong>Report type: </strong> {{ report.type }}
+                </p>
+            </div>
+            
+            <div class="form-group">
+                <div class="form-col-2">
+                    <label for="message">User's message:</label>
+                    <textarea class="report-textarea" 
+                        name="message" 
+                        [(ngModel)]="report.message" 
+                        disabled></textarea>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="form-col-2">
+                    <label for="reply">Adminstrator's reply: (*)</label>
+                    <textarea class="report-textarea" 
+                        name="reply"
+                        [(ngModel)]="report.reply"
+                        required></textarea>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="form-col-1">
+                    <label for="solved">Solved: (*)</label>
+                    <select name="solved" 
+                        [(ngModel)]="solved"
+                        required>
+                        <option *ngFor="let s of solvedChoices" 
+                            [value]="s">{{s}}</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <button type="submit">Reply</button>
+            </div>
+
+        </form>
+    </div>
+</div>

@@ -6,18 +6,19 @@ import { Report } from "../../models/report.model.app";
 import { ReportsService } from "../../services/reports.service";
 
 @Component({
-    selector: "view-report",
-    templateUrl: "./report-view.component.html",
-    styles: [ require("./report-view.component.css").toString() ]
+    selector: "reply-to-report",
+    templateUrl: "./report-reply.component.html",
+    styles: [ require("./report-reply.component.css").toString() ]
 })
-export class ViewReportComponent implements OnInit {
+export class ReplyToReportComponent implements OnInit {
 
-    // initialized using default values (must not be null)
     private report: Report = new Report("", "", "", "", "", false, "", new Date(0));
+    private solved: string;
+    private solvedChoices: string[] = ["No", "Yes"];
 
     constructor(
         private route: ActivatedRoute,
-        private router: Router,
+        private router: Router, 
         private reportsService: ReportsService) {
 
     }
@@ -31,21 +32,24 @@ export class ViewReportComponent implements OnInit {
                         alert(json.fail);
                         this.router.navigate(["/reports"]);
                     } else {
-                        /*this.report = new Report(id, 
-                            json.title, json.author, json.message, 
-                            "", json.solved, json.type, 
-                            new Date(json.createdAt));*/
                         this.report.id = id;
                         this.report.title = json.title;
-                        this.report.author = json.author;
+                        this.report.type = json.type;
                         this.report.message = json.message;
                         this.report.reply = json.reply;
-                        this.report.solved = json.solved;
-                        this.report.type = json.type;
-                        this.report.createdAt = new Date(json.createdAt);
                     }
                 });
         });
     }
 
+    onSubmitReply(): void {
+        this.report.solved = this.solved === "Yes";
+
+        this.reportsService.replyToReport(
+                this.report.id, this.report.reply, this.report.solved)
+            .subscribe((result: any) => {
+                alert(result.message);
+                this.router.navigate(["/reports"]);
+            });
+    }
 }
