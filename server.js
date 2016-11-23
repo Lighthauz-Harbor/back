@@ -44,8 +44,7 @@ app.use(passport.session());
 
 routes(app, dbDriver, passport);
 
-var host = "localhost";
 var PORT = process.env.PORT || 3000;
 var server = app.listen(PORT, function() {
-    console.log("Server is listening at http://" + host + ":" + PORT);
+    console.log("Server is listening at port " + PORT);
 });

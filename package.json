@@ -3,8 +3,7 @@
   "version": "0.0.1",
   "main": "server.js",
   "scripts": {
-    "dev": "concurrently --kill-others \"npm run pack:dev\" \"npm run serve:dev\" ",
-    "start": "concurrently --kill-others --raw \"npm run serve\" \"npm run pack\" ",
+    "start": "npm run pack && npm run serve",
     "pack": "webpack",
     "pack:dev": "webpack --watch",
     "serve": "node server.js",
