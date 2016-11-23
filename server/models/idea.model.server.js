@@ -400,6 +400,50 @@ var IdeaSchema = function(dbDriver) {
                 session.close();
             });
     };
+
+    this.getTotalIdeasCount = function(req, res) {
+        var session = this.driver.session();
+
+        session
+            .run("MATCH (i:Idea) RETURN count(i)")
+            .then(function(result) {
+                res.send({
+                    count: neo4jInt(result.records[0].get("count(i)")).toNumber()
+                });
+                session.close();
+            })
+            .catch(function(err) {
+                res.send({
+                    count: -1
+                });
+                session.close();
+            });
+    };
+
+    this.getTodayCount = function(req, res) {
+        var session = this.driver.session();
+
+        session
+            .run("MATCH (i:Idea)<-[m:MAKE]-(:User) \
+                WHERE m.lastChanged >= {today} \
+                RETURN count(m)", 
+                {
+                    // exactly today's date, at 00:00
+                    today: (new Date((new Date()).toDateString())).getTime()
+                })
+            .then(function(result) {
+                res.send({
+                    count: neo4jInt(result.records[0].get("count(m)")).toNumber()
+                });
+                session.close();
+            })
+            .catch(function(err) {
+                res.send({
+                    count: -1
+                });
+                session.close();
+            });
+    };
 };
 
 module.exports = IdeaSchema;

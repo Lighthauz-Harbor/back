@@ -28,4 +28,12 @@ module.exports = function(router, dbDriver) {
         ideaSchema.deleteIdeas(req, res);
     });
 
+    router.get("/ideas/total-ideas", function(req, res) {
+        ideaSchema.getTotalIdeasCount(req, res);
+    });
+
+    router.get("/ideas/today/count", function(req, res) {
+        ideaSchema.getTodayCount(req, res);
+    });
+
 };

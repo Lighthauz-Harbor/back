@@ -1,5 +1,6 @@
 var uuid = require("uuid");
 var bcrypt = require("bcrypt-nodejs");
+var neo4jInt = require("neo4j-driver").v1.int;
 
 var UserSchema = function(dbDriver) {
     this.driver = dbDriver;
@@ -374,7 +375,7 @@ var UserSchema = function(dbDriver) {
             .run("MATCH (u:User) RETURN count(u)")
             .then(function(result) {
                 res.send({
-                    count: result.records[0].get("count(u)")
+                    count: neo4jInt(result.records[0].get("count(u)")).toNumber()
                 });
                 session.close();
             })
@@ -384,6 +385,26 @@ var UserSchema = function(dbDriver) {
                 });
                 session.close();
             });
+    };
+
+    this.getUserActivityCount = function(req, res) {
+        var session = this.driver.session();
+        
+        session
+            .run("MATCH (:User)-[r]->() RETURN count(r)")
+            .then(function(result) {
+                res.send({
+                    count: neo4jInt(result.records[0].get("count(r)")).toNumber()
+                });
+                session.close();
+            })
+            .catch(function(err) {
+                res.send({
+                    count: -1
+                });
+                session.close();
+            });
+
     };
 };
 

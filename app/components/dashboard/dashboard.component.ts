@@ -29,7 +29,33 @@ export class DashboardComponent implements OnInit {
     }
 
     ngOnInit(): void {
+        this.getUserInfo();
+        this.getIdeaInfo();
         this.loadRecentReports();
+    }
+
+    private getUserInfo(): void {
+        this.usersService.getUserActivityCount()
+            .subscribe((json: any) => {
+                this.userActivity = json.count;
+            });
+
+        this.usersService.getTotalUsersCount()
+            .subscribe((json: any) => {
+                this.totalUsers = json.count;
+            });
+    }
+
+    private getIdeaInfo(): void {
+        this.ideasService.getTodayCount()
+            .subscribe((json: any) => {
+                this.ideasToday = json.count;
+            });
+
+        this.ideasService.getTotalIdeasCount()
+            .subscribe((json: any) => {
+                this.totalIdeas = json.count;
+            });
     }
 
     private loadRecentReports(): void {

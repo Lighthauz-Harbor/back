@@ -54,4 +54,18 @@ export class IdeasService {
                 return JSON.parse(res.text());
             });
     }
+
+    getTotalIdeasCount(): Observable<any> {
+        return this.http.get("/api/ideas/total-ideas")
+            .map((res: Response) => {
+                return JSON.parse(res.text());
+            });
+    }
+
+    getTodayCount(): Observable<any> {
+        return this.http.get("/api/ideas/today/count")
+            .map((res: Response) => {
+                return JSON.parse(res.text());
+            });
+    }
 }

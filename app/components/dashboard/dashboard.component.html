@@ -12,8 +12,8 @@
                     <h3>User info</h3>
                 </div>
                 <div class="stat-info">
-                    <p><span class="activity-stat">12,345</span> user activities</p>
-                    <p><span class="total-stat">1,234</span> total users</p>
+                    <p><span class="activity-stat">{{ userActivity < 0 ? "ERR" : userActivity }}</span> user activities</p>
+                    <p><span class="total-stat">{{ totalUsers < 0 ? "ERR" : totalUsers }}</span> total users</p>
                 </div>
             </div>
 
@@ -23,8 +23,8 @@
                     <h3>Idea info</h3>
                 </div>
                 <div class="stat-info">
-                    <p><span class="activity-stat">12,345</span> ideas today</p>
-                    <p><span class="total-stat">1,234</span> total ideas</p>
+                    <p><span class="activity-stat">{{ ideasToday < 0 ? "ERR" : ideasToday }}</span> ideas today</p>
+                    <p><span class="total-stat">{{ totalIdeas < 0 ? "ERR" : totalIdeas }}</span> total ideas</p>
                 </div>
             </div> 
         </div>

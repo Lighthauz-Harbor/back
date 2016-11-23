@@ -55,11 +55,15 @@ export class UsersService {
             });
     } 
 
-    /**
-     * Statistics for dashboard page
-     */
     getTotalUsersCount(): Observable<any> {
         return this.http.get("/api/users/total-users")
+            .map((res: Response) => {
+                return JSON.parse(res.text());
+            });
+    }
+
+    getUserActivityCount(): Observable<any> {
+        return this.http.get("/api/users/activity-count")
             .map((res: Response) => {
                 return JSON.parse(res.text());
             });
