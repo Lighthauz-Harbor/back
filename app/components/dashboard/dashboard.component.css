@@ -1,9 +1,9 @@
 .content-dashboard {
     height: 100%;
-    padding-left: 252px;
-    padding-right: 12px;
-    padding-top: 8px;
-    padding-bottom: -8px;
+    margin-left: 252px;
+    margin-right: 12px;
+    margin-top: 8px;
+    margin-bottom: -8px;
     background-color: #efefef;
 }
 
