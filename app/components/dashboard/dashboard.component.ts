@@ -1,9 +1,10 @@
 import { Component, OnInit } from "@angular/core";
-import { Router } from "@angular/router";
 
-import { User } from "../../models/user.model.app";
+import { Report } from "../../models/report.model.app";
 
-import { AuthenticationService } from "../../services/authentication.service";
+import { UsersService } from "../../services/users.service";
+import { IdeasService } from "../../services/ideas.service";
+import { ReportsService } from "../../services/reports.service";
 
 @Component({
     selector: "dashboard",
@@ -11,12 +12,45 @@ import { AuthenticationService } from "../../services/authentication.service";
     styles: [ require("./dashboard.component.css").toString() ]
 })
 export class DashboardComponent implements OnInit {
+
+    private message: string = "";
+
+    private userActivity: number = 0;
+    private totalUsers: number = 0;
+    private ideasToday: number = 0;
+    private totalIdeas: number = 0;
+    private reportsList: Report[] = [];
+
     constructor(
-        private router: Router,
-        private authService: AuthenticationService) {
+        private usersService: UsersService,
+        private ideasService: IdeasService,
+        private reportsService: ReportsService) {
+
     }
 
     ngOnInit(): void {
-        //
+        this.loadRecentReports();
+    }
+
+    private loadRecentReports(): void {
+        this.reportsService.getRecent().subscribe((json: any) => {
+            if (json.fail) {
+                this.message = json.fail;
+            } else if (json.reports.length === 0) {
+                this.message = "There are no unsolved reports, so far.";
+            } else {
+                json.reports.map((report: any) => {
+                    this.reportsList.push(new Report(
+                        report.id,
+                        report.title,
+                        report.author,
+                        "",
+                        "",
+                        false,
+                        "",
+                        new Date(report.createdAt)));
+                });
+            }
+        });
     }
 }

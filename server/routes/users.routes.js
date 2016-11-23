@@ -28,4 +28,8 @@ module.exports = function(router, dbDriver) {
         userSchema.deleteUsers(req, res);
     });
 
+    router.get("/users/total-users", function(req, res) {
+        userSchema.getTotalUsersCount(req, res);
+    });
+
 };

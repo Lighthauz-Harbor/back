@@ -17,6 +17,13 @@ export class ReportsService {
             });
     }
 
+    getRecent(): Observable<any> {
+        return this.http.get("/api/reports/recent")
+            .map((res: Response) => {
+                return JSON.parse(res.text());
+            });
+    }
+
     getSingle(id: string): Observable<any> {
         return this.http.get("/api/reports/get/" + id)
             .map((res: Response) => {

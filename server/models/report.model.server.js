@@ -88,6 +88,36 @@ var ReportSchema = function(dbDriver) {
             });
     };
 
+    this.getRecent = function(req, res) {
+        var session = this.driver.session();
+
+        session
+            .run("MATCH (author:User)-[report:REPORT]->(target) \
+                WHERE report.solved = false \
+                RETURN author.username, report.id, \
+                report.title, report.createdAt \
+                ORDER BY report.createdAt DESC LIMIT 4")
+            .then(function(result) {
+                res.send({
+                    reports: result.records.map(function(report) {
+                        return {
+                            id: report.get("report.id"),
+                            title: report.get("report.title"),
+                            author: report.get("author.username"),
+                            createdAt: report.get("report.createdAt")
+                        };
+                    })
+                });
+                session.close();
+            })
+            .catch(function(err) {
+                res.send({
+                    fail: "Failed loading list of reports. Please try again."
+                });
+                session.close();
+            });
+    };
+
     this.getSingle = function(req, res) {
         var session = this.driver.session();
 

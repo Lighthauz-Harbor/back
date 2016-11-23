@@ -3,8 +3,6 @@ import { Http, Response } from "@angular/http";
 
 import { Observable } from "rxjs";
 
-import { User } from "../models/user.model.app";
-
 @Injectable()
 export class UsersService {
 
@@ -56,5 +54,15 @@ export class UsersService {
                 return JSON.parse(res.text());
             });
     } 
+
+    /**
+     * Statistics for dashboard page
+     */
+    getTotalUsersCount(): Observable<any> {
+        return this.http.get("/api/users/total-users")
+            .map((res: Response) => {
+                return JSON.parse(res.text());
+            });
+    }
 
 }

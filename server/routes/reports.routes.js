@@ -12,6 +12,10 @@ module.exports = function(router, dbDriver) {
         reportSchema.listReports(req, res);
     });
 
+    router.get("/reports/recent", function(req, res) {
+        reportSchema.getRecent(req, res);
+    });
+
     router.get("/reports/get/:id", function(req, res) {
         reportSchema.getSingle(req, res);
     });

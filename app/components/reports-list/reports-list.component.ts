@@ -30,7 +30,7 @@ export class ReportsListComponent implements OnInit {
             if (json.fail) {
                 this.message = json.fail;
             } else if (json.reports.length === 0) {
-                this.message = "There are no reports, so far.";
+                this.message = "There are no unsolved reports, so far.";
             } else {
                 json.reports.map((report: any) => {
                     this.list.push(new Report(

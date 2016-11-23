@@ -3,4 +3,64 @@
         <h1>Dashboard</h1>
         <h2>View recent users, ideas, and reports.</h2>
     </div>
+
+    <div class="info-dashboard">
+        <div class="info-group">
+            <div class="info-col-1 user-info">
+                <div class="pic-info">
+                    <i class="fa fa-user fa-5x"></i>
+                    <h3>User info</h3>
+                </div>
+                <div class="stat-info">
+                    <p><span class="activity-stat">12,345</span> user activities</p>
+                    <p><span class="total-stat">1,234</span> total users</p>
+                </div>
+            </div>
+
+            <div class="info-col-1 idea-info">
+                <div class="pic-info">
+                    <i class="fa fa-lightbulb-o fa-5x"></i>
+                    <h3>Idea info</h3>
+                </div>
+                <div class="stat-info">
+                    <p><span class="activity-stat">12,345</span> ideas today</p>
+                    <p><span class="total-stat">1,234</span> total ideas</p>
+                </div>
+            </div> 
+        </div>
+
+        <div class="info-group">
+            <div class="info-col-2 reports-info">
+                <div class="heading-info">
+                    <h3><i class="fa fa-files-o"></i> Recent Reports</h3>
+                </div>
+
+                <div class="table-info">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Report title</th>
+                                <th>User / reporter</th>
+                                <th>Last submitted at</th>
+                            </tr>
+                        </thead>
+                        <tbody *ngIf="reportsList.length <= 0">
+                            <tr>
+                                <td class="table-message" colspan="3">
+                                    {{ message || "Error loading reports. Please refresh." }}
+                                </td>
+                            </tr>
+                        </tbody>
+                        <tbody *ngIf="reportsList.length > 0">
+                            <tr *ngFor="let report of reportsList">
+                                <td>{{ report.title }}</td>
+                                <td>{{ report.author }}</td>
+                                <td>{{ report.createdAt.toDateString() }}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>

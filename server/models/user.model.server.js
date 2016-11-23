@@ -366,6 +366,25 @@ var UserSchema = function(dbDriver) {
                 session.close();
             });
     };
+
+    this.getTotalUsersCount = function(req, res) {
+        var session = this.driver.session();
+
+        session
+            .run("MATCH (u:User) RETURN count(u)")
+            .then(function(result) {
+                res.send({
+                    count: result.records[0].get("count(u)")
+                });
+                session.close();
+            })
+            .catch(function(err) {
+                res.send({
+                    count: -1
+                });
+                session.close();
+            });
+    };
 };
 
 module.exports = UserSchema;

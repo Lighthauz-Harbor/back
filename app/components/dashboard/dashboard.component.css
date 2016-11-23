@@ -17,3 +17,106 @@
     font-size: 12pt;
     margin-bottom: 12px;
 }
+
+.info-group {
+    width: 100%;
+    margin-bottom: 16px;
+}
+
+.info-group, .info-col-1, .info-col-2 {
+}
+
+.info-col-1, .info-col-2 {
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+
+    overflow: hidden;
+    padding: 24px;
+    background-color: #fff;
+
+    -webkit-box-shadow: 1px 1px 2px 0px rgba(0,0,0,0.55);
+    -moz-box-shadow: 1px 1px 2px 0px rgba(0,0,0,0.55);
+    box-shadow: 1px 1px 2px 0px rgba(0,0,0,0.55); 
+}
+
+.info-col-1 {
+    width: 48.75%; 
+}
+
+.info-col-2 {
+}
+
+.info-col-1:first-child {
+    float: left;
+    margin-right: 2.5%;
+}
+
+.info-col-1:last-child {
+    margin-left: 2.5%;
+}
+
+.user-info i.fa {
+    color: #22baa0;
+}
+
+.idea-info i.fa {
+    color: #f6d433;
+}
+
+.pic-info, .stat-info {
+    display: block;
+}
+
+.pic-info {
+    float: left;
+    text-align: center;
+    margin-right: 20px;
+}
+
+.pic-info i.fa {
+    font-size: 72pt;
+}
+
+.pic-info h3, .heading-info h3 {
+    font-size: 20pt;
+    font-weight: 100;
+}
+
+.stat-info {
+    text-align: right;
+}
+
+.stat-info p {
+    font-size: 16pt;
+}
+
+.activity-stat, .total-stat {
+    font-size: 36pt;
+    font-weight: 600;
+}
+
+.activity-stat, .heading-info h3 i.fa {
+    color: #ce4949;
+}
+
+.total-stat {
+    color: #12afcb;
+}
+
+.heading-info {
+    margin-bottom: 12px;
+}
+
+.heading-info h3 i.fa {
+    font-size: 40pt;
+}
+
+.table-info table {
+    width: 100%;
+}
+
+.table-info table th,
+.table-info table td {
+    text-align: left;
+}
