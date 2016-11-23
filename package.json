@@ -61,9 +61,7 @@
     "sha1": "^1.1.1",
     "uuid": "^2.0.3",
     "webpack": "^1.13.3",
-    "zone.js": "^0.6.26"
-  },
-  "devDependencies": {
+    "zone.js": "^0.6.26",
     "angular2-styles-loader": "^1.0.0",
     "angular2-template-loader": "^0.5.0",
     "css-loader": "^0.25.0",
