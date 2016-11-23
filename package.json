@@ -3,6 +3,7 @@
   "version": "0.0.1",
   "main": "server.js",
   "scripts": {
+    "postinstall": "webpack",
     "start": "npm run serve",
     "build": "webpack -p",
     "pack": "webpack",
