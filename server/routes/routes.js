@@ -7,6 +7,8 @@ var usersRoutes = require("./users.routes");
 var ideasRoutes = require("./ideas.routes");
 var reportsRoutes = require("./reports.routes");
 
+var newsFeedRoutes = require("./news-feed.routes");
+
 var path = require("path");
 var rootDir = path.resolve(__dirname, "..", "..");
 
@@ -43,9 +45,14 @@ module.exports = function(app, dbDriver, passport) {
     userAuthRoutes(userAuthRouter, dbDriver, passport, authMiddleware);
 
     var apiRouter = express.Router();
+
+    // for admin interface
     usersRoutes(apiRouter, dbDriver);
     ideasRoutes(apiRouter, dbDriver);
     reportsRoutes(apiRouter, dbDriver);
+
+    // for user application
+    newsFeedRoutes(apiRouter, dbDriver);
 
     app.use("/admin/auth", adminAuthRouter);
     app.use("/user/auth", userAuthRouter);
