@@ -49,4 +49,16 @@ module.exports = function(router, dbDriver,
         res.sendStatus(204);
     });
 
+    router.put("/generate-verif", function(req, res) {
+        userSchema.generateVerifCode(req, res);
+    });
+
+    router.get("/verify/:username/:code", function(req, res) {
+        userSchema.verifyAccount(req, res);
+    });
+
+    router.get("/is-verified/:username", function(req, res) {
+        userSchema.isVerified(req, res);
+    });
+
 };

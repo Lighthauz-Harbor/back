@@ -1,6 +1,8 @@
 var uuid = require("uuid");
 var nodemailer = require("nodemailer");
 
+var smtpConfig = require("../config/smtp");
+
 var ReportSchema = function(dbDriver) {
     this.driver = dbDriver;
 
@@ -168,16 +170,6 @@ var ReportSchema = function(dbDriver) {
                 var authorName = result.records[0].get("author.name");
                 var authorEmail = result.records[0].get("author.username");
                 var message = result.records[0].get("report.message");
-
-                var smtpConfig = {
-                    host: process.env.EMAIL_HOST,
-                    port: process.env.EMAIL_PORT,
-                    secure: true,
-                    auth: {
-                        user: process.env.EMAIL_ADDR,
-                        pass: process.env.EMAIL_PASS
-                    }
-                };
 
                 var transporter = nodemailer.createTransport(smtpConfig);
 

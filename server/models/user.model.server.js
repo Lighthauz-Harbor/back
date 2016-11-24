@@ -1,6 +1,9 @@
-var uuid = require("uuid");
 var bcrypt = require("bcrypt-nodejs");
+var uuid = require("uuid");
 var neo4jInt = require("neo4j-driver").v1.int;
+var nodemailer = require("nodemailer");
+
+var smtpConfig = require("../config/smtp");
 
 var UserSchema = function(dbDriver) {
     this.driver = dbDriver;
@@ -105,6 +108,141 @@ var UserSchema = function(dbDriver) {
                     session.close();
                 });
         }
+    };
+
+    this.generateVerifCode = function(req, res) {
+        var session = this.driver.session();
+
+        session
+            .run("MATCH (u:User) WHERE u.username = {username} \
+                SET u.verifCode = {verifCode} \
+                RETURN u.name, u.username, u.verifCode",
+                {
+                    username: req.body.username,
+                    verifCode: (Math.random() + 1).toString(36).substr(2, 20)
+                })
+            .then(function(result) {
+                var name = result.records[0].get("u.name");
+                var email = result.records[0].get("u.username");
+                var verifCode = result.records[0].get("u.verifCode");
+                var verifLink = "https://lighthauz.herokuapp.com/user/auth/verify/" + email + "/" + verifCode;
+
+                var transporter = nodemailer.createTransport(smtpConfig);
+
+                var replyText = "Dear " + name + ",\n\n" +
+                    "Thank you for registering into Lighthauz. To start using, please click the following verification link:\n\n" +
+                    verifLink + "\n\n" +
+                    "That is all from us. Have a nice day with Lighthauz. Thank you." + "\n\n" +
+                    "Regards,\n\nLighthauz Harbor team.";
+
+                var mailOptions = {
+                    from: '"Lighthauz Harbor" <' + process.env.EMAIL_ADDR + '>',
+                    to: email,
+                    subject: "Verify your account",
+                    text: replyText
+                };
+
+                transporter.sendMail(mailOptions, function(error, info) {
+                    if (error) {
+                        console.log(error);
+                        res.send({
+                            fail: "Verification failed. Please click the link below.",
+                            verifLink: verifLink
+                        });
+                        session.close();
+                    } else {
+                        console.log("Message sent: " + info.response);
+                        res.send({
+                            message: "A verification link has been sent to your email.\n" + 
+                                "Please check it (if not found, check your spam folder)."
+                        });
+                        session.close();
+                    }
+                });
+            })
+            .catch(function(err) {
+                res.send({
+                    fail: "Failed generating verification code. Please register again, or contact us at lighthauzharbor@gmail.com."
+                });
+                session.close();
+            });
+    };
+
+    this.verifyAccount = function(req, res) {
+        var username = req.params.username;
+        var verifCode = req.params.code;
+
+        var session = this.driver.session();
+
+        session
+            .run("MATCH (u:User) WHERE u.username = {username} \
+                RETURN u.name",
+                {
+                    username: username
+                })
+            .then(function(result) {
+                session
+                    .run("MATCH (u:User) WHERE u.verifCode = {verifCode} \
+                        RETURN u.name",
+                        {
+                            verifCode: verifCode
+                        })
+                    .then(function(result) {
+                        var name = result.records[0].get("u.name");
+
+                        session
+                            .run("MATCH (u:User) WHERE u.username = {username} \
+                                REMOVE u.verifCode",
+                                {
+                                    username: username
+                                })
+                            .then(function() {
+                                res.send("<h1>Congratulations, " + name + "!</h1>" +
+                                    "<p><strong>Your account has been verified!</strong></p>" + 
+                                    "<p>You may open the Lighthauz app and login with your account.</p>");
+                                session.close();
+                            })
+                            .catch(function(err) {
+                                res.send("<h1>Verification error.</h1>" +
+                                    "<p>Please <a href=\"https://lighthauz.herokuapp.com/user/auth/verify/" + 
+                                    username + "/" + verifCode + "\">click here</a> to verify again.</p>");
+                                session.close();
+                            });
+                    })
+                    .catch(function(err) {
+                        res.send("<h1>Your account has been verified.</h1>" +
+                            "<p>You may log in to Lighthauz with your account.</p>");
+                        session.close();
+                    });
+            })
+            .catch(function(err) {
+                res.send("<h1>Your account has not been registered.</h1>" + 
+                    "<p>Please register first in Lighthauz, then verify your account.</p>");
+                session.close();
+            });
+    };
+
+    this.isVerified = function(req, res) {
+        var session = this.driver.session();
+
+        session
+            .run("MATCH (u:User) WHERE u.username = {username} AND \
+                NOT exists(u.verifCode) RETURN u.username",
+                {
+                    username: req.params.username
+                })
+            .then(function(result) {
+                res.send({
+                    verified: true
+                });
+                session.close();
+            })
+            .catch(function(err) {
+                res.send({
+                    verified: false
+                });
+                session.close();
+            });
     };
 
     this.strategy = function(username, password, done) {
