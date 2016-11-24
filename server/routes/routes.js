@@ -1,6 +1,8 @@
 var express = require("express");
 
+var userAuthRoutes = require("./user-auth.routes");
 var adminAuthRoutes = require("./admin-auth.routes");
+
 var usersRoutes = require("./users.routes");
 var ideasRoutes = require("./ideas.routes");
 var reportsRoutes = require("./reports.routes");
@@ -35,15 +37,18 @@ module.exports = function(app, dbDriver, passport) {
     };
 
     // Assign routes to app and router
-    var adminRouter = express.Router();
-    adminAuthRoutes(adminRouter, dbDriver, passport, adminMiddleware);
+    var adminAuthRouter = express.Router();
+    var userAuthRouter = express.Router();
+    adminAuthRoutes(adminAuthRouter, dbDriver, passport, adminMiddleware);
+    userAuthRoutes(userAuthRouter, dbDriver, passport, authMiddleware);
 
     var apiRouter = express.Router();
     usersRoutes(apiRouter, dbDriver);
     ideasRoutes(apiRouter, dbDriver);
     reportsRoutes(apiRouter, dbDriver);
 
-    app.use("/admin/auth", adminRouter);
+    app.use("/admin/auth", adminAuthRouter);
+    app.use("/user/auth", userAuthRouter);
     app.use("/api", apiRouter);
 
     // Fallback route (other route handling is handled in Angular 2)

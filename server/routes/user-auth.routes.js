@@ -4,7 +4,7 @@ var LocalStrategy = require("passport-local").Strategy;
 var UserSchema = require("../models/user.model.server");
 
 module.exports = function(router, dbDriver,
-                          passport, adminMiddleware) {
+                          passport, authMiddleware) {
 
     var userSchema = new UserSchema(dbDriver);
 
@@ -33,16 +33,15 @@ module.exports = function(router, dbDriver,
 
     router.post("/login", 
         passport.authenticate("local", {
-            failureRedirect: "/admin/auth/fail"
+            failureRedirect: "/user/auth/fail"
         }),
-        adminMiddleware,
+        authMiddleware,
         function(req, res) {
             res.send({
                 username: req.user.username,
                 token: jwt.sign(req.user, "i am a keyboard cat")
             });
-        }
-    );
+        });
 
     router.post("/logout", function(req, res) {
         req.logOut();
