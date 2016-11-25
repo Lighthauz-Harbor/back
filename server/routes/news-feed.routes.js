@@ -5,7 +5,7 @@ module.exports = function(router, dbDriver) {
 
         session
             .run("MATCH (u:User)-[m:MAKE]->(i:Idea)<-[:CATEGORIZE]-(c:Category) \
-                RETURN u.id, u.name, \
+                RETURN u.id, u.name, u.profilePic, \
                 i.id, i.pic, i.title, i.description, \
                 c.name, m.lastChanged \
                 ORDER BY m.lastChanged DESC \
@@ -21,7 +21,8 @@ module.exports = function(router, dbDriver) {
                         return {
                             author: {
                                 id: post.get("u.id"),
-                                name: post.get("u.name")
+                                name: post.get("u.name"),
+                                pic: post.get("u.profilePic")
                             },
                             idea: {
                                 id: post.get("i.id"),
