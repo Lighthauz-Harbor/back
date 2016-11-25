@@ -7,7 +7,7 @@ module.exports = function(router, dbDriver) {
             .run("MATCH (u:User)-[m:MAKE]->(i:Idea)<-[:CATEGORIZE]-(c:Category) \
                 RETURN u.id, u.name, u.profilePic, \
                 i.id, i.pic, i.title, i.description, \
-                c.name, m.lastChanged \
+                c.name, m.lastChanged, m.createdAt \
                 ORDER BY m.lastChanged DESC \
                 SKIP {skip} LIMIT {num}",
                 {
@@ -31,7 +31,7 @@ module.exports = function(router, dbDriver) {
                                 description: post.get("i.description"),
                                 category: post.get("c.name")
                             },
-                            timestamp: post.get("m.lastChanged")
+                            type: post.get("m.createdAt") === post.get("m.lastChanged") ? "create" : "update"
                         };
                     })
                 });

@@ -14,7 +14,7 @@ var IdeaSchema = function(dbDriver) {
         // if it doesn't exist)
         var createQuery = "MATCH (u: User) WHERE u.id = {authorId} \
             MERGE (c: Category {name: {categoryName}}) \
-            CREATE (u)-[m:MAKE {lastChanged: {createdAt}}]->(i:Idea \
+            CREATE (u)-[m:MAKE {createdAt: {createdAt}, lastChanged: {createdAt}}]->(i:Idea \
                 { \
                     id: {ideaId}, \
                     title: {title}, \
@@ -196,7 +196,7 @@ var IdeaSchema = function(dbDriver) {
     // helper function that only updates the idea's values
     this._updateIdeaValues = function(session, req, res, pic) {
         session
-            .run("MATCH (i:Idea) WHERE i.id = {ideaId} \
+            .run("MATCH (i:Idea)<-[m:MAKE]-(:User) WHERE i.id = {ideaId} \
                 SET \
                 i.title = {title}, \
                 i.description = {description}, \
@@ -218,7 +218,8 @@ var IdeaSchema = function(dbDriver) {
                 i.keyResources = {keyResources}, \
                 i.keyPartners = {keyPartners}, \
                 i.costStructure = {costStructure}, \
-                i.revenueStreams = {revenueStreams}", 
+                i.revenueStreams = {revenueStreams}, \
+                m.lastChanged = {lastChanged}", 
                 {
                     ideaId: req.body.id,
                     title: req.body.title,
@@ -242,6 +243,7 @@ var IdeaSchema = function(dbDriver) {
                     keyPartners: req.body.keyPartners,
                     costStructure: req.body.costStructure,
                     revenueStreams: req.body.revenueStreams,
+                    lastChanged: (new Date()).getTime()
                 })
             .then(function() {
                 res.send({
@@ -292,13 +294,13 @@ var IdeaSchema = function(dbDriver) {
                                     .run("MATCH (u1:User)-[mOld:MAKE]->(i:Idea) \
                                         WHERE u1.username = {oldAuthor} \
                                         AND i.id = {ideaId} \
-                                        WITH u1, mOld, i \
+                                        WITH u1, mOld, mOld.createdAt AS createdAt, i \
                                         DELETE mOld \
                                         WITH i \
                                         MATCH (u2:User) WHERE u2.username = {newAuthor} \
                                         WITH i, u2 \
                                         CREATE (u2)-[mNew:MAKE \
-                                        {lastChanged: {lastChanged}}]->(i)",
+                                        {createdAt: {lastChanged}, lastChanged: {lastChanged}}]->(i)",
                                         {
                                             ideaId: req.body.id,
                                             oldAuthor: oldAuthor,
@@ -346,8 +348,8 @@ var IdeaSchema = function(dbDriver) {
                                             MATCH (u2:User) WHERE u2.username = {newAuthor} \
                                             WITH i, u2 \
                                             MERGE (c2:Category {name: {newCategory}}) \
-                                            CREATE (u2)-[mNew:MAKE {lastChanged: \
-                                                {lastChanged}}]->(i)<-[\
+                                            CREATE (u2)-[mNew:MAKE {createdAt: {lastChanged}, \
+                                                lastChanged: {lastChanged}}]->(i)<-[\
                                                 crNew:CATEGORIZE]-(c2)", 
                                                 {
                                                     ideaId: req.body.id,
@@ -444,6 +446,20 @@ var IdeaSchema = function(dbDriver) {
                 session.close();
             });
     };
+
+    /*this.getIdeaListFromUser = function(req, res) {
+        var session = this.driver.session();
+
+        session
+            .run("MATCH (u:User)-[:MAKE]->(i:Idea)<-[cr:CATEGORIZE]-(c:Category) \
+                WHERE u.id = {userId} \
+                RETURN i.id, i.title, i.description",
+                {
+                    userId: req.params.userId
+                })
+            .then()
+            .catch();
+    };*/
 };
 
 module.exports = IdeaSchema;
