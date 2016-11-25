@@ -17,7 +17,15 @@ module.exports = function(router, dbDriver) {
     });
 
     router.get("/ideas/search/:term", function(req, res) {
-        ideaSchema.search(req, res);
+        ideaSchema.searchAsAdmin(req, res);
+    });
+
+    router.get("/ideas/search/title/:title", function(req, res) {
+        ideaSchema.searchByTitle(req, res);
+    });
+
+    router.get("/ideas/search/category/:category", function(req, res) {
+        ideaSchema.searchByCategory(req, res);
     });
 
     router.put("/ideas/update/:id", function(req, res) {
@@ -39,5 +47,6 @@ module.exports = function(router, dbDriver) {
     router.get("/ideas/list/:userId", function(req, res) {
         ideaSchema.getIdeaListFromUser(req, res);
     });
+
 
 };

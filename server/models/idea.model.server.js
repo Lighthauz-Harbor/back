@@ -127,22 +127,22 @@ var IdeaSchema = function(dbDriver) {
             });
     };
 
-    this.search = function(req, res) {
+    this.searchAsAdmin = function(req, res) {
         var titleRegex = "(?i).*" + req.params.term + ".*";
         var session = this.driver.session();
         session
-            .run("MATCH (i:Idea)<-[m:MAKE]-(u:User) \
+            .run("MATCH (u:User)-[m:MAKE]->(i:Idea) \
                 WHERE i.title =~ {titleRegex} \
-                RETURN i, m.lastChanged, u.username ORDER BY i.title ASC",
+                RETURN i.id, i.title, i.description, \
+                m.lastChanged, u.username ORDER BY i.title ASC",
                 { titleRegex: titleRegex })
             .then(function(result) {
                 res.send({
                     results: result.records.map(function(record) {
-                        var idea = record.get("i").properties;
                         return {
-                            id: idea.id,
-                            title: idea.title,
-                            description: idea.description,
+                            id: record.get("i.id"),
+                            title: record.get("i.title"),
+                            description: record.get("i.description"),
                             author: record.get("u.username"),
                             lastChanged: (
                                 new Date(record.get("m.lastChanged"))
@@ -155,6 +155,71 @@ var IdeaSchema = function(dbDriver) {
             .catch(function(err) {
                 res.send({
                     fail: "Failed searching for idea. Please try again."
+                });
+                session.close();
+            });
+    };
+
+    this.searchByTitle = function(req, res) {
+        var titleRegex = "(?i).*" + req.params.title + ".*";
+        var session = this.driver.session();
+        session
+            .run("MATCH (:User)-[m:MAKE]->(i:Idea)<-[:CATEGORIZE]-(c:Category) \
+                WHERE i.title =~ {titleRegex} \
+                RETURN i.id, i.title, i.description, i.pic, \
+                c.name, m.lastChanged \
+                ORDER BY m.lastChanged DESC", 
+                { titleRegex: titleRegex })
+            .then(function(result) {
+                res.send({
+                    results: result.records.map(function(record) {
+                        return {
+                            id: record.get("i.id"),
+                            title: record.get("i.title"),
+                            description: record.get("i.description"),
+                            pic: record.get("i.pic"),
+                            category: record.get("c.name")
+                        };
+                    })
+                });
+                session.close();
+            })
+            .catch(function(err) {
+                res.send({
+                    fail: "Failed searching for ideas. Please try again."
+                });
+                session.close();
+            });
+    };
+
+    this.searchByCategory = function(req, res) {
+        var categoryRegex = "(?i).*" + req.params.category + ".*";
+        var session = this.driver.session();
+
+        session
+            .run("MATCH (:User)-[m:MAKE]->(i:Idea)<-[:CATEGORIZE]-(c:Category) \
+                WHERE c.name =~ {categoryRegex} \
+                RETURN i.id, i.title, i.description, i.pic, \
+                c.name, m.lastChanged \
+                ORDER BY m.lastChanged DESC",
+                { categoryRegex: categoryRegex })
+            .then(function(result) {
+                res.send({
+                    results: result.records.map(function(record) {
+                        return {
+                            id: record.get("i.id"),
+                            title: record.get("i.title"),
+                            description: record.get("i.description"),
+                            pic: record.get("i.pic"),
+                            category: record.get("c.name")
+                        };
+                    })
+                });
+                session.close();
+            })
+            .catch(function(err) {
+                res.send({
+                    fail: "Failed searching for ideas. Please try again."
                 });
                 session.close();
             });
@@ -481,6 +546,7 @@ var IdeaSchema = function(dbDriver) {
                 session.close();
             });
     };
+
 };
 
 module.exports = IdeaSchema;
