@@ -447,19 +447,40 @@ var IdeaSchema = function(dbDriver) {
             });
     };
 
-    /*this.getIdeaListFromUser = function(req, res) {
+    this.getIdeaListFromUser = function(req, res) {
         var session = this.driver.session();
 
         session
-            .run("MATCH (u:User)-[:MAKE]->(i:Idea)<-[cr:CATEGORIZE]-(c:Category) \
+            .run("MATCH (u:User)-[m:MAKE]->(i:Idea)<-[cr:CATEGORIZE]-(c:Category) \
                 WHERE u.id = {userId} \
-                RETURN i.id, i.title, i.description",
+                RETURN i.id, i.title, i.description, i.pic, c.name, \
+                m.createdAt, m.lastChanged",
                 {
                     userId: req.params.userId
                 })
-            .then()
-            .catch();
-    };*/
+            .then(function(result) {
+                res.send({
+                    ideas: result.records.map(function(idea) {
+                        return {
+                            id: idea.get("i.id"),
+                            title: idea.get("i.title"),
+                            description: idea.get("i.description"),
+                            pic: idea.get("i.pic"),
+                            category: idea.get("c.name"),
+                            timestamp: idea.get("m.lastChanged"),
+                            type: idea.get("m.createdAt") === idea.get("m.lastChanged") ? "create" : "update",
+                        };
+                    })
+                });
+                session.close();
+            })
+            .catch(function(err) {
+                res.send({
+                    fail: "Failed loading list of ideas from user. Please try again."
+                });
+                session.close();
+            });
+    };
 };
 
 module.exports = IdeaSchema;

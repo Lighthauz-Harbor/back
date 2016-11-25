@@ -36,8 +36,8 @@ module.exports = function(router, dbDriver) {
         ideaSchema.getTodayCount(req, res);
     });
 
-    /*router.get("/ideas/list/:userId", function(req, res) {
+    router.get("/ideas/list/:userId", function(req, res) {
         ideaSchema.getIdeaListFromUser(req, res);
-    });*/
+    });
 
 };
