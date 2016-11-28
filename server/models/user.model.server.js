@@ -541,7 +541,7 @@ var UserSchema = function(dbDriver) {
         var session = this.driver.session();
 
         session
-            .run("MATCH (u:User) RETURN count(u)")
+            .run("MATCH (u:User) WHERE u.role = 'user' RETURN count(u)")
             .then(function(result) {
                 res.send({
                     count: neo4jInt(result.records[0].get("count(u)")).toNumber()
