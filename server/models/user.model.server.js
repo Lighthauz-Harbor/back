@@ -73,7 +73,7 @@ var UserSchema = function(dbDriver) {
             var session = this.driver.session();
 
             session
-                .run("MATCH (u:User) WHERE u.username = {username} RETURN u", 
+                .run("MATCH (u:User) WHERE u.username = {username} RETURN u.id",
                     {username: params.username})
                 .then(function(result) {
                     if (result.records.length > 0) {
@@ -287,11 +287,18 @@ var UserSchema = function(dbDriver) {
     this.getSingle = function(req, res) {
         var session = this.driver.session();
         session
-            .run("MATCH (u:User) WHERE u.username = {username} RETURN u", 
-                {username: req.params.username})
+            .run("MATCH (u:User) WHERE u.username = {username} \
+                RETURN u.id, u.name, u.username, u.bio, u.profilePic", 
+                { username: req.params.username })
             .then(function(result) {
-                var user = result.records[0].get(0).properties;
-                res.send(user);
+                var user = result.records[0];
+                res.send({
+                    id: user.get("u.id"),
+                    name: user.get("u.name"),
+                    username: user.get("u.username"),
+                    bio: user.get("u.bio"),
+                    profilePic: user.get("u.profilePic")
+                });
                 session.close();
             })
             .catch(function(err) {
@@ -302,21 +309,45 @@ var UserSchema = function(dbDriver) {
             });
     };
 
+    this.getSingleById = function(req, res) {
+        var session = this.driver.session();
+        session
+            .run("MATCH (u:User) WHERE u.id = {id} \
+                RETURN u.id, u.name, u.username, u.bio, u.profilePic", 
+                { id: req.params.id })
+            .then(function(result) {
+                var user = result.records[0];
+                res.send({
+                    id: user.get("u.id"),
+                    name: user.get("u.name"),
+                    username: user.get("u.username"),
+                    bio: user.get("u.bio"),
+                    profilePic: user.get("u.profilePic")
+                });
+                session.close();
+            })
+            .catch(function(err) {
+                res.send({
+                    fail: "Failed finding user with that id. Please try again."
+                });
+                session.close();
+            });
+    };
+
     this.listUsers = function(req, res) {
         var session = this.driver.session();
         session
-            .run("MATCH (u:User) WHERE u.role = 'user' RETURN u \
+            .run("MATCH (u:User) WHERE u.role = 'user' \
+                RETURN u.name, u.username, u.profilePic, u.createdAt \
                 ORDER BY u.createdAt DESC")
             .then(function(result) {
                 res.send({
                     results: result.records.map(function(record) {
-                        var user = record.get(0).properties;
-                        // don't send id and password in this response
                         return {
-                            name: user.name,
-                            username: user.username,
-                            profilePic: user.profilePic,
-                            createdAt: (new Date(user.createdAt)).toDateString(),
+                            name: record.get("u.name"),
+                            username: record.get("u.username"),
+                            profilePic: record.get("u.profilePic"),
+                            createdAt: (new Date(record.get("u.createdAt"))).toDateString(),
                             // TODO insert user's last activity below 
                             // (in `lastActivity` property)
                         };
@@ -336,19 +367,19 @@ var UserSchema = function(dbDriver) {
         var nameRegex = "(?i).*" + req.params.term + ".*";
         var session = this.driver.session();
         session
-            .run("MATCH (u:User) WHERE u.name =~ {nameRegex} AND \
-                u.role = 'user' RETURN u ORDER BY u.name ASC", 
+            .run("MATCH (u:User) WHERE u.name =~ {nameRegex} \
+                AND u.role = 'user' \
+                RETURN u.name, u.username, u.createdAt, u.profilePic \
+                ORDER BY u.name ASC", 
                 { nameRegex: nameRegex })
             .then(function(result) {
                 res.send({
                     results: result.records.map(function(record) {
-                        var user = record.get(0).properties;
-
                         return {
-                            name: user.name,
-                            username: user.username,
-                            createdAt: user.createdAt,
-                            profilePic: user.profilePic
+                            name: record.get("u.name"),
+                            username: record.get("u.username"),
+                            createdAt: record.get("u.createdAt"),
+                            profilePic: record.get("u.profilePic")
                             // TODO insert user's last activity below 
                             // (in `lastActivity` property)                            
                         };

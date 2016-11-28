@@ -16,6 +16,10 @@ module.exports = function(router, dbDriver) {
         userSchema.getSingle(req, res);
     });
 
+    router.get("/users/get/id/:id", function(req, res) {
+        userSchema.getSingleById(req, res);
+    });
+
     router.get("/users/search/:term", function(req, res) {
         userSchema.search(req, res);
     });
