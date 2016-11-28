@@ -542,7 +542,288 @@ var UserSchema = function(dbDriver) {
                 });
                 session.close();
             });
+    };
 
+    this.getConnections = function(req, res) {
+        var session = this.driver.session();
+
+        session
+            .run("MATCH (from:User)-[c:CONNECT]-(to:User) \
+                WHERE from.id = {userId} AND c.status = 1 \
+                RETURN to.id, to.name, to.bio, to.profilePic", 
+                {
+                    userId: req.params.userId
+                })
+            .then(function(result) {
+                res.send({
+                    connections: result.records.map(function(record) {
+                        return {
+                            id: record.get("to.id"),
+                            name: record.get("to.name"),
+                            bio: record.get("to.bio"),
+                            profilePic: record.get("to.profilePic")
+                        };
+                    })
+                });
+                session.close();
+            })
+            .catch(function(err) {
+                res.send({
+                    connections: []
+                });
+                session.close();
+            });
+    };
+
+    this.sendConnectionRequest = function(req, res) {
+        var session = this.driver.session();
+
+        session
+            .run("MATCH (from:User)-[c:CONNECT]-(to:User) \
+                WHERE from.id = {fromId} AND to.id = {toId} \
+                RETURN c.status",
+                {
+                    fromId: req.body.fromId,
+                    toId: req.body.toId
+                })
+            .then(function(result) { // check user connection status
+                // connection status:
+                // -1 = rejected, 0 = only sent request, 1 = accepted
+                var status = neo4jInt(result.records[0].get("c.status")).toNumber();
+
+                switch (status) {
+                    case 1:
+                        res.send({
+                            message: "Both users are already connected."
+                        });
+                        session.close();
+                        break;
+                    case 0:
+                        res.send({
+                            message: "Your request has previously been sent. Please wait for them to accept."
+                        });
+                        session.close();
+                        break;
+                    case -1: // in this case, send request as usual
+                        session
+                            .run("MATCH (from:User)-[c:CONNECT]-(to:User) \
+                                WHERE from.id = {fromId} AND to.id = {toId} \
+                                SET c.status = 0, \
+                                c.lastChanged = {lastChanged}",
+                                {
+                                    fromId: req.body.fromId,
+                                    toId: req.body.toId,
+                                    lastChanged: (new Date()).getTime()
+                                })
+                            .then(function() {
+                                res.send({
+                                    message: "Successfully sent request to connect."
+                                });
+                                session.close();
+                            })
+                            .catch(function(err) {
+                                res.send({
+                                    message: "Error sending request. Please try again."
+                                });
+                                session.close();
+                            });
+                        break;
+                }
+            })
+            .catch(function(err) { // not an error, just connect both users
+                session
+                    .run("MATCH (from:User), (to:User) \
+                        WHERE from.id = {fromId} AND to.id = {toId} \
+                        CREATE (from)-[c:CONNECT \
+                        {status: 0, lastChanged: {lastChanged}}]->(to)",
+                        {
+                            fromId: req.body.fromId,
+                            toId: req.body.toId,
+                            lastChanged: (new Date()).getTime()
+                        })
+                    .then(function() {
+                        res.send({
+                            message: "Successfully sent request to connect."
+                        });
+                        session.close();
+                    })
+                    .catch(function(err) {
+                        res.send({
+                            message: "Error sending request. User may not exist. Please try again."
+                        });
+                        session.close();
+                    });
+            });
+    };
+
+    this.acceptRequest = function(req, res) {
+        var session = this.driver.session();
+
+        session
+            .run("MATCH (from:User)-[c:CONNECT]-(to:User) \
+                WHERE from.id = {fromId} AND to.id = {toId} \
+                RETURN c.status",
+                {
+                    fromId: req.body.fromId,
+                    toId: req.body.toId
+                })
+            .then(function(result) {
+                var status = neo4jInt(result.records[0].get("c.status")).toNumber();
+
+                switch (status) {
+                    case 1:
+                        res.send({
+                            message: "Both of you are already connected!"
+                        });
+                        session.close();
+                        break;
+                    case 0:
+                        session
+                            .run("MATCH (from:User)-[c:CONNECT]-(to:User) \
+                                WHERE from.id = {fromId} AND to.id = {toId} \
+                                SET c.status = 1, c.lastChanged = {lastChanged}",
+                                {
+                                    fromId: req.body.fromId,
+                                    toId: req.body.toId,
+                                    lastChanged: (new Date()).getTime()
+                                })
+                            .then(function() {
+                                res.send({
+                                    message: "You have been connected!"
+                                });
+                                session.close();
+                            })
+                            .catch(function(err) {
+                                res.send({
+                                    message: "Failed to accept connection. Please try again."
+                                });
+                                session.close();
+                            });
+                        break;
+                    case -1:
+                        res.send({
+                            message: "You need to send connection request to them first."
+                        });
+                        session.close();
+                        break;
+                }
+            })
+            .catch(function(err) {
+                res.send({
+                    message: "You need to send connection request to them first."
+                });
+                session.close();
+            });
+    };
+
+    this.rejectRequest = function(req, res) {
+        var session = this.driver.session();
+
+        session
+            .run("MATCH (from:User)-[c:CONNECT]-(to:User) \
+                WHERE from.id = {fromId} AND to.id = {toId} \
+                RETURN c.status",
+                {
+                    fromId: req.body.fromId,
+                    toId: req.body.toId
+                })
+            .then(function(result) {
+                var status = neo4jInt(result.records[0].get("c.status")).toNumber();
+
+                switch (status) {
+                    case 1:
+                        res.send({
+                            message: "Both of you are already connected. Instead, go to their profile and click 'Remove'."
+                        });
+                        session.close();
+                        break;
+                    case 0:
+                        session
+                            .run("MATCH (from:User)-[c:CONNECT]-(to:User) \
+                                WHERE from.id = {fromId} AND to.id = {toId} \
+                                SET c.status = -1, c.lastChanged = {lastChanged}",
+                                {
+                                    fromId: req.body.fromId,
+                                    toId: req.body.toId,
+                                    lastChanged: (new Date()).getTime()
+                                })
+                            .then(function() {
+                                res.send({
+                                    message: "Successfully rejected request."
+                                });
+                                session.close();
+                            })
+                            .catch(function(err) {
+                                res.send({
+                                    message: "Error rejecting request. Please try again."
+                                });
+                                session.close();
+                            });
+                        break;
+                    case -1:
+                        res.send({
+                            message: "The request has been previously rejected."
+                        });
+                        session.close();
+                        break;
+                }
+            })
+            .catch(function(err) {
+                res.send({
+                    message: "Cannot reject request, both of you are already not connected."
+                });
+                session.close();
+            });
+    };
+
+    this.removeConnection = function(req, res) {
+        var session = this.driver.session();
+
+        session
+            .run("MATCH (from:User)-[c:CONNECT]-(to:User) \
+                WHERE from.id = {fromId} AND to.id = {toId} \
+                RETURN c.status",
+                {
+                    fromId: req.body.fromId,
+                    toId: req.body.toId
+                })
+            .then(function(result) {
+                var status = neo4jInt(result.records[0].get("c.status")).toNumber();
+                if (status === 1) {
+                    session
+                        .run("MATCH (from:User)-[c:CONNECT]-(to:User) \
+                            WHERE from.id = {fromId} AND to.id = {toId} \
+                            DELETE c",
+                            {
+                                fromId: req.body.fromId,
+                                toId: req.body.toId
+                            })
+                        .then(function() {
+                            res.send({
+                                message: "Successfully removed connection."
+                            });
+                            session.close();
+                        })
+                        .catch(function(err) {
+                            res.send({
+                                message: "Failed removing connection. Please try again."
+                            });
+                            session.close();
+                        });
+                } else {
+                    res.send({
+                        message: "Error removing connection: Both of you are already not connected."
+                    });
+                    session.close();
+                }
+            })
+            .catch(function(err) {
+                console.log(err);
+                res.send({
+                    message: "Error removing connection: you may not be connected with each other before."
+                });
+                session.close();
+            });
     };
 };
 

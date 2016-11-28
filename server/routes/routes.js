@@ -8,6 +8,7 @@ var ideasRoutes = require("./ideas.routes");
 var reportsRoutes = require("./reports.routes");
 
 var newsFeedRoutes = require("./news-feed.routes");
+var userConnRoutes = require("./user-conn.routes");
 
 var path = require("path");
 var rootDir = path.resolve(__dirname, "..", "..");
@@ -48,11 +49,12 @@ module.exports = function(app, dbDriver, passport) {
 
     // for admin interface
     usersRoutes(apiRouter, dbDriver);
-    ideasRoutes(apiRouter, dbDriver);
+    ideasRoutes(apiRouter, dbDriver); // also for Android app
     reportsRoutes(apiRouter, dbDriver);
 
     // for user application
     newsFeedRoutes(apiRouter, dbDriver);
+    userConnRoutes(apiRouter, dbDriver);
 
     app.use("/admin/auth", adminAuthRouter);
     app.use("/user/auth", userAuthRouter);
