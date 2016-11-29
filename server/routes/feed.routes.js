@@ -47,7 +47,7 @@ module.exports = function(router, dbDriver) {
             });
     });
 
-    router.put("/like", function(req, res) {
+    router.post("/like", function(req, res) {
         var session = dbDriver.session();
 
         session
@@ -71,7 +71,7 @@ module.exports = function(router, dbDriver) {
             });
     });
 
-    router.put("/unlike", function(req, res) {
+    router.post("/unlike", function(req, res) {
         var session = dbDriver.session();
 
         session
@@ -93,5 +93,7 @@ module.exports = function(router, dbDriver) {
                 session.close();
             });
     });
+
+    router.put("/comment");
 
 };
