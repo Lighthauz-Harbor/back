@@ -146,7 +146,7 @@ var UserSchema = function(dbDriver) {
                     if (error) {
                         console.log(error);
                         res.send({
-                            fail: "Verification failed. Please click the link below.",
+                            fail: "Failed sending verification link to your email. Please click the link below.",
                             verifLink: verifLink
                         });
                         session.close();
