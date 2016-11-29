@@ -7,7 +7,7 @@ var usersRoutes = require("./users.routes");
 var ideasRoutes = require("./ideas.routes");
 var reportsRoutes = require("./reports.routes");
 
-var newsFeedRoutes = require("./news-feed.routes");
+var feedRoutes = require("./feed.routes"); // feed = news feed and user profile
 var userConnRoutes = require("./user-conn.routes");
 
 var path = require("path");
@@ -53,7 +53,7 @@ module.exports = function(app, dbDriver, passport) {
     reportsRoutes(apiRouter, dbDriver);
 
     // for user application
-    newsFeedRoutes(apiRouter, dbDriver);
+    feedRoutes(apiRouter, dbDriver);
     userConnRoutes(apiRouter, dbDriver);
 
     app.use("/admin/auth", adminAuthRouter);

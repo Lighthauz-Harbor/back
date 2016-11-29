@@ -47,4 +47,51 @@ module.exports = function(router, dbDriver) {
             });
     });
 
+    router.put("/like", function(req, res) {
+        var session = dbDriver.session();
+
+        session
+            .run("MATCH (u:User), (i:Idea) \
+                WHERE u.id = {userId} AND i.id = {ideaId} \
+                CREATE (u)-[:LIKE {lastChanged: {lastChanged}}]->(i)",
+                {
+                    userId: req.body.userId,
+                    ideaId: req.body.ideaId,
+                    lastChanged: (new Date()).getTime()
+                })
+            .then(function() {
+                res.sendStatus(200);
+                session.close();
+            })
+            .catch(function(err) {
+                res.send({
+                    fail: "Failed to like this post. Please try again."
+                });
+                session.close();
+            });
+    });
+
+    router.put("/unlike", function(req, res) {
+        var session = dbDriver.session();
+
+        session
+            .run("MATCH (u:User)-[l:LIKE]->(i:Idea) \
+                WHERE u.id = {userId} AND i.id = {ideaId} \
+                DELETE l",
+                {
+                    userId: req.body.userId,
+                    ideaId: req.body.ideaId
+                })
+            .then(function() {
+                res.sendStatus(200);
+                session.close();
+            })
+            .catch(function(err) {
+                res.send({
+                    fail: "Failed to unlike this post. Please try again."
+                });
+                session.close();
+            });
+    });
+
 };
