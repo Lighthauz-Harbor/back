@@ -71,6 +71,35 @@ module.exports = function(router, dbDriver) {
             });
     });
 
+    router.get("/like/list/:ideaId", function(req, res) {
+        var session = dbDriver.session();
+
+        session
+            .run("MATCH (u:User)-[l:LIKE]->(i:Idea) \
+                WHERE i.id = {ideaId} \
+                RETURN u.id, u.name, u.profilePic \
+                ORDER BY l.lastChanged DESC",
+                { ideaId: req.params.ideaId })
+            .then(function(result) {
+                res.send({
+                    list: result.records.map(function(user) {
+                        return {
+                            id: user.get("u.id"),
+                            name: user.get("u.name"),
+                            profilePic: user.get("u.profilePic")
+                        };
+                    })
+                });
+                session.close();
+            })
+            .catch(function(err) {
+                res.send({
+                    fail: "Failed fetching list of likers. Please try again."
+                });
+                session.close();
+            });
+    });
+
     router.post("/unlike", function(req, res) {
         var session = dbDriver.session();
 
@@ -115,6 +144,40 @@ module.exports = function(router, dbDriver) {
             .catch(function(err) {
                 res.send({
                     fail: "Failed commenting this post. Please try again."
+                });
+                session.close();
+            });
+    });
+
+    router.get("/comment/list/:ideaId", function(req, res) {
+        var session = dbDriver.session();
+
+        session
+            .run("MATCH (u:User)-[c:COMMENT]->(i:Idea) \
+                WHERE i.id = {ideaId} \
+                RETURN u.id, u.name, u.profilePic, c.comment, c.lastChanged",
+                { ideaId: req.params.ideaId })
+            .then(function(result) {
+                res.send({
+                    list: result.records.map(function(item) {
+                        return {
+                            author: {
+                                id: item.get("u.id"),
+                                name: item.get("u.name"),
+                                profilePic: item.get("u.profilePic")
+                            },
+                            comment: {
+                                text: item.get("c.comment"),
+                                timestamp: item.get("c.lastChanged")
+                            }
+                        };
+                    })
+                });
+                session.close();
+            })
+            .catch(function(err) {
+                res.send({
+                    fail: "Failed fetching list of comments. Please try again."
                 });
                 session.close();
             });
