@@ -1,16 +1,20 @@
+var neo4jInt = require("neo4j-driver").v1.int;
+
 module.exports = function(router, dbDriver) {
 
-    router.get("/news/:skip/:num", function(req, res) {
+    router.get("/news/:userId/:skip/:num", function(req, res) {
         var session = dbDriver.session();
 
         session
-            .run("MATCH (u:User)-[m:MAKE]->(i:Idea)<-[:CATEGORIZE]-(c:Category) \
+            .run("MATCH (you:User)-[:CONNECT]-(u:User)-[m:MAKE]->(i:Idea)<-[:CATEGORIZE]-(c:Category) \
+                WHERE you.id = {userId} \
                 RETURN u.id, u.name, u.profilePic, \
-                i.id, i.pic, i.title, i.description, \
+                i.id, i.pic, i.title, i.description, i.visibility, \
                 c.name, m.lastChanged, m.createdAt \
                 ORDER BY m.lastChanged DESC \
                 SKIP {skip} LIMIT {num}",
                 {
+                    userId: req.params.userId,
                     skip: Number(req.params.skip),
                     num: Number(req.params.num)
                 })
@@ -31,6 +35,7 @@ module.exports = function(router, dbDriver) {
                                 description: post.get("i.description"),
                                 category: post.get("c.name")
                             },
+                            visibility: neo4jInt(post.get("i.visibility")).toNumber(),
                             type: post.get("m.createdAt") === post.get("m.lastChanged") ? "create" : "update",
                             timestamp: post.get("m.lastChanged")
                         };
