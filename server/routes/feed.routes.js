@@ -94,6 +94,30 @@ module.exports = function(router, dbDriver) {
             });
     });
 
-    router.put("/comment");
+    router.post("/comment", function(req, res) {
+        var session = dbDriver.session();
+
+        session
+            .run("MATCH (u:User), (i:Idea) \
+                WHERE u.id = {userId} AND i.id = {ideaId} \
+                CREATE (u)-[:COMMENT {comment: {comment}, \
+                lastChanged: {lastChanged}}]->(i)",
+                {
+                    userId: req.body.userId,
+                    ideaId: req.body.ideaId,
+                    comment: req.body.comment,
+                    lastChanged: (new Date()).getTime()
+                })
+            .then(function() {
+                res.sendStatus(200);
+                session.close();
+            })
+            .catch(function(err) {
+                res.send({
+                    fail: "Failed commenting this post. Please try again."
+                });
+                session.close();
+            });
+    });
 
 };
