@@ -38,6 +38,7 @@ module.exports = function(router, dbDriver,
         authMiddleware,
         function(req, res) {
             res.send({
+                id: req.user.id,
                 username: req.user.username,
                 token: jwt.sign(req.user, "i am a keyboard cat")
             });
