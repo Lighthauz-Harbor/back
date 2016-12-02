@@ -10,7 +10,7 @@ module.exports = function(dbDriver) {
             .then(function(result) {
                 res.send({
                     list: result.records.map(function(category) {
-                        return category;
+                        return category.get("c.name");
                     })
                 });
                 session.close();
