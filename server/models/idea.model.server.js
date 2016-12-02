@@ -230,8 +230,8 @@ var IdeaSchema = function(dbDriver) {
         session
             .run("MATCH (c:Category)-[:CATEGORIZE]->(i:Idea)<-[m:MAKE]-(u:User) \
                 WHERE i.id = {ideaId} \
-                RETURN i, u.id, u.username, u.name, u.bio, u.profilePic, \
-                c.name, m.lastChanged",
+                RETURN i, i.visibility, u.id, u.username, u.name, u.bio, \
+                u.profilePic, c.name, m.lastChanged",
                 { ideaId: req.params.id })
             .then(function(result) {
                 res.send({
@@ -243,6 +243,7 @@ var IdeaSchema = function(dbDriver) {
                         bio: result.records[0].get("u.bio"),
                         profilePic: result.records[0].get("u.profilePic")
                     },
+                    visibility: neo4jInt(result.records[0].get("i.visibility")).toNumber(),
                     category: result.records[0].get("c.name"),
                     timestamp: result.records[0].get("m.lastChanged")
                 });
