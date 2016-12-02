@@ -1,7 +1,7 @@
 export class User {
+
     private _name: string;
     private _username: string;
-    private _password: string;
     private _role: string;
     private _bio: string;
     private _profilePic: string; // URL to the file in image server
@@ -9,15 +9,15 @@ export class User {
     private _createdAt: Date;
     private _selected: boolean; // for selection in users list table
 
+    // don't assign passwords for security purposes
     constructor(
         username: string, 
         role: string,
         name: string = "Some Name",
         bio: string = "This is some bio",
         profilePic: string = "http://res.cloudinary.com/lighthauz-harbor/image/upload/v1478504599/default-profile-pic_hroujz.png",
-        dateOfBirth: Date = new Date(),
-        createdAt: Date = new Date(0),
-        password: string = "") {
+        dateOfBirth: Date = new Date(0),
+        createdAt: Date = new Date(0)) {
         
         this._name = name;
         this._username = username;
@@ -27,7 +27,6 @@ export class User {
         this._dateOfBirth = dateOfBirth;
         this._createdAt = createdAt;
         this._selected = false;
-        // don't assign passwords for security purposes
     }
 
     get name(): string {
@@ -44,10 +43,6 @@ export class User {
 
     set username(newUsername: string) {
         this._username = newUsername;
-    }
-
-    get password(): string {
-        return this._password;
     }
 
     get role(): string {

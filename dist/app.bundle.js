@@ -29954,13 +29954,13 @@ webpackJsonp([0],{
 
 	"use strict";
 	var User = (function () {
-	    function User(username, role, name, bio, profilePic, dateOfBirth, createdAt, password) {
+	    // don't assign passwords for security purposes
+	    function User(username, role, name, bio, profilePic, dateOfBirth, createdAt) {
 	        if (name === void 0) { name = "Some Name"; }
 	        if (bio === void 0) { bio = "This is some bio"; }
 	        if (profilePic === void 0) { profilePic = "http://res.cloudinary.com/lighthauz-harbor/image/upload/v1478504599/default-profile-pic_hroujz.png"; }
-	        if (dateOfBirth === void 0) { dateOfBirth = new Date(); }
+	        if (dateOfBirth === void 0) { dateOfBirth = new Date(0); }
 	        if (createdAt === void 0) { createdAt = new Date(0); }
-	        if (password === void 0) { password = ""; }
 	        this._name = name;
 	        this._username = username;
 	        this._role = role;
@@ -29969,7 +29969,6 @@ webpackJsonp([0],{
 	        this._dateOfBirth = dateOfBirth;
 	        this._createdAt = createdAt;
 	        this._selected = false;
-	        // don't assign passwords for security purposes
 	    }
 	    Object.defineProperty(User.prototype, "name", {
 	        get: function () {
@@ -29987,13 +29986,6 @@ webpackJsonp([0],{
 	        },
 	        set: function (newUsername) {
 	            this._username = newUsername;
-	        },
-	        enumerable: true,
-	        configurable: true
-	    });
-	    Object.defineProperty(User.prototype, "password", {
-	        get: function () {
-	            return this._password;
 	        },
 	        enumerable: true,
 	        configurable: true

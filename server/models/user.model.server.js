@@ -338,18 +338,17 @@ var UserSchema = function(dbDriver) {
         var session = this.driver.session();
         session
             .run("MATCH (u:User) WHERE u.role = 'user' \
-                RETURN u.name, u.username, u.profilePic, u.createdAt \
+                RETURN u.id, u.name, u.username, u.profilePic, u.createdAt \
                 ORDER BY u.createdAt DESC")
             .then(function(result) {
                 res.send({
                     results: result.records.map(function(record) {
                         return {
+                            id: record.get("u.id"),
                             name: record.get("u.name"),
                             username: record.get("u.username"),
                             profilePic: record.get("u.profilePic"),
                             createdAt: (new Date(record.get("u.createdAt"))).toDateString(),
-                            // TODO insert user's last activity below 
-                            // (in `lastActivity` property)
                         };
                     })
                 });
