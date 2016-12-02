@@ -98,7 +98,7 @@ var IdeaSchema = function(dbDriver) {
 
     this.listIdeas = function(req, res) {
         var session = this.driver.session();
-        // m.lastChanged: "modified at", i.createdAt: "created at"
+        // m.lastChanged: "modified at"
         session
             .run("MATCH (i:Idea)<-[m:MAKE]-(u:User) RETURN \
                 i.id, i.title, i.description, u.username, m.lastChanged \
@@ -228,17 +228,23 @@ var IdeaSchema = function(dbDriver) {
     this.getSingle = function(req, res) {
         var session = this.driver.session();
         session
-            .run("MATCH (c:Category)-[:CATEGORIZE]->(i:Idea)<-[:MAKE]-(u:User) \
-                WHERE i.id = {ideaId} RETURN i, u.username, c.name",
+            .run("MATCH (c:Category)-[:CATEGORIZE]->(i:Idea)<-[m:MAKE]-(u:User) \
+                WHERE i.id = {ideaId} \
+                RETURN i, u.id, u.username, u.name, u.bio, u.profilePic, \
+                c.name, m.lastChanged",
                 { ideaId: req.params.id })
             .then(function(result) {
                 res.send({
                     idea: result.records[0].get("i").properties,
-                    author: result.records[0].get("u.username"),
+                    author: {
+                        id: result.records[0].get("u.id"),
+                        name: result.records[0].get("u.name"),
+                        email: result.records[0].get("u.username"),
+                        bio: result.records[0].get("u.bio"),
+                        profilePic: result.records[0].get("u.profilePic")
+                    },
                     category: result.records[0].get("c.name"),
-                    visibility: neo4jInt(
-                        result.records[0].get("i").properties.visibility
-                    ).toNumber()
+                    timestamp: result.records[0].get("m.lastChanged")
                 });
                 session.close();
             })
