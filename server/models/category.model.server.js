@@ -2,6 +2,28 @@ module.exports = function(dbDriver) {
 
     this.driver = dbDriver;
 
+    this.listCategories = function(req, res) {
+        var session = this.driver.session();
+
+        session
+            .run("MATCH (c:Category) RETURN c.name")
+            .then(function(result) {
+                res.send({
+                    list: result.records.map(function(category) {
+                        return category;
+                    })
+                });
+                session.close();
+            })
+            .catch(function(err) {
+                res.send({
+                    fail: "Failed loading list of categories. Please try again."
+                });
+                session.close();
+            });
+
+    };
+
     this.setPreferredCategories = function(req, res) {
         var session = this.driver.session();
 
