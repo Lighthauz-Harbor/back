@@ -288,7 +288,8 @@ var UserSchema = function(dbDriver) {
         var session = this.driver.session();
         session
             .run("MATCH (u:User) WHERE u.username = {username} \
-                RETURN u.id, u.name, u.username, u.bio, u.profilePic", 
+                RETURN u.id, u.name, u.username, u.profilePic, \
+                u.bio, u.dateOfBirth, u.createdAt",
                 { username: req.params.username })
             .then(function(result) {
                 var user = result.records[0];
@@ -297,7 +298,9 @@ var UserSchema = function(dbDriver) {
                     name: user.get("u.name"),
                     username: user.get("u.username"),
                     bio: user.get("u.bio"),
-                    profilePic: user.get("u.profilePic")
+                    profilePic: user.get("u.profilePic"),
+                    dateOfBirth: user.get("u.dateOfBirth"),
+                    createdAt: user.get("u.createdAt")
                 });
                 session.close();
             })
@@ -338,7 +341,8 @@ var UserSchema = function(dbDriver) {
         var session = this.driver.session();
         session
             .run("MATCH (u:User) WHERE u.role = 'user' \
-                RETURN u.id, u.name, u.username, u.profilePic, u.createdAt \
+                RETURN u.id, u.name, u.username, u.profilePic, \
+                u.bio, u.createdAt \
                 ORDER BY u.createdAt DESC")
             .then(function(result) {
                 res.send({
@@ -348,7 +352,8 @@ var UserSchema = function(dbDriver) {
                             name: record.get("u.name"),
                             username: record.get("u.username"),
                             profilePic: record.get("u.profilePic"),
-                            createdAt: (new Date(record.get("u.createdAt"))).toDateString(),
+                            bio: record.get("u.bio"),
+                            createdAt: record.get("u.createdAt")
                         };
                     })
                 });
@@ -368,19 +373,20 @@ var UserSchema = function(dbDriver) {
         session
             .run("MATCH (u:User) WHERE u.name =~ {nameRegex} \
                 AND u.role = 'user' \
-                RETURN u.name, u.username, u.createdAt, u.profilePic \
+                RETURN u.id, u.name, u.username, u.profilePic \
+                u.bio, u.createdAt \
                 ORDER BY u.name ASC", 
                 { nameRegex: nameRegex })
             .then(function(result) {
                 res.send({
                     results: result.records.map(function(record) {
                         return {
+                            id: record.get("u.id"),
                             name: record.get("u.name"),
                             username: record.get("u.username"),
-                            createdAt: record.get("u.createdAt"),
-                            profilePic: record.get("u.profilePic")
-                            // TODO insert user's last activity below 
-                            // (in `lastActivity` property)                            
+                            profilePic: record.get("u.profilePic"),
+                            bio: record.get("u.bio"),
+                            createdAt: record.get("u.createdAt")
                         };
                     })
                 });

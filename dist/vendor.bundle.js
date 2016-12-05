@@ -109,7 +109,7 @@
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(global) {/**
-	 * @license Angular v2.2.4
+	 * @license Angular v2.2.2
 	 * (c) 2010-2016 Google, Inc. https://angular.io/
 	 * License: MIT
 	 */
@@ -185,7 +185,6 @@
 	        return o !== null && (typeof o === 'function' || typeof o === 'object');
 	    }
 	    function print(obj) {
-	        // tslint:disable-next-line:no-console
 	        console.log(obj);
 	    }
 	    function warn(obj) {
@@ -10882,7 +10881,7 @@
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(global) {/**
-	 * @license Angular v2.2.4
+	 * @license Angular v2.2.2
 	 * (c) 2010-2016 Google, Inc. https://angular.io/
 	 * License: MIT
 	 */
@@ -11074,12 +11073,23 @@
 	            });
 	            var previousStyleProps = Object.keys(this.previousStyles);
 	            if (previousStyleProps.length) {
-	                var startingKeyframe_1 = findStartingKeyframe(keyframes);
+	                var startingKeyframe_1 = keyframes[0];
+	                var missingStyleProps_1 = [];
 	                previousStyleProps.forEach(function (prop) {
-	                    if (isPresent(startingKeyframe_1[prop])) {
-	                        startingKeyframe_1[prop] = _this.previousStyles[prop];
+	                    if (!isPresent(startingKeyframe_1[prop])) {
+	                        missingStyleProps_1.push(prop);
 	                    }
+	                    startingKeyframe_1[prop] = _this.previousStyles[prop];
 	                });
+	                if (missingStyleProps_1.length) {
+	                    var _loop_1 = function(i) {
+	                        var kf = keyframes[i];
+	                        missingStyleProps_1.forEach(function (prop) { kf[prop] = _computeStyle(_this.element, prop); });
+	                    };
+	                    for (var i = 1; i < keyframes.length; i++) {
+	                        _loop_1(i);
+	                    }
+	                }
 	            }
 	            this._player = this._triggerWebAnimation(this.element, keyframes, this.options);
 	            this._finalKeyframe = _copyKeyframeStyles(keyframes[keyframes.length - 1]);
@@ -11169,19 +11179,6 @@
 	        });
 	        return newStyles;
 	    }
-	    function findStartingKeyframe(keyframes) {
-	        var startingKeyframe = keyframes[0];
-	        // it's important that we find the LAST keyframe
-	        // to ensure that style overidding is final.
-	        for (var i = 1; i < keyframes.length; i++) {
-	            var kf = keyframes[i];
-	            var offset = kf['offset'];
-	            if (offset !== 0)
-	                break;
-	            startingKeyframe = kf;
-	        }
-	        return startingKeyframe;
-	    }
 
 	    var WebAnimationsDriver = (function () {
 	        function WebAnimationsDriver() {
@@ -11190,10 +11187,8 @@
 	            if (previousPlayers === void 0) { previousPlayers = []; }
 	            var formattedSteps = [];
 	            var startingStyleLookup = {};
-	            if (isPresent(startingStyles) && startingStyles.styles.length > 0) {
+	            if (isPresent(startingStyles)) {
 	                startingStyleLookup = _populateStyles(startingStyles, {});
-	                startingStyleLookup['offset'] = 0;
-	                formattedSteps.push(startingStyleLookup);
 	            }
 	            keyframes.forEach(function (keyframe) {
 	                var data = _populateStyles(keyframe.styles, startingStyleLookup);
@@ -11396,7 +11391,6 @@
 	        };
 	        BrowserDomAdapter.prototype.log = function (error) {
 	            if (window.console) {
-	                // tslint:disable-next-line:no-console
 	                window.console.log && window.console.log(error);
 	            }
 	        };
@@ -13352,7 +13346,6 @@
 	        function AngularProfiler(ref) {
 	            this.appRef = ref.injector.get(_angular_core.ApplicationRef);
 	        }
-	        // tslint:disable:no-console
 	        /**
 	         * Exercises change detection in a loop and then prints the average amount of
 	         * time in milliseconds how long a single round of change detection takes for
@@ -13522,7 +13515,7 @@
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(global) {/**
-	 * @license Angular v2.2.4
+	 * @license Angular v2.2.2
 	 * (c) 2010-2016 Google, Inc. https://angular.io/
 	 * License: MIT
 	 */
@@ -15560,7 +15553,7 @@
 	     * {@example common/pipes/ts/async_pipe.ts region='AsyncPipePromise'}
 	     *
 	     * It's also possible to use `async` with Observables. The example below binds the `time` Observable
-	     * to the view. The Observable continuously updates the view with the current time.
+	     * to the view. The Observable continuesly updates the view with the current time.
 	     *
 	     * {@example common/pipes/ts/async_pipe.ts region='AsyncPipeObservable'}
 	     *
@@ -15670,7 +15663,6 @@
 	    }());
 	    var DATE_FORMATS_SPLIT = /((?:[^yMLdHhmsazZEwGjJ']+)|(?:'(?:[^']|'')*')|(?:E+|y+|M+|L+|d+|H+|h+|J+|j+|m+|s+|a|z|Z|G+|w+))(.*)/;
 	    var PATTERN_ALIASES = {
-	        // Keys are quoted so they do not get renamed during closure compilation.
 	        'yMMMdjms': datePartGetterFactory(combine([
 	            digitCondition('year', 1),
 	            nameCondition('month', 3),
@@ -15694,47 +15686,46 @@
 	        'jm': datePartGetterFactory(combine([digitCondition('hour', 1), digitCondition('minute', 1)]))
 	    };
 	    var DATE_FORMATS = {
-	        // Keys are quoted so they do not get renamed.
-	        'yyyy': datePartGetterFactory(digitCondition('year', 4)),
-	        'yy': datePartGetterFactory(digitCondition('year', 2)),
-	        'y': datePartGetterFactory(digitCondition('year', 1)),
-	        'MMMM': datePartGetterFactory(nameCondition('month', 4)),
-	        'MMM': datePartGetterFactory(nameCondition('month', 3)),
-	        'MM': datePartGetterFactory(digitCondition('month', 2)),
-	        'M': datePartGetterFactory(digitCondition('month', 1)),
-	        'LLLL': datePartGetterFactory(nameCondition('month', 4)),
-	        'L': datePartGetterFactory(nameCondition('month', 1)),
-	        'dd': datePartGetterFactory(digitCondition('day', 2)),
-	        'd': datePartGetterFactory(digitCondition('day', 1)),
-	        'HH': digitModifier(hourExtractor(datePartGetterFactory(hour12Modify(digitCondition('hour', 2), false)))),
-	        'H': hourExtractor(datePartGetterFactory(hour12Modify(digitCondition('hour', 1), false))),
-	        'hh': digitModifier(hourExtractor(datePartGetterFactory(hour12Modify(digitCondition('hour', 2), true)))),
-	        'h': hourExtractor(datePartGetterFactory(hour12Modify(digitCondition('hour', 1), true))),
-	        'jj': datePartGetterFactory(digitCondition('hour', 2)),
-	        'j': datePartGetterFactory(digitCondition('hour', 1)),
-	        'mm': digitModifier(datePartGetterFactory(digitCondition('minute', 2))),
-	        'm': datePartGetterFactory(digitCondition('minute', 1)),
-	        'ss': digitModifier(datePartGetterFactory(digitCondition('second', 2))),
-	        's': datePartGetterFactory(digitCondition('second', 1)),
+	        yyyy: datePartGetterFactory(digitCondition('year', 4)),
+	        yy: datePartGetterFactory(digitCondition('year', 2)),
+	        y: datePartGetterFactory(digitCondition('year', 1)),
+	        MMMM: datePartGetterFactory(nameCondition('month', 4)),
+	        MMM: datePartGetterFactory(nameCondition('month', 3)),
+	        MM: datePartGetterFactory(digitCondition('month', 2)),
+	        M: datePartGetterFactory(digitCondition('month', 1)),
+	        LLLL: datePartGetterFactory(nameCondition('month', 4)),
+	        L: datePartGetterFactory(nameCondition('month', 1)),
+	        dd: datePartGetterFactory(digitCondition('day', 2)),
+	        d: datePartGetterFactory(digitCondition('day', 1)),
+	        HH: digitModifier(hourExtractor(datePartGetterFactory(hour12Modify(digitCondition('hour', 2), false)))),
+	        H: hourExtractor(datePartGetterFactory(hour12Modify(digitCondition('hour', 1), false))),
+	        hh: digitModifier(hourExtractor(datePartGetterFactory(hour12Modify(digitCondition('hour', 2), true)))),
+	        h: hourExtractor(datePartGetterFactory(hour12Modify(digitCondition('hour', 1), true))),
+	        jj: datePartGetterFactory(digitCondition('hour', 2)),
+	        j: datePartGetterFactory(digitCondition('hour', 1)),
+	        mm: digitModifier(datePartGetterFactory(digitCondition('minute', 2))),
+	        m: datePartGetterFactory(digitCondition('minute', 1)),
+	        ss: digitModifier(datePartGetterFactory(digitCondition('second', 2))),
+	        s: datePartGetterFactory(digitCondition('second', 1)),
 	        // while ISO 8601 requires fractions to be prefixed with `.` or `,`
 	        // we can be just safely rely on using `sss` since we currently don't support single or two digit
 	        // fractions
-	        'sss': datePartGetterFactory(digitCondition('second', 3)),
-	        'EEEE': datePartGetterFactory(nameCondition('weekday', 4)),
-	        'EEE': datePartGetterFactory(nameCondition('weekday', 3)),
-	        'EE': datePartGetterFactory(nameCondition('weekday', 2)),
-	        'E': datePartGetterFactory(nameCondition('weekday', 1)),
-	        'a': hourClockExtractor(datePartGetterFactory(hour12Modify(digitCondition('hour', 1), true))),
-	        'Z': timeZoneGetter('short'),
-	        'z': timeZoneGetter('long'),
-	        'ww': datePartGetterFactory({}),
+	        sss: datePartGetterFactory(digitCondition('second', 3)),
+	        EEEE: datePartGetterFactory(nameCondition('weekday', 4)),
+	        EEE: datePartGetterFactory(nameCondition('weekday', 3)),
+	        EE: datePartGetterFactory(nameCondition('weekday', 2)),
+	        E: datePartGetterFactory(nameCondition('weekday', 1)),
+	        a: hourClockExtractor(datePartGetterFactory(hour12Modify(digitCondition('hour', 1), true))),
+	        Z: timeZoneGetter('short'),
+	        z: timeZoneGetter('long'),
+	        ww: datePartGetterFactory({}),
 	        // first Thursday of the year. not support ?
-	        'w': datePartGetterFactory({}),
+	        w: datePartGetterFactory({}),
 	        // of the year not support ?
-	        'G': datePartGetterFactory(nameCondition('era', 1)),
-	        'GG': datePartGetterFactory(nameCondition('era', 2)),
-	        'GGG': datePartGetterFactory(nameCondition('era', 3)),
-	        'GGGG': datePartGetterFactory(nameCondition('era', 4))
+	        G: datePartGetterFactory(nameCondition('era', 1)),
+	        GG: datePartGetterFactory(nameCondition('era', 2)),
+	        GGG: datePartGetterFactory(nameCondition('era', 3)),
+	        GGGG: datePartGetterFactory(nameCondition('era', 4))
 	    };
 	    function digitModifier(inner) {
 	        return function (date, locale) {

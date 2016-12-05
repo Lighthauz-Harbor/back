@@ -28,7 +28,7 @@
                     </th>
                     <th>Name</th>
                     <th>Email</th>
-                    <th>Last activity</th>
+                    <th>Biography</th>
                     <th>Last created at</th>
                 </tr>
             </thead>
@@ -57,7 +57,7 @@
                             {{user.username}}
                         </a>
                     </td>
-                    <td>{{user.lastActivity || "No user activity"}}</td>
+                    <td>{{user.bio || "No bio found."}}</td>
                     <td>{{user.createdAt.toDateString()}}</td>
                 </tr>
             </tbody>
