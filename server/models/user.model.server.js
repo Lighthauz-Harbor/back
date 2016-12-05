@@ -373,9 +373,9 @@ var UserSchema = function(dbDriver) {
         session
             .run("MATCH (u:User) WHERE u.name =~ {nameRegex} \
                 AND u.role = 'user' \
-                RETURN u.id, u.name, u.username, u.profilePic \
+                RETURN u.id, u.name, u.username, u.profilePic, \
                 u.bio, u.createdAt \
-                ORDER BY u.name ASC", 
+                ORDER BY u.name ASC",
                 { nameRegex: nameRegex })
             .then(function(result) {
                 res.send({
@@ -393,6 +393,7 @@ var UserSchema = function(dbDriver) {
                 session.close();
             })
             .catch(function(err) {
+                console.log(err);
                 res.send({
                     fail: "Failed searching for user. Please try again."
                 });
