@@ -49,6 +49,27 @@ var UserSchema = function(dbDriver) {
         return true;
     };
 
+    this._createInDb = function(session, params, res) {
+        session
+            .run(
+                "CREATE (:User {id: {id}, username: {username}, \
+                password: {password}, name: {name}, role: {role}, \
+                bio: {bio}, profilePic: {profilePic}, \
+                dateOfBirth: {dateOfBirth}, createdAt: {createdAt}})", params)
+            .then(function() {
+                res.send({
+                    message: "User successfully created!"
+                });
+                session.close();
+            })
+            .catch(function(err) {
+                res.send({
+                    fail: "Error creating user! Please try again."
+                });
+                session.close();
+            });
+    };
+
     this.create = function(req, res) {
         if (!this._checkParams(req.body)) {
             res.send({
@@ -71,6 +92,7 @@ var UserSchema = function(dbDriver) {
             };
 
             var session = this.driver.session();
+            var that = this;
 
             session
                 .run("MATCH (u:User) WHERE u.username = {username} RETURN u.id",
@@ -80,25 +102,9 @@ var UserSchema = function(dbDriver) {
                         res.send({
                             fail: "Duplicate user! Please find another username."
                         });
+                        session.close();
                     } else {
-                        session
-                            .run(
-                                "CREATE (:User {id: {id}, username: {username}, \
-                                password: {password}, name: {name}, role: {role}, \
-                                bio: {bio}, profilePic: {profilePic}, \
-                                dateOfBirth: {dateOfBirth}, createdAt: {createdAt}})", params)
-                            .then(function() {
-                                res.send({
-                                    message: "User successfully created!"
-                                });
-                                session.close();
-                            })
-                            .catch(function(err) {
-                                res.send({
-                                    fail: "Error creating user! Please try again."
-                                });
-                                session.close();
-                            });
+                        that._createInDb(session, params, res);
                     }
                 })
                 .catch(function(err) {
@@ -168,11 +174,61 @@ var UserSchema = function(dbDriver) {
             });
     };
 
+    this._notifyVerifResults = function(session, result, username, 
+                                        verifCode, res) {
+        var name = result.records[0].get("u.name");
+
+        session
+            .run("MATCH (u:User) WHERE u.username = {username} \
+                REMOVE u.verifCode",
+                {
+                    username: username
+                })
+            .then(function() {
+                res.send("<h1>Congratulations, " + name + "!</h1>" +
+                    "<p><strong>Your account has been verified!</strong></p>" + 
+                    "<p>You may login to Lighthauz.</p>");
+                session.close();
+            })
+            .catch(function(err) {
+                res.send("<h1>Verification error.</h1>" +
+                    "<p>Please <a " + 
+                    "href=\"https://lighthauz.herokuapp.com/user/auth/verify/" +
+                    username + "/" + verifCode + "\">click here</a> " + 
+                    "to verify again.</p>");
+                session.close();
+            });
+    };
+
+    this._findVerifCode = function(session, that, result, 
+                                   username, verifCode, res) {
+        session
+            .run("MATCH (u:User) WHERE u.verifCode = {verifCode} \
+                RETURN u.name",
+                {
+                    verifCode: verifCode
+                })
+            .then(function(result) {
+                that._notifyVerifResults(
+                    session, result, username, verifCode, res);
+            })
+            .catch(function(err) {
+                console.log(err);
+                res.send("<h1>Verification error.</h1>" +
+                    "<p>The verification link may be a wrong one." + 
+                    '<a href="mailto:lighthauzharbor@gmail.com">' +
+                    "Please send your email to us</a> about this problem.</p>" +
+                    "<p>We apologize for your inconvenience.</p>");
+                session.close();
+            });
+    };
+
     this.verifyAccount = function(req, res) {
         var username = req.params.username;
         var verifCode = req.params.code;
 
         var session = this.driver.session();
+        var that = this;
 
         session
             .run("MATCH (u:User) WHERE u.username = {username} \
@@ -181,43 +237,13 @@ var UserSchema = function(dbDriver) {
                     username: username
                 })
             .then(function(result) {
-                session
-                    .run("MATCH (u:User) WHERE u.verifCode = {verifCode} \
-                        RETURN u.name",
-                        {
-                            verifCode: verifCode
-                        })
-                    .then(function(result) {
-                        var name = result.records[0].get("u.name");
-
-                        session
-                            .run("MATCH (u:User) WHERE u.username = {username} \
-                                REMOVE u.verifCode",
-                                {
-                                    username: username
-                                })
-                            .then(function() {
-                                res.send("<h1>Congratulations, " + name + "!</h1>" +
-                                    "<p><strong>Your account has been verified!</strong></p>" + 
-                                    "<p>You may open the Lighthauz app and login with your account.</p>");
-                                session.close();
-                            })
-                            .catch(function(err) {
-                                res.send("<h1>Verification error.</h1>" +
-                                    "<p>Please <a href=\"https://lighthauz.herokuapp.com/user/auth/verify/" + 
-                                    username + "/" + verifCode + "\">click here</a> to verify again.</p>");
-                                session.close();
-                            });
-                    })
-                    .catch(function(err) {
-                        res.send("<h1>Your account has been verified.</h1>" +
-                            "<p>You may log in to Lighthauz with your account.</p>");
-                        session.close();
-                    });
+                that._findVerifCode(session, that, result, 
+                    username, verifCode, res);
             })
             .catch(function(err) {
-                res.send("<h1>Your account has not been registered.</h1>" + 
-                    "<p>Please register first in Lighthauz, then verify your account.</p>");
+                res.send("<h1>Your account has not been registered.</h1>" +
+                    "<p>Please register first in Lighthauz, " +
+                    "then verify your account.</p>");
                 session.close();
             });
     };
@@ -393,7 +419,6 @@ var UserSchema = function(dbDriver) {
                 session.close();
             })
             .catch(function(err) {
-                console.log(err);
                 res.send({
                     fail: "Failed searching for user. Please try again."
                 });
@@ -612,8 +637,59 @@ var UserSchema = function(dbDriver) {
             });
     };
 
+    this._resetRequestAfterRejection = function(session, req, res) {
+        session
+            .run("MATCH (from:User)-[c:CONNECT]-(to:User) \
+                WHERE from.id = {fromId} AND to.id = {toId} \
+                SET c.status = 0, \
+                c.lastChanged = {lastChanged}",
+                {
+                    fromId: req.body.fromId,
+                    toId: req.body.toId,
+                    lastChanged: (new Date()).getTime()
+                })
+            .then(function() {
+                res.send({
+                    message: "Successfully sent request to connect."
+                });
+                session.close();
+            })
+            .catch(function(err) {
+                res.send({
+                    message: "Error sending request. Please try again."
+                });
+                session.close();
+            });
+    };
+
+    this._createConnectionRequest = function(session, req, res) {
+        session
+            .run("MATCH (from:User), (to:User) \
+                WHERE from.id = {fromId} AND to.id = {toId} \
+                CREATE (from)-[c:CONNECT \
+                {status: 0, lastChanged: {lastChanged}}]->(to)",
+                {
+                    fromId: req.body.fromId,
+                    toId: req.body.toId,
+                    lastChanged: (new Date()).getTime()
+                })
+            .then(function() {
+                res.send({
+                    message: "Successfully sent request to connect."
+                });
+                session.close();
+            })
+            .catch(function(err) {
+                res.send({
+                    message: "Error sending request. User may not exist. Please try again."
+                });
+                session.close();
+            });
+    };
+
     this.sendConnectionRequest = function(req, res) {
         var session = this.driver.session();
+        var that = this;
 
         session
             .run("MATCH (from:User)-[c:CONNECT]-(to:User) \
@@ -642,59 +718,49 @@ var UserSchema = function(dbDriver) {
                         session.close();
                         break;
                     case -1: // in this case, send request as usual
-                        session
-                            .run("MATCH (from:User)-[c:CONNECT]-(to:User) \
-                                WHERE from.id = {fromId} AND to.id = {toId} \
-                                SET c.status = 0, \
-                                c.lastChanged = {lastChanged}",
-                                {
-                                    fromId: req.body.fromId,
-                                    toId: req.body.toId,
-                                    lastChanged: (new Date()).getTime()
-                                })
-                            .then(function() {
-                                res.send({
-                                    message: "Successfully sent request to connect."
-                                });
-                                session.close();
-                            })
-                            .catch(function(err) {
-                                res.send({
-                                    message: "Error sending request. Please try again."
-                                });
-                                session.close();
-                            });
+                        that._resetRequestAfterRejection(session, req, res);
                         break;
                 }
             })
             .catch(function(err) { // not an error, just connect both users
-                session
-                    .run("MATCH (from:User), (to:User) \
-                        WHERE from.id = {fromId} AND to.id = {toId} \
-                        CREATE (from)-[c:CONNECT \
-                        {status: 0, lastChanged: {lastChanged}}]->(to)",
-                        {
-                            fromId: req.body.fromId,
-                            toId: req.body.toId,
-                            lastChanged: (new Date()).getTime()
-                        })
-                    .then(function() {
-                        res.send({
-                            message: "Successfully sent request to connect."
-                        });
-                        session.close();
-                    })
-                    .catch(function(err) {
-                        res.send({
-                            message: "Error sending request. User may not exist. Please try again."
-                        });
-                        session.close();
-                    });
+                that._createConnectionRequest(session, req, res);
             });
+    };
+
+    this._setRequestForAcceptance = function(session, req, res) {
+        session
+            .run("MATCH (from:User)-[c:CONNECT]-(to:User) \
+                WHERE from.id = {fromId} AND to.id = {toId} \
+                SET c.status = 1, c.lastChanged = {lastChanged}",
+                {
+                    fromId: req.body.fromId,
+                    toId: req.body.toId,
+                    lastChanged: (new Date()).getTime()
+                })
+            .then(function() {
+                res.send({
+                    message: "You have been connected!"
+                });
+                session.close();
+            })
+            .catch(function(err) {
+                res.send({
+                    message: "Failed to accept connection. Please try again."
+                });
+                session.close();
+            });
+    };
+
+    this._notifyMustConnect = function(session, res) {
+        res.send({
+            message: "You need to send connection request to them first."
+        });
+        session.close();
     };
 
     this.acceptRequest = function(req, res) {
         var session = this.driver.session();
+        var that = this;
 
         session
             .run("MATCH (from:User)-[c:CONNECT]-(to:User) \
@@ -715,39 +781,37 @@ var UserSchema = function(dbDriver) {
                         session.close();
                         break;
                     case 0:
-                        session
-                            .run("MATCH (from:User)-[c:CONNECT]-(to:User) \
-                                WHERE from.id = {fromId} AND to.id = {toId} \
-                                SET c.status = 1, c.lastChanged = {lastChanged}",
-                                {
-                                    fromId: req.body.fromId,
-                                    toId: req.body.toId,
-                                    lastChanged: (new Date()).getTime()
-                                })
-                            .then(function() {
-                                res.send({
-                                    message: "You have been connected!"
-                                });
-                                session.close();
-                            })
-                            .catch(function(err) {
-                                res.send({
-                                    message: "Failed to accept connection. Please try again."
-                                });
-                                session.close();
-                            });
+                        that._setRequestForAcceptance(session, req, res);
                         break;
                     case -1:
-                        res.send({
-                            message: "You need to send connection request to them first."
-                        });
-                        session.close();
+                        that._notifyMustConnect(session, res);
                         break;
                 }
             })
             .catch(function(err) {
+                that._notifyMustConnect(session, res);
+            });
+    };
+
+    this._setRequestForRejection = function(session, req, res) {
+        session
+            .run("MATCH (from:User)-[c:CONNECT]-(to:User) \
+                WHERE from.id = {fromId} AND to.id = {toId} \
+                SET c.status = -1, c.lastChanged = {lastChanged}",
+                {
+                    fromId: req.body.fromId,
+                    toId: req.body.toId,
+                    lastChanged: (new Date()).getTime()
+                })
+            .then(function() {
                 res.send({
-                    message: "You need to send connection request to them first."
+                    message: "Successfully rejected request."
+                });
+                session.close();
+            })
+            .catch(function(err) {
+                res.send({
+                    message: "Error rejecting request. Please try again."
                 });
                 session.close();
             });
@@ -755,6 +819,7 @@ var UserSchema = function(dbDriver) {
 
     this.rejectRequest = function(req, res) {
         var session = this.driver.session();
+        var that = this;
 
         session
             .run("MATCH (from:User)-[c:CONNECT]-(to:User) \
@@ -775,27 +840,7 @@ var UserSchema = function(dbDriver) {
                         session.close();
                         break;
                     case 0:
-                        session
-                            .run("MATCH (from:User)-[c:CONNECT]-(to:User) \
-                                WHERE from.id = {fromId} AND to.id = {toId} \
-                                SET c.status = -1, c.lastChanged = {lastChanged}",
-                                {
-                                    fromId: req.body.fromId,
-                                    toId: req.body.toId,
-                                    lastChanged: (new Date()).getTime()
-                                })
-                            .then(function() {
-                                res.send({
-                                    message: "Successfully rejected request."
-                                });
-                                session.close();
-                            })
-                            .catch(function(err) {
-                                res.send({
-                                    message: "Error rejecting request. Please try again."
-                                });
-                                session.close();
-                            });
+                        that._setRequestForRejection(session, req, res);
                         break;
                     case -1:
                         res.send({
@@ -813,8 +858,32 @@ var UserSchema = function(dbDriver) {
             });
     };
 
+    this._removeConnectRelationship = function(session, req, res) {
+        session
+            .run("MATCH (from:User)-[c:CONNECT]-(to:User) \
+                WHERE from.id = {fromId} AND to.id = {toId} \
+                DELETE c",
+                {
+                    fromId: req.body.fromId,
+                    toId: req.body.toId
+                })
+            .then(function() {
+                res.send({
+                    message: "Successfully removed connection."
+                });
+                session.close();
+            })
+            .catch(function(err) {
+                res.send({
+                    message: "Failed removing connection. Please try again."
+                });
+                session.close();
+            });
+    };
+
     this.removeConnection = function(req, res) {
         var session = this.driver.session();
+        var that = this;
 
         session
             .run("MATCH (from:User)-[c:CONNECT]-(to:User) \
@@ -827,26 +896,7 @@ var UserSchema = function(dbDriver) {
             .then(function(result) {
                 var status = neo4jInt(result.records[0].get("c.status")).toNumber();
                 if (status === 1) {
-                    session
-                        .run("MATCH (from:User)-[c:CONNECT]-(to:User) \
-                            WHERE from.id = {fromId} AND to.id = {toId} \
-                            DELETE c",
-                            {
-                                fromId: req.body.fromId,
-                                toId: req.body.toId
-                            })
-                        .then(function() {
-                            res.send({
-                                message: "Successfully removed connection."
-                            });
-                            session.close();
-                        })
-                        .catch(function(err) {
-                            res.send({
-                                message: "Failed removing connection. Please try again."
-                            });
-                            session.close();
-                        });
+                    that._removeConnectRelationship(session, req, res);
                 } else {
                     res.send({
                         message: "Error removing connection: Both of you are already not connected."
