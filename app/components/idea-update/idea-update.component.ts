@@ -60,8 +60,8 @@ export class UpdateIdeaComponent implements OnInit {
                         alert(json.fail);
                         this.router.navigate(["/ideas"]);
                     } else {
-                        this.oldAuthor = json.author;
-                        this.author = json.author;
+                        this.oldAuthor = json.author.email;
+                        this.author = json.author.email;
 
                         this.oldCategory = json.category;
                         this.category = json.category;

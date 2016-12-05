@@ -4,8 +4,54 @@ var neo4jInt = require("neo4j-driver").v1.int;
 var IdeaSchema = function(dbDriver) {
     this.driver = dbDriver;
 
+    this._createInDb = function(session, createQuery, result, req, res) {
+        var authorId = result.records[0].get(0);
+        session
+            .run(createQuery, {
+                authorId: authorId,
+                categoryName: req.body.category,
+                createdAt: (new Date()).getTime(),
+                ideaId: uuid.v4(),
+                title: req.body.title,
+                description: req.body.description,
+                visibility: neo4jInt(req.body.visibility),
+                background: req.body.background,
+                problem: req.body.problem,
+                solution: req.body.solution,
+                extraLink: req.body.extraLink,
+                pic: req.body.pic || 
+                    "https://res.cloudinary.com/lighthauz-harbor/image/upload/v1479742560/default-idea-pic_wq1dzc.png",
+                strengths: req.body.strengths,
+                weaknesses: req.body.weaknesses,
+                opportunities: req.body.opportunities,
+                threats: req.body.threats,
+                valueProposition: req.body.valueProposition,
+                customerSegments: req.body.customerSegments,
+                customerRelationships: req.body.customerRelationships,
+                channels: req.body.channels,
+                keyActivities: req.body.keyActivities,
+                keyResources: req.body.keyResources,
+                keyPartners: req.body.keyPartners,
+                costStructure: req.body.costStructure,
+                revenueStreams: req.body.revenueStreams,
+            })
+            .then(function() {
+                res.send({
+                    message: "Successfully created idea."
+                });
+                session.close();
+            })
+            .catch(function(err) {
+                res.send({
+                    message: "Error creating idea. Please try again."
+                });
+                session.close();
+            });
+    };
+
     this.create = function(req, res) {
         var session = this.driver.session();
+        var that = this;
 
         // match the author's username with an existing one
         var matchQuery = "MATCH (u: User) WHERE u.username = {author} RETURN u.id";
@@ -45,48 +91,7 @@ var IdeaSchema = function(dbDriver) {
                 author: req.body.author
             })
             .then(function(result) {
-                var authorId = result.records[0].get(0);
-                session
-                    .run(createQuery, {
-                        authorId: authorId,
-                        categoryName: req.body.category,
-                        createdAt: (new Date()).getTime(),
-                        ideaId: uuid.v4(),
-                        title: req.body.title,
-                        description: req.body.description,
-                        visibility: neo4jInt(req.body.visibility),
-                        background: req.body.background,
-                        problem: req.body.problem,
-                        solution: req.body.solution,
-                        extraLink: req.body.extraLink,
-                        pic: req.body.pic || 
-                            "https://res.cloudinary.com/lighthauz-harbor/image/upload/v1479742560/default-idea-pic_wq1dzc.png",
-                        strengths: req.body.strengths,
-                        weaknesses: req.body.weaknesses,
-                        opportunities: req.body.opportunities,
-                        threats: req.body.threats,
-                        valueProposition: req.body.valueProposition,
-                        customerSegments: req.body.customerSegments,
-                        customerRelationships: req.body.customerRelationships,
-                        channels: req.body.channels,
-                        keyActivities: req.body.keyActivities,
-                        keyResources: req.body.keyResources,
-                        keyPartners: req.body.keyPartners,
-                        costStructure: req.body.costStructure,
-                        revenueStreams: req.body.revenueStreams,
-                    })
-                    .then(function() {
-                        res.send({
-                            message: "Successfully created idea."
-                        });
-                        session.close();
-                    })
-                    .catch(function(err) {
-                        res.send({
-                            message: "Error creating idea. Please try again."
-                        });
-                        session.close();
-                    });
+                that._createInDb(session, createQuery, result, req, res);
             })
             .catch(function(err) {
                 res.send({
@@ -328,15 +333,147 @@ var IdeaSchema = function(dbDriver) {
             });
     };
 
+    this._updateWithDifferentAuthor = function(session, that, req, res,
+            pic, oldAuthor, newAuthor) {
+
+        session
+            .run("MATCH (u1:User)-[mOld:MAKE]->(i:Idea) \
+                WHERE u1.username = {oldAuthor} \
+                AND i.id = {ideaId} \
+                WITH u1, mOld, mOld.createdAt AS createdAt, i \
+                DELETE mOld \
+                WITH i \
+                MATCH (u2:User) WHERE u2.username = {newAuthor} \
+                WITH i, u2 \
+                CREATE (u2)-[mNew:MAKE \
+                {createdAt: {lastChanged}, lastChanged: {lastChanged}}]->(i)",
+                {
+                    ideaId: req.body.id,
+                    oldAuthor: oldAuthor,
+                    newAuthor: newAuthor,
+                    lastChanged: (new Date()).getTime()
+                })
+            .then(function() {
+                that._updateIdeaValues(session, req, res, pic);
+            })
+            .catch(function(err) {
+                that._catchUpdateError(session, res);
+            });
+    };
+
+    this._updateWithDifferentCategory = function(session, that, req, res,
+            pic, oldCategory, newCategory) {
+
+        session
+            .run("MATCH (i:Idea)<-[crOld:CATEGORIZE]-(c1:Category) \
+                WHERE c1.name = {oldCategory} AND i.id = {ideaId} \
+                WITH i, crOld, c1 \
+                DELETE crOld \
+                WITH i \
+                MERGE (c2:Category {name: {newCategory}}) \
+                CREATE (i)<-[crNew:CATEGORIZE]-(c2)", {
+                    ideaId: req.body.id,
+                    oldCategory: oldCategory,
+                    newCategory: newCategory
+                })
+            .then(function() {
+                that._updateIdeaValues(session, req, res, pic);
+            })
+            .catch(function(err) {
+                that._catchUpdateError(session, res);
+            });
+    };
+
+    this._updateWithDifferentBoth = function(session, that, req, res,
+            pic, oldAuthor, newAuthor, oldCategory, newCategory) {
+
+        session
+            .run("MATCH (u1:User)-[mOld:MAKE]->(i:Idea)<-[\
+                    crOld:CATEGORIZE]-(c1:Category) \
+                    WHERE u1.username = {oldAuthor} AND \
+                    i.id = {ideaId} AND c1.name = {oldCategory} \
+                    WITH u1, mOld, i, crOld, c1 \
+                    DELETE mOld, crOld \
+                    WITH i \
+                    MATCH (u2:User) WHERE u2.username = {newAuthor} \
+                    WITH i, u2 \
+                    MERGE (c2:Category {name: {newCategory}}) \
+                    CREATE (u2)-[mNew:MAKE {createdAt: {lastChanged}, \
+                        lastChanged: {lastChanged}}]->(i)<-[\
+                        crNew:CATEGORIZE]-(c2)", 
+                        {
+                            ideaId: req.body.id,
+                            oldAuthor: oldAuthor,
+                            newAuthor: newAuthor,
+                            oldCategory: oldCategory,
+                            newCategory: newCategory,
+                            lastChanged: (new Date()).getTime()
+                        })
+            .then(function() {
+                // then update the idea
+                that._updateIdeaValues(session, req, res, pic);
+            })
+            .catch(function(err) {
+                that._catchUpdateError(session, res);
+            });
+    };
+
+    this._checkDuplicateAndUpdate = function(session, that, req, res,
+            pic, oldAuthor, newAuthor, oldCategory, newCategory) {
+
+        session
+            .run("MATCH (u:User) WHERE u.username = {newAuthor} RETURN u", 
+                { newAuthor: req.body.author })
+            .then(function(result) {
+                // if author doesn't exist
+                if (result.records.length === 0) {
+                    that._catchUpdateError(session, res);
+                } else {
+                    // check whether the author and/or category are different or not
+                    // then update their relationships, and then update the idea's
+                    // inner values
+                    if (oldAuthor !== newAuthor && 
+                        oldCategory === newCategory) {
+
+                        that._updateWithDifferentAuthor(
+                            session, that, req, res, 
+                            pic, oldAuthor, newAuthor);
+
+                    } else if (oldAuthor === newAuthor && 
+                        oldCategory !== newCategory) {
+
+                        that._updateWithDifferentCategory(
+                            session, that, req, res,
+                            pic, oldCategory, newCategory);
+
+                    } else if (oldAuthor !== newAuthor && 
+                        oldCategory !== newCategory) {
+
+                        that._updateWithDifferentBoth(
+                            session, that, req, res,
+                            pic, oldAuthor, newAuthor,
+                            oldCategory, newCategory);
+
+                    } else {
+                        // just update the idea's values if the author and category
+                        // are just the same
+                        that._updateIdeaValues(session, req, res, pic);
+                    }
+                }
+            })
+            .catch(function(err) {
+                that._catchUpdateError(session, res);
+            });
+    };
+
     this.update = function(req, res) {
         var session = this.driver.session();
+        var that = this;
 
         var oldAuthor = req.body.oldAuthor;
         var newAuthor = req.body.author;
         var oldCategory = req.body.oldCategory;
         var newCategory = req.body.category;
-
-        var that = this;
 
         // find (and replace, if needed) idea picture first
         session
@@ -348,106 +485,8 @@ var IdeaSchema = function(dbDriver) {
                 var pic = req.body.pic || result.records[0].get("i.pic");
 
                 // next, check whether the new author exists, and then update the idea
-                session
-                    .run("MATCH (u:User) WHERE u.username = {newAuthor} RETURN u", 
-                        { newAuthor: req.body.author })
-                    .then(function(result) {
-                        // if author doesn't exist
-                        if (result.records.length === 0) {
-                            that._catchUpdateError(session, res);
-                        } else {
-                            // check whether the author and/or category are different or not
-                            // then update their relationships, and then update the idea's
-                            // inner values
-                            if (oldAuthor !== newAuthor && 
-                                oldCategory === newCategory) {
-
-                                session
-                                    .run("MATCH (u1:User)-[mOld:MAKE]->(i:Idea) \
-                                        WHERE u1.username = {oldAuthor} \
-                                        AND i.id = {ideaId} \
-                                        WITH u1, mOld, mOld.createdAt AS createdAt, i \
-                                        DELETE mOld \
-                                        WITH i \
-                                        MATCH (u2:User) WHERE u2.username = {newAuthor} \
-                                        WITH i, u2 \
-                                        CREATE (u2)-[mNew:MAKE \
-                                        {createdAt: {lastChanged}, lastChanged: {lastChanged}}]->(i)",
-                                        {
-                                            ideaId: req.body.id,
-                                            oldAuthor: oldAuthor,
-                                            newAuthor: newAuthor,
-                                            lastChanged: (new Date()).getTime()
-                                        })
-                                    .then(function() {
-                                        that._updateIdeaValues(session, req, res, pic);
-                                    })
-                                    .catch(function(err) {
-                                        that._catchUpdateError(session, res);
-                                    });
-                            } else if (oldAuthor === newAuthor && 
-                                oldCategory !== newCategory) {
-
-                                session
-                                    .run("MATCH (i:Idea)<-[crOld:CATEGORIZE]-(c1:Category) \
-                                        WHERE c1.name = {oldCategory} AND i.id = {ideaId} \
-                                        WITH i, crOld, c1 \
-                                        DELETE crOld \
-                                        WITH i \
-                                        MERGE (c2:Category {name: {newCategory}}) \
-                                        CREATE (i)<-[crNew:CATEGORIZE]-(c2)", {
-                                            ideaId: req.body.id,
-                                            oldCategory: oldCategory,
-                                            newCategory: newCategory
-                                        })
-                                    .then(function() {
-                                        that._updateIdeaValues(session, req, res, pic);
-                                    })
-                                    .catch(function(err) {
-                                        that._catchUpdateError(session, res);
-                                    });
-                            } else if (oldAuthor !== newAuthor && 
-                                oldCategory !== newCategory) {
-
-                                session
-                                    .run("MATCH (u1:User)-[mOld:MAKE]->(i:Idea)<-[\
-                                            crOld:CATEGORIZE]-(c1:Category) \
-                                            WHERE u1.username = {oldAuthor} AND \
-                                            i.id = {ideaId} AND c1.name = {oldCategory} \
-                                            WITH u1, mOld, i, crOld, c1 \
-                                            DELETE mOld, crOld \
-                                            WITH i \
-                                            MATCH (u2:User) WHERE u2.username = {newAuthor} \
-                                            WITH i, u2 \
-                                            MERGE (c2:Category {name: {newCategory}}) \
-                                            CREATE (u2)-[mNew:MAKE {createdAt: {lastChanged}, \
-                                                lastChanged: {lastChanged}}]->(i)<-[\
-                                                crNew:CATEGORIZE]-(c2)", 
-                                                {
-                                                    ideaId: req.body.id,
-                                                    oldAuthor: oldAuthor,
-                                                    newAuthor: newAuthor,
-                                                    oldCategory: oldCategory,
-                                                    newCategory: newCategory,
-                                                    lastChanged: (new Date()).getTime()
-                                                })
-                                    .then(function() {
-                                        // then update the idea
-                                        that._updateIdeaValues(session, req, res, pic);
-                                    })
-                                    .catch(function(err) {
-                                        that._catchUpdateError(session, res);
-                                    });
-                            } else {
-                                // just update the idea's values if the author and category
-                                // are just the same
-                                that._updateIdeaValues(session, req, res, pic);
-                            }
-                        }
-                    })
-                    .catch(function(err) {
-                        that._catchUpdateError(session, res);
-                    });
+                that._checkDuplicateAndUpdate(session, that, req, res,
+                    pic, oldAuthor, newAuthor, oldCategory, newCategory);
             })
             .catch(function() {
                 that._catchUpdateError(session, res);

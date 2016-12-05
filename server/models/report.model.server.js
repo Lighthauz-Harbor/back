@@ -6,8 +6,44 @@ var smtpConfig = require("../config/smtp");
 var ReportSchema = function(dbDriver) {
     this.driver = dbDriver;
 
+    this._createInDb = function(session, req, res) {
+        session
+            .run("MATCH (author:User), (target) WHERE \
+                author.id = {authorId} AND target.id = {targetId} \
+                CREATE (author)-[report:REPORT { \
+                    id: {reportId}, \
+                    title: {title}, \
+                    message: {message}, \
+                    reply: \"\", \
+                    solved: false, \
+                    createdAt: {createdAt} \
+                }]->(target)",
+                {
+                    authorId: req.body.authorId,
+                    targetId: req.body.targetId,
+                    reportId: uuid.v4(),
+                    title: req.body.title,
+                    message: req.body.message,
+                    createdAt: (new Date()).getTime()
+                })
+            .then(function() {
+                res.send({
+                    message: "Successfully created report."
+                });
+                session.close();
+            })
+            .catch(function(err) {
+                res.send({
+                    message: "Failed creating report. " + 
+                        "Please try again, or send an email to lighthauzharbor@gmail.com to report."
+                });
+                session.close();
+            });
+    };
+
     this.create = function(req, res) {
         var session = this.driver.session();
+        var that = this;
 
         // author = the report's author
         // target = what is being reported (user or idea)
@@ -20,37 +56,7 @@ var ReportSchema = function(dbDriver) {
                     targetId: req.body.targetId,
                 })
             .then(function(result) {
-                session
-                    .run("MATCH (author:User), (target) WHERE \
-                        author.id = {authorId} AND target.id = {targetId} \
-                        CREATE (author)-[report:REPORT { \
-                            id: {reportId}, \
-                            title: {title}, \
-                            message: {message}, \
-                            reply: \"\", \
-                            solved: false, \
-                            createdAt: {createdAt} \
-                        }]->(target)",
-                        {
-                            authorId: req.body.authorId,
-                            targetId: req.body.targetId,
-                            reportId: uuid.v4(),
-                            title: req.body.title,
-                            message: req.body.message,
-                            createdAt: (new Date()).getTime()
-                        })
-                    .then(function() {
-                        res.send({
-                            message: "Successfully created report."
-                        });
-                        session.close();
-                    })
-                    .catch(function(err) {
-                        res.send({
-                            message: "Failed creating report. Please try again, or send an email to lighthauzharbor@gmail.com to report."
-                        });
-                        session.close();
-                    });
+                that._createInDb(session, req, res);
             })
             .catch(function(err) {
                 res.send({

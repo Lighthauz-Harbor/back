@@ -31911,8 +31911,8 @@ webpackJsonp([0],{
 	                    _this.router.navigate(["/ideas"]);
 	                }
 	                else {
-	                    _this.oldAuthor = json.author;
-	                    _this.author = json.author;
+	                    _this.oldAuthor = json.author.email;
+	                    _this.author = json.author.email;
 	                    _this.oldCategory = json.category;
 	                    _this.category = json.category;
 	                    _this.visibility = _this.visibilityChoices[json.visibility];
