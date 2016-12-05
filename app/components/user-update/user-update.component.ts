@@ -72,7 +72,7 @@ export class UpdateUserComponent implements OnInit {
             username: this.email,
             oldUsername: this.oldEmail,
             password: this.password, 
-            dateOfBirth: (new Date(this.dateOfBirth)).toISOString().slice(0, 10), 
+            dateOfBirth: (new Date(this.dateOfBirth)).getTime(),
             bio: this.bio
         };
 

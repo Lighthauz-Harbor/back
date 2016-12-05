@@ -31191,7 +31191,7 @@ webpackJsonp([0],{
 	            username: this.email,
 	            oldUsername: this.oldEmail,
 	            password: this.password,
-	            dateOfBirth: (new Date(this.dateOfBirth)).toISOString().slice(0, 10),
+	            dateOfBirth: (new Date(this.dateOfBirth)).getTime(),
 	            bio: this.bio
 	        };
 	        if (this.profilePicFile.length === 1) {
