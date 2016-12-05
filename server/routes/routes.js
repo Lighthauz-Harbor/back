@@ -10,6 +10,7 @@ var reportsRoutes = require("./reports.routes");
 var feedRoutes = require("./feed.routes"); // feed = news feed and user profile
 var userConnRoutes = require("./user-conn.routes");
 var categoryRoutes = require("./category.routes");
+var recommenderRoutes = require("./recommender.routes");
 
 var path = require("path");
 var rootDir = path.resolve(__dirname, "..", "..");
@@ -57,6 +58,7 @@ module.exports = function(app, dbDriver, passport) {
     feedRoutes(apiRouter, dbDriver);
     userConnRoutes(apiRouter, dbDriver);
     categoryRoutes(apiRouter, dbDriver);
+    recommenderRoutes(apiRouter, dbDriver);
 
     app.use("/admin/auth", adminAuthRouter);
     app.use("/user/auth", userAuthRouter);

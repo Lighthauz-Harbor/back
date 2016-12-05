@@ -48,5 +48,4 @@ module.exports = function(router, dbDriver) {
         ideaSchema.getIdeaListFromUser(req, res);
     });
 
-
 };
