@@ -47,6 +47,31 @@ module.exports = function(dbDriver) {
             });
     };
 
+    this.listPreferredCategories = function(req, res) {
+        var session = this.driver.session();
+
+        session
+            .run("MATCH (u:User)-[:PREFER]->(c:Category) \
+                WHERE u.id = {userId} RETURN c.name",
+                {
+                    userId: req.body.userId
+                })
+            .then(function(result) {
+                res.send({
+                    list: result.records.map(function(category) {
+                        return category.get("c.name");
+                    })
+                });
+                session.close();
+            })
+            .catch(function(err) {
+                res.send({
+                    fail: "Failed loading list of preferred categories. Please try again."
+                });
+                session.close();
+            });
+    };
+
     this.recommendUsersByCategory = function(req, res) {
         var session = this.driver.session();
 

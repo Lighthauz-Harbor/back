@@ -12,6 +12,10 @@ module.exports = function(router, dbDriver) {
         categorySchema.setPreferredCategories(req, res);
     });
 
+    router.post("/category/prefer/list", function(req, res) {
+        categorySchema.listPreferredCategories(req, res);
+    });
+
     router.post("/category/recommend/users", function(req, res) {
         categorySchema.recommendUsersByCategory(req, res);
     });

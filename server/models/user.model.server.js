@@ -610,11 +610,12 @@ var UserSchema = function(dbDriver) {
         var session = this.driver.session();
 
         session
-            .run("MATCH (from:User)-[c:CONNECT]-(to:User) \
-                WHERE from.id = {userId} AND c.status = 1 \
-                RETURN to.id, to.name, to.bio, to.profilePic", 
+            .run("MATCH (from:User)-[c:CONNECT]->(to:User) \
+                WHERE from.id = {userId} AND c.status = {status} \
+                RETURN to.id, to.name, to.username, to.bio, to.profilePic",
                 {
-                    userId: req.params.userId
+                    userId: req.params.userId,
+                    status: Number(req.params.status) || 1
                 })
             .then(function(result) {
                 res.send({
@@ -622,6 +623,7 @@ var UserSchema = function(dbDriver) {
                         return {
                             id: record.get("to.id"),
                             name: record.get("to.name"),
+                            email: record.get("to.username"),
                             bio: record.get("to.bio"),
                             profilePic: record.get("to.profilePic")
                         };
@@ -631,7 +633,8 @@ var UserSchema = function(dbDriver) {
             })
             .catch(function(err) {
                 res.send({
-                    connections: []
+                    connections: [],
+                    fail: "Failed!"
                 });
                 session.close();
             });

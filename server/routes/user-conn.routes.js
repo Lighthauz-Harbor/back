@@ -4,7 +4,7 @@ module.exports = function(router, dbDriver) {
 
     var userSchema = new UserSchema(dbDriver);
 
-    router.get("/connections/:userId", function(req, res) {
+    router.get("/connections/:userId/:status", function(req, res) {
         userSchema.getConnections(req, res);
     });
 
