@@ -217,15 +217,13 @@ var IdeaSchema = function(dbDriver) {
                     partnerId: req.params.partnerId
                 })
             .then(function() {
-                res.send({
-                    message: "Congratulations! You are now collaborating on their idea. Let's work!"
-                });
+                res.send("<h1>Congratulations!</h1>" + 
+                    "<p>You are now collaborating on their idea. Let's work!</p>");
                 session.close();
             })
             .catch(function(err) {
-                res.send({
-                    message: "Failed on requesting collaboration to server. Please try again."
-                });
+                res.send("<h1>Failed processing collaboration.</h1>" +
+                    "<p>Please refresh to try again.</p>");
                 session.close();
             });
     };

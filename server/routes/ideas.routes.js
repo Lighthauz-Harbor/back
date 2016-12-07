@@ -16,7 +16,7 @@ module.exports = function(router, dbDriver) {
         ideaSchema.invitePartners(req, res);
     });
 
-    router.put("/ideas/collaborate/:ideaId/:partnerId", function(req, res) {
+    router.get("/ideas/collaborate/:ideaId/:partnerId", function(req, res) {
         ideaSchema.collaborateInIdea(req, res);
     });
 
