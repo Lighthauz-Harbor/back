@@ -12,6 +12,10 @@ module.exports = function(router, dbDriver) {
         ideaSchema.create(req, res);
     });
 
+    router.post("/ideas/invite-partners", function(req, res) {
+        ideaSchema.invitePartners(req, res);
+    });
+
     router.get("/ideas/get/:id", function(req, res) {
         ideaSchema.getSingle(req, res);
     });

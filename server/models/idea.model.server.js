@@ -1,5 +1,8 @@
 var uuid = require("uuid");
 var neo4jInt = require("neo4j-driver").v1.int;
+var nodemailer = require("nodemailer");
+
+var smtpConfig = require("../config/smtp");
 
 var IdeaSchema = function(dbDriver) {
     this.driver = dbDriver;
@@ -96,6 +99,106 @@ var IdeaSchema = function(dbDriver) {
             .catch(function(err) {
                 res.send({
                     message: "User/author doesn't exist. Please try again."
+                });
+                session.close();
+            });
+    };
+
+    this._sendPartnerInvitationEmail = function(session, req, res,
+                                                author, idea, category) {
+        session
+            .run("MATCH (u:User) WHERE u.id IN {partnerIds} \
+                RETURN u.id, u.name, u.username",
+                {
+                    partnerIds: req.body.partnerIds
+                })
+            .then(function(result) {
+                var transporter = nodemailer.createTransport(smtpConfig);
+
+                var max = result.records.length - 1;
+                result.records.map(function(partner, idx) {
+                    var partner = {
+                        id: partner.get("u.id"),
+                        name: partner.get("u.name"),
+                        email: partner.get("u.username")
+                    };
+
+                    var collaborationLink =
+                        "https://lighthauz.herokuapp.com/ideas/collaborate/" +
+                        req.body.ideaId + "/" + partner.id;
+
+                    var invitationText = "Dear " + partner.name + ",\n\n" +
+                        "Our user, " + author + ", just made an idea called " + idea.title +
+                        " (category: " + category + "), and the author is looking forward to collaborate " +
+                        "with you in it!\n\n" +
+                        "Following is a description of his idea:\n" + idea.description +
+                        "\n\n" + "For more details of their idea, you can search it by its title " +
+                        "in our app, and come back to this email if you want to take part.\n\n" +
+                        "If you would like to collaborate with them, please go to the following link:\n" +
+                        collaborationLink + "\n\n" +
+                        "That is all from us. Thank you for your attention.\n\n" +
+                        "Regards,\n\nLighthauz Harbor team.";
+
+                    var mailOptions = {
+                        from: '"Lighthauz Harbor" <' + process.env.EMAIL_ADDR + '>',
+                        to: partner.email,
+                        subject: author + " would like to collaborate with you on their idea!",
+                        text: invitationText
+                    };
+
+                    transporter.sendMail(mailOptions, function(error, info) {
+                        if (error) {
+                            console.log(error);
+                            res.send({
+                                fail: "Failed sending invitiation emails to selected partners. " +
+                                    "Please try again."
+                            });
+                            session.close();
+                        } else if (idx === max) {
+                            console.log("Message sent: " + info.response);
+                            res.send({
+                                message: "Invitation emails to the selected partners have been sent. " +
+                                    "Wait until they accept them."
+                            });
+                            session.close();
+                        }
+                    });
+                });
+            })
+            .catch(function(err) {
+                res.fail({
+                    fail: "Failed finding partners in database. Please try again."
+                });
+                session.close();
+            });
+    };
+
+    this.invitePartners = function(req, res) {
+        var session = this.driver.session();
+        var that = this;
+
+        session
+            .run("MATCH (u:User)-[:MAKE]->(i:Idea)<-[:CATEGORIZE]-(c:Category) \
+                WHERE i.id = {ideaId} \
+                RETURN u.name, i.id, i.title, i.description, c.name",
+                {
+                    ideaId: req.body.ideaId
+                })
+            .then(function(result) {
+                var author = result.records[0].get("u.name");
+                var idea = {
+                    id: result.records[0].get("i.id"),
+                    title: result.records[0].get("i.title"),
+                    description: result.records[0].get("i.description")
+                };
+                var category = result.records[0].get("c.name");
+
+                that._sendPartnerInvitationEmail(
+                    session, req, res, author, idea, category);
+            })
+            .catch(function(err) {
+                res.send({
+                    fail: "Failed finding idea object in database. Please try again."
                 });
                 session.close();
             });
