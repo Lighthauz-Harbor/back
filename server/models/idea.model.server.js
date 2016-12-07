@@ -124,7 +124,7 @@ var IdeaSchema = function(dbDriver) {
                     };
 
                     var collaborationLink =
-                        "https://lighthauz.herokuapp.com/ideas/collaborate/" +
+                        "https://lighthauz.herokuapp.com/api/ideas/collaborate/" +
                         req.body.ideaId + "/" + partner.id;
 
                     var invitationText = "Dear " + partner.name + ",\n\n" +
@@ -136,6 +136,7 @@ var IdeaSchema = function(dbDriver) {
                         "in our app, and come back to this email if you want to take part.\n\n" +
                         "If you would like to collaborate with them, please go to the following link:\n" +
                         collaborationLink + "\n\n" +
+                        "But if not, you may simply ignore this email.\n\n" +
                         "That is all from us. Thank you for your attention.\n\n" +
                         "Regards,\n\nLighthauz Harbor team.";
 
@@ -199,6 +200,31 @@ var IdeaSchema = function(dbDriver) {
             .catch(function(err) {
                 res.send({
                     fail: "Failed finding idea object in database. Please try again."
+                });
+                session.close();
+            });
+    };
+
+    this.collaborateInIdea = function(req, res) {
+        var session = this.driver.session();
+
+        session
+            .run("MATCH (u:User) WHERE u.id = {partnerId} \
+                MATCH (i:Idea) WHERE i.id = {ideaId} \
+                MERGE (u)-[:COLLABORATE]->(i)",
+                {
+                    ideaId: req.params.ideaId,
+                    partnerId: req.params.partnerId
+                })
+            .then(function() {
+                res.send({
+                    message: "Congratulations! You are now collaborating on their idea. Let's work!"
+                });
+                session.close();
+            })
+            .catch(function(err) {
+                res.send({
+                    message: "Failed on requesting collaboration to server. Please try again."
                 });
                 session.close();
             });
