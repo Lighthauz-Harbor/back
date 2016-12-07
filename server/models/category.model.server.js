@@ -35,7 +35,7 @@ module.exports = function(dbDriver) {
                 })
             .then(function() { // then merge the currently preferred categories
                 that._choosePreferredCategories(
-                    session, newCategories, req, res);
+                    session, req, res, newCategories);
             })
             .catch(function(err) {
                 res.send({
@@ -45,7 +45,7 @@ module.exports = function(dbDriver) {
             });
     };
 
-    this._choosePreferredCategories = function(session, newCategories, req, res) {
+    this._choosePreferredCategories = function(session, req, res, newCategories) {
         session
             .run("MATCH (u:User), (c:Category) \
                 WHERE u.id = {userId} AND c.name IN {categories} \
@@ -98,7 +98,7 @@ module.exports = function(dbDriver) {
                         session, that, req, res, diffDelete, newCategories);
                 } else { // just merge the preferred categories
                     that._choosePreferredCategories(
-                        session, newCategories, req, res);
+                        session, req, res, newCategories);
                 }
             })
             .catch(function(err) {
