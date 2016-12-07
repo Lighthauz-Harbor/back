@@ -230,6 +230,38 @@ var IdeaSchema = function(dbDriver) {
             });
     };
 
+    this.listPartners = function(req, res) {
+        var session = this.driver.session();
+
+        session
+            .run("MATCH (u:User)-[:COLLABORATE]->(i:Idea) \
+                WHERE i.id = {ideaId} \
+                RETURN u.id, u.name, u.username, u.bio, u.profilePic",
+                {
+                    ideaId: req.params.ideaId
+                })
+            .then(function(result) {
+                res.send({
+                    partners: result.records.map(function(partner) {
+                        return {
+                            id: partner.get("u.id"),
+                            name: partner.get("u.name"),
+                            username: partner.get("u.username"),
+                            bio: partner.get("u.bio"),
+                            profilePic: partner.get("u.profilePic")
+                        };
+                    })
+                });
+                session.close();
+            })
+            .catch(function(err) {
+                res.send({
+                    fail: "Failed loading list of partners. Please try again."
+                });
+                session.close();
+            });
+    };
+
     this.listIdeas = function(req, res) {
         var session = this.driver.session();
         // m.lastChanged: "modified at"

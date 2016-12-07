@@ -20,6 +20,10 @@ module.exports = function(router, dbDriver) {
         ideaSchema.collaborateInIdea(req, res);
     });
 
+    router.get("/ideas/partners/:ideaId", function(req, res) {
+        ideaSchema.listPartners(req, res);
+    });
+
     router.get("/ideas/get/:id", function(req, res) {
         ideaSchema.getSingle(req, res);
     });
