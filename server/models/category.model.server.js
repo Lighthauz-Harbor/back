@@ -23,6 +23,49 @@ module.exports = function(dbDriver) {
             });
     };
 
+    this._overwritePreferredCategories = function(session, that, req, res,
+                                                  diffDelete, newCategories) {
+        session
+            .run("MATCH (u:User)-[p:PREFER]->(c:Category) \
+                WHERE u.id = {userId} AND c.name IN {categories} \
+                DELETE p",
+                {
+                    userId: req.body.userId,
+                    categories: diffDelete
+                })
+            .then(function() { // then merge the currently preferred categories
+                that._choosePreferredCategories(
+                    session, newCategories, req, res);
+            })
+            .catch(function(err) {
+                res.send({
+                    fail: "Failed overwriting categories. Please try again."
+                });
+                session.close();
+            });
+    };
+
+    this._choosePreferredCategories = function(session, newCategories, req, res) {
+        session
+            .run("MATCH (u:User), (c:Category) \
+                WHERE u.id = {userId} AND c.name IN {categories} \
+                MERGE (u)-[:PREFER]->(c)",
+                {
+                    userId: req.body.userId,
+                    categories: newCategories
+                })
+            .then(function() {
+                res.sendStatus(200);
+                session.close();
+            })
+            .catch(function(err) {
+                res.send({
+                    fail: "Failed setting preferred categories. Please try again."
+                });
+                session.close();
+            });
+    };
+
     this.setPreferredCategories = function(req, res) {
         var session = this.driver.session();
         var that = this;
@@ -47,68 +90,18 @@ module.exports = function(dbDriver) {
                     return newCategories.indexOf(category) === -1;
                 });
 
-                // remove unpreferred categories, if any
+                // overwrite the preferred categories
+                // (remove unpreferred categories, if any, and then merge the
+                // categories in DB)
                 if (diffDelete.length > 0) {
-                    session
-                        .run("MATCH (u:User)-[p:PREFER]->(c:Category) \
-                            WHERE u.id = {userId} AND c.name IN {categories} \
-                            DELETE p",
-                            {
-                                userId: req.body.userId,
-                                categories: diffDelete
-                            })
-                        .then(function() { // then merge the currently preferred categories
-                            session
-                                .run("MATCH (u:User), (c:Category) \
-                                    WHERE u.id = {userId} AND c.name IN {categories} \
-                                    MERGE (u)-[:PREFER]->(c)",
-                                    {
-                                        userId: req.body.userId,
-                                        categories: newCategories
-                                    })
-                                .then(function() {
-                                    res.sendStatus(200);
-                                    session.close();
-                                })
-                                .catch(function(err) {
-                console.log(err);
-                                    res.send({
-                                        fail: "Failed setting preferred categories. Please try again."
-                                    });
-                                    session.close();
-                                });
-                        })
-                        .catch(function(err) {
-                console.log(err);
-                            res.send({
-                                fail: "Failed overwriting categories. Please try again."
-                            });
-                            session.close();
-                        });
+                    that._overwritePreferredCategories(
+                        session, that, req, res, diffDelete, newCategories);
                 } else { // just merge the preferred categories
-                    session
-                        .run("MATCH (u:User), (c:Category) \
-                            WHERE u.id = {userId} AND c.name IN {categories} \
-                            MERGE (u)-[:PREFER]->(c)",
-                            {
-                                userId: req.body.userId,
-                                categories: newCategories
-                            })
-                        .then(function() {
-                            res.sendStatus(200);
-                            session.close();
-                        })
-                        .catch(function(err) {
-                console.log(err);
-                            res.send({
-                                fail: "Failed setting preferred categories. Please try again."
-                            });
-                            session.close();
-                        });
+                    that._choosePreferredCategories(
+                        session, newCategories, req, res);
                 }
             })
             .catch(function(err) {
-                console.log(err);
                 res.send({
                     fail: "Failed setting user's preferred categories. Please try again."
                 });
