@@ -615,7 +615,7 @@ var UserSchema = function(dbDriver) {
                 RETURN to.id, to.name, to.username, to.bio, to.profilePic",
                 {
                     userId: req.params.userId,
-                    status: Number(req.params.status) || 1
+                    status: Number(req.params.status)
                 })
             .then(function(result) {
                 res.send({
