@@ -610,7 +610,7 @@ var UserSchema = function(dbDriver) {
         var session = this.driver.session();
 
         session
-            .run("MATCH (from:User)-[c:CONNECT]->(to:User) \
+            .run("MATCH (from:User)-[c:CONNECT]-(to:User) \
                 WHERE from.id = {userId} AND c.status = {status} \
                 RETURN to.id, to.name, to.username, to.bio, to.profilePic",
                 {
@@ -635,6 +635,34 @@ var UserSchema = function(dbDriver) {
                 res.send({
                     connections: [],
                     fail: "Failed!"
+                });
+                session.close();
+            });
+    };
+
+    this.isConnected = function(req, res) {
+        var session = this.driver.session();
+
+        session
+            .run("MATCH (u1:User)-[c:CONNECT]-(u2:User) \
+                WHERE u1.id = {user1} AND u2.id = {user2} \
+                RETURN c.status",
+                {
+                    user1: req.params.user1,
+                    user2: req.params.user2
+                })
+            .then(function(result) {
+                res.send({
+                    // taking into account rejected connections, hence `=== 1`
+                    connected: neo4jInt(result.records[0].get("c.status"))
+                        .toNumber() === 1
+                });
+                session.close();
+            })
+            .catch(function(err) {
+                res.send({
+                    // because there is no :CONNECT relationship found
+                    connected: false
                 });
                 session.close();
             });

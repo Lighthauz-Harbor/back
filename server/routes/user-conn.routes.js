@@ -8,6 +8,10 @@ module.exports = function(router, dbDriver) {
         userSchema.getConnections(req, res);
     });
 
+    router.get("/connections/is-connected/:user1/:user2", function(req, res) {
+        userSchema.isConnected(req, res);
+    });
+
     router.post("/connections/request", function(req, res) {
         userSchema.sendConnectionRequest(req, res);
     });
