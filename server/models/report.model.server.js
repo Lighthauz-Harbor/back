@@ -34,7 +34,7 @@ var ReportSchema = function(dbDriver) {
             })
             .catch(function(err) {
                 res.send({
-                    fail: "Failed creating report. " + 
+                    message: "Failed creating report. " +
                         "Please try again, or send an email to lighthauzharbor@gmail.com to report."
                 });
                 session.close();
@@ -60,7 +60,8 @@ var ReportSchema = function(dbDriver) {
             })
             .catch(function(err) {
                 res.send({
-                    fail: "Reported user / idea ID not found. Please send an email to lighthauzharbor@gmail.com about this error."
+                    message: "Reported user / idea ID not found. " +
+                        "Please send an email to lighthauzharbor@gmail.com about this error."
                 });
                 session.close();
             });
@@ -214,7 +215,7 @@ var ReportSchema = function(dbDriver) {
             })
             .catch(function(err) {
                 res.send({
-                    fail: "Failed storing reply to user in our database. Please try again."
+                    message: "Failed storing reply to user in our database. Please try again."
                 });
             });
     };
