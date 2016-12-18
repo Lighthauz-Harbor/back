@@ -632,8 +632,7 @@ var UserSchema = function(dbDriver) {
             })
             .catch(function(err) {
                 res.send({
-                    connections: [],
-                    fail: "Failed!"
+                    connections: []
                 });
                 session.close();
             });
