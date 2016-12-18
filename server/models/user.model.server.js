@@ -611,11 +611,10 @@ var UserSchema = function(dbDriver) {
 
         session
             .run("MATCH (from:User)-[c:CONNECT]-(to:User) \
-                WHERE from.id = {userId} AND c.status = {status} \
+                WHERE from.id = {userId} AND c.status = 1 \
                 RETURN to.id, to.name, to.username, to.bio, to.profilePic",
                 {
-                    userId: req.params.userId,
-                    status: Number(req.params.status)
+                    userId: req.params.userId
                 })
             .then(function(result) {
                 res.send({
@@ -635,6 +634,72 @@ var UserSchema = function(dbDriver) {
                 res.send({
                     connections: [],
                     fail: "Failed!"
+                });
+                session.close();
+            });
+    };
+
+    this.getSentConnectionRequests = function(req, res) {
+        var session = this.driver.session();
+
+        session
+            .run("MATCH (you:User)-[c:CONNECT]->(other:User) \
+                WHERE you.id = {userId} AND c.status = 0 \
+                RETURN other.id, other.name, other.username, \
+                other.bio, other.profilePic",
+                {
+                    userId: req.params.userId
+                })
+            .then(function(result) {
+                res.send({
+                    sentByUser: result.records.map(function(record) {
+                        return {
+                            id: record.get("other.id"),
+                            name: record.get("other.name"),
+                            email: record.get("other.username"),
+                            bio: record.get("other.bio"),
+                            profilePic: record.get("other.profilePic")
+                        };
+                    })
+                });
+                session.close();
+            })
+            .catch(function(err) {
+                res.send({
+                    sentByUser: []
+                });
+                session.close();
+            });
+    };
+
+    this.getReceivedConnectionRequests = function(req, res) {
+        var session = this.driver.session();
+
+        session
+            .run("MATCH (other:User)-[c:CONNECT]->(you:User) \
+                WHERE you.id = {userId} AND c.status = 0 \
+                RETURN other.id, other.name, other.username, \
+                other.bio, other.profilePic",
+                {
+                    userId: req.params.userId
+                })
+            .then(function(result) {
+                res.send({
+                    receivedByUser: result.records.map(function(record) {
+                        return {
+                            id: record.get("other.id"),
+                            name: record.get("other.name"),
+                            email: record.get("other.username"),
+                            bio: record.get("other.bio"),
+                            profilePic: record.get("other.profilePic")
+                        };
+                    })
+                });
+                session.close();
+            })
+            .catch(function(err) {
+                res.send({
+                    receivedByUser: []
                 });
                 session.close();
             });
