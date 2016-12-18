@@ -32,12 +32,8 @@ module.exports = function(router, dbDriver) {
         ideaSchema.searchAsAdmin(req, res);
     });
 
-    router.get("/ideas/search/title/:title", function(req, res) {
-        ideaSchema.searchByTitle(req, res);
-    });
-
-    router.get("/ideas/search/category/:category", function(req, res) {
-        ideaSchema.searchByCategory(req, res);
+    router.post("/ideas/search", function(req, res) {
+        ideaSchema.searchAsUser(req, res);
     });
 
     router.put("/ideas/update/:id", function(req, res) {

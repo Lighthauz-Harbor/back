@@ -324,69 +324,87 @@ var IdeaSchema = function(dbDriver) {
             });
     };
 
-    this.searchByTitle = function(req, res) {
-        var titleRegex = "(?i).*" + req.params.title + ".*";
-        var session = this.driver.session();
-        session
-            .run("MATCH (:User)-[m:MAKE]->(i:Idea)<-[:CATEGORIZE]-(c:Category) \
-                WHERE i.title =~ {titleRegex} \
-                RETURN i.id, i.title, i.description, i.pic, \
-                c.name, m.lastChanged \
-                ORDER BY m.lastChanged DESC", 
-                { titleRegex: titleRegex })
-            .then(function(result) {
-                res.send({
-                    results: result.records.map(function(record) {
-                        return {
-                            id: record.get("i.id"),
-                            title: record.get("i.title"),
-                            description: record.get("i.description"),
-                            pic: record.get("i.pic"),
-                            category: record.get("c.name")
-                        };
-                    })
-                });
-                session.close();
-            })
-            .catch(function(err) {
-                res.send({
-                    fail: "Failed searching for ideas. Please try again."
-                });
-                session.close();
-            });
-    };
-
-    this.searchByCategory = function(req, res) {
-        var categoryRegex = "(?i).*" + req.params.category + ".*";
+    this.searchAsUser = function(req, res) {
+        var titleRegex = "(?i).*" + req.body.title + ".*";
+        var categories = req.body.categories;
         var session = this.driver.session();
 
-        session
-            .run("MATCH (:User)-[m:MAKE]->(i:Idea)<-[:CATEGORIZE]-(c:Category) \
-                WHERE c.name =~ {categoryRegex} \
-                RETURN i.id, i.title, i.description, i.pic, \
-                c.name, m.lastChanged \
-                ORDER BY m.lastChanged DESC",
-                { categoryRegex: categoryRegex })
-            .then(function(result) {
-                res.send({
-                    results: result.records.map(function(record) {
-                        return {
-                            id: record.get("i.id"),
-                            title: record.get("i.title"),
-                            description: record.get("i.description"),
-                            pic: record.get("i.pic"),
-                            category: record.get("c.name")
-                        };
+        if (!categories) {
+            session
+                .run("MATCH (u:User)-[m:MAKE]->(i:Idea)<-[:CATEGORIZE]-(c:Category) \
+                    WHERE i.title =~ {titleRegex} \
+                    RETURN i.id, i.title, i.description, i.pic, \
+                    u.id, u.name, c.name, m.lastChanged \
+                    ORDER BY m.lastChanged DESC",
+                    {
+                        titleRegex: titleRegex
                     })
+                .then(function(result) {
+                    res.send({
+                        results: result.records.map(function(record) {
+                            return {
+                                idea: {
+                                    id: record.get("i.id"),
+                                    title: record.get("i.title"),
+                                    description: record.get("i.description"),
+                                    pic: record.get("i.pic")
+                                },
+                                author: {
+                                    id: record.get("u.id"),
+                                    name: record.get("u.name")
+                                },
+                                category: record.get("c.name"),
+                                lastChanged: record.get("m.lastChanged")
+                            };
+                        })
+                    });
+                    session.close();
+                })
+                .catch(function(err) {
+                    res.send({
+                        fail: "Failed searching for idea. Please try again."
+                    });
+                    session.close();
                 });
-                session.close();
-            })
-            .catch(function(err) {
-                res.send({
-                    fail: "Failed searching for ideas. Please try again."
+        } else {
+            session
+                .run("MATCH (u:User)-[m:MAKE]->(i:Idea)<-[:CATEGORIZE]-(c:Category) \
+                    WHERE i.title =~ {titleRegex} AND c.name IN {categories} \
+                    RETURN i.id, i.title, i.description, i.pic, \
+                    u.id, u.name, c.name, m.lastChanged \
+                    ORDER BY m.lastChanged DESC",
+                    {
+                        titleRegex: titleRegex,
+                        categories: categories
+                    })
+                .then(function(result) {
+                    res.send({
+                        results: result.records.map(function(record) {
+                            return {
+                                idea: {
+                                    id: record.get("i.id"),
+                                    title: record.get("i.title"),
+                                    description: record.get("i.description"),
+                                    pic: record.get("i.pic")
+                                },
+                                author: {
+                                    id: record.get("u.id"),
+                                    name: record.get("u.name"),
+                                },
+                                category: record.get("c.name"),
+                                lastChanged: record.get("m.lastChanged")
+                            };
+                        })
+                    });
+                    session.close();
+                })
+                .catch(function(err) {
+                    res.send({
+                        fail: "Failed searching for idea. Please try again."
+                    });
+                    session.close();
                 });
-                session.close();
-            });
+        }
     };
 
     this.getSingle = function(req, res) {
