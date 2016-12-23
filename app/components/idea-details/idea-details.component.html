@@ -128,7 +128,7 @@
                         (You can view their pic and more info by clicking their name)
                     </p>
                     <ul class="list-detail">
-                        <li>Name: <a [routerLink]="['/users', 'details', author.id]">{{author.name}}</a></li>
+                        <li>Name: <a [routerLink]="['/users', author.id]">{{author.name}}</a></li>
                         <li>Email: <a href="mailto:{{author.username}}">{{author.username}}</a></li>
                         <li>Biography: {{author.bio}}</li>
                     </ul>

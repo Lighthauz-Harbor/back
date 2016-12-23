@@ -40,7 +40,7 @@ const routes: Routes = [
                 component: CreateUserComponent
             },
             {
-                path: "details/:id",
+                path: ":id",
                 component: UserDetailsComponent
             },
             {
@@ -62,7 +62,7 @@ const routes: Routes = [
                 component: CreateIdeaComponent
             },
             {
-                path: "details/:id",
+                path: ":id",
                 children: [
                     {
                         path: "",
