@@ -19566,6 +19566,7 @@ webpackJsonp([0],{
 	var idea_details_component_1 = __webpack_require__(430);
 	var idea_create_component_1 = __webpack_require__(388);
 	var idea_update_component_1 = __webpack_require__(392);
+	var idea_responses_component_1 = __webpack_require__(438);
 	var reports_list_component_1 = __webpack_require__(396);
 	var report_view_component_1 = __webpack_require__(400);
 	var report_reply_component_1 = __webpack_require__(404);
@@ -19603,6 +19604,7 @@ webpackJsonp([0],{
 	                idea_details_component_1.IdeaDetailsComponent,
 	                idea_create_component_1.CreateIdeaComponent,
 	                idea_update_component_1.UpdateIdeaComponent,
+	                idea_responses_component_1.IdeaResponsesComponent,
 	                reports_list_component_1.ReportsListComponent,
 	                report_view_component_1.ViewReportComponent,
 	                report_reply_component_1.ReplyToReportComponent,
@@ -25917,6 +25919,7 @@ webpackJsonp([0],{
 	var idea_details_component_1 = __webpack_require__(430);
 	var idea_create_component_1 = __webpack_require__(388);
 	var idea_update_component_1 = __webpack_require__(392);
+	var idea_responses_component_1 = __webpack_require__(438);
 	var reports_list_component_1 = __webpack_require__(396);
 	var report_view_component_1 = __webpack_require__(400);
 	var report_reply_component_1 = __webpack_require__(404);
@@ -25963,7 +25966,16 @@ webpackJsonp([0],{
 	            },
 	            {
 	                path: "details/:id",
-	                component: idea_details_component_1.IdeaDetailsComponent
+	                children: [
+	                    {
+	                        path: "",
+	                        component: idea_details_component_1.IdeaDetailsComponent
+	                    },
+	                    {
+	                        path: "responses",
+	                        component: idea_responses_component_1.IdeaResponsesComponent
+	                    }
+	                ]
 	            },
 	            {
 	                path: "update/:id",
@@ -32660,7 +32672,7 @@ webpackJsonp([0],{
 /***/ 431:
 /***/ function(module, exports) {
 
-	module.exports = "<div class=\"content-dashboard\">\r\n    <div class=\"title-dashboard\">\r\n        <h1>Idea details: {{idea.title || \"Loading...\"}}</h1>\r\n        <h2>\r\n            Read the details of the business idea here.<br>\r\n            To take action upon the idea (view additional details or edit it), simply navigate to Actions and choose a link there.\r\n        </h2>\r\n    </div>\r\n\r\n    <div class=\"actions-dashboard\">\r\n        <h2>Actions</h2>\r\n        <ul class=\"list-actions\">\r\n            <li>\r\n                <a [routerLink]=\"['/ideas', 'update', idea.id]\">Update idea information</a>\r\n            </li>\r\n        </ul>\r\n    </div>\r\n\r\n    <div class=\"details-dashboard\">\r\n        <h2>Business idea information</h2>\r\n        <div class=\"body-dashboard\">\r\n            <div class=\"pic-col-details\">\r\n                <img [src]=\"idea.picture\">\r\n            </div>\r\n            <div class=\"info-col-details\">\r\n                <div class=\"info-wrapper basic-info-details\">\r\n                    <h3>Basic information</h3>\r\n                    <p>\r\n                        <strong>Visibility:</strong> \r\n                        {{(idea.visibility === 0) ? \r\n                            \"Not published\" : \r\n                            (idea.visibility === 1) ? \"Exclusive\" : \r\n                                \"Public\"}}\r\n                    </p>\r\n                    <p>\r\n                        <strong>Description:</strong> \r\n                        {{idea.description}}\r\n                    </p>\r\n                    <p>\r\n                        <strong>Background:</strong> \r\n                        {{idea.background}}\r\n                    </p>\r\n                    <p>\r\n                        <strong>Problem:</strong> \r\n                        {{idea.problem}}\r\n                    </p>\r\n                    <p>\r\n                        <strong>Solution:</strong> \r\n                        {{idea.solution}}\r\n                    </p>\r\n                </div>\r\n                <div class=\"info-wrapper extra-info-details\">\r\n                    <h3>Extra information:</h3>\r\n                    <p>\r\n                        <strong>Extra Link:</strong> \r\n                        {{idea.extraLink || \"No extra link\"}}\r\n                    </p>\r\n                </div>\r\n                <div class=\"info-wrapper bmc-details\">\r\n                    <h3>Business model canvas:</h3>\r\n                    <p>\r\n                        <strong>Value Proposition:</strong> \r\n                        {{idea.valueProposition}}\r\n                    </p>\r\n                    <p>\r\n                        <strong>Customer Segments:</strong> \r\n                        {{idea.customerSegments}}\r\n                    </p>\r\n                    <p>\r\n                        <strong>Customer Relationship:</strong> \r\n                        {{idea.customerRelationships}}\r\n                    </p>\r\n                    <p>\r\n                        <strong>Channels:</strong> \r\n                        {{idea.channels}}\r\n                    </p>\r\n                    <p>\r\n                        <strong>Key Activities:</strong> \r\n                        {{idea.keyActivities}}\r\n                    </p>\r\n                    <p>\r\n                        <strong>Key Resources:</strong> \r\n                        {{idea.keyResources}}\r\n                    </p>\r\n                    <p>\r\n                        <strong>Key Partners:</strong> \r\n                        {{idea.keyPartners}}\r\n                    </p>\r\n                    <p>\r\n                        <strong>Cost Structure:</strong> \r\n                        {{idea.costStructure}}\r\n                    </p>\r\n                    <p>\r\n                        <strong>Revenue Streams:</strong> \r\n                        {{idea.revenueStreams}}\r\n                    </p>\r\n                </div>\r\n                <div class=\"info-wrapper swot-details\">\r\n                    <h3>SWOT analysis:</h3>\r\n                    <p>\r\n                        <strong>Strengths:</strong> \r\n                        {{idea.strengths}}\r\n                    </p>\r\n                    <p>\r\n                        <strong>Weaknesses:</strong> \r\n                        {{idea.weaknesses}}\r\n                    </p>\r\n                    <p>\r\n                        <strong>Opportunities:</strong> \r\n                        {{idea.opportunities}}\r\n                    </p>\r\n                    <p>\r\n                        <strong>Threats:</strong> \r\n                        {{idea.threats}}\r\n                    </p>\r\n                </div>\r\n                <div class=\"info-wrapper other-info-details\">\r\n                    <h3>Other information</h3>\r\n                    <p>\r\n                        <strong>Author:</strong> \r\n                        (You can view their pic and more info by clicking their name)\r\n                    </p>\r\n                    <ul class=\"list-detail\">\r\n                        <li>Name: <a [routerLink]=\"['/users', 'details', author.id]\">{{author.name}}</a></li>\r\n                        <li>Email: <a href=\"mailto:{{author.username}}\">{{author.username}}</a></li>\r\n                        <li>Biography: {{author.bio}}</li>\r\n                    </ul>\r\n                    <p>\r\n                        <strong>Category:</strong> \r\n                        {{idea.category}}\r\n                    </p>\r\n                    <p>\r\n                        <strong>Last modified at:</strong> \r\n                        {{idea.lastChanged.toString()}}\r\n                    </p>\r\n                </div>\r\n            </div>\r\n        </div>\r\n    </div>\r\n</div>"
+	module.exports = "<div class=\"content-dashboard\">\r\n    <div class=\"title-dashboard\">\r\n        <h1>{{idea.title || \"Loading\"}} idea details</h1>\r\n        <h2>\r\n            Read the details of the business idea here.<br>\r\n            To take action upon the idea (view additional details or edit it), simply navigate to Actions and choose a link there.\r\n        </h2>\r\n    </div>\r\n\r\n    <div class=\"actions-dashboard\">\r\n        <h2>Actions</h2>\r\n        <ul class=\"list-actions\">\r\n            <li>\r\n                <a [routerLink]=\"['/ideas', 'update', idea.id]\">Update idea information</a>\r\n            </li>\r\n            <li>\r\n                <a [routerLink]=\"['responses']\">View likes and comments</a>\r\n            </li>\r\n        </ul>\r\n    </div>\r\n\r\n    <div class=\"details-dashboard\">\r\n        <h2>Business idea information</h2>\r\n        <div class=\"body-dashboard\">\r\n            <div class=\"pic-col-details\">\r\n                <img [src]=\"idea.picture\">\r\n            </div>\r\n            <div class=\"info-col-details\">\r\n                <div class=\"info-wrapper basic-info-details\">\r\n                    <h3>Basic information</h3>\r\n                    <p>\r\n                        <strong>Visibility:</strong> \r\n                        {{(idea.visibility === 0) ? \r\n                            \"Not published\" : \r\n                            (idea.visibility === 1) ? \"Exclusive\" : \r\n                                \"Public\"}}\r\n                    </p>\r\n                    <p>\r\n                        <strong>Title:</strong> \r\n                        {{idea.title}}\r\n                    </p>\r\n                    <p>\r\n                        <strong>Description:</strong> \r\n                        {{idea.description}}\r\n                    </p>\r\n                    <p>\r\n                        <strong>Background:</strong> \r\n                        {{idea.background}}\r\n                    </p>\r\n                    <p>\r\n                        <strong>Problem:</strong> \r\n                        {{idea.problem}}\r\n                    </p>\r\n                    <p>\r\n                        <strong>Solution:</strong> \r\n                        {{idea.solution}}\r\n                    </p>\r\n                </div>\r\n                <div class=\"info-wrapper extra-info-details\">\r\n                    <h3>Extra information:</h3>\r\n                    <p>\r\n                        <strong>Extra Link:</strong> \r\n                        {{idea.extraLink || \"No extra link\"}}\r\n                    </p>\r\n                </div>\r\n                <div class=\"info-wrapper bmc-details\">\r\n                    <h3>Business model canvas:</h3>\r\n                    <p>\r\n                        <strong>Value Proposition:</strong> \r\n                        {{idea.valueProposition}}\r\n                    </p>\r\n                    <p>\r\n                        <strong>Customer Segments:</strong> \r\n                        {{idea.customerSegments}}\r\n                    </p>\r\n                    <p>\r\n                        <strong>Customer Relationship:</strong> \r\n                        {{idea.customerRelationships}}\r\n                    </p>\r\n                    <p>\r\n                        <strong>Channels:</strong> \r\n                        {{idea.channels}}\r\n                    </p>\r\n                    <p>\r\n                        <strong>Key Activities:</strong> \r\n                        {{idea.keyActivities}}\r\n                    </p>\r\n                    <p>\r\n                        <strong>Key Resources:</strong> \r\n                        {{idea.keyResources}}\r\n                    </p>\r\n                    <p>\r\n                        <strong>Key Partners:</strong> \r\n                        {{idea.keyPartners}}\r\n                    </p>\r\n                    <p>\r\n                        <strong>Cost Structure:</strong> \r\n                        {{idea.costStructure}}\r\n                    </p>\r\n                    <p>\r\n                        <strong>Revenue Streams:</strong> \r\n                        {{idea.revenueStreams}}\r\n                    </p>\r\n                </div>\r\n                <div class=\"info-wrapper swot-details\">\r\n                    <h3>SWOT analysis:</h3>\r\n                    <p>\r\n                        <strong>Strengths:</strong> \r\n                        {{idea.strengths}}\r\n                    </p>\r\n                    <p>\r\n                        <strong>Weaknesses:</strong> \r\n                        {{idea.weaknesses}}\r\n                    </p>\r\n                    <p>\r\n                        <strong>Opportunities:</strong> \r\n                        {{idea.opportunities}}\r\n                    </p>\r\n                    <p>\r\n                        <strong>Threats:</strong> \r\n                        {{idea.threats}}\r\n                    </p>\r\n                </div>\r\n                <div class=\"info-wrapper other-info-details\">\r\n                    <h3>Other information</h3>\r\n                    <p>\r\n                        <strong>Author:</strong> \r\n                        (You can view their pic and more info by clicking their name)\r\n                    </p>\r\n                    <ul class=\"list-detail\">\r\n                        <li>Name: <a [routerLink]=\"['/users', 'details', author.id]\">{{author.name}}</a></li>\r\n                        <li>Email: <a href=\"mailto:{{author.username}}\">{{author.username}}</a></li>\r\n                        <li>Biography: {{author.bio}}</li>\r\n                    </ul>\r\n                    <p>\r\n                        <strong>Category:</strong> \r\n                        {{idea.category}}\r\n                    </p>\r\n                    <p>\r\n                        <strong>Last modified at:</strong> \r\n                        {{idea.lastChanged.toString()}}\r\n                    </p>\r\n                </div>\r\n            </div>\r\n        </div>\r\n    </div>\r\n</div>"
 
 /***/ },
 
@@ -32734,6 +32746,60 @@ webpackJsonp([0],{
 /***/ },
 
 /***/ 436:
+/***/ function(module, exports) {
+
+	// removed by extract-text-webpack-plugin
+
+/***/ },
+
+/***/ 438:
+/***/ function(module, exports, __webpack_require__) {
+
+	"use strict";
+	var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+	    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+	    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+	    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+	    return c > 3 && r && Object.defineProperty(target, key, r), r;
+	};
+	var __metadata = (this && this.__metadata) || function (k, v) {
+	    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+	};
+	var core_1 = __webpack_require__(4);
+	var router_1 = __webpack_require__(31);
+	var ideas_service_1 = __webpack_require__(364);
+	var IdeaResponsesComponent = (function () {
+	    function IdeaResponsesComponent(route, router, ideasService) {
+	        this.route = route;
+	        this.router = router;
+	        this.ideasService = ideasService;
+	        this.likes = [];
+	    }
+	    IdeaResponsesComponent.prototype.ngOnInit = function () {
+	    };
+	    IdeaResponsesComponent = __decorate([
+	        core_1.Component({
+	            selector: "idea-responses",
+	            template: __webpack_require__(439),
+	            styles: [__webpack_require__(440).toString()]
+	        }), 
+	        __metadata('design:paramtypes', [router_1.ActivatedRoute, router_1.Router, ideas_service_1.IdeasService])
+	    ], IdeaResponsesComponent);
+	    return IdeaResponsesComponent;
+	}());
+	exports.IdeaResponsesComponent = IdeaResponsesComponent;
+
+
+/***/ },
+
+/***/ 439:
+/***/ function(module, exports) {
+
+	module.exports = "<div class=\"content-dashboard\">\r\n    <div class=\"title-dashboard\">\r\n        <h1>View likes &amp; comments</h1>\r\n        <h2>\r\n            You can view who likes and comments on the idea in the tables below.\r\n        </h2>\r\n    </div>\r\n</div>"
+
+/***/ },
+
+/***/ 440:
 /***/ function(module, exports) {
 
 	// removed by extract-text-webpack-plugin

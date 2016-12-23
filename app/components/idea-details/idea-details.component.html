@@ -1,6 +1,6 @@
 <div class="content-dashboard">
     <div class="title-dashboard">
-        <h1>Idea details: {{idea.title || "Loading..."}}</h1>
+        <h1>{{idea.title || "Loading"}} idea details</h1>
         <h2>
             Read the details of the business idea here.<br>
             To take action upon the idea (view additional details or edit it), simply navigate to Actions and choose a link there.
@@ -12,6 +12,9 @@
         <ul class="list-actions">
             <li>
                 <a [routerLink]="['/ideas', 'update', idea.id]">Update idea information</a>
+            </li>
+            <li>
+                <a [routerLink]="['responses']">View likes and comments</a>
             </li>
         </ul>
     </div>
@@ -31,6 +34,10 @@
                             "Not published" : 
                             (idea.visibility === 1) ? "Exclusive" : 
                                 "Public"}}
+                    </p>
+                    <p>
+                        <strong>Title:</strong> 
+                        {{idea.title}}
                     </p>
                     <p>
                         <strong>Description:</strong> 

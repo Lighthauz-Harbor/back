@@ -20,6 +20,7 @@ import { IdeasListComponent } from "./components/ideas-list/ideas-list.component
 import { IdeaDetailsComponent } from "./components/idea-details/idea-details.component";
 import { CreateIdeaComponent } from "./components/idea-create/idea-create.component";
 import { UpdateIdeaComponent } from "./components/idea-update/idea-update.component";
+import { IdeaResponsesComponent } from "./components/idea-responses/idea-responses.component";
 
 import { ReportsListComponent } from "./components/reports-list/reports-list.component";
 import { ViewReportComponent } from "./components/report-view/report-view.component";
@@ -56,6 +57,7 @@ import "./vendor/vendor"; // vendor.ts file
         IdeaDetailsComponent,
         CreateIdeaComponent,
         UpdateIdeaComponent,
+        IdeaResponsesComponent,
         ReportsListComponent,
         ViewReportComponent,
         ReplyToReportComponent,
