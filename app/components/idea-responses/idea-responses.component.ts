@@ -1,9 +1,6 @@
 import { Component, OnInit } from "@angular/core";
 import { Router, ActivatedRoute, Params } from "@angular/router";
 
-import { Idea } from "../../models/idea.model.app";
-import { User } from "../../models/user.model.app";
-
 import { IdeasService } from "../../services/ideas.service";
 
 @Component({

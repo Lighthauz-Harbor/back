@@ -14,6 +14,7 @@ import { IdeaDetailsComponent } from "./components/idea-details/idea-details.com
 import { CreateIdeaComponent } from "./components/idea-create/idea-create.component";
 import { UpdateIdeaComponent } from "./components/idea-update/idea-update.component";
 import { IdeaResponsesComponent } from "./components/idea-responses/idea-responses.component";
+import { IdeaPartnersComponent } from "./components/idea-partners/idea-partners.component";
 
 import { ReportsListComponent } from "./components/reports-list/reports-list.component";
 import { ViewReportComponent } from "./components/report-view/report-view.component";
@@ -80,6 +81,10 @@ const routes: Routes = [
                     {
                         path: "responses",
                         component: IdeaResponsesComponent
+                    },
+                    {
+                        path: "partners",
+                        component: IdeaPartnersComponent
                     }
                 ]
             },
