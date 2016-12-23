@@ -9,6 +9,7 @@ import { CreateUserComponent } from "./components/user-create/user-create.compon
 import { UpdateUserComponent } from "./components/user-update/user-update.component";
 
 import { IdeasListComponent } from "./components/ideas-list/ideas-list.component";
+import { IdeaDetailsComponent } from "./components/idea-details/idea-details.component";
 import { CreateIdeaComponent } from "./components/idea-create/idea-create.component";
 import { UpdateIdeaComponent } from "./components/idea-update/idea-update.component";
 
@@ -53,6 +54,10 @@ const routes: Routes = [
             {
                 path: "create",
                 component: CreateIdeaComponent
+            },
+            {
+                path: "details/:id",
+                component: IdeaDetailsComponent
             },
             {
                 path: "update/:id",

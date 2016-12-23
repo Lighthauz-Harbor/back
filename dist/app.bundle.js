@@ -19562,6 +19562,7 @@ webpackJsonp([0],{
 	var user_create_component_1 = __webpack_require__(374);
 	var user_update_component_1 = __webpack_require__(379);
 	var ideas_list_component_1 = __webpack_require__(383);
+	var idea_details_component_1 = __webpack_require__(430);
 	var idea_create_component_1 = __webpack_require__(388);
 	var idea_update_component_1 = __webpack_require__(392);
 	var reports_list_component_1 = __webpack_require__(396);
@@ -19597,6 +19598,7 @@ webpackJsonp([0],{
 	                user_create_component_1.CreateUserComponent,
 	                user_update_component_1.UpdateUserComponent,
 	                ideas_list_component_1.IdeasListComponent,
+	                idea_details_component_1.IdeaDetailsComponent,
 	                idea_create_component_1.CreateIdeaComponent,
 	                idea_update_component_1.UpdateIdeaComponent,
 	                reports_list_component_1.ReportsListComponent,
@@ -25909,6 +25911,7 @@ webpackJsonp([0],{
 	var user_create_component_1 = __webpack_require__(374);
 	var user_update_component_1 = __webpack_require__(379);
 	var ideas_list_component_1 = __webpack_require__(383);
+	var idea_details_component_1 = __webpack_require__(430);
 	var idea_create_component_1 = __webpack_require__(388);
 	var idea_update_component_1 = __webpack_require__(392);
 	var reports_list_component_1 = __webpack_require__(396);
@@ -25950,6 +25953,10 @@ webpackJsonp([0],{
 	            {
 	                path: "create",
 	                component: idea_create_component_1.CreateIdeaComponent
+	            },
+	            {
+	                path: "details/:id",
+	                component: idea_details_component_1.IdeaDetailsComponent
 	            },
 	            {
 	                path: "update/:id",
@@ -31409,13 +31416,14 @@ webpackJsonp([0],{
 	        if (info === void 0) { info = {}; }
 	        if (bmc === void 0) { bmc = {}; }
 	        if (swot === void 0) { swot = {}; }
-	        if (author === void 0) { author = "Unknown author"; }
+	        if (author === void 0) { author = "unknown@author.com"; }
 	        if (category === void 0) { category = "Unknown category"; }
 	        if (lastChanged === void 0) { lastChanged = new Date(0); }
 	        this._id = id;
 	        this._visibility = info.visibility || 1;
 	        this._title = info.title || "";
-	        this._picture = info.picture || "";
+	        this._picture = info.picture ||
+	            "http://res.cloudinary.com/lighthauz-harbor/image/upload/v1479742560/default-idea-pic_wq1dzc.png";
 	        this._description = info.description || "";
 	        this._background = info.background || "";
 	        this._problem = info.problem || "";
@@ -31709,7 +31717,7 @@ webpackJsonp([0],{
 /***/ 385:
 /***/ function(module, exports) {
 
-	module.exports = "<div class=\"content-dashboard\">\r\n    <div class=\"title-dashboard\">\r\n        <h1>List of Ideas</h1>\r\n        <h2>Click on a idea's name to read and edit their profile.<br>\r\n            Click the checkboxes to select multiple ideas and delete them.<br>\r\n            You can also search for a idea. Empty the box and press Enter to view the complete list again.</h2>\r\n    </div>\r\n\r\n    <div class=\"panel-dashboard\">\r\n        <a routerLink=\"/ideas/create\" class=\"btn-create\">Create idea</a>\r\n        <a (click)=\"deleteSelectedIdeas()\" class=\"btn-delete\">Delete idea(s)</a>\r\n        <input #searchIdea type=\"text\"\r\n            name=\"search-idea\"\r\n            class=\"search-panel\"\r\n            placeholder=\"Search idea title and press Enter.\"\r\n            (keyup.enter)=\"search(searchIdea.value)\">\r\n    </div>\r\n\r\n    <div class=\"body-dashboard\">\r\n        <table>\r\n            <thead>\r\n                <tr>\r\n                    <th>\r\n                        <input type=\"checkbox\"\r\n                            class=\"cb-toggle-all\"\r\n                            [checked]=\"toggleAll\"\r\n                            (change)=\"toggleAllIdeas()\">\r\n                    </th>\r\n                    <th>Idea title</th>\r\n                    <th>Description</th>\r\n                    <th>Author</th>\r\n                    <th>Last modified at</th>\r\n                </tr>\r\n            </thead>\r\n            <tbody *ngIf=\"list.length <= 0\">\r\n                <tr>\r\n                    <td class=\"table-message\" colspan=\"5\">\r\n                        {{message || \"Loading...\"}}\r\n                    </td>\r\n                </tr>\r\n            </tbody>\r\n            <tbody *ngIf=\"list.length > 0\">\r\n                <tr *ngFor=\"let idea of list\">\r\n                    <td>\r\n                        <input type=\"checkbox\" \r\n                            class=\"cb-select\"\r\n                            [(ngModel)]=\"idea.selected\"\r\n                            (change)=\"cancelToggleAll()\">\r\n                    </td>\r\n                    <td>\r\n                        <a [routerLink]=\"['update', idea.id]\">\r\n                            {{idea.title}}\r\n                        </a>\r\n                    </td>\r\n                    <td>\r\n                        {{idea.description.length < 37 ?\r\n                            idea.description :\r\n                            (idea.description.slice(0, 37) + \"...\")}}\r\n                    </td>\r\n                    <td>\r\n                        <a href=\"mailto:{{idea.author}}\">\r\n                            {{idea.author}}\r\n                        </a>\r\n                    </td>\r\n                    <td>{{idea.lastChanged}}</td>\r\n                </tr>\r\n            </tbody>\r\n        </table>\r\n    </div>\r\n</div>"
+	module.exports = "<div class=\"content-dashboard\">\r\n    <div class=\"title-dashboard\">\r\n        <h1>List of Ideas</h1>\r\n        <h2>Click on a idea's name to read and edit its data.<br>\r\n            Click the checkboxes to select multiple ideas and delete them.<br>\r\n            You can also search for a idea. Empty the box and press Enter to view the complete list again.</h2>\r\n    </div>\r\n\r\n    <div class=\"panel-dashboard\">\r\n        <a routerLink=\"/ideas/create\" class=\"btn-create\">Create idea</a>\r\n        <a (click)=\"deleteSelectedIdeas()\" class=\"btn-delete\">Delete idea(s)</a>\r\n        <input #searchIdea type=\"text\"\r\n            name=\"search-idea\"\r\n            class=\"search-panel\"\r\n            placeholder=\"Search idea title and press Enter.\"\r\n            (keyup.enter)=\"search(searchIdea.value)\">\r\n    </div>\r\n\r\n    <div class=\"body-dashboard\">\r\n        <table>\r\n            <thead>\r\n                <tr>\r\n                    <th>\r\n                        <input type=\"checkbox\"\r\n                            class=\"cb-toggle-all\"\r\n                            [checked]=\"toggleAll\"\r\n                            (change)=\"toggleAllIdeas()\">\r\n                    </th>\r\n                    <th>Idea title</th>\r\n                    <th>Description</th>\r\n                    <th>Author</th>\r\n                    <th>Last modified at</th>\r\n                </tr>\r\n            </thead>\r\n            <tbody *ngIf=\"list.length <= 0\">\r\n                <tr>\r\n                    <td class=\"table-message\" colspan=\"5\">\r\n                        {{message || \"Loading...\"}}\r\n                    </td>\r\n                </tr>\r\n            </tbody>\r\n            <tbody *ngIf=\"list.length > 0\">\r\n                <tr *ngFor=\"let idea of list\">\r\n                    <td>\r\n                        <input type=\"checkbox\" \r\n                            class=\"cb-select\"\r\n                            [(ngModel)]=\"idea.selected\"\r\n                            (change)=\"cancelToggleAll()\">\r\n                    </td>\r\n                    <td>\r\n                        <a [routerLink]=\"['details', idea.id]\">\r\n                            {{idea.title}}\r\n                        </a>\r\n                    </td>\r\n                    <td>\r\n                        {{idea.description.length < 37 ?\r\n                            idea.description :\r\n                            (idea.description.slice(0, 37) + \"...\")}}\r\n                    </td>\r\n                    <td>\r\n                        <a href=\"mailto:{{idea.author}}\">\r\n                            {{idea.author}}\r\n                        </a>\r\n                    </td>\r\n                    <td>{{idea.lastChanged}}</td>\r\n                </tr>\r\n            </tbody>\r\n        </table>\r\n    </div>\r\n</div>"
 
 /***/ },
 
@@ -32543,6 +32551,99 @@ webpackJsonp([0],{
 /***/ },
 
 /***/ 423:
+/***/ function(module, exports) {
+
+	// removed by extract-text-webpack-plugin
+
+/***/ },
+
+/***/ 430:
+/***/ function(module, exports, __webpack_require__) {
+
+	"use strict";
+	var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+	    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+	    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+	    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+	    return c > 3 && r && Object.defineProperty(target, key, r), r;
+	};
+	var __metadata = (this && this.__metadata) || function (k, v) {
+	    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+	};
+	var core_1 = __webpack_require__(4);
+	var router_1 = __webpack_require__(31);
+	var idea_model_app_1 = __webpack_require__(384);
+	var ideas_service_1 = __webpack_require__(364);
+	var IdeaDetailsComponent = (function () {
+	    function IdeaDetailsComponent(route, router, ideasService) {
+	        this.route = route;
+	        this.router = router;
+	        this.ideasService = ideasService;
+	        this.idea = new idea_model_app_1.Idea();
+	    }
+	    IdeaDetailsComponent.prototype.ngOnInit = function () {
+	        var _this = this;
+	        this.route.params.forEach(function (params) {
+	            var id = params["id"];
+	            _this.ideasService.getSingleIdea(id)
+	                .subscribe(function (json) {
+	                if (json.fail) {
+	                    alert(json.fail);
+	                    _this.router.navigate(["/ideas"]);
+	                }
+	                else {
+	                    _this.idea = new idea_model_app_1.Idea(id, {
+	                        visibility: json.visibility,
+	                        title: json.idea.title,
+	                        picture: json.idea.pic,
+	                        description: json.idea.description,
+	                        background: json.idea.background,
+	                        problem: json.idea.problem,
+	                        solution: json.idea.solution,
+	                        extraLink: json.idea.extraLink,
+	                    }, {
+	                        valueProposition: json.idea.valueProposition,
+	                        customerSegments: json.idea.customerSegments,
+	                        customerRelationships: json.idea.customerRelationships,
+	                        channels: json.idea.channels,
+	                        keyActivities: json.idea.keyActivities,
+	                        keyResources: json.idea.keyResources,
+	                        keyPartners: json.idea.keyPartners,
+	                        costStructure: json.idea.costStructure,
+	                        revenueStreams: json.idea.revenueStreams,
+	                    }, {
+	                        strengths: json.idea.strengths,
+	                        weaknesses: json.idea.weaknesses,
+	                        opportunities: json.idea.opportunities,
+	                        threats: json.idea.threats,
+	                    }, json.author.email, json.category, new Date(json.timestamp));
+	                }
+	            });
+	        });
+	    };
+	    IdeaDetailsComponent = __decorate([
+	        core_1.Component({
+	            selector: "idea-details",
+	            template: __webpack_require__(431),
+	            styles: [__webpack_require__(432).toString()]
+	        }), 
+	        __metadata('design:paramtypes', [router_1.ActivatedRoute, router_1.Router, ideas_service_1.IdeasService])
+	    ], IdeaDetailsComponent);
+	    return IdeaDetailsComponent;
+	}());
+	exports.IdeaDetailsComponent = IdeaDetailsComponent;
+
+
+/***/ },
+
+/***/ 431:
+/***/ function(module, exports) {
+
+	module.exports = "<div class=\"content-dashboard\">\r\n    <div class=\"title-dashboard\">\r\n        <h1>Idea details: {{ idea.title || \"Loading...\" }}</h1>\r\n        <h2>\r\n            Read the details of the business idea here.<br>\r\n            To take action upon the idea (view additional details or edit it), simply navigate to Actions and choose a link there.\r\n        </h2>\r\n    </div>\r\n\r\n    <div class=\"actions-wrapper-dashboard\">\r\n        <div class=\"list-col-actions\">\r\n            <h2>Actions</h2>\r\n            <ul class=\"list-actions\">\r\n                <li>\r\n                    <a [routerLink]=\"['/ideas', 'update', idea.id]\">Update idea information</a>\r\n                </li>\r\n            </ul>\r\n        </div>\r\n        <!-- TODO: insert picture into idea details div -->\r\n        <div class=\"pic-col-actions\">\r\n            <img [src]=\"idea.picture\">\r\n        </div>\r\n    </div>\r\n</div>"
+
+/***/ },
+
+/***/ 432:
 /***/ function(module, exports) {
 
 	// removed by extract-text-webpack-plugin

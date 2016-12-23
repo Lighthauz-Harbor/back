@@ -1,0 +1,12 @@
+.list-col-actions {
+    float: left;
+}
+
+.pic-col-actions {
+    float: right;
+}
+
+.pic-col-actions,
+.pic-col-actions img {
+    width: 360px;
+}

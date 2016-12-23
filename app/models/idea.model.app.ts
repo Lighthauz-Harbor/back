@@ -27,14 +27,15 @@ export class Idea {
     private _selected: boolean; // for selection in users list table
 
     constructor(id: string = "", info: any = {}, bmc: any = {}, swot: any = {},
-        author: string = "Unknown author", 
+        author: string = "unknown@author.com", 
         category: string = "Unknown category",
         lastChanged: Date = new Date(0)) {
 
         this._id = id;
         this._visibility = info.visibility || 1;
         this._title = info.title || "";
-        this._picture = info.picture || "";
+        this._picture = info.picture || 
+            "http://res.cloudinary.com/lighthauz-harbor/image/upload/v1479742560/default-idea-pic_wq1dzc.png";
         this._description = info.description || "";
         this._background = info.background || "";
         this._problem = info.problem || "";

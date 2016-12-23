@@ -283,6 +283,17 @@
 .form-group button[type="submit"] {
     padding: 4px 8px;
     font-size: 12pt;
+}.list-col-actions {
+    float: left;
+}
+
+.pic-col-actions {
+    float: right;
+}
+
+.pic-col-actions,
+.pic-col-actions img {
+    width: 360px;
 }.form-dashboard h2 {
     font-weight: 100;
 }

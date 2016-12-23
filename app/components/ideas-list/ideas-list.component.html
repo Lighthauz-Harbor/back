@@ -1,7 +1,7 @@
 <div class="content-dashboard">
     <div class="title-dashboard">
         <h1>List of Ideas</h1>
-        <h2>Click on a idea's name to read and edit their profile.<br>
+        <h2>Click on a idea's name to read and edit its data.<br>
             Click the checkboxes to select multiple ideas and delete them.<br>
             You can also search for a idea. Empty the box and press Enter to view the complete list again.</h2>
     </div>
@@ -48,7 +48,7 @@
                             (change)="cancelToggleAll()">
                     </td>
                     <td>
-                        <a [routerLink]="['update', idea.id]">
+                        <a [routerLink]="['details', idea.id]">
                             {{idea.title}}
                         </a>
                     </td>
