@@ -28,7 +28,7 @@ export class Idea {
 
     constructor(id: string = "", info: any = {}, bmc: any = {}, swot: any = {},
         author: string = "unknown@author.com", 
-        category: string = "Unknown category",
+        category: string = "",
         lastChanged: Date = new Date(0)) {
 
         this._id = id;

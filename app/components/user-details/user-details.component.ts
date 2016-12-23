@@ -13,6 +13,7 @@ import { UsersService } from "../../services/users.service";
 export class UserDetailsComponent implements OnInit {
 
     private user: User = new User();
+    private preferredCategories: string[] = [];
 
     constructor(
         private route: ActivatedRoute,
@@ -35,6 +36,19 @@ export class UserDetailsComponent implements OnInit {
                             json.name, json.bio, json.profilePic,
                             new Date(json.dateOfBirth),
                             new Date(json.createdAt));
+                    }
+                });
+            this.usersService.listPreferredCategories(id)
+                .subscribe((json: any) => {
+                    if (json.fail) {
+                        this.preferredCategories.push("Failed to load.");
+                    } else {
+                        json.list.map((item: string) => {
+                            this.preferredCategories.push(item);
+                        });
+                        if (this.preferredCategories.length === 0) {
+                            this.preferredCategories.push("No preferred categories.");
+                        }
                     }
                 });
         });

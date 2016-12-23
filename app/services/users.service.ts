@@ -69,4 +69,12 @@ export class UsersService {
             });
     }
 
+    listPreferredCategories(userId: string): Observable<any> {
+        return this.http.post("/api/category/prefer/list",
+        { userId })
+            .map((res: Response) => {
+                return JSON.parse(res.text());
+            });
+    }
+
 }

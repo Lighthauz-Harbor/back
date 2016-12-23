@@ -19,6 +19,12 @@
         <div class="body-dashboard">
             <div class="pic-col-details">
                 <img [src]="user.profilePic">
+                <p>
+                    <strong>Preferred categories:</strong><br>
+                    {{(preferredCategories.length === 0) ? 
+                        "Loading..." : 
+                        preferredCategories.join(", ")}}
+                </p>
             </div>
             <div class="info-col-details">
                 <div class="info-wrapper basic-info-details">

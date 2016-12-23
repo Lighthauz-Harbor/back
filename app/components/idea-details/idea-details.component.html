@@ -28,7 +28,7 @@
             <div class="pic-col-details">
                 <img [src]="idea.picture">
                 <p>
-                    <strong>Category:</strong> {{idea.category}}
+                    <strong>Category:</strong> {{idea.category || "Loading..."}}
                 </p>
             </div>
             <div class="info-col-details">
