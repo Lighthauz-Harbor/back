@@ -30904,7 +30904,7 @@ webpackJsonp([0],{
 	        if (id === void 0) { id = ""; }
 	        if (username === void 0) { username = "unknown@email.com"; }
 	        if (role === void 0) { role = "user"; }
-	        if (name === void 0) { name = "Loading..."; }
+	        if (name === void 0) { name = ""; }
 	        if (bio === void 0) { bio = "This is some bio"; }
 	        if (profilePic === void 0) { profilePic = "http://res.cloudinary.com/lighthauz-harbor/image/upload/v1478504599/default-profile-pic_hroujz.png"; }
 	        if (dateOfBirth === void 0) { dateOfBirth = new Date(0); }
