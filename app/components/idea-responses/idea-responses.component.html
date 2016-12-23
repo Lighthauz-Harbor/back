@@ -13,7 +13,7 @@
                 <tr>
                     <th>User picture</th>
                     <th>User name</th>
-                    <th>Last liked at</th>
+                    <th class="timestamp-col">Last liked at</th>
                 </tr>
             </thead>
             <tbody *ngIf="likes.length === 0">
@@ -31,8 +31,9 @@
                             {{row.user.name}}
                         </a>
                     </td>
-                    <td>
-                        {{row.timestamp.toString()}}
+                    <td class="timestamp-col">
+                        {{row.timestamp.toDateString()}}<br>
+                        {{row.timestamp.toTimeString()}}
                     </td>
                 </tr>
             </tbody>
@@ -47,7 +48,7 @@
                     <th>User picture</th>
                     <th>User name</th>
                     <th>Comment</th>
-                    <th>Last modified at</th>
+                    <th class="timestamp-col">Last modified at</th>
                 </tr>
             </thead>
             <tbody *ngIf="comments.length === 0">
@@ -68,8 +69,9 @@
                     <td>
                         {{row.comment.text}}
                     </td>
-                    <td>
-                        {{row.comment.timestamp.toString()}}
+                    <td class="timestamp-col">
+                        {{row.comment.timestamp.toDateString()}}<br>
+                        {{row.comment.timestamp.toTimeString()}}
                     </td>
                 </tr>
             </tbody>

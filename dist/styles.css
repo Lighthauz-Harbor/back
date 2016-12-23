@@ -358,8 +358,17 @@ ul.list-detail {
     text-align: left !important;
 }
 
+.table-action th,
+.table-action td {
+    padding: 4px 8px;
+}
+
 .table-action td img {
     width: 80px;
+}
+
+.timestamp-col {
+    width: 200px;
 }.title-dashboard h2 strong {
     font-weight: 600;
 }.body-dashboard p {
