@@ -84,16 +84,16 @@ export class UsersListComponent implements OnInit {
     }
 
     deleteSelectedUsers(): void {
-        let selectedUsernames = this.list.filter((row) => {
+        let selectedIds = this.list.filter((row) => {
             return row.selected;
         }).map((user) => {
-            return user.username;
+            return user.id;
         });
 
-        if (selectedUsernames.length === 0) {
+        if (selectedIds.length === 0) {
             alert("Please select the users to delete first!");
         } else {
-            this.usersService.deleteUsers(selectedUsernames)
+            this.usersService.deleteUsers(selectedIds)
                 .subscribe((json: any) => {
                     alert(json.message);
                     this.loadUsersList(); // reload the users list

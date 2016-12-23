@@ -47,9 +47,9 @@ export class UsersService {
                 });
     }
 
-    deleteUsers(usernames: string[]): Observable<any> {
+    deleteUsers(ids: string[]): Observable<any> {
         return this.http.post("/api/users/delete",
-            { usernames })
+            { ids })
             .map((res: Response) => {
                 return JSON.parse(res.text());
             });

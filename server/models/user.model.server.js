@@ -553,10 +553,9 @@ var UserSchema = function(dbDriver) {
 
     this.deleteUsers = function(req, res) {
         var session = this.driver.session();
-        var usernames = req.body.usernames;
         session
-            .run("MATCH (u:User) WHERE u.username IN {usernames} DETACH DELETE u",
-                { usernames: usernames })
+            .run("MATCH (u:User) WHERE u.id IN {ids} DETACH DELETE u",
+                { ids: req.body.ids })
             .then(function(result) {
                 res.send({
                     message: "Successfully deleted user(s)!"

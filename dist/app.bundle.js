@@ -30547,8 +30547,8 @@ webpackJsonp([0],{
 	            return JSON.parse(res.text());
 	        });
 	    };
-	    UsersService.prototype.deleteUsers = function (usernames) {
-	        return this.http.post("/api/users/delete", { usernames: usernames })
+	    UsersService.prototype.deleteUsers = function (ids) {
+	        return this.http.post("/api/users/delete", { ids: ids })
 	            .map(function (res) {
 	            return JSON.parse(res.text());
 	        });
@@ -30806,16 +30806,16 @@ webpackJsonp([0],{
 	    };
 	    UsersListComponent.prototype.deleteSelectedUsers = function () {
 	        var _this = this;
-	        var selectedUsernames = this.list.filter(function (row) {
+	        var selectedIds = this.list.filter(function (row) {
 	            return row.selected;
 	        }).map(function (user) {
-	            return user.username;
+	            return user.id;
 	        });
-	        if (selectedUsernames.length === 0) {
+	        if (selectedIds.length === 0) {
 	            alert("Please select the users to delete first!");
 	        }
 	        else {
-	            this.usersService.deleteUsers(selectedUsernames)
+	            this.usersService.deleteUsers(selectedIds)
 	                .subscribe(function (json) {
 	                alert(json.message);
 	                _this.loadUsersList(); // reload the users list
