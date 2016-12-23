@@ -7,13 +7,13 @@
     </div>
 
     <div class="panel-dashboard">
+        <a routerLink="/users/create" class="btn-create">Create user</a>
+        <a (click)="deleteSelectedUsers()" class="btn-delete">Delete user(s)</a>
         <input #searchUser type="text"
             name="search-user" 
             class="search-panel"
             placeholder="Search user and press Enter."
             (keyup.enter)="search(searchUser.value)">
-        <a routerLink="/users/create" class="btn-create">Create user</a>
-        <a (click)="deleteSelectedUsers()" class="btn-delete">Delete user(s)</a>
     </div>
 
     <div class="body-dashboard">
