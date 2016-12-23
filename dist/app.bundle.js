@@ -32928,6 +32928,7 @@ webpackJsonp([0],{
 	};
 	var core_1 = __webpack_require__(4);
 	var router_1 = __webpack_require__(31);
+	var user_model_app_1 = __webpack_require__(370);
 	var ideas_service_1 = __webpack_require__(364);
 	var IdeaPartnersComponent = (function () {
 	    function IdeaPartnersComponent(route, router, ideasService) {
@@ -32946,7 +32947,22 @@ webpackJsonp([0],{
 	                if (json.fail) {
 	                    _this.partnersMessage = json.fail;
 	                }
+	                else {
+	                    _this.pushPartners(json);
+	                    if (_this.partners.length === 0) {
+	                        _this.partnersMessage = "There are no partners collaborating on this idea.";
+	                    }
+	                    else {
+	                        _this.partnersMessage = "";
+	                    }
+	                }
 	            });
+	        });
+	    };
+	    IdeaPartnersComponent.prototype.pushPartners = function (json) {
+	        var _this = this;
+	        json.partners.map(function (item) {
+	            _this.partners.push(new user_model_app_1.User(item.id, item.username, "user", item.name, item.bio, item.profilePic));
 	        });
 	    };
 	    IdeaPartnersComponent = __decorate([
@@ -32967,7 +32983,7 @@ webpackJsonp([0],{
 /***/ 443:
 /***/ function(module, exports) {
 
-	module.exports = "<div class=\"content-dashboard\">\r\n    <div class=\"title-dashboard\">\r\n        <h1>View partners</h1>\r\n        <h2>\r\n            You can view the partners collaborating in the business idea you selected.\r\n        </h2>\r\n    </div>\r\n\r\n    <div class=\"action-table-wrapper partners-wrapper\">\r\n        <h2>Partners</h2>\r\n        <table class=\"table-action\">\r\n            <thead>\r\n                <tr>\r\n                    <th>User's picture</th>\r\n                    <th>User's name</th>\r\n                    <th>Email</th>\r\n                    <th>Biography</th>\r\n                </tr>\r\n            </thead>\r\n            <tbody>\r\n                <tr>\r\n                    <td colspan=\"4\">{{partnersMessage}}</td>\r\n                </tr>\r\n            </tbody>\r\n        </table>\r\n    </div>\r\n</div>"
+	module.exports = "<div class=\"content-dashboard\">\r\n    <div class=\"title-dashboard\">\r\n        <h1>View partners</h1>\r\n        <h2>\r\n            You can view the partners collaborating in the business idea you selected.\r\n        </h2>\r\n    </div>\r\n\r\n    <div class=\"action-table-wrapper partners-wrapper\">\r\n        <h2>Partners</h2>\r\n        <table class=\"table-action\">\r\n            <thead>\r\n                <tr>\r\n                    <th>User's picture</th>\r\n                    <th>User's name</th>\r\n                    <th>Email</th>\r\n                    <th>Biography</th>\r\n                </tr>\r\n            </thead>\r\n            <tbody *ngIf=\"partners.length === 0\">\r\n                <tr>\r\n                    <td colspan=\"4\">{{partnersMessage}}</td>\r\n                </tr>\r\n            </tbody>\r\n            <tbody *ngIf=\"partners.length > 0\">\r\n                <tr *ngFor=\"let row of partners\">\r\n                    <td>\r\n                        <img [src]=\"row.profilePic\">\r\n                    </td>\r\n                    <td>\r\n                        <a [routerLink]=\"['/users', row.id]\">{{row.name}}</a>\r\n                    </td>\r\n                    <td>\r\n                        <a href=\"mailto:{{row.username}}\">{{row.username}}</a>\r\n                    </td>\r\n                    <td>\r\n                        {{row.bio}}\r\n                    </td>\r\n                </tr>\r\n            </tbody>\r\n        </table>\r\n    </div>\r\n</div>"
 
 /***/ },
 

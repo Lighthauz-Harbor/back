@@ -30,8 +30,23 @@ export class IdeaPartnersComponent implements OnInit {
 
                     if (json.fail) {
                         this.partnersMessage = json.fail;
+                    } else {
+                        this.pushPartners(json);
+                        if (this.partners.length === 0) {
+                            this.partnersMessage = "There are no partners collaborating on this idea.";
+                        } else {
+                            this.partnersMessage = "";
+                        }
                     }
             });
+        });
+    }
+
+    private pushPartners(json: any): void {
+        json.partners.map((item: any) => {
+            this.partners.push(
+                new User(item.id, item.username, "user", 
+                    item.name, item.bio, item.profilePic));
         });
     }
 

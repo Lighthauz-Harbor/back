@@ -17,9 +17,25 @@
                     <th>Biography</th>
                 </tr>
             </thead>
-            <tbody>
+            <tbody *ngIf="partners.length === 0">
                 <tr>
                     <td colspan="4">{{partnersMessage}}</td>
+                </tr>
+            </tbody>
+            <tbody *ngIf="partners.length > 0">
+                <tr *ngFor="let row of partners">
+                    <td>
+                        <img [src]="row.profilePic">
+                    </td>
+                    <td>
+                        <a [routerLink]="['/users', row.id]">{{row.name}}</a>
+                    </td>
+                    <td>
+                        <a href="mailto:{{row.username}}">{{row.username}}</a>
+                    </td>
+                    <td>
+                        {{row.bio}}
+                    </td>
                 </tr>
             </tbody>
         </table>
