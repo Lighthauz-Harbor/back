@@ -36,8 +36,8 @@ export class UpdateUserComponent implements OnInit {
 
     ngOnInit(): void {
         this.route.params.forEach((params: Params) => {
-            let username = params["username"];
-            this.usersService.getSingleUser(username)
+            let id = params["id"];
+            this.usersService.getSingleUser(id)
                 .subscribe((json: any) => {
                     if (json.fail) {
                         alert(json.fail);

@@ -25937,7 +25937,7 @@ webpackJsonp([0],{
 	                component: user_create_component_1.CreateUserComponent
 	            },
 	            {
-	                path: "update/:username",
+	                path: "update/:id",
 	                component: user_update_component_1.UpdateUserComponent
 	            }
 	        ]
@@ -30529,8 +30529,8 @@ webpackJsonp([0],{
 	            return JSON.parse(res.text());
 	        });
 	    };
-	    UsersService.prototype.getSingleUser = function (username) {
-	        return this.http.get("/api/users/get/" + username)
+	    UsersService.prototype.getSingleUser = function (id) {
+	        return this.http.get("/api/users/get/id/" + id)
 	            .map(function (res) {
 	            return JSON.parse(res.text());
 	        });
@@ -30959,7 +30959,7 @@ webpackJsonp([0],{
 /***/ 371:
 /***/ function(module, exports) {
 
-	module.exports = "<div class=\"content-dashboard\">\r\n    <div class=\"title-dashboard\">\r\n        <h1>List of Users</h1>\r\n        <h2>Click on a user's name to read and edit their profile. <br>\r\n            Click the checkboxes to select multiple users and delete them.<br>\r\n            You can also search for a user. Empty the box and press Enter to view the complete list again.</h2>\r\n    </div>\r\n\r\n    <div class=\"panel-dashboard\">\r\n        <a routerLink=\"/users/create\" class=\"btn-create\">Create user</a>\r\n        <a (click)=\"deleteSelectedUsers()\" class=\"btn-delete\">Delete user(s)</a>\r\n        <input #searchUser type=\"text\"\r\n            name=\"search-user\" \r\n            class=\"search-panel\"\r\n            placeholder=\"Search user and press Enter.\"\r\n            (keyup.enter)=\"search(searchUser.value)\">\r\n    </div>\r\n\r\n    <div class=\"body-dashboard\">\r\n        <table>\r\n            <thead>\r\n                <tr>\r\n                    <th>\r\n                        <input type=\"checkbox\"\r\n                            class=\"cb-toggle-all\" \r\n                            [checked]=\"toggleAll\"\r\n                            (change)=\"toggleAllUsers()\">\r\n                    </th>\r\n                    <th>Name</th>\r\n                    <th>Email</th>\r\n                    <th>Biography</th>\r\n                    <th>Last created at</th>\r\n                </tr>\r\n            </thead>\r\n            <tbody *ngIf=\"list.length <= 0\">\r\n                <tr>\r\n                    <td class=\"table-message\" colspan=\"5\">\r\n                        {{message || \"Loading...\"}}\r\n                    </td>\r\n                </tr>\r\n            </tbody>\r\n            <tbody *ngIf=\"list.length > 0\">\r\n                <tr *ngFor=\"let user of list\">\r\n                    <td>\r\n                        <input type=\"checkbox\" \r\n                            class=\"cb-select\"\r\n                            [(ngModel)]=\"user.selected\"\r\n                            (change)=\"cancelToggleAll()\">\r\n                    </td>\r\n                    <td>\r\n                        <a [routerLink]=\"['update', user.username]\">\r\n                            {{user.name}}\r\n                        </a>\r\n                    </td>\r\n                    <td>\r\n                        <a href=\"mailto:{{user.username}}\">\r\n                            {{user.username}}\r\n                        </a>\r\n                    </td>\r\n                    <td>{{user.bio || \"No bio found.\"}}</td>\r\n                    <td>{{user.createdAt.toDateString()}}</td>\r\n                </tr>\r\n            </tbody>\r\n        </table>\r\n    </div>\r\n</div>"
+	module.exports = "<div class=\"content-dashboard\">\r\n    <div class=\"title-dashboard\">\r\n        <h1>List of Users</h1>\r\n        <h2>Click on a user's name to read and edit their profile. <br>\r\n            Click the checkboxes to select multiple users and delete them.<br>\r\n            You can also search for a user. Empty the box and press Enter to view the complete list again.</h2>\r\n    </div>\r\n\r\n    <div class=\"panel-dashboard\">\r\n        <a routerLink=\"/users/create\" class=\"btn-create\">Create user</a>\r\n        <a (click)=\"deleteSelectedUsers()\" class=\"btn-delete\">Delete user(s)</a>\r\n        <input #searchUser type=\"text\"\r\n            name=\"search-user\" \r\n            class=\"search-panel\"\r\n            placeholder=\"Search user and press Enter.\"\r\n            (keyup.enter)=\"search(searchUser.value)\">\r\n    </div>\r\n\r\n    <div class=\"body-dashboard\">\r\n        <table>\r\n            <thead>\r\n                <tr>\r\n                    <th>\r\n                        <input type=\"checkbox\"\r\n                            class=\"cb-toggle-all\" \r\n                            [checked]=\"toggleAll\"\r\n                            (change)=\"toggleAllUsers()\">\r\n                    </th>\r\n                    <th>Name</th>\r\n                    <th>Email</th>\r\n                    <th>Biography</th>\r\n                    <th>Last created at</th>\r\n                </tr>\r\n            </thead>\r\n            <tbody *ngIf=\"list.length <= 0\">\r\n                <tr>\r\n                    <td class=\"table-message\" colspan=\"5\">\r\n                        {{message || \"Loading...\"}}\r\n                    </td>\r\n                </tr>\r\n            </tbody>\r\n            <tbody *ngIf=\"list.length > 0\">\r\n                <tr *ngFor=\"let user of list\">\r\n                    <td>\r\n                        <input type=\"checkbox\" \r\n                            class=\"cb-select\"\r\n                            [(ngModel)]=\"user.selected\"\r\n                            (change)=\"cancelToggleAll()\">\r\n                    </td>\r\n                    <td>\r\n                        <a [routerLink]=\"['update', user.id]\">\r\n                            {{user.name}}\r\n                        </a>\r\n                    </td>\r\n                    <td>\r\n                        <a href=\"mailto:{{user.username}}\">\r\n                            {{user.username}}\r\n                        </a>\r\n                    </td>\r\n                    <td>{{user.bio || \"No bio found.\"}}</td>\r\n                    <td>{{user.createdAt.toDateString()}}</td>\r\n                </tr>\r\n            </tbody>\r\n        </table>\r\n    </div>\r\n</div>"
 
 /***/ },
 
@@ -31174,8 +31174,8 @@ webpackJsonp([0],{
 	    UpdateUserComponent.prototype.ngOnInit = function () {
 	        var _this = this;
 	        this.route.params.forEach(function (params) {
-	            var username = params["username"];
-	            _this.usersService.getSingleUser(username)
+	            var id = params["id"];
+	            _this.usersService.getSingleUser(id)
 	                .subscribe(function (json) {
 	                if (json.fail) {
 	                    alert(json.fail);

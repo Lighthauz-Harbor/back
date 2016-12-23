@@ -342,8 +342,8 @@ var UserSchema = function(dbDriver) {
         var session = this.driver.session();
         session
             .run("MATCH (u:User) WHERE u.id = {id} \
-                RETURN u.id, u.name, u.username, u.bio, \
-                u.dateOfBirth, u.profilePic",
+                RETURN u.id, u.name, u.username, u.bio, u.profilePic, \
+                u.dateOfBirth, u.createdAt",
                 { id: req.params.id })
             .then(function(result) {
                 var user = result.records[0];
@@ -352,8 +352,9 @@ var UserSchema = function(dbDriver) {
                     name: user.get("u.name"),
                     username: user.get("u.username"),
                     bio: user.get("u.bio"),
+                    profilePic: user.get("u.profilePic"),
                     dateOfBirth: Number(user.get("u.dateOfBirth")),
-                    profilePic: user.get("u.profilePic")
+                    createdAt: Number(user.get("u.createdAt"))
                 });
                 session.close();
             })
