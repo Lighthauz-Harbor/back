@@ -27,6 +27,9 @@
         <div class="body-dashboard">
             <div class="pic-col-details">
                 <img [src]="idea.picture">
+                <p>
+                    <strong>Category:</strong> {{idea.category}}
+                </p>
             </div>
             <div class="info-col-details">
                 <div class="info-wrapper basic-info-details">
@@ -135,10 +138,6 @@
                         <li>Email: <a href="mailto:{{author.username}}">{{author.username}}</a></li>
                         <li>Biography: {{author.bio}}</li>
                     </ul>
-                    <p>
-                        <strong>Category:</strong> 
-                        {{idea.category}}
-                    </p>
                     <p>
                         <strong>Last modified at:</strong> 
                         {{idea.lastChanged.toString()}}

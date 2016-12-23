@@ -15,6 +15,11 @@
     border: 1px solid #000;
 }
 
+.pic-col-details p {
+    text-align: center;
+    font-size: 10pt;
+}
+
 .body-dashboard {
     overflow: hidden;
 }
