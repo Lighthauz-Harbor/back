@@ -52,7 +52,11 @@
                             {{idea.title}}
                         </a>
                     </td>
-                    <td>{{idea.description}}</td>
+                    <td>
+                        {{idea.description.length < 37 ?
+                            idea.description :
+                            (idea.description.slice(0, 37) + "...")}}
+                    </td>
                     <td>
                         <a href="mailto:{{idea.author}}">
                             {{idea.author}}
