@@ -41,12 +41,17 @@ const routes: Routes = [
             },
             {
                 path: ":id",
-                component: UserDetailsComponent
+                children: [
+                    {
+                        path: "",
+                        component: UserDetailsComponent
+                    },
+                    {
+                        path: "update",
+                        component: UpdateUserComponent
+                    }
+                ]
             },
-            {
-                path: "update/:id",
-                component: UpdateUserComponent
-            }
         ]
     },
     {
@@ -69,15 +74,15 @@ const routes: Routes = [
                         component: IdeaDetailsComponent
                     },
                     {
+                        path: "update",
+                        component: UpdateIdeaComponent
+                    },
+                    {
                         path: "responses",
                         component: IdeaResponsesComponent
                     }
                 ]
             },
-            {
-                path: "update/:id",
-                component: UpdateIdeaComponent
-            }
         ]
     },
     {
