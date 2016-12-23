@@ -7,18 +7,132 @@
         </h2>
     </div>
 
-    <div class="actions-wrapper-dashboard">
-        <div class="list-col-actions">
-            <h2>Actions</h2>
-            <ul class="list-actions">
-                <li>
-                    <a [routerLink]="['/ideas', 'update', idea.id]">Update idea information</a>
-                </li>
-            </ul>
-        </div>
-        <!-- TODO: insert picture into idea details div -->
-        <div class="pic-col-actions">
-            <img [src]="idea.picture">
+    <div class="actions-dashboard">
+        <h2>Actions</h2>
+        <ul class="list-actions">
+            <li>
+                <a [routerLink]="['/ideas', 'update', idea.id]">Update idea information</a>
+            </li>
+        </ul>
+    </div>
+
+    <div class="details-dashboard">
+        <h2>Business idea details</h2>
+        <div class="body-dashboard">
+            <div class="pic-col-details">
+                <img [src]="idea.picture">
+            </div>
+            <div class="info-col-details">
+                <div class="basic-info-details">
+                    <h3>Basic information</h3>
+                    <p>
+                        <strong>Visibility:</strong> 
+                        {{(idea.visibility === 0) ? 
+                            "Not published" : 
+                            (idea.visibility === 1) ? "Exclusive" : 
+                                "Public"}}
+                    </p>
+                    <p>
+                        <strong>Description:</strong> 
+                        {{idea.description}}
+                    </p>
+                    <p>
+                        <strong>Background:</strong> 
+                        {{idea.background}}
+                    </p>
+                    <p>
+                        <strong>Problem:</strong> 
+                        {{idea.problem}}
+                    </p>
+                    <p>
+                        <strong>Solution:</strong> 
+                        {{idea.solution}}
+                    </p>
+                </div>
+                <div class="extra-info-details">
+                    <h3>Extra information:</h3>
+                    <p>
+                        <strong>Extra Link:</strong> 
+                        {{idea.extraLink || "No extra link"}}
+                    </p>
+                </div>
+                <div class="bmc-details">
+                    <p>
+                        <strong>Value Proposition:</strong> 
+                        {{idea.valueProposition}}
+                    </p>
+                    <p>
+                        <strong>Customer Segments:</strong> 
+                        {{idea.customerSegments}}
+                    </p>
+                    <p>
+                        <strong>Customer Relationship:</strong> 
+                        {{idea.customerRelationships}}
+                    </p>
+                    <p>
+                        <strong>Channels:</strong> 
+                        {{idea.channels}}
+                    </p>
+                    <p>
+                        <strong>Key Activities:</strong> 
+                        {{idea.keyActivities}}
+                    </p>
+                    <p>
+                        <strong>Key Resources:</strong> 
+                        {{idea.keyResources}}
+                    </p>
+                    <p>
+                        <strong>Key Partners:</strong> 
+                        {{idea.keyPartners}}
+                    </p>
+                    <p>
+                        <strong>Cost Structure:</strong> 
+                        {{idea.costStructure}}
+                    </p>
+                    <p>
+                        <strong>Revenue Streams:</strong> 
+                        {{idea.revenueStreams}}
+                    </p>
+                </div>
+                <div class="swot-details">
+                    <p>
+                        <strong>Strengths:</strong> 
+                        {{idea.strengths}}
+                    </p>
+                    <p>
+                        <strong>Weaknesses:</strong> 
+                        {{idea.weaknesses}}
+                    </p>
+                    <p>
+                        <strong>Opportunities:</strong> 
+                        {{idea.opportunities}}
+                    </p>
+                    <p>
+                        <strong>Threats:</strong> 
+                        {{idea.threats}}
+                    </p>
+                </div>
+                <div class="other-info-details">
+                    <h3>Other information</h3>
+                    <p>
+                        <strong>Author:</strong> 
+                        (You can view their pic and more info by clicking their name)
+                    </p>
+                    <ul class="list-detail">
+                        <li>Name: {{author.name}}</li>
+                        <li>Email: <a href="mailto:{{author.username}}">{{author.username}}</a></li>
+                        <li>Biography: {{author.bio}}</li>
+                    </ul>
+                    <p>
+                        <strong>Category:</strong> 
+                        {{idea.category}}
+                    </p>
+                    <p>
+                        <strong>Last modified at:</strong> 
+                        {{idea.lastChanged.toString()}}
+                    </p>
+                </div>
+            </div>
         </div>
     </div>
 </div>

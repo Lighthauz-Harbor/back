@@ -1,12 +1,24 @@
-.list-col-actions {
-    float: left;
+.actions-dashboard {
+    margin-bottom: 20px;
 }
 
-.pic-col-actions {
+.pic-col-details {
     float: right;
 }
 
-.pic-col-actions,
-.pic-col-actions img {
+.pic-col-details,
+.pic-col-details img {
     width: 360px;
+}
+
+.pic-col-details img {
+    border: 1px solid #000;
+}
+
+.body-dashboard {
+    overflow: hidden;
+}
+
+ul.list-detail {
+    list-style-type: disc;
 }

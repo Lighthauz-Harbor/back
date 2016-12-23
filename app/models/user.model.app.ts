@@ -11,8 +11,8 @@ export class User {
 
     // don't assign passwords for security purposes
     constructor(
-        username: string, 
-        role: string,
+        username: string = "unknown@email.com", 
+        role: string = "user",
         name: string = "Some Name",
         bio: string = "This is some bio",
         profilePic: string = "http://res.cloudinary.com/lighthauz-harbor/image/upload/v1478504599/default-profile-pic_hroujz.png",
