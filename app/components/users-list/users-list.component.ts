@@ -1,6 +1,6 @@
 import { Component, OnInit } from "@angular/core";
 
-import { Observable, Subject } from "rxjs";
+import { Observable } from "rxjs";
 
 import { User } from "../../models/user.model.app";
 import { UsersService } from "../../services/users.service";
@@ -13,7 +13,6 @@ import { UsersService } from "../../services/users.service";
 export class UsersListComponent implements OnInit {
 
     private list: User[] = [];
-    private searchTerms = new Subject<string>();
     private toggleAll: boolean = false;
     private message: string = "";
 

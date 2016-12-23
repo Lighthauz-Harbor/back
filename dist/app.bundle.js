@@ -30729,14 +30729,12 @@ webpackJsonp([0],{
 	    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 	};
 	var core_1 = __webpack_require__(4);
-	var rxjs_1 = __webpack_require__(63);
 	var user_model_app_1 = __webpack_require__(370);
 	var users_service_1 = __webpack_require__(363);
 	var UsersListComponent = (function () {
 	    function UsersListComponent(usersService) {
 	        this.usersService = usersService;
 	        this.list = [];
-	        this.searchTerms = new rxjs_1.Subject();
 	        this.toggleAll = false;
 	        this.message = "";
 	    }
