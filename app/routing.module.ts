@@ -94,12 +94,17 @@ const routes: Routes = [
                 component: ReportsListComponent
             },
             {
-                path: "view/:id",
-                component: ViewReportComponent
-            },
-            {
-                path: "reply/:id",
-                component: ReplyToReportComponent
+                path: ":id",
+                children: [
+                    {
+                        path: "",
+                        component: ViewReportComponent
+                    },
+                    {
+                        path: "reply",
+                        component: ReplyToReportComponent
+                    }
+                ]
             }
         ]
     },

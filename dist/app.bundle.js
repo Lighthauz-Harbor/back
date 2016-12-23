@@ -25997,12 +25997,17 @@ webpackJsonp([0],{
 	                component: reports_list_component_1.ReportsListComponent
 	            },
 	            {
-	                path: "view/:id",
-	                component: report_view_component_1.ViewReportComponent
-	            },
-	            {
-	                path: "reply/:id",
-	                component: report_reply_component_1.ReplyToReportComponent
+	                path: ":id",
+	                children: [
+	                    {
+	                        path: "",
+	                        component: report_view_component_1.ViewReportComponent
+	                    },
+	                    {
+	                        path: "reply",
+	                        component: report_reply_component_1.ReplyToReportComponent
+	                    }
+	                ]
 	            }
 	        ]
 	    },
@@ -32167,7 +32172,7 @@ webpackJsonp([0],{
 /***/ 397:
 /***/ function(module, exports) {
 
-	module.exports = "<div class=\"content-dashboard\">\r\n    <div class=\"title-dashboard\">\r\n        <h1>List of reports</h1>\r\n        <h2>\r\n            Following are the list of unsolved reports. Solved reports will not be shown here.<br>\r\n            Click on the report's title to view its description. Click on the reporter's email to reply to their reports. You <strong>cannot</strong> delete reports.\r\n        </h2>\r\n    </div>\r\n    <div class=\"body-dashboard\">\r\n        <table>\r\n            <thead>\r\n                <tr>\r\n                    <th>Report title</th>\r\n                    <th>Reporter's email</th>\r\n                    <th>Last submitted at</th>\r\n                </tr>\r\n            </thead>\r\n            <tbody *ngIf=\"list.length <= 0\">\r\n                <tr>\r\n                    <td class=\"table-message\" colspan=\"3\">\r\n                        {{ message || \"Loading...\" }}\r\n                    </td>\r\n                </tr>\r\n            </tbody>\r\n            <tbody *ngIf=\"list.length > 0\">\r\n                <tr *ngFor=\"let report of list\">\r\n                    <td>\r\n                        <a [routerLink]=\"['view', report.id]\">\r\n                            {{ report.title }}\r\n                        </a>\r\n                    </td>\r\n                    <td>\r\n                        <a href=\"mailto:{{report.author}}\">\r\n                            {{ report.author }}\r\n                        </a>\r\n                    </td>\r\n                    <td>{{ report.createdAt.toDateString() }}</td>\r\n                </tr>\r\n            </tbody>\r\n        </table>\r\n    </div>\r\n</div>"
+	module.exports = "<div class=\"content-dashboard\">\r\n    <div class=\"title-dashboard\">\r\n        <h1>List of reports</h1>\r\n        <h2>\r\n            Following are the list of unsolved reports. Solved reports will not be shown here.<br>\r\n            Click on the report's title to view its description. Click on the reporter's email to reply to their reports. You <strong>cannot</strong> delete reports.\r\n        </h2>\r\n    </div>\r\n    <div class=\"body-dashboard\">\r\n        <table>\r\n            <thead>\r\n                <tr>\r\n                    <th>Report title</th>\r\n                    <th>Reporter's email</th>\r\n                    <th>Last submitted at</th>\r\n                </tr>\r\n            </thead>\r\n            <tbody *ngIf=\"list.length <= 0\">\r\n                <tr>\r\n                    <td class=\"table-message\" colspan=\"3\">\r\n                        {{ message || \"Loading...\" }}\r\n                    </td>\r\n                </tr>\r\n            </tbody>\r\n            <tbody *ngIf=\"list.length > 0\">\r\n                <tr *ngFor=\"let report of list\">\r\n                    <td>\r\n                        <a [routerLink]=\"[report.id]\">\r\n                            {{ report.title }}\r\n                        </a>\r\n                    </td>\r\n                    <td>\r\n                        <a href=\"mailto:{{report.author}}\">\r\n                            {{ report.author }}\r\n                        </a>\r\n                    </td>\r\n                    <td>{{ report.createdAt.toDateString() }}</td>\r\n                </tr>\r\n            </tbody>\r\n        </table>\r\n    </div>\r\n</div>"
 
 /***/ },
 
@@ -32248,7 +32253,7 @@ webpackJsonp([0],{
 /***/ 401:
 /***/ function(module, exports) {
 
-	module.exports = "<div class=\"content-dashboard\">\r\n    <div class=\"title-dashboard\">\r\n        <h1>Report Details</h1>\r\n        <h2>\r\n            Read the description below, and take action for the problems stated within.<br>\r\n            After that, reply to this report, about how you solved those problems.<br>\r\n            The reply will be directly sent to the user's email.\r\n        </h2>\r\n    </div>\r\n\r\n    <div class=\"body-dashboard\">\r\n        <p>\r\n            <strong>Title: </strong> {{ report.title }}\r\n        </p>\r\n        <p>\r\n            <strong>Reporter: </strong> {{ report.author }}\r\n        </p>\r\n        <p>\r\n            <strong>Report type (User or Idea): </strong> {{ report.type }}\r\n        </p>\r\n        <p>\r\n            <strong>User's message:</strong><br>\r\n            {{ report.message }}\r\n        </p>\r\n        <p>\r\n            <strong>Administrator's reply:</strong><br>\r\n            {{ report.reply === \"\" ? \"No reply has been sent yet.\" : report.reply }}\r\n        </p>\r\n        <p>\r\n            <strong>Solved: </strong> {{ report.solved ? \"Already solved.\" : \"Not solved yet.\" }}\r\n        </p>\r\n    </div>\r\n\r\n    <a class=\"button-reply\" href=\"/reports/reply/{{report.id}}\">Reply to report</a>\r\n</div>"
+	module.exports = "<div class=\"content-dashboard\">\r\n    <div class=\"title-dashboard\">\r\n        <h1>Report Details</h1>\r\n        <h2>\r\n            Read the description below, and take action for the problems stated within.<br>\r\n            After that, reply to this report, about how you solved those problems.<br>\r\n            The reply will be directly sent to the user's email.\r\n        </h2>\r\n    </div>\r\n\r\n    <div class=\"body-dashboard\">\r\n        <p>\r\n            <strong>Title: </strong> {{ report.title }}\r\n        </p>\r\n        <p>\r\n            <strong>Reporter: </strong> {{ report.author }}\r\n        </p>\r\n        <p>\r\n            <strong>Report type (User or Idea): </strong> {{ report.type }}\r\n        </p>\r\n        <p>\r\n            <strong>User's message:</strong><br>\r\n            {{ report.message }}\r\n        </p>\r\n        <p>\r\n            <strong>Administrator's reply:</strong><br>\r\n            {{ report.reply === \"\" ? \"No reply has been sent yet.\" : report.reply }}\r\n        </p>\r\n        <p>\r\n            <strong>Solved: </strong> {{ report.solved ? \"Already solved.\" : \"Not solved yet.\" }}\r\n        </p>\r\n    </div>\r\n\r\n    <a class=\"button-reply\" [routerLink]=\"['reply']\">Reply to report</a>\r\n</div>"
 
 /***/ },
 

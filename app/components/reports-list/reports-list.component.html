@@ -25,7 +25,7 @@
             <tbody *ngIf="list.length > 0">
                 <tr *ngFor="let report of list">
                     <td>
-                        <a [routerLink]="['view', report.id]">
+                        <a [routerLink]="[report.id]">
                             {{ report.title }}
                         </a>
                     </td>
