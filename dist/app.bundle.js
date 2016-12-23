@@ -30908,10 +30908,10 @@ webpackJsonp([0],{
 	    // don't assign passwords for security purposes
 	    function User(id, username, role, name, bio, profilePic, dateOfBirth, createdAt) {
 	        if (id === void 0) { id = ""; }
-	        if (username === void 0) { username = "unknown@email.com"; }
+	        if (username === void 0) { username = ""; }
 	        if (role === void 0) { role = "user"; }
 	        if (name === void 0) { name = ""; }
-	        if (bio === void 0) { bio = "This is some bio"; }
+	        if (bio === void 0) { bio = ""; }
 	        if (profilePic === void 0) { profilePic = "http://res.cloudinary.com/lighthauz-harbor/image/upload/v1478504599/default-profile-pic_hroujz.png"; }
 	        if (dateOfBirth === void 0) { dateOfBirth = new Date(0); }
 	        if (createdAt === void 0) { createdAt = new Date(0); }
@@ -31490,7 +31490,7 @@ webpackJsonp([0],{
 	        if (info === void 0) { info = {}; }
 	        if (bmc === void 0) { bmc = {}; }
 	        if (swot === void 0) { swot = {}; }
-	        if (author === void 0) { author = "unknown@author.com"; }
+	        if (author === void 0) { author = ""; }
 	        if (category === void 0) { category = ""; }
 	        if (lastChanged === void 0) { lastChanged = new Date(0); }
 	        this._id = id;

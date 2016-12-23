@@ -27,7 +27,7 @@ export class Idea {
     private _selected: boolean; // for selection in users list table
 
     constructor(id: string = "", info: any = {}, bmc: any = {}, swot: any = {},
-        author: string = "unknown@author.com", 
+        author: string = "", 
         category: string = "",
         lastChanged: Date = new Date(0)) {
 

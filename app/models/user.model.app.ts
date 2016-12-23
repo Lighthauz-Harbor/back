@@ -13,10 +13,10 @@ export class User {
     // don't assign passwords for security purposes
     constructor(
         id: string = "",
-        username: string = "unknown@email.com", 
+        username: string = "", 
         role: string = "user",
         name: string = "",
-        bio: string = "This is some bio",
+        bio: string = "",
         profilePic: string = "http://res.cloudinary.com/lighthauz-harbor/image/upload/v1478504599/default-profile-pic_hroujz.png",
         dateOfBirth: Date = new Date(0),
         createdAt: Date = new Date(0)) {
