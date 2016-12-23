@@ -15,7 +15,7 @@ export class User {
         id: string = "",
         username: string = "unknown@email.com", 
         role: string = "user",
-        name: string = "Some Name",
+        name: string = "Loading...",
         bio: string = "This is some bio",
         profilePic: string = "http://res.cloudinary.com/lighthauz-harbor/image/upload/v1478504599/default-profile-pic_hroujz.png",
         dateOfBirth: Date = new Date(0),
