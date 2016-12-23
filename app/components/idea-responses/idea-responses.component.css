@@ -24,6 +24,11 @@
     width: 80px;
 }
 
+.table-action th:first-child,
+.table-action td:first-child {
+    text-align: center !important;
+}
+
 .timestamp-col {
     width: 200px;
 }
