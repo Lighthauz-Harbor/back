@@ -18,10 +18,33 @@
         <h2>User information</h2>
         <div class="body-dashboard">
             <div class="pic-col-details">
-                Picture here...
+                <img [src]="user.profilePic">
             </div>
             <div class="info-col-details">
-                User info here...
+                <div class="info-wrapper basic-info-details">
+                    <h3>Basic information</h3>
+                    <p>
+                        <strong>Name:</strong> {{user.name}}
+                    </p>
+                    <p>
+                        <strong>Email:</strong> {{user.username}}
+                    </p>
+                    <p>
+                        <strong>Role:</strong> {{user.role}}
+                    </p>
+                    <p>
+                        <strong>Biography:</strong> {{user.bio}}
+                    </p>
+                </div>
+                <div class="info-wrapper other-info-details">
+                    <h3>Other information</h3>
+                    <p>
+                        <strong>Date of birth:</strong> {{user.dateOfBirth.toDateString()}}
+                    </p>
+                    <p>
+                        <strong>Created at:</strong> {{user.createdAt.toString()}}
+                    </p>
+                </div>
             </div>
         </div>
     </div>
