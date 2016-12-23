@@ -68,4 +68,11 @@ export class IdeasService {
                 return JSON.parse(res.text());
             });
     }
+
+    getLikes(ideaId: string): Observable<any> {
+        return this.http.get("/api/like/list/" + ideaId)
+            .map((res: Response) => {
+                return JSON.parse(res.text());
+            });
+    }
 }

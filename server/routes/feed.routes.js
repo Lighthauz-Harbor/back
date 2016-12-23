@@ -84,7 +84,7 @@ module.exports = function(router, dbDriver) {
         session
             .run("MATCH (u:User)-[l:LIKE]->(i:Idea) \
                 WHERE i.id = {ideaId} \
-                RETURN u.id, u.name, u.profilePic \
+                RETURN u.id, u.name, u.profilePic, l.lastChanged \
                 ORDER BY l.lastChanged DESC",
                 { ideaId: req.params.ideaId })
             .then(function(result) {
@@ -93,7 +93,8 @@ module.exports = function(router, dbDriver) {
                         return {
                             id: user.get("u.id"),
                             name: user.get("u.name"),
-                            profilePic: user.get("u.profilePic")
+                            profilePic: user.get("u.profilePic"),
+                            timestamp: user.get("l.lastChanged")
                         };
                     })
                 });

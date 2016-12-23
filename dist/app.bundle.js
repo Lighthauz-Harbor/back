@@ -30675,6 +30675,12 @@ webpackJsonp([0],{
 	            return JSON.parse(res.text());
 	        });
 	    };
+	    IdeasService.prototype.getLikes = function (ideaId) {
+	        return this.http.get("/api/like/list/" + ideaId)
+	            .map(function (res) {
+	            return JSON.parse(res.text());
+	        });
+	    };
 	    IdeasService = __decorate([
 	        core_1.Injectable(), 
 	        __metadata('design:paramtypes', [http_1.Http])
@@ -32790,8 +32796,43 @@ webpackJsonp([0],{
 	        this.router = router;
 	        this.ideasService = ideasService;
 	        this.likes = [];
+	        this.likesMessage = "Loading...";
+	        this.comments = [];
+	        this.commentsMessage = "Loading...";
 	    }
 	    IdeaResponsesComponent.prototype.ngOnInit = function () {
+	        var _this = this;
+	        this.route.params.forEach(function (params) {
+	            var ideaId = params["id"];
+	            _this.ideasService.getLikes(ideaId)
+	                .subscribe(function (json) {
+	                if (json.fail) {
+	                    _this.likesMessage = json.fail;
+	                }
+	                else {
+	                    _this.pushLikes(json);
+	                    if (_this.likes.length === 0) {
+	                        _this.likesMessage = "There are no likes for this idea.";
+	                    }
+	                    else {
+	                        _this.likesMessage = "";
+	                    }
+	                }
+	            });
+	        });
+	    };
+	    IdeaResponsesComponent.prototype.pushLikes = function (json) {
+	        var _this = this;
+	        json.list.map(function (like) {
+	            _this.likes.push({
+	                user: {
+	                    id: like.id,
+	                    name: like.name,
+	                    profilePic: like.profilePic
+	                },
+	                timestamp: new Date(like.timestamp)
+	            });
+	        });
 	    };
 	    IdeaResponsesComponent = __decorate([
 	        core_1.Component({
@@ -32811,7 +32852,7 @@ webpackJsonp([0],{
 /***/ 439:
 /***/ function(module, exports) {
 
-	module.exports = "<div class=\"content-dashboard\">\r\n    <div class=\"title-dashboard\">\r\n        <h1>View likes &amp; comments</h1>\r\n        <h2>\r\n            You can view who likes and comments on the idea in the tables below.\r\n        </h2>\r\n    </div>\r\n</div>"
+	module.exports = "<div class=\"content-dashboard\">\r\n    <div class=\"title-dashboard\">\r\n        <h1>View likes &amp; comments</h1>\r\n        <h2>\r\n            You can view who likes and comments on the idea in the tables below.\r\n        </h2>\r\n    </div>\r\n\r\n    <div class=\"likes-wrapper\">\r\n        <h2>Likes</h2>\r\n        <table class=\"table-action\">\r\n            <thead>\r\n                <tr>\r\n                    <th>User picture</th>\r\n                    <th>User name</th>\r\n                    <th>Last liked at</th>\r\n                </tr>\r\n            </thead>\r\n            <tbody *ngIf=\"likes.length === 0\">\r\n                <tr>\r\n                    <td class=\"table-message\" colspan=\"3\">{{likesMessage}}</td>\r\n                </tr>\r\n            </tbody>\r\n            <tbody *ngIf=\"likes.length > 0\">\r\n                <tr *ngFor=\"let like of likes\">\r\n                    <td>\r\n                        <img [src]=\"like.user.profilePic\">\r\n                    </td>\r\n                    <td>\r\n                        <a [routerLink]=\"['/users', like.user.id]\">{{like.user.name}}</a>\r\n                    </td>\r\n                    <td>\r\n                        {{like.timestamp.toString()}}\r\n                    </td>\r\n                </tr>\r\n            </tbody>\r\n        </table>\r\n    </div>\r\n</div>"
 
 /***/ },
 

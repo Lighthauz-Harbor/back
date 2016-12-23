@@ -1,0 +1,16 @@
+.table-action {
+    background-color: #fff;
+
+    padding: 8px;
+    min-width: 360px;
+
+    -webkit-box-shadow: 1px 1px 2px 0px rgba(0,0,0,0.55);
+    -moz-box-shadow: 1px 1px 2px 0px rgba(0,0,0,0.55);
+    box-shadow: 1px 1px 2px 0px rgba(0,0,0,0.55);
+
+    text-align: center !important;
+}
+
+.table-action td img {
+    width: 80px;
+}

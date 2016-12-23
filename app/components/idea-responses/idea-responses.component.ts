@@ -14,6 +14,9 @@ import { IdeasService } from "../../services/ideas.service";
 export class IdeaResponsesComponent implements OnInit {
 
     private likes: any[] = [];
+    private likesMessage: string = "Loading...";
+    private comments: any[] = [];
+    private commentsMessage: string = "Loading...";
 
     constructor(
         private route: ActivatedRoute,
@@ -23,7 +26,36 @@ export class IdeaResponsesComponent implements OnInit {
     }
 
     ngOnInit(): void {
-        
+        this.route.params.forEach((params: Params) => {
+            let ideaId = params["id"];
+            
+            this.ideasService.getLikes(ideaId)
+                .subscribe((json: any) => {
+                    if (json.fail) {
+                        this.likesMessage = json.fail;
+                    } else {
+                        this.pushLikes(json);
+                        if (this.likes.length === 0) {
+                            this.likesMessage = "There are no likes for this idea.";
+                        } else {
+                            this.likesMessage = "";
+                        }
+                    }
+                });
+        });
+    }
+
+    private pushLikes(json: any): void {
+        json.list.map((like: any) => {
+            this.likes.push({
+                user: {
+                    id: like.id,
+                    name: like.name,
+                    profilePic: like.profilePic
+                },
+                timestamp: new Date(like.timestamp)
+            });
+        });
     }
 
 }

@@ -5,4 +5,35 @@
             You can view who likes and comments on the idea in the tables below.
         </h2>
     </div>
+
+    <div class="likes-wrapper">
+        <h2>Likes</h2>
+        <table class="table-action">
+            <thead>
+                <tr>
+                    <th>User picture</th>
+                    <th>User name</th>
+                    <th>Last liked at</th>
+                </tr>
+            </thead>
+            <tbody *ngIf="likes.length === 0">
+                <tr>
+                    <td class="table-message" colspan="3">{{likesMessage}}</td>
+                </tr>
+            </tbody>
+            <tbody *ngIf="likes.length > 0">
+                <tr *ngFor="let like of likes">
+                    <td>
+                        <img [src]="like.user.profilePic">
+                    </td>
+                    <td>
+                        <a [routerLink]="['/users', like.user.id]">{{like.user.name}}</a>
+                    </td>
+                    <td>
+                        {{like.timestamp.toString()}}
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
 </div>
