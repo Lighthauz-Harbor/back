@@ -1,5 +1,6 @@
 export class User {
 
+    private _id: string;
     private _name: string;
     private _username: string;
     private _role: string;
@@ -11,6 +12,7 @@ export class User {
 
     // don't assign passwords for security purposes
     constructor(
+        id: string = "",
         username: string = "unknown@email.com", 
         role: string = "user",
         name: string = "Some Name",
@@ -19,6 +21,7 @@ export class User {
         dateOfBirth: Date = new Date(0),
         createdAt: Date = new Date(0)) {
         
+        this._id = id;
         this._name = name;
         this._username = username;
         this._role = role;
@@ -27,6 +30,10 @@ export class User {
         this._dateOfBirth = dateOfBirth;
         this._createdAt = createdAt;
         this._selected = false;
+    }
+
+    get id(): string {
+        return this._id;
     }
 
     get name(): string {

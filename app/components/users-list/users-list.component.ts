@@ -38,7 +38,7 @@ export class UsersListComponent implements OnInit {
                     // some arguments are left empty or 0 because
                     // they are not needed at the moment
                     this.list.push(
-                        new User(u.username, "user", u.name, u.bio,
+                        new User(u.id, u.username, "user", u.name, u.bio,
                             "", new Date(0), new Date(u.createdAt)));
                 });
             }
@@ -64,7 +64,7 @@ export class UsersListComponent implements OnInit {
                     // some arguments are left empty or 0 because
                     // they are not needed at the moment
                     this.list.push(
-                        new User(u.username, "user", u.name, 
+                        new User(u.id, u.username, "user", u.name, 
                             u.bio, "", new Date(0), 
                             new Date(u.createdAt)));
                 });

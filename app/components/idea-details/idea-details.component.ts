@@ -66,6 +66,7 @@ export class IdeaDetailsComponent implements OnInit {
                             new Date(json.timestamp));
                         
                         this.author = new User(
+                            json.author.id, 
                             json.author.email,
                             "user",
                             json.author.name,
