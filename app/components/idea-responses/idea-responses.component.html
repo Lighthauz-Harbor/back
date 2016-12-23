@@ -6,7 +6,7 @@
         </h2>
     </div>
 
-    <div class="likes-wrapper">
+    <div class="action-table-wrapper likes-wrapper">
         <h2>Likes</h2>
         <table class="table-action">
             <thead>
@@ -22,15 +22,54 @@
                 </tr>
             </tbody>
             <tbody *ngIf="likes.length > 0">
-                <tr *ngFor="let like of likes">
+                <tr *ngFor="let row of likes">
                     <td>
-                        <img [src]="like.user.profilePic">
+                        <img [src]="row.user.profilePic">
                     </td>
                     <td>
-                        <a [routerLink]="['/users', like.user.id]">{{like.user.name}}</a>
+                        <a [routerLink]="['/users', row.user.id]">
+                            {{row.user.name}}
+                        </a>
                     </td>
                     <td>
-                        {{like.timestamp.toString()}}
+                        {{row.timestamp.toString()}}
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <div class="action-table-wrapper comments-wrapper">
+        <h2>Comments</h2>
+        <table class="table-action">
+            <thead>
+                <tr>
+                    <th>User picture</th>
+                    <th>User name</th>
+                    <th>Comment</th>
+                    <th>Last modified at</th>
+                </tr>
+            </thead>
+            <tbody *ngIf="comments.length === 0">
+                <tr>
+                    <td colspan="4" class="table-message">{{commentsMessage}}</td>
+                </tr>
+            </tbody>
+            <tbody *ngIf="comments.length > 0">
+                <tr *ngFor="let row of comments">
+                    <td>
+                        <img [src]="row.user.profilePic">
+                    </td>
+                    <td>
+                        <a [routerLink]="['/users', row.user.id]">
+                            {{row.user.name}}
+                        </a>
+                    </td>
+                    <td>
+                        {{row.comment.text}}
+                    </td>
+                    <td>
+                        {{row.comment.timestamp.toString()}}
                     </td>
                 </tr>
             </tbody>

@@ -28,7 +28,7 @@ export class IdeaResponsesComponent implements OnInit {
     ngOnInit(): void {
         this.route.params.forEach((params: Params) => {
             let ideaId = params["id"];
-            
+
             this.ideasService.getLikes(ideaId)
                 .subscribe((json: any) => {
                     if (json.fail) {
@@ -42,18 +42,48 @@ export class IdeaResponsesComponent implements OnInit {
                         }
                     }
                 });
+
+            this.ideasService.getComments(ideaId)
+                .subscribe((json: any) => {
+                    if (json.fail) {
+                        this.commentsMessage = json.fail;
+                    } else {
+                        this.pushComments(json);
+                        if (this.comments.length === 0) {
+                            this.commentsMessage = "There are no comments for this idea.";
+                        } else {
+                            this.commentsMessage = "";
+                        }
+                    }
+                });
         });
     }
 
     private pushLikes(json: any): void {
-        json.list.map((like: any) => {
+        json.list.map((item: any) => {
             this.likes.push({
                 user: {
-                    id: like.id,
-                    name: like.name,
-                    profilePic: like.profilePic
+                    id: item.id,
+                    name: item.name,
+                    profilePic: item.profilePic
                 },
-                timestamp: new Date(like.timestamp)
+                timestamp: new Date(item.timestamp)
+            });
+        });
+    }
+
+    private pushComments(json: any): void {
+        json.list.map((item: any) => {
+            this.comments.push({
+                user: {
+                    id: item.author.id,
+                    name: item.author.name,
+                    profilePic: item.author.profilePic
+                },
+                comment: {
+                    text: item.comment.text,
+                    timestamp: new Date(item.comment.timestamp)
+                }
             });
         });
     }

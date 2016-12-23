@@ -30681,6 +30681,12 @@ webpackJsonp([0],{
 	            return JSON.parse(res.text());
 	        });
 	    };
+	    IdeasService.prototype.getComments = function (ideaId) {
+	        return this.http.get("/api/comment/list/" + ideaId)
+	            .map(function (res) {
+	            return JSON.parse(res.text());
+	        });
+	    };
 	    IdeasService = __decorate([
 	        core_1.Injectable(), 
 	        __metadata('design:paramtypes', [http_1.Http])
@@ -32819,18 +32825,49 @@ webpackJsonp([0],{
 	                    }
 	                }
 	            });
+	            _this.ideasService.getComments(ideaId)
+	                .subscribe(function (json) {
+	                if (json.fail) {
+	                    _this.commentsMessage = json.fail;
+	                }
+	                else {
+	                    _this.pushComments(json);
+	                    if (_this.comments.length === 0) {
+	                        _this.commentsMessage = "There are no comments for this idea.";
+	                    }
+	                    else {
+	                        _this.commentsMessage = "";
+	                    }
+	                }
+	            });
 	        });
 	    };
 	    IdeaResponsesComponent.prototype.pushLikes = function (json) {
 	        var _this = this;
-	        json.list.map(function (like) {
+	        json.list.map(function (item) {
 	            _this.likes.push({
 	                user: {
-	                    id: like.id,
-	                    name: like.name,
-	                    profilePic: like.profilePic
+	                    id: item.id,
+	                    name: item.name,
+	                    profilePic: item.profilePic
 	                },
-	                timestamp: new Date(like.timestamp)
+	                timestamp: new Date(item.timestamp)
+	            });
+	        });
+	    };
+	    IdeaResponsesComponent.prototype.pushComments = function (json) {
+	        var _this = this;
+	        json.list.map(function (item) {
+	            _this.comments.push({
+	                user: {
+	                    id: item.author.id,
+	                    name: item.author.name,
+	                    profilePic: item.author.profilePic
+	                },
+	                comment: {
+	                    text: item.comment.text,
+	                    timestamp: new Date(item.comment.timestamp)
+	                }
 	            });
 	        });
 	    };
@@ -32852,7 +32889,7 @@ webpackJsonp([0],{
 /***/ 439:
 /***/ function(module, exports) {
 
-	module.exports = "<div class=\"content-dashboard\">\r\n    <div class=\"title-dashboard\">\r\n        <h1>View likes &amp; comments</h1>\r\n        <h2>\r\n            You can view who likes and comments on the idea in the tables below.\r\n        </h2>\r\n    </div>\r\n\r\n    <div class=\"likes-wrapper\">\r\n        <h2>Likes</h2>\r\n        <table class=\"table-action\">\r\n            <thead>\r\n                <tr>\r\n                    <th>User picture</th>\r\n                    <th>User name</th>\r\n                    <th>Last liked at</th>\r\n                </tr>\r\n            </thead>\r\n            <tbody *ngIf=\"likes.length === 0\">\r\n                <tr>\r\n                    <td class=\"table-message\" colspan=\"3\">{{likesMessage}}</td>\r\n                </tr>\r\n            </tbody>\r\n            <tbody *ngIf=\"likes.length > 0\">\r\n                <tr *ngFor=\"let like of likes\">\r\n                    <td>\r\n                        <img [src]=\"like.user.profilePic\">\r\n                    </td>\r\n                    <td>\r\n                        <a [routerLink]=\"['/users', like.user.id]\">{{like.user.name}}</a>\r\n                    </td>\r\n                    <td>\r\n                        {{like.timestamp.toString()}}\r\n                    </td>\r\n                </tr>\r\n            </tbody>\r\n        </table>\r\n    </div>\r\n</div>"
+	module.exports = "<div class=\"content-dashboard\">\r\n    <div class=\"title-dashboard\">\r\n        <h1>View likes &amp; comments</h1>\r\n        <h2>\r\n            You can view who likes and comments on the idea in the tables below.\r\n        </h2>\r\n    </div>\r\n\r\n    <div class=\"action-table-wrapper likes-wrapper\">\r\n        <h2>Likes</h2>\r\n        <table class=\"table-action\">\r\n            <thead>\r\n                <tr>\r\n                    <th>User picture</th>\r\n                    <th>User name</th>\r\n                    <th>Last liked at</th>\r\n                </tr>\r\n            </thead>\r\n            <tbody *ngIf=\"likes.length === 0\">\r\n                <tr>\r\n                    <td class=\"table-message\" colspan=\"3\">{{likesMessage}}</td>\r\n                </tr>\r\n            </tbody>\r\n            <tbody *ngIf=\"likes.length > 0\">\r\n                <tr *ngFor=\"let row of likes\">\r\n                    <td>\r\n                        <img [src]=\"row.user.profilePic\">\r\n                    </td>\r\n                    <td>\r\n                        <a [routerLink]=\"['/users', row.user.id]\">\r\n                            {{row.user.name}}\r\n                        </a>\r\n                    </td>\r\n                    <td>\r\n                        {{row.timestamp.toString()}}\r\n                    </td>\r\n                </tr>\r\n            </tbody>\r\n        </table>\r\n    </div>\r\n\r\n    <div class=\"action-table-wrapper comments-wrapper\">\r\n        <h2>Comments</h2>\r\n        <table class=\"table-action\">\r\n            <thead>\r\n                <tr>\r\n                    <th>User picture</th>\r\n                    <th>User name</th>\r\n                    <th>Comment</th>\r\n                    <th>Last modified at</th>\r\n                </tr>\r\n            </thead>\r\n            <tbody *ngIf=\"comments.length === 0\">\r\n                <tr>\r\n                    <td colspan=\"4\" class=\"table-message\">{{commentsMessage}}</td>\r\n                </tr>\r\n            </tbody>\r\n            <tbody *ngIf=\"comments.length > 0\">\r\n                <tr *ngFor=\"let row of comments\">\r\n                    <td>\r\n                        <img [src]=\"row.user.profilePic\">\r\n                    </td>\r\n                    <td>\r\n                        <a [routerLink]=\"['/users', row.user.id]\">\r\n                            {{row.user.name}}\r\n                        </a>\r\n                    </td>\r\n                    <td>\r\n                        {{row.comment.text}}\r\n                    </td>\r\n                    <td>\r\n                        {{row.comment.timestamp.toString()}}\r\n                    </td>\r\n                </tr>\r\n            </tbody>\r\n        </table>\r\n    </div>\r\n</div>"
 
 /***/ },
 

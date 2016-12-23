@@ -75,4 +75,11 @@ export class IdeasService {
                 return JSON.parse(res.text());
             });
     }
+
+    getComments(ideaId: string): Observable<any> {
+        return this.http.get("/api/comment/list/" + ideaId)
+            .map((res: Response) => {
+                return JSON.parse(res.text());
+            });
+    }
 }

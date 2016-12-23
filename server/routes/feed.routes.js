@@ -94,7 +94,7 @@ module.exports = function(router, dbDriver) {
                             id: user.get("u.id"),
                             name: user.get("u.name"),
                             profilePic: user.get("u.profilePic"),
-                            timestamp: user.get("l.lastChanged")
+                            timestamp: Number(user.get("l.lastChanged"))
                         };
                     })
                 });
@@ -176,7 +176,7 @@ module.exports = function(router, dbDriver) {
                             },
                             comment: {
                                 text: item.get("c.comment"),
-                                timestamp: item.get("c.lastChanged")
+                                timestamp: Number(item.get("c.lastChanged"))
                             }
                         };
                     })
