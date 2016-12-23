@@ -1,0 +1,28 @@
+<div class="content-dashboard">
+    <div class="title-dashboard">
+        <h1>User details: {{user.name || "Loading..."}}</h1>
+        <h2>
+            Read the details of the user here.<br>
+            To take action upon the user (view additional details or edit it), simply navigate to Actions and choose a link there.
+        </h2>
+    </div>
+    <div class="actions-dashboard">
+        <h2>Actions</h2>
+        <ul class="list-actions">
+            <li>
+                <a [routerLink]="['/users', 'update', user.id]">Update user information</a>
+            </li>
+        </ul>
+    </div>
+    <div class="details-dashboard">
+        <h2>User information</h2>
+        <div class="body-dashboard">
+            <div class="pic-col-details">
+                Picture here...
+            </div>
+            <div class="info-col-details">
+                User info here...
+            </div>
+        </div>
+    </div>
+</div>

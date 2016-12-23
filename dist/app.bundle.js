@@ -19559,6 +19559,7 @@ webpackJsonp([0],{
 	var footer_component_1 = __webpack_require__(417);
 	var sidebar_component_1 = __webpack_require__(421);
 	var users_list_component_1 = __webpack_require__(369);
+	var user_details_component_1 = __webpack_require__(434);
 	var user_create_component_1 = __webpack_require__(374);
 	var user_update_component_1 = __webpack_require__(379);
 	var ideas_list_component_1 = __webpack_require__(383);
@@ -19595,6 +19596,7 @@ webpackJsonp([0],{
 	                footer_component_1.FooterComponent,
 	                sidebar_component_1.SidebarComponent,
 	                users_list_component_1.UsersListComponent,
+	                user_details_component_1.UserDetailsComponent,
 	                user_create_component_1.CreateUserComponent,
 	                user_update_component_1.UpdateUserComponent,
 	                ideas_list_component_1.IdeasListComponent,
@@ -25908,6 +25910,7 @@ webpackJsonp([0],{
 	var login_component_1 = __webpack_require__(61);
 	var dashboard_component_1 = __webpack_require__(361);
 	var users_list_component_1 = __webpack_require__(369);
+	var user_details_component_1 = __webpack_require__(434);
 	var user_create_component_1 = __webpack_require__(374);
 	var user_update_component_1 = __webpack_require__(379);
 	var ideas_list_component_1 = __webpack_require__(383);
@@ -25935,6 +25938,10 @@ webpackJsonp([0],{
 	            {
 	                path: "create",
 	                component: user_create_component_1.CreateUserComponent
+	            },
+	            {
+	                path: "details/:id",
+	                component: user_details_component_1.UserDetailsComponent
 	            },
 	            {
 	                path: "update/:id",
@@ -30959,7 +30966,7 @@ webpackJsonp([0],{
 /***/ 371:
 /***/ function(module, exports) {
 
-	module.exports = "<div class=\"content-dashboard\">\r\n    <div class=\"title-dashboard\">\r\n        <h1>List of Users</h1>\r\n        <h2>Click on a user's name to read and edit their profile. <br>\r\n            Click the checkboxes to select multiple users and delete them.<br>\r\n            You can also search for a user. Empty the box and press Enter to view the complete list again.</h2>\r\n    </div>\r\n\r\n    <div class=\"panel-dashboard\">\r\n        <a routerLink=\"/users/create\" class=\"btn-create\">Create user</a>\r\n        <a (click)=\"deleteSelectedUsers()\" class=\"btn-delete\">Delete user(s)</a>\r\n        <input #searchUser type=\"text\"\r\n            name=\"search-user\" \r\n            class=\"search-panel\"\r\n            placeholder=\"Search user and press Enter.\"\r\n            (keyup.enter)=\"search(searchUser.value)\">\r\n    </div>\r\n\r\n    <div class=\"body-dashboard\">\r\n        <table>\r\n            <thead>\r\n                <tr>\r\n                    <th>\r\n                        <input type=\"checkbox\"\r\n                            class=\"cb-toggle-all\" \r\n                            [checked]=\"toggleAll\"\r\n                            (change)=\"toggleAllUsers()\">\r\n                    </th>\r\n                    <th>Name</th>\r\n                    <th>Email</th>\r\n                    <th>Biography</th>\r\n                    <th>Last created at</th>\r\n                </tr>\r\n            </thead>\r\n            <tbody *ngIf=\"list.length <= 0\">\r\n                <tr>\r\n                    <td class=\"table-message\" colspan=\"5\">\r\n                        {{message || \"Loading...\"}}\r\n                    </td>\r\n                </tr>\r\n            </tbody>\r\n            <tbody *ngIf=\"list.length > 0\">\r\n                <tr *ngFor=\"let user of list\">\r\n                    <td>\r\n                        <input type=\"checkbox\" \r\n                            class=\"cb-select\"\r\n                            [(ngModel)]=\"user.selected\"\r\n                            (change)=\"cancelToggleAll()\">\r\n                    </td>\r\n                    <td>\r\n                        <a [routerLink]=\"['update', user.id]\">\r\n                            {{user.name}}\r\n                        </a>\r\n                    </td>\r\n                    <td>\r\n                        <a href=\"mailto:{{user.username}}\">\r\n                            {{user.username}}\r\n                        </a>\r\n                    </td>\r\n                    <td>{{user.bio || \"No bio found.\"}}</td>\r\n                    <td>{{user.createdAt.toDateString()}}</td>\r\n                </tr>\r\n            </tbody>\r\n        </table>\r\n    </div>\r\n</div>"
+	module.exports = "<div class=\"content-dashboard\">\r\n    <div class=\"title-dashboard\">\r\n        <h1>List of Users</h1>\r\n        <h2>Click on a user's name to read and edit their data. <br>\r\n            Click the checkboxes to select multiple users and delete them.<br>\r\n            You can also search for a user. Empty the box and press Enter to view the complete list again.</h2>\r\n    </div>\r\n\r\n    <div class=\"panel-dashboard\">\r\n        <a routerLink=\"/users/create\" class=\"btn-create\">Create user</a>\r\n        <a (click)=\"deleteSelectedUsers()\" class=\"btn-delete\">Delete user(s)</a>\r\n        <input #searchUser type=\"text\"\r\n            name=\"search-user\" \r\n            class=\"search-panel\"\r\n            placeholder=\"Search user and press Enter.\"\r\n            (keyup.enter)=\"search(searchUser.value)\">\r\n    </div>\r\n\r\n    <div class=\"body-dashboard\">\r\n        <table>\r\n            <thead>\r\n                <tr>\r\n                    <th>\r\n                        <input type=\"checkbox\"\r\n                            class=\"cb-toggle-all\" \r\n                            [checked]=\"toggleAll\"\r\n                            (change)=\"toggleAllUsers()\">\r\n                    </th>\r\n                    <th>Name</th>\r\n                    <th>Email</th>\r\n                    <th>Biography</th>\r\n                    <th>Last created at</th>\r\n                </tr>\r\n            </thead>\r\n            <tbody *ngIf=\"list.length <= 0\">\r\n                <tr>\r\n                    <td class=\"table-message\" colspan=\"5\">\r\n                        {{message || \"Loading...\"}}\r\n                    </td>\r\n                </tr>\r\n            </tbody>\r\n            <tbody *ngIf=\"list.length > 0\">\r\n                <tr *ngFor=\"let user of list\">\r\n                    <td>\r\n                        <input type=\"checkbox\" \r\n                            class=\"cb-select\"\r\n                            [(ngModel)]=\"user.selected\"\r\n                            (change)=\"cancelToggleAll()\">\r\n                    </td>\r\n                    <td>\r\n                        <a [routerLink]=\"['details', user.id]\">\r\n                            {{user.name}}\r\n                        </a>\r\n                    </td>\r\n                    <td>\r\n                        <a href=\"mailto:{{user.username}}\">\r\n                            {{user.username}}\r\n                        </a>\r\n                    </td>\r\n                    <td>{{user.bio || \"No bio found.\"}}</td>\r\n                    <td>{{user.createdAt.toDateString()}}</td>\r\n                </tr>\r\n            </tbody>\r\n        </table>\r\n    </div>\r\n</div>"
 
 /***/ },
 
@@ -32653,11 +32660,80 @@ webpackJsonp([0],{
 /***/ 431:
 /***/ function(module, exports) {
 
-	module.exports = "<div class=\"content-dashboard\">\r\n    <div class=\"title-dashboard\">\r\n        <h1>Idea details: {{idea.title || \"Loading...\"}}</h1>\r\n        <h2>\r\n            Read the details of the business idea here.<br>\r\n            To take action upon the idea (view additional details or edit it), simply navigate to Actions and choose a link there.\r\n        </h2>\r\n    </div>\r\n\r\n    <div class=\"actions-dashboard\">\r\n        <h2>Actions</h2>\r\n        <ul class=\"list-actions\">\r\n            <li>\r\n                <a [routerLink]=\"['/ideas', 'update', idea.id]\">Update idea information</a>\r\n            </li>\r\n        </ul>\r\n    </div>\r\n\r\n    <div class=\"details-dashboard\">\r\n        <h2>Business idea details</h2>\r\n        <div class=\"body-dashboard\">\r\n            <div class=\"pic-col-details\">\r\n                <img [src]=\"idea.picture\">\r\n            </div>\r\n            <div class=\"info-col-details\">\r\n                <div class=\"info-wrapper basic-info-details\">\r\n                    <h3>Basic information</h3>\r\n                    <p>\r\n                        <strong>Visibility:</strong> \r\n                        {{(idea.visibility === 0) ? \r\n                            \"Not published\" : \r\n                            (idea.visibility === 1) ? \"Exclusive\" : \r\n                                \"Public\"}}\r\n                    </p>\r\n                    <p>\r\n                        <strong>Description:</strong> \r\n                        {{idea.description}}\r\n                    </p>\r\n                    <p>\r\n                        <strong>Background:</strong> \r\n                        {{idea.background}}\r\n                    </p>\r\n                    <p>\r\n                        <strong>Problem:</strong> \r\n                        {{idea.problem}}\r\n                    </p>\r\n                    <p>\r\n                        <strong>Solution:</strong> \r\n                        {{idea.solution}}\r\n                    </p>\r\n                </div>\r\n                <div class=\"info-wrapper extra-info-details\">\r\n                    <h3>Extra information:</h3>\r\n                    <p>\r\n                        <strong>Extra Link:</strong> \r\n                        {{idea.extraLink || \"No extra link\"}}\r\n                    </p>\r\n                </div>\r\n                <div class=\"info-wrapper bmc-details\">\r\n                    <h3>Business model canvas:</h3>\r\n                    <p>\r\n                        <strong>Value Proposition:</strong> \r\n                        {{idea.valueProposition}}\r\n                    </p>\r\n                    <p>\r\n                        <strong>Customer Segments:</strong> \r\n                        {{idea.customerSegments}}\r\n                    </p>\r\n                    <p>\r\n                        <strong>Customer Relationship:</strong> \r\n                        {{idea.customerRelationships}}\r\n                    </p>\r\n                    <p>\r\n                        <strong>Channels:</strong> \r\n                        {{idea.channels}}\r\n                    </p>\r\n                    <p>\r\n                        <strong>Key Activities:</strong> \r\n                        {{idea.keyActivities}}\r\n                    </p>\r\n                    <p>\r\n                        <strong>Key Resources:</strong> \r\n                        {{idea.keyResources}}\r\n                    </p>\r\n                    <p>\r\n                        <strong>Key Partners:</strong> \r\n                        {{idea.keyPartners}}\r\n                    </p>\r\n                    <p>\r\n                        <strong>Cost Structure:</strong> \r\n                        {{idea.costStructure}}\r\n                    </p>\r\n                    <p>\r\n                        <strong>Revenue Streams:</strong> \r\n                        {{idea.revenueStreams}}\r\n                    </p>\r\n                </div>\r\n                <div class=\"info-wrapper swot-details\">\r\n                    <h3>SWOT analysis:</h3>\r\n                    <p>\r\n                        <strong>Strengths:</strong> \r\n                        {{idea.strengths}}\r\n                    </p>\r\n                    <p>\r\n                        <strong>Weaknesses:</strong> \r\n                        {{idea.weaknesses}}\r\n                    </p>\r\n                    <p>\r\n                        <strong>Opportunities:</strong> \r\n                        {{idea.opportunities}}\r\n                    </p>\r\n                    <p>\r\n                        <strong>Threats:</strong> \r\n                        {{idea.threats}}\r\n                    </p>\r\n                </div>\r\n                <div class=\"info-wrapper other-info-details\">\r\n                    <h3>Other information</h3>\r\n                    <p>\r\n                        <strong>Author:</strong> \r\n                        (You can view their pic and more info by clicking their name)\r\n                    </p>\r\n                    <ul class=\"list-detail\">\r\n                        <li>Name: {{author.name}}</li>\r\n                        <li>Email: <a href=\"mailto:{{author.username}}\">{{author.username}}</a></li>\r\n                        <li>Biography: {{author.bio}}</li>\r\n                    </ul>\r\n                    <p>\r\n                        <strong>Category:</strong> \r\n                        {{idea.category}}\r\n                    </p>\r\n                    <p>\r\n                        <strong>Last modified at:</strong> \r\n                        {{idea.lastChanged.toString()}}\r\n                    </p>\r\n                </div>\r\n            </div>\r\n        </div>\r\n    </div>\r\n</div>"
+	module.exports = "<div class=\"content-dashboard\">\r\n    <div class=\"title-dashboard\">\r\n        <h1>Idea details: {{idea.title || \"Loading...\"}}</h1>\r\n        <h2>\r\n            Read the details of the business idea here.<br>\r\n            To take action upon the idea (view additional details or edit it), simply navigate to Actions and choose a link there.\r\n        </h2>\r\n    </div>\r\n\r\n    <div class=\"actions-dashboard\">\r\n        <h2>Actions</h2>\r\n        <ul class=\"list-actions\">\r\n            <li>\r\n                <a [routerLink]=\"['/ideas', 'update', idea.id]\">Update idea information</a>\r\n            </li>\r\n        </ul>\r\n    </div>\r\n\r\n    <div class=\"details-dashboard\">\r\n        <h2>Business idea information</h2>\r\n        <div class=\"body-dashboard\">\r\n            <div class=\"pic-col-details\">\r\n                <img [src]=\"idea.picture\">\r\n            </div>\r\n            <div class=\"info-col-details\">\r\n                <div class=\"info-wrapper basic-info-details\">\r\n                    <h3>Basic information</h3>\r\n                    <p>\r\n                        <strong>Visibility:</strong> \r\n                        {{(idea.visibility === 0) ? \r\n                            \"Not published\" : \r\n                            (idea.visibility === 1) ? \"Exclusive\" : \r\n                                \"Public\"}}\r\n                    </p>\r\n                    <p>\r\n                        <strong>Description:</strong> \r\n                        {{idea.description}}\r\n                    </p>\r\n                    <p>\r\n                        <strong>Background:</strong> \r\n                        {{idea.background}}\r\n                    </p>\r\n                    <p>\r\n                        <strong>Problem:</strong> \r\n                        {{idea.problem}}\r\n                    </p>\r\n                    <p>\r\n                        <strong>Solution:</strong> \r\n                        {{idea.solution}}\r\n                    </p>\r\n                </div>\r\n                <div class=\"info-wrapper extra-info-details\">\r\n                    <h3>Extra information:</h3>\r\n                    <p>\r\n                        <strong>Extra Link:</strong> \r\n                        {{idea.extraLink || \"No extra link\"}}\r\n                    </p>\r\n                </div>\r\n                <div class=\"info-wrapper bmc-details\">\r\n                    <h3>Business model canvas:</h3>\r\n                    <p>\r\n                        <strong>Value Proposition:</strong> \r\n                        {{idea.valueProposition}}\r\n                    </p>\r\n                    <p>\r\n                        <strong>Customer Segments:</strong> \r\n                        {{idea.customerSegments}}\r\n                    </p>\r\n                    <p>\r\n                        <strong>Customer Relationship:</strong> \r\n                        {{idea.customerRelationships}}\r\n                    </p>\r\n                    <p>\r\n                        <strong>Channels:</strong> \r\n                        {{idea.channels}}\r\n                    </p>\r\n                    <p>\r\n                        <strong>Key Activities:</strong> \r\n                        {{idea.keyActivities}}\r\n                    </p>\r\n                    <p>\r\n                        <strong>Key Resources:</strong> \r\n                        {{idea.keyResources}}\r\n                    </p>\r\n                    <p>\r\n                        <strong>Key Partners:</strong> \r\n                        {{idea.keyPartners}}\r\n                    </p>\r\n                    <p>\r\n                        <strong>Cost Structure:</strong> \r\n                        {{idea.costStructure}}\r\n                    </p>\r\n                    <p>\r\n                        <strong>Revenue Streams:</strong> \r\n                        {{idea.revenueStreams}}\r\n                    </p>\r\n                </div>\r\n                <div class=\"info-wrapper swot-details\">\r\n                    <h3>SWOT analysis:</h3>\r\n                    <p>\r\n                        <strong>Strengths:</strong> \r\n                        {{idea.strengths}}\r\n                    </p>\r\n                    <p>\r\n                        <strong>Weaknesses:</strong> \r\n                        {{idea.weaknesses}}\r\n                    </p>\r\n                    <p>\r\n                        <strong>Opportunities:</strong> \r\n                        {{idea.opportunities}}\r\n                    </p>\r\n                    <p>\r\n                        <strong>Threats:</strong> \r\n                        {{idea.threats}}\r\n                    </p>\r\n                </div>\r\n                <div class=\"info-wrapper other-info-details\">\r\n                    <h3>Other information</h3>\r\n                    <p>\r\n                        <strong>Author:</strong> \r\n                        (You can view their pic and more info by clicking their name)\r\n                    </p>\r\n                    <ul class=\"list-detail\">\r\n                        <li>Name: {{author.name}}</li>\r\n                        <li>Email: <a href=\"mailto:{{author.username}}\">{{author.username}}</a></li>\r\n                        <li>Biography: {{author.bio}}</li>\r\n                    </ul>\r\n                    <p>\r\n                        <strong>Category:</strong> \r\n                        {{idea.category}}\r\n                    </p>\r\n                    <p>\r\n                        <strong>Last modified at:</strong> \r\n                        {{idea.lastChanged.toString()}}\r\n                    </p>\r\n                </div>\r\n            </div>\r\n        </div>\r\n    </div>\r\n</div>"
 
 /***/ },
 
 /***/ 432:
+/***/ function(module, exports) {
+
+	// removed by extract-text-webpack-plugin
+
+/***/ },
+
+/***/ 434:
+/***/ function(module, exports, __webpack_require__) {
+
+	"use strict";
+	var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+	    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+	    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+	    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+	    return c > 3 && r && Object.defineProperty(target, key, r), r;
+	};
+	var __metadata = (this && this.__metadata) || function (k, v) {
+	    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+	};
+	var core_1 = __webpack_require__(4);
+	var router_1 = __webpack_require__(31);
+	var user_model_app_1 = __webpack_require__(370);
+	var users_service_1 = __webpack_require__(363);
+	var UserDetailsComponent = (function () {
+	    function UserDetailsComponent(route, router, usersService) {
+	        this.route = route;
+	        this.router = router;
+	        this.usersService = usersService;
+	        this.user = new user_model_app_1.User();
+	    }
+	    UserDetailsComponent.prototype.ngOnInit = function () {
+	        var _this = this;
+	        this.route.params.forEach(function (params) {
+	            var id = params["id"];
+	            _this.usersService.getSingleUser(id)
+	                .subscribe(function (json) {
+	                if (json.fail) {
+	                    alert(json.fail);
+	                    _this.router.navigate(["/users"]);
+	                }
+	                else {
+	                    _this.user = new user_model_app_1.User(json.id, json.username, json.role, json.name, json.bio, json.profilePic, new Date(json.dateOfBirth), new Date(json.createdAt));
+	                }
+	            });
+	        });
+	    };
+	    UserDetailsComponent = __decorate([
+	        core_1.Component({
+	            selector: "user-details",
+	            template: __webpack_require__(435),
+	            styles: [__webpack_require__(436).toString()]
+	        }), 
+	        __metadata('design:paramtypes', [router_1.ActivatedRoute, router_1.Router, users_service_1.UsersService])
+	    ], UserDetailsComponent);
+	    return UserDetailsComponent;
+	}());
+	exports.UserDetailsComponent = UserDetailsComponent;
+
+
+/***/ },
+
+/***/ 435:
+/***/ function(module, exports) {
+
+	module.exports = "<div class=\"content-dashboard\">\r\n    <div class=\"title-dashboard\">\r\n        <h1>User details: {{user.name || \"Loading...\"}}</h1>\r\n        <h2>\r\n            Read the details of the user here.<br>\r\n            To take action upon the user (view additional details or edit it), simply navigate to Actions and choose a link there.\r\n        </h2>\r\n    </div>\r\n    <div class=\"actions-dashboard\">\r\n        <h2>Actions</h2>\r\n        <ul class=\"list-actions\">\r\n            <li>\r\n                <a [routerLink]=\"['/users', 'update', user.id]\">Update user information</a>\r\n            </li>\r\n        </ul>\r\n    </div>\r\n    <div class=\"details-dashboard\">\r\n        <h2>User information</h2>\r\n        <div class=\"body-dashboard\">\r\n            <div class=\"pic-col-details\">\r\n                Picture here...\r\n            </div>\r\n            <div class=\"info-col-details\">\r\n                User info here...\r\n            </div>\r\n        </div>\r\n    </div>\r\n</div>"
+
+/***/ },
+
+/***/ 436:
 /***/ function(module, exports) {
 
 	// removed by extract-text-webpack-plugin

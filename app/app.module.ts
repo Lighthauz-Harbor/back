@@ -12,6 +12,7 @@ import { FooterComponent } from "./components/footer/footer.component";
 import { SidebarComponent } from "./components/sidebar/sidebar.component";
 
 import { UsersListComponent } from "./components/users-list/users-list.component";
+import { UserDetailsComponent } from "./components/user-details/user-details.component";
 import { CreateUserComponent } from "./components/user-create/user-create.component";
 import { UpdateUserComponent } from "./components/user-update/user-update.component";
 
@@ -48,6 +49,7 @@ import "./vendor/vendor"; // vendor.ts file
         FooterComponent,
         SidebarComponent,
         UsersListComponent,
+        UserDetailsComponent,
         CreateUserComponent,
         UpdateUserComponent,
         IdeasListComponent,
