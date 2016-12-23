@@ -304,6 +304,10 @@
     overflow: hidden;
 }
 
+.info-wrapper {
+    margin-bottom: 16px;
+}
+
 ul.list-detail {
     list-style-type: disc;
 }.form-dashboard h2 {

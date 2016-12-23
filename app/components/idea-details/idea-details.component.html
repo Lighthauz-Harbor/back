@@ -23,7 +23,7 @@
                 <img [src]="idea.picture">
             </div>
             <div class="info-col-details">
-                <div class="basic-info-details">
+                <div class="info-wrapper basic-info-details">
                     <h3>Basic information</h3>
                     <p>
                         <strong>Visibility:</strong> 
@@ -49,14 +49,15 @@
                         {{idea.solution}}
                     </p>
                 </div>
-                <div class="extra-info-details">
+                <div class="info-wrapper extra-info-details">
                     <h3>Extra information:</h3>
                     <p>
                         <strong>Extra Link:</strong> 
                         {{idea.extraLink || "No extra link"}}
                     </p>
                 </div>
-                <div class="bmc-details">
+                <div class="info-wrapper bmc-details">
+                    <h3>Business model canvas:</h3>
                     <p>
                         <strong>Value Proposition:</strong> 
                         {{idea.valueProposition}}
@@ -94,7 +95,8 @@
                         {{idea.revenueStreams}}
                     </p>
                 </div>
-                <div class="swot-details">
+                <div class="info-wrapper swot-details">
+                    <h3>SWOT analysis:</h3>
                     <p>
                         <strong>Strengths:</strong> 
                         {{idea.strengths}}
@@ -112,7 +114,7 @@
                         {{idea.threats}}
                     </p>
                 </div>
-                <div class="other-info-details">
+                <div class="info-wrapper other-info-details">
                     <h3>Other information</h3>
                     <p>
                         <strong>Author:</strong> 
