@@ -12,7 +12,10 @@ import { ReportsService } from "../../services/reports.service";
 })
 export class ReplyToReportComponent implements OnInit {
 
-    private report: Report = new Report("", "", "", "", "", false, "", new Date(0));
+    // initialize using default values first
+    // (its values will be set during `ngOnInit()`)
+    private report: Report = new Report();
+    
     private solved: string;
     private solvedChoices: string[] = ["No", "Yes"];
 

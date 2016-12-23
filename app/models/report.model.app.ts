@@ -10,9 +10,9 @@ export class Report {
     private _createdAt: Date;
 
     constructor(
-        id: string,
-        title: string,
-        author: string,
+        id: string = "",
+        title: string = "",
+        author: string = "",
         message: string = "",
         reply: string = "",
         solved: boolean = false,

@@ -30426,6 +30426,9 @@ webpackJsonp([0],{
 	"use strict";
 	var Report = (function () {
 	    function Report(id, title, author, message, reply, solved, type, createdAt) {
+	        if (id === void 0) { id = ""; }
+	        if (title === void 0) { title = ""; }
+	        if (author === void 0) { author = ""; }
 	        if (message === void 0) { message = ""; }
 	        if (reply === void 0) { reply = ""; }
 	        if (solved === void 0) { solved = false; }
@@ -32206,7 +32209,7 @@ webpackJsonp([0],{
 	        this.router = router;
 	        this.reportsService = reportsService;
 	        // initialized using default values (must not be null)
-	        this.report = new report_model_app_1.Report("", "", "", "", "", false, "", new Date(0));
+	        this.report = new report_model_app_1.Report();
 	    }
 	    ViewReportComponent.prototype.ngOnInit = function () {
 	        var _this = this;
@@ -32286,7 +32289,9 @@ webpackJsonp([0],{
 	        this.route = route;
 	        this.router = router;
 	        this.reportsService = reportsService;
-	        this.report = new report_model_app_1.Report("", "", "", "", "", false, "", new Date(0));
+	        // initialize using default values first
+	        // (its values will be set during `ngOnInit()`)
+	        this.report = new report_model_app_1.Report();
 	        this.solvedChoices = ["No", "Yes"];
 	    }
 	    ReplyToReportComponent.prototype.ngOnInit = function () {

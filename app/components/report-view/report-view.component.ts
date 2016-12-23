@@ -13,7 +13,7 @@ import { ReportsService } from "../../services/reports.service";
 export class ViewReportComponent implements OnInit {
 
     // initialized using default values (must not be null)
-    private report: Report = new Report("", "", "", "", "", false, "", new Date(0));
+    private report: Report = new Report();
 
     constructor(
         private route: ActivatedRoute,
