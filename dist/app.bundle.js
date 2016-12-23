@@ -30530,7 +30530,7 @@ webpackJsonp([0],{
 	        });
 	    };
 	    UsersService.prototype.getSingleUser = function (id) {
-	        return this.http.get("/api/users/get/id/" + id)
+	        return this.http.get("/api/users/get/" + id)
 	            .map(function (res) {
 	            return JSON.parse(res.text());
 	        });

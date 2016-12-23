@@ -313,34 +313,6 @@ var UserSchema = function(dbDriver) {
     this.getSingle = function(req, res) {
         var session = this.driver.session();
         session
-            .run("MATCH (u:User) WHERE u.username = {username} \
-                RETURN u.id, u.name, u.username, u.profilePic, \
-                u.bio, u.dateOfBirth, u.createdAt",
-                { username: req.params.username })
-            .then(function(result) {
-                var user = result.records[0];
-                res.send({
-                    id: user.get("u.id"),
-                    name: user.get("u.name"),
-                    username: user.get("u.username"),
-                    bio: user.get("u.bio"),
-                    profilePic: user.get("u.profilePic"),
-                    dateOfBirth: user.get("u.dateOfBirth"),
-                    createdAt: user.get("u.createdAt")
-                });
-                session.close();
-            })
-            .catch(function(err) {
-                res.send({
-                    fail: "Failed finding user with that username. Please try again."
-                });
-                session.close();
-            });
-    };
-
-    this.getSingleById = function(req, res) {
-        var session = this.driver.session();
-        session
             .run("MATCH (u:User) WHERE u.id = {id} \
                 RETURN u.id, u.name, u.username, u.bio, u.profilePic, \
                 u.dateOfBirth, u.createdAt",

@@ -12,12 +12,8 @@ module.exports = function(router, dbDriver) {
         userSchema.listUsers(req, res);
     });
 
-    router.get("/users/get/:username", function(req, res) {
+    router.get("/users/get/:id", function(req, res) {
         userSchema.getSingle(req, res);
-    });
-
-    router.get("/users/get/id/:id", function(req, res) {
-        userSchema.getSingleById(req, res);
     });
 
     router.get("/users/search/:term", function(req, res) {

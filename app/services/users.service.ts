@@ -25,7 +25,7 @@ export class UsersService {
     }
 
     getSingleUser(id: string): Observable<any> {
-        return this.http.get("/api/users/get/id/" + id)
+        return this.http.get("/api/users/get/" + id)
             .map((res: Response) => {
                 return JSON.parse(res.text());
             });
