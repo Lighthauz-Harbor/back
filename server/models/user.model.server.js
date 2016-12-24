@@ -332,7 +332,7 @@ var UserSchema = function(dbDriver) {
             })
             .catch(function(err) {
                 res.send({
-                    fail: "Failed finding user with that id. Please try again."
+                    fail: "User not found. Please try again."
                 });
                 session.close();
             });
@@ -526,11 +526,12 @@ var UserSchema = function(dbDriver) {
     this.deleteUsers = function(req, res) {
         var session = this.driver.session();
         session
-            .run("MATCH (u:User) WHERE u.id IN {ids} DETACH DELETE u",
+            .run("MATCH (u:User)-[:MAKE]->(i:Idea) \
+                WHERE u.id IN {ids} DETACH DELETE i, u",
                 { ids: req.body.ids })
             .then(function(result) {
                 res.send({
-                    message: "Successfully deleted user(s)!"
+                    message: "Successfully deleted user(s), along with their data."
                 });
                 session.close();
             })

@@ -433,7 +433,7 @@ var IdeaSchema = function(dbDriver) {
             })
             .catch(function(err) {
                 res.send({
-                    fail: "Failed finding idea. Please try again."
+                    fail: "Failed finding idea. The idea may have been removed. Please try again."
                 });
                 session.close();
             });
