@@ -9,6 +9,8 @@ import { UserDetailsComponent } from "./components/user-details/user-details.com
 import { CreateUserComponent } from "./components/user-create/user-create.component";
 import { UpdateUserComponent } from "./components/user-update/user-update.component";
 import { UserIdeasComponent } from "./components/user-ideas/user-ideas.component";
+import { UserConnectionsComponent } from 
+    "./components/user-connections/user-connections.component";
 
 import { IdeasListComponent } from "./components/ideas-list/ideas-list.component";
 import { IdeaDetailsComponent } from "./components/idea-details/idea-details.component";
@@ -55,6 +57,10 @@ const routes: Routes = [
                     {
                         path: "ideas",
                         component: UserIdeasComponent
+                    },
+                    {
+                        path: "connections",
+                        component: UserConnectionsComponent
                     }
                 ]
             },
