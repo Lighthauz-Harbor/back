@@ -6,7 +6,7 @@
             In case of trouble, you may remove a connection request here.
         </h2>
     </div>
-    <div class="action-table-wrapper requests-wrapper">
+    <div class="action-table-wrapper requests-sent-wrapper">
         <h2>Requests sent by user</h2>
         <table class="table-action">
             <thead>
@@ -17,9 +17,28 @@
                     <th>Last requested at</th>
                 </tr>
             </thead>
-            <tbody>
+            <tbody *ngIf="requestsSent.length === 0">
                 <tr>
                     <td class="table-message" colspan="4">{{requestsSentMessage}}</td>
+                </tr>
+            </tbody>
+            <tbody *ngIf="requestsSent.length > 0">
+                <tr *ngFor="let row of requestsSent">
+                    <td>
+                        <img [src]="row.profilePic">
+                    </td>
+                    <td>
+                        <a [routerLink]="['/users', row.id]">{{row.name}}</a>
+                    </td>
+                    <td>
+                        {{(row.bio.length < 37) ?
+                            row.bio :
+                            (row.bio.slice(0, 37) + "...")}}
+                    </td>
+                    <td>
+                        {{row.lastChanged.toDateString()}}<br>
+                        {{row.lastChanged.toTimeString()}}
+                    </td>
                 </tr>
             </tbody>
         </table>

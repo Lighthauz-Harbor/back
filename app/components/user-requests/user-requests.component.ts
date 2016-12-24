@@ -34,7 +34,7 @@ export class UserRequestsComponent implements OnInit {
                         this.requestsSentMessage = 
                             "No requests were sent by this user, yet.";
                     } else {
-                        this.requestsSentMessage = "There were requests.";
+                        this.requestsSentMessage = "";
                     }
                 });
         });
