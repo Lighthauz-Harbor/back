@@ -37,12 +37,30 @@ export class UserRequestsComponent implements OnInit {
                         this.requestsSentMessage = "";
                     }
                 });
+            this.usersService.getReceivedConnectionRequests(id)
+                .subscribe((json: any) => {
+                    this.pushRequestsReceived(json);
+                    if (this.requestsReceived.length === 0) {
+                        this.requestsReceivedMessage = 
+                            "No requests were received by this user, yet.";
+                    } else {
+                        this.requestsReceivedMessage = "";
+                    }
+                });
         });
     }
 
     private pushRequestsSent(json: any): void {
         json.sentByUser.map((item: any) => {
             this.requestsSent.push(new User(item.id, item.username, "user",
+                item.name, item.bio, item.profilePic,
+                new Date(0), new Date(0), new Date(item.timestamp)));
+        });
+    }
+
+    private pushRequestsReceived(json: any): void {
+        json.receivedByUser.map((item: any) => {
+            this.requestsReceived.push(new User(item.id, item.username, "user",
                 item.name, item.bio, item.profilePic,
                 new Date(0), new Date(0), new Date(item.timestamp)));
         });

@@ -33341,12 +33341,29 @@ webpackJsonp([0],{
 	                    _this.requestsSentMessage = "";
 	                }
 	            });
+	            _this.usersService.getReceivedConnectionRequests(id)
+	                .subscribe(function (json) {
+	                _this.pushRequestsReceived(json);
+	                if (_this.requestsReceived.length === 0) {
+	                    _this.requestsReceivedMessage =
+	                        "No requests were received by this user, yet.";
+	                }
+	                else {
+	                    _this.requestsReceivedMessage = "";
+	                }
+	            });
 	        });
 	    };
 	    UserRequestsComponent.prototype.pushRequestsSent = function (json) {
 	        var _this = this;
 	        json.sentByUser.map(function (item) {
 	            _this.requestsSent.push(new user_model_app_1.User(item.id, item.username, "user", item.name, item.bio, item.profilePic, new Date(0), new Date(0), new Date(item.timestamp)));
+	        });
+	    };
+	    UserRequestsComponent.prototype.pushRequestsReceived = function (json) {
+	        var _this = this;
+	        json.receivedByUser.map(function (item) {
+	            _this.requestsReceived.push(new user_model_app_1.User(item.id, item.username, "user", item.name, item.bio, item.profilePic, new Date(0), new Date(0), new Date(item.timestamp)));
 	        });
 	    };
 	    UserRequestsComponent = __decorate([
@@ -33367,7 +33384,7 @@ webpackJsonp([0],{
 /***/ 459:
 /***/ function(module, exports) {
 
-	module.exports = "<div class=\"content-dashboard\">\r\n    <div class=\"title-dashboard\">\r\n        <h1>Edit user's connection requests</h1>\r\n        <h2>\r\n            You can view the user's connection requests here.<br>\r\n            In case of trouble, you may remove a connection request here.\r\n        </h2>\r\n    </div>\r\n    <div class=\"action-table-wrapper requests-sent-wrapper\">\r\n        <h2>Requests sent by user</h2>\r\n        <table class=\"table-action\">\r\n            <thead>\r\n                <tr>\r\n                    <th>User's picture</th>\r\n                    <th>User's name</th>\r\n                    <th>Biography</th>\r\n                    <th>Last requested at</th>\r\n                </tr>\r\n            </thead>\r\n            <tbody *ngIf=\"requestsSent.length === 0\">\r\n                <tr>\r\n                    <td class=\"table-message\" colspan=\"4\">{{requestsSentMessage}}</td>\r\n                </tr>\r\n            </tbody>\r\n            <tbody *ngIf=\"requestsSent.length > 0\">\r\n                <tr *ngFor=\"let row of requestsSent\">\r\n                    <td>\r\n                        <img [src]=\"row.profilePic\">\r\n                    </td>\r\n                    <td>\r\n                        <a [routerLink]=\"['/users', row.id]\">{{row.name}}</a>\r\n                    </td>\r\n                    <td>\r\n                        {{(row.bio.length < 37) ?\r\n                            row.bio :\r\n                            (row.bio.slice(0, 37) + \"...\")}}\r\n                    </td>\r\n                    <td>\r\n                        {{row.lastChanged.toDateString()}}<br>\r\n                        {{row.lastChanged.toTimeString()}}\r\n                    </td>\r\n                </tr>\r\n            </tbody>\r\n        </table>\r\n    </div>\r\n</div>"
+	module.exports = "<div class=\"content-dashboard\">\r\n\r\n    <div class=\"title-dashboard\">\r\n        <h1>Edit user's connection requests</h1>\r\n        <h2>\r\n            You can view the user's connection requests here.<br>\r\n            In case of trouble, you may remove a connection request here.\r\n        </h2>\r\n    </div>\r\n\r\n    <div class=\"action-table-wrapper requests-sent-wrapper\">\r\n        <h2>Requests sent by user</h2>\r\n        <table class=\"table-action\">\r\n            <thead>\r\n                <tr>\r\n                    <th>User's picture</th>\r\n                    <th>User's name</th>\r\n                    <th>Biography</th>\r\n                    <th>Last requested at</th>\r\n                </tr>\r\n            </thead>\r\n            <tbody *ngIf=\"requestsSent.length === 0\">\r\n                <tr>\r\n                    <td class=\"table-message\" colspan=\"4\">{{requestsSentMessage}}</td>\r\n                </tr>\r\n            </tbody>\r\n            <tbody *ngIf=\"requestsSent.length > 0\">\r\n                <tr *ngFor=\"let row of requestsSent\">\r\n                    <td>\r\n                        <img [src]=\"row.profilePic\">\r\n                    </td>\r\n                    <td>\r\n                        <a [routerLink]=\"['/users', row.id]\">{{row.name}}</a>\r\n                    </td>\r\n                    <td>\r\n                        {{(row.bio.length < 37) ?\r\n                            row.bio :\r\n                            (row.bio.slice(0, 37) + \"...\")}}\r\n                    </td>\r\n                    <td>\r\n                        {{row.lastChanged.toDateString()}}<br>\r\n                        {{row.lastChanged.toTimeString()}}\r\n                    </td>\r\n                </tr>\r\n            </tbody>\r\n        </table>\r\n    </div>\r\n\r\n    <div class=\"action-table-wrapper requests-received-wrapper\">\r\n        <h2>Requests received by user</h2>\r\n        <table class=\"table-action\">\r\n            <thead>\r\n                <tr>\r\n                    <th>User's picture</th>\r\n                    <th>User's name</th>\r\n                    <th>Biography</th>\r\n                    <th>Last requested at</th>\r\n                </tr>\r\n            </thead>\r\n            <tbody *ngIf=\"requestsReceived.length === 0\">\r\n                <tr>\r\n                    <td class=\"table-message\" colspan=\"4\">{{requestsReceivedMessage}}</td>\r\n                </tr>\r\n            </tbody>\r\n            <tbody *ngIf=\"requestsReceived.length > 0\">\r\n                <tr *ngFor=\"let row of requestsReceived\">\r\n                    <td>\r\n                        <img [src]=\"row.profilePic\">\r\n                    </td>\r\n                    <td>\r\n                        <a [routerLink]=\"['/users', row.id]\">{{row.name}}</a>\r\n                    </td>\r\n                    <td>\r\n                        {{(row.bio.length < 37) ?\r\n                            row.bio :\r\n                            (row.bio.slice(0, 37) + \"...\")}}\r\n                    </td>\r\n                    <td>\r\n                        {{row.lastChanged.toDateString()}}<br>\r\n                        {{row.lastChanged.toTimeString()}}\r\n                    </td>\r\n                </tr>\r\n            </tbody>\r\n        </table>\r\n    </div>\r\n\r\n</div>"
 
 /***/ },
 
