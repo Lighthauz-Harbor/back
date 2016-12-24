@@ -31,10 +31,13 @@
                         <a [routerLink]="['/users', row.id]">{{row.name}}</a>
                     </td>
                     <td>
-                        {{row.bio}}
+                        {{(row.bio.length < 37) ?
+                            row.bio :
+                            (row.bio.slice(0, 37) + "...")}}
                     </td>
                     <td>
-                        Some date
+                        {{row.lastChanged.toDateString()}}<br>
+                        {{row.lastChanged.toTimeString()}}
                     </td>
                 </tr>
             </tbody>

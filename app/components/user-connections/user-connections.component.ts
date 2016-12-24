@@ -46,7 +46,8 @@ export class UserConnectionsComponent implements OnInit {
             this.connections.push(
                 new User(
                     item.id, item.email, "user", 
-                    item.name, item.bio, item.profilePic));
+                    item.name, item.bio, item.profilePic,
+                    new Date(0), new Date(0), new Date(item.timestamp)));
         });
     }
 

@@ -30932,7 +30932,7 @@ webpackJsonp([0],{
 	"use strict";
 	var User = (function () {
 	    // don't assign passwords for security purposes
-	    function User(id, username, role, name, bio, profilePic, dateOfBirth, createdAt) {
+	    function User(id, username, role, name, bio, profilePic, dateOfBirth, createdAt, lastChanged) {
 	        if (id === void 0) { id = ""; }
 	        if (username === void 0) { username = ""; }
 	        if (role === void 0) { role = "user"; }
@@ -30941,6 +30941,7 @@ webpackJsonp([0],{
 	        if (profilePic === void 0) { profilePic = "http://res.cloudinary.com/lighthauz-harbor/image/upload/v1478504599/default-profile-pic_hroujz.png"; }
 	        if (dateOfBirth === void 0) { dateOfBirth = new Date(0); }
 	        if (createdAt === void 0) { createdAt = new Date(0); }
+	        if (lastChanged === void 0) { lastChanged = new Date(); }
 	        this._id = id;
 	        this._name = name;
 	        this._username = username;
@@ -30949,6 +30950,8 @@ webpackJsonp([0],{
 	        this._profilePic = profilePic;
 	        this._dateOfBirth = dateOfBirth;
 	        this._createdAt = createdAt;
+	        this._lastChanged = lastChanged;
+	        // to initialize the user's list
 	        this._selected = false;
 	    }
 	    Object.defineProperty(User.prototype, "id", {
@@ -31024,6 +31027,16 @@ webpackJsonp([0],{
 	        },
 	        set: function (newCreatedAt) {
 	            this._createdAt = newCreatedAt;
+	        },
+	        enumerable: true,
+	        configurable: true
+	    });
+	    Object.defineProperty(User.prototype, "lastChanged", {
+	        get: function () {
+	            return this._lastChanged;
+	        },
+	        set: function (newLastChanged) {
+	            this._lastChanged = newLastChanged;
 	        },
 	        enumerable: true,
 	        configurable: true
@@ -33175,7 +33188,7 @@ webpackJsonp([0],{
 	    UserConnectionsComponent.prototype.pushConnections = function (json) {
 	        var _this = this;
 	        json.connections.map(function (item) {
-	            _this.connections.push(new user_model_app_1.User(item.id, item.email, "user", item.name, item.bio, item.profilePic));
+	            _this.connections.push(new user_model_app_1.User(item.id, item.email, "user", item.name, item.bio, item.profilePic, new Date(0), new Date(0), new Date(item.timestamp)));
 	        });
 	    };
 	    UserConnectionsComponent = __decorate([
@@ -33196,7 +33209,7 @@ webpackJsonp([0],{
 /***/ 451:
 /***/ function(module, exports) {
 
-	module.exports = "<div class=\"content-dashboard\">\r\n    <div class=\"title-dashboard\">\r\n        <h1>User's connections</h1>\r\n        <h2>\r\n            You can view the list of user's accepted connections here.<br>\r\n            (Excluding the connection requests.)<br>\r\n            To view connection requests, go back and click \"List user's connection requests.\"\r\n        </h2>\r\n    </div>\r\n    <div class=\"action-table-wrapper connections-wrapper\">\r\n        <table class=\"table-action\">\r\n            <thead>\r\n                <tr>\r\n                    <th>User's picture</th>\r\n                    <th>User's name</th>\r\n                    <th>Biography</th>\r\n                    <th>Last connected at</th>\r\n                </tr>\r\n            </thead>\r\n            <tbody *ngIf=\"connections.length === 0\">\r\n                <tr>\r\n                    <td class=\"table-message\" colspan=\"4\">{{message}}</td>\r\n                </tr>\r\n            </tbody>\r\n            <tbody *ngIf=\"connections.length > 0\">\r\n                <tr *ngFor=\"let row of connections\">\r\n                    <td>\r\n                        <img [src]=\"row.profilePic\">\r\n                    </td>\r\n                    <td>\r\n                        <a [routerLink]=\"['/users', row.id]\">{{row.name}}</a>\r\n                    </td>\r\n                    <td>\r\n                        {{row.bio}}\r\n                    </td>\r\n                    <td>\r\n                        Some date\r\n                    </td>\r\n                </tr>\r\n            </tbody>\r\n        </table>\r\n    </div>\r\n</div>"
+	module.exports = "<div class=\"content-dashboard\">\r\n    <div class=\"title-dashboard\">\r\n        <h1>User's connections</h1>\r\n        <h2>\r\n            You can view the list of user's accepted connections here.<br>\r\n            (Excluding the connection requests.)<br>\r\n            To view connection requests, go back and click \"List user's connection requests.\"\r\n        </h2>\r\n    </div>\r\n    <div class=\"action-table-wrapper connections-wrapper\">\r\n        <table class=\"table-action\">\r\n            <thead>\r\n                <tr>\r\n                    <th>User's picture</th>\r\n                    <th>User's name</th>\r\n                    <th>Biography</th>\r\n                    <th>Last connected at</th>\r\n                </tr>\r\n            </thead>\r\n            <tbody *ngIf=\"connections.length === 0\">\r\n                <tr>\r\n                    <td class=\"table-message\" colspan=\"4\">{{message}}</td>\r\n                </tr>\r\n            </tbody>\r\n            <tbody *ngIf=\"connections.length > 0\">\r\n                <tr *ngFor=\"let row of connections\">\r\n                    <td>\r\n                        <img [src]=\"row.profilePic\">\r\n                    </td>\r\n                    <td>\r\n                        <a [routerLink]=\"['/users', row.id]\">{{row.name}}</a>\r\n                    </td>\r\n                    <td>\r\n                        {{(row.bio.length < 37) ?\r\n                            row.bio :\r\n                            (row.bio.slice(0, 37) + \"...\")}}\r\n                    </td>\r\n                    <td>\r\n                        {{row.lastChanged.toDateString()}}<br>\r\n                        {{row.lastChanged.toTimeString()}}\r\n                    </td>\r\n                </tr>\r\n            </tbody>\r\n        </table>\r\n    </div>\r\n</div>"
 
 /***/ },
 

@@ -587,7 +587,9 @@ var UserSchema = function(dbDriver) {
         session
             .run("MATCH (from:User)-[c:CONNECT]-(to:User) \
                 WHERE from.id = {userId} AND c.status = 1 \
-                RETURN to.id, to.name, to.username, to.bio, to.profilePic",
+                RETURN to.id, to.name, to.username, to.bio, \
+                to.profilePic, c.lastChanged \
+                ORDER BY c.lastChanged DESC",
                 {
                     userId: req.params.userId
                 })
@@ -599,7 +601,8 @@ var UserSchema = function(dbDriver) {
                             name: record.get("to.name"),
                             email: record.get("to.username"),
                             bio: record.get("to.bio"),
-                            profilePic: record.get("to.profilePic")
+                            profilePic: record.get("to.profilePic"),
+                            timestamp: record.get("c.lastChanged")
                         };
                     })
                 });

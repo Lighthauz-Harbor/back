@@ -5,10 +5,17 @@ export class User {
     private _username: string;
     private _role: string;
     private _bio: string;
-    private _profilePic: string; // URL to the file in image server
+
+    // URL to the file in image server
+    private _profilePic: string; 
     private _dateOfBirth: Date;
     private _createdAt: Date;
-    private _selected: boolean; // for selection in users list table
+
+    // time the user did a particular action (connect, etc.)
+    private _lastChanged: Date;
+
+    // for selection in users list table
+    private _selected: boolean; 
 
     // don't assign passwords for security purposes
     constructor(
@@ -19,7 +26,8 @@ export class User {
         bio: string = "",
         profilePic: string = "http://res.cloudinary.com/lighthauz-harbor/image/upload/v1478504599/default-profile-pic_hroujz.png",
         dateOfBirth: Date = new Date(0),
-        createdAt: Date = new Date(0)) {
+        createdAt: Date = new Date(0),
+        lastChanged: Date = new Date()) {
         
         this._id = id;
         this._name = name;
@@ -29,7 +37,10 @@ export class User {
         this._profilePic = profilePic;
         this._dateOfBirth = dateOfBirth;
         this._createdAt = createdAt;
-        this._selected = false;
+        this._lastChanged = lastChanged;
+
+        // to initialize the user's list
+        this._selected = false; 
     }
 
     get id(): string {
@@ -90,6 +101,14 @@ export class User {
 
     set createdAt(newCreatedAt: Date) {
         this._createdAt = newCreatedAt;
+    }
+
+    get lastChanged(): Date {
+        return this._lastChanged;
+    }
+
+    set lastChanged(newLastChanged: Date) {
+        this._lastChanged = newLastChanged;
     }
 
     get selected(): boolean {
