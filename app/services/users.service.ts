@@ -84,4 +84,18 @@ export class UsersService {
             });
     }
 
+    getSentConnectionRequests(userId: string): Observable<any> {
+        return this.http.get("/api/connections/requests/sent/" + userId)
+            .map((res: Response) => {
+                return JSON.parse(res.text());
+            });
+    }
+
+    getReceivedConnectionRequests(userId: string): Observable<any> {
+        return this.http.get("/api/connections/requests/received/" + userId)
+            .map((res: Response) => {
+                return JSON.parse(res.text());
+            });
+    }
+
 }

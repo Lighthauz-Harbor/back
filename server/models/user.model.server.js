@@ -623,7 +623,8 @@ var UserSchema = function(dbDriver) {
             .run("MATCH (you:User)-[c:CONNECT]->(other:User) \
                 WHERE you.id = {userId} AND c.status = 0 \
                 RETURN other.id, other.name, other.username, \
-                other.bio, other.profilePic",
+                other.bio, other.profilePic, c.lastChanged \
+                ORDER BY c.lastChanged DESC",
                 {
                     userId: req.params.userId
                 })
@@ -635,7 +636,8 @@ var UserSchema = function(dbDriver) {
                             name: record.get("other.name"),
                             email: record.get("other.username"),
                             bio: record.get("other.bio"),
-                            profilePic: record.get("other.profilePic")
+                            profilePic: record.get("other.profilePic"),
+                            timestamp: Number(record.get("c.lastChanged"))
                         };
                     })
                 });
@@ -656,7 +658,8 @@ var UserSchema = function(dbDriver) {
             .run("MATCH (other:User)-[c:CONNECT]->(you:User) \
                 WHERE you.id = {userId} AND c.status = 0 \
                 RETURN other.id, other.name, other.username, \
-                other.bio, other.profilePic",
+                other.bio, other.profilePic, c.lastChanged \
+                ORDER BY c.lastChanged DESC",
                 {
                     userId: req.params.userId
                 })
@@ -668,7 +671,8 @@ var UserSchema = function(dbDriver) {
                             name: record.get("other.name"),
                             email: record.get("other.username"),
                             bio: record.get("other.bio"),
-                            profilePic: record.get("other.profilePic")
+                            profilePic: record.get("other.profilePic"),
+                            timestamp: Number(record.get("c.lastChanged"))
                         };
                     })
                 });
