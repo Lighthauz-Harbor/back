@@ -77,4 +77,11 @@ export class UsersService {
             });
     }
 
+    getConnections(userId: string): Observable<any> {
+        return this.http.get("/api/connections/" + userId)
+            .map((res: Response) => {
+                return JSON.parse(res.text());
+            });
+    }
+
 }

@@ -30624,6 +30624,12 @@ webpackJsonp([0],{
 	            return JSON.parse(res.text());
 	        });
 	    };
+	    UsersService.prototype.getConnections = function (userId) {
+	        return this.http.get("/api/connections/" + userId)
+	            .map(function (res) {
+	            return JSON.parse(res.text());
+	        });
+	    };
 	    UsersService = __decorate([
 	        core_1.Injectable(), 
 	        __metadata('design:paramtypes', [http_1.Http])
@@ -32535,7 +32541,7 @@ webpackJsonp([0],{
 /***/ 409:
 /***/ function(module, exports) {
 
-	module.exports = "<div class=\"content-dashboard\">\r\n    <div class=\"title-dashboard\">\r\n        <h1>View partners</h1>\r\n        <h2>\r\n            You can view the partners collaborating in the business idea you selected.\r\n        </h2>\r\n    </div>\r\n\r\n    <div class=\"action-table-wrapper partners-wrapper\">\r\n        <h2>Partners</h2>\r\n        <table class=\"table-action\">\r\n            <thead>\r\n                <tr>\r\n                    <th>User's picture</th>\r\n                    <th>User's name</th>\r\n                    <th>Email</th>\r\n                    <th>Biography</th>\r\n                </tr>\r\n            </thead>\r\n            <tbody *ngIf=\"partners.length === 0\">\r\n                <tr>\r\n                    <td colspan=\"4\">{{partnersMessage}}</td>\r\n                </tr>\r\n            </tbody>\r\n            <tbody *ngIf=\"partners.length > 0\">\r\n                <tr *ngFor=\"let row of partners\">\r\n                    <td>\r\n                        <img [src]=\"row.profilePic\">\r\n                    </td>\r\n                    <td>\r\n                        <a [routerLink]=\"['/users', row.id]\">{{row.name}}</a>\r\n                    </td>\r\n                    <td>\r\n                        <a href=\"mailto:{{row.username}}\">{{row.username}}</a>\r\n                    </td>\r\n                    <td>\r\n                        {{row.bio}}\r\n                    </td>\r\n                </tr>\r\n            </tbody>\r\n        </table>\r\n    </div>\r\n</div>"
+	module.exports = "<div class=\"content-dashboard\">\r\n    <div class=\"title-dashboard\">\r\n        <h1>View partners</h1>\r\n        <h2>\r\n            You can view the partners collaborating in the business idea you selected.\r\n        </h2>\r\n    </div>\r\n\r\n    <div class=\"action-table-wrapper partners-wrapper\">\r\n        <table class=\"table-action\">\r\n            <thead>\r\n                <tr>\r\n                    <th>User's picture</th>\r\n                    <th>User's name</th>\r\n                    <th>Email</th>\r\n                    <th>Biography</th>\r\n                </tr>\r\n            </thead>\r\n            <tbody *ngIf=\"partners.length === 0\">\r\n                <tr>\r\n                    <td colspan=\"4\">{{partnersMessage}}</td>\r\n                </tr>\r\n            </tbody>\r\n            <tbody *ngIf=\"partners.length > 0\">\r\n                <tr *ngFor=\"let row of partners\">\r\n                    <td>\r\n                        <img [src]=\"row.profilePic\">\r\n                    </td>\r\n                    <td>\r\n                        <a [routerLink]=\"['/users', row.id]\">{{row.name}}</a>\r\n                    </td>\r\n                    <td>\r\n                        <a href=\"mailto:{{row.username}}\">{{row.username}}</a>\r\n                    </td>\r\n                    <td>\r\n                        {{row.bio}}\r\n                    </td>\r\n                </tr>\r\n            </tbody>\r\n        </table>\r\n    </div>\r\n</div>"
 
 /***/ },
 
@@ -33109,7 +33115,7 @@ webpackJsonp([0],{
 /***/ 447:
 /***/ function(module, exports) {
 
-	module.exports = "<div class=\"content-dashboard\">\r\n    <div class=\"title-dashboard\">\r\n        <h1>User's ideas</h1>\r\n        <h2>You can view the list of ideas the user has created here.</h2>\r\n    </div>\r\n\r\n    <div class=\"action-table-wrapper user-ideas-wrapper\">\r\n        <h2>Ideas</h2>\r\n        <table class=\"table-action\">\r\n            <thead>\r\n                <tr>\r\n                    <th>Idea's picture</th>\r\n                    <th>Title</th>\r\n                    <th>Description</th>\r\n                    <th>Last changed at</th>\r\n                </tr>\r\n            </thead>\r\n            <tbody *ngIf=\"ideas.length === 0\">\r\n                <tr>\r\n                    <td class=\"table-message\" colspan=\"4\">{{message}}</td>\r\n                </tr>\r\n            </tbody>\r\n            <tbody *ngIf=\"ideas.length > 0\">\r\n                <tr *ngFor = \"let row of ideas\">\r\n                    <td>\r\n                        <img [src]=\"row.picture\">\r\n                    </td>\r\n                    <td>\r\n                        <a [routerLink]=\"['/ideas', row.id]\">{{row.title}}</a>\r\n                    </td>\r\n                    <td>\r\n                        {{(row.description.length < 37) ?\r\n                            row.description :\r\n                            (row.description.slice(0, 37) + \"...\")}}\r\n                    </td>\r\n                    <td class=\"timestamp-col\">\r\n                        {{row.lastChanged.toDateString()}}<br>\r\n                        {{row.lastChanged.toTimeString()}}\r\n                    </td>\r\n                </tr>\r\n            </tbody>\r\n        </table>\r\n    </div>\r\n</div>"
+	module.exports = "<div class=\"content-dashboard\">\r\n    <div class=\"title-dashboard\">\r\n        <h1>User's ideas</h1>\r\n        <h2>You can view the list of ideas the user has created here.</h2>\r\n    </div>\r\n\r\n    <div class=\"action-table-wrapper user-ideas-wrapper\">\r\n        <table class=\"table-action\">\r\n            <thead>\r\n                <tr>\r\n                    <th>Idea's picture</th>\r\n                    <th>Title</th>\r\n                    <th>Description</th>\r\n                    <th>Last changed at</th>\r\n                </tr>\r\n            </thead>\r\n            <tbody *ngIf=\"ideas.length === 0\">\r\n                <tr>\r\n                    <td class=\"table-message\" colspan=\"4\">{{message}}</td>\r\n                </tr>\r\n            </tbody>\r\n            <tbody *ngIf=\"ideas.length > 0\">\r\n                <tr *ngFor = \"let row of ideas\">\r\n                    <td>\r\n                        <img [src]=\"row.picture\">\r\n                    </td>\r\n                    <td>\r\n                        <a [routerLink]=\"['/ideas', row.id]\">{{row.title}}</a>\r\n                    </td>\r\n                    <td>\r\n                        {{(row.description.length < 37) ?\r\n                            row.description :\r\n                            (row.description.slice(0, 37) + \"...\")}}\r\n                    </td>\r\n                    <td class=\"timestamp-col\">\r\n                        {{row.lastChanged.toDateString()}}<br>\r\n                        {{row.lastChanged.toTimeString()}}\r\n                    </td>\r\n                </tr>\r\n            </tbody>\r\n        </table>\r\n    </div>\r\n</div>"
 
 /***/ },
 
@@ -33135,14 +33141,42 @@ webpackJsonp([0],{
 	};
 	var core_1 = __webpack_require__(4);
 	var router_1 = __webpack_require__(31);
+	var user_model_app_1 = __webpack_require__(370);
 	var users_service_1 = __webpack_require__(363);
 	var UserConnectionsComponent = (function () {
 	    function UserConnectionsComponent(router, route, usersService) {
 	        this.router = router;
 	        this.route = route;
 	        this.usersService = usersService;
+	        this.connections = [];
+	        this.message = "Loading...";
 	    }
 	    UserConnectionsComponent.prototype.ngOnInit = function () {
+	        var _this = this;
+	        this.route.params.forEach(function (params) {
+	            var id = params["id"];
+	            _this.usersService.getConnections(id)
+	                .subscribe(function (json) {
+	                if (json.fail) {
+	                    _this.message = json.fail;
+	                }
+	                else {
+	                    _this.pushConnections(json);
+	                    if (_this.connections.length === 0) {
+	                        _this.message = "This user has no connections, yet.";
+	                    }
+	                    else {
+	                        _this.message = "This user has some connections, though. :D";
+	                    }
+	                }
+	            });
+	        });
+	    };
+	    UserConnectionsComponent.prototype.pushConnections = function (json) {
+	        var _this = this;
+	        json.connections.map(function (item) {
+	            _this.connections.push(new user_model_app_1.User(item.id, item.email, "user", item.name, item.bio, item.profilePic));
+	        });
 	    };
 	    UserConnectionsComponent = __decorate([
 	        core_1.Component({
@@ -33162,7 +33196,7 @@ webpackJsonp([0],{
 /***/ 451:
 /***/ function(module, exports) {
 
-	module.exports = "<div class=\"content-dashboard\">\r\n    <div class=\"title-dashboard\">\r\n        <h1>User's connections</h1>\r\n        <h2>\r\n            You can view the list of user's accepted connections here.<br>\r\n            (Excluding the connection requests.)<br>\r\n            To view them, go back and click \"List user's connection requests\"\r\n        </h2>\r\n    </div>\r\n    <div class=\"action-table-wrapper connections-wrapper\">\r\n        \r\n    </div>\r\n</div>"
+	module.exports = "<div class=\"content-dashboard\">\r\n    <div class=\"title-dashboard\">\r\n        <h1>User's connections</h1>\r\n        <h2>\r\n            You can view the list of user's accepted connections here.<br>\r\n            (Excluding the connection requests.)<br>\r\n            To view connection requests, go back and click \"List user's connection requests.\"\r\n        </h2>\r\n    </div>\r\n    <div class=\"action-table-wrapper connections-wrapper\">\r\n        <table class=\"table-action\">\r\n            <thead>\r\n                <tr>\r\n                    <th>User's picture</th>\r\n                    <th>User's name</th>\r\n                    <th>Biography</th>\r\n                    <th>Last connected at</th>\r\n                </tr>\r\n            </thead>\r\n            <tbody *ngIf=\"connections.length === 0\">\r\n                <tr>\r\n                    <td class=\"table-message\" colspan=\"4\">{{message}}</td>\r\n                </tr>\r\n            </tbody>\r\n            <tbody *ngIf=\"connections.length > 0\">\r\n                <tr *ngFor=\"let row of connections\">\r\n                    <td>\r\n                        <img [src]=\"row.profilePic\">\r\n                    </td>\r\n                    <td>\r\n                        <a [routerLink]=\"['/users', row.id]\">{{row.name}}</a>\r\n                    </td>\r\n                    <td>\r\n                        {{row.bio}}\r\n                    </td>\r\n                    <td>\r\n                        Some date\r\n                    </td>\r\n                </tr>\r\n            </tbody>\r\n        </table>\r\n    </div>\r\n</div>"
 
 /***/ },
 
