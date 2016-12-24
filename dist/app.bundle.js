@@ -19562,6 +19562,7 @@ webpackJsonp([0],{
 	var user_details_component_1 = __webpack_require__(374);
 	var user_create_component_1 = __webpack_require__(378);
 	var user_update_component_1 = __webpack_require__(383);
+	var user_ideas_component_1 = __webpack_require__(446);
 	var ideas_list_component_1 = __webpack_require__(387);
 	var idea_details_component_1 = __webpack_require__(392);
 	var idea_create_component_1 = __webpack_require__(396);
@@ -19601,6 +19602,7 @@ webpackJsonp([0],{
 	                user_details_component_1.UserDetailsComponent,
 	                user_create_component_1.CreateUserComponent,
 	                user_update_component_1.UpdateUserComponent,
+	                user_ideas_component_1.UserIdeasComponent,
 	                ideas_list_component_1.IdeasListComponent,
 	                idea_details_component_1.IdeaDetailsComponent,
 	                idea_create_component_1.CreateIdeaComponent,
@@ -25917,6 +25919,7 @@ webpackJsonp([0],{
 	var user_details_component_1 = __webpack_require__(374);
 	var user_create_component_1 = __webpack_require__(378);
 	var user_update_component_1 = __webpack_require__(383);
+	var user_ideas_component_1 = __webpack_require__(446);
 	var ideas_list_component_1 = __webpack_require__(387);
 	var idea_details_component_1 = __webpack_require__(392);
 	var idea_create_component_1 = __webpack_require__(396);
@@ -25955,6 +25958,10 @@ webpackJsonp([0],{
 	                    {
 	                        path: "update",
 	                        component: user_update_component_1.UpdateUserComponent
+	                    },
+	                    {
+	                        path: "ideas",
+	                        component: user_ideas_component_1.UserIdeasComponent
 	                    }
 	                ]
 	            },
@@ -30706,6 +30713,12 @@ webpackJsonp([0],{
 	            return JSON.parse(res.text());
 	        });
 	    };
+	    IdeasService.prototype.getIdeaListFromUser = function (userId) {
+	        return this.http.get("/api/ideas/list/" + userId)
+	            .map(function (res) {
+	            return JSON.parse(res.text());
+	        });
+	    };
 	    IdeasService = __decorate([
 	        core_1.Injectable(), 
 	        __metadata('design:paramtypes', [http_1.Http])
@@ -31106,7 +31119,7 @@ webpackJsonp([0],{
 /***/ 375:
 /***/ function(module, exports) {
 
-	module.exports = "<div class=\"content-dashboard\">\r\n    <div class=\"title-dashboard\">\r\n        <h1>User details: {{user.name || \"Loading...\"}}</h1>\r\n        <h2>\r\n            Read the details of the user here.<br>\r\n            To take action upon the user (view additional details or edit it), simply navigate to Actions and choose a link there.\r\n        </h2>\r\n    </div>\r\n    <div class=\"actions-dashboard\">\r\n        <h2>Actions</h2>\r\n        <ul class=\"list-actions\">\r\n            <li>\r\n                <a [routerLink]=\"['update']\">Update user information</a>\r\n            </li>\r\n        </ul>\r\n    </div>\r\n    <div class=\"details-dashboard\">\r\n        <h2>User information</h2>\r\n        <div class=\"body-dashboard\">\r\n            <div class=\"pic-col-details\">\r\n                <img [src]=\"user.profilePic\">\r\n                <p>\r\n                    <strong>Preferred categories:</strong><br>\r\n                    {{(preferredCategories.length === 0) ? \r\n                        \"Loading...\" : \r\n                        preferredCategories.join(\", \")}}\r\n                </p>\r\n            </div>\r\n            <div class=\"info-col-details\">\r\n                <div class=\"info-wrapper basic-info-details\">\r\n                    <h3>Basic information</h3>\r\n                    <p>\r\n                        <strong>Name:</strong> {{user.name}}\r\n                    </p>\r\n                    <p>\r\n                        <strong>Email:</strong> {{user.username}}\r\n                    </p>\r\n                    <p>\r\n                        <strong>Role:</strong> {{user.role}}\r\n                    </p>\r\n                    <p>\r\n                        <strong>Biography:</strong> {{user.bio}}\r\n                    </p>\r\n                </div>\r\n                <div class=\"info-wrapper other-info-details\">\r\n                    <h3>Other information</h3>\r\n                    <p>\r\n                        <strong>Date of birth:</strong> {{user.dateOfBirth.toDateString()}}\r\n                    </p>\r\n                    <p>\r\n                        <strong>Created at:</strong> {{user.createdAt.toString()}}\r\n                    </p>\r\n                </div>\r\n            </div>\r\n        </div>\r\n    </div>\r\n</div>"
+	module.exports = "<div class=\"content-dashboard\">\r\n    <div class=\"title-dashboard\">\r\n        <h1>User details: {{user.name || \"Loading...\"}}</h1>\r\n        <h2>\r\n            Read the details of the user here.<br>\r\n            To take action upon the user (view additional details or edit it), simply navigate to Actions and choose a link there.\r\n        </h2>\r\n    </div>\r\n    <div class=\"actions-dashboard\">\r\n        <h2>Actions</h2>\r\n        <ul class=\"list-actions\">\r\n            <li>\r\n                <a [routerLink]=\"['update']\">Update user information</a>\r\n            </li>\r\n            <li>\r\n                <a [routerLink]=\"['ideas']\">List user's ideas</a>\r\n            </li>\r\n        </ul>\r\n    </div>\r\n    <div class=\"details-dashboard\">\r\n        <h2>User information</h2>\r\n        <div class=\"body-dashboard\">\r\n            <div class=\"pic-col-details\">\r\n                <img [src]=\"user.profilePic\">\r\n                <p>\r\n                    <strong>Preferred categories:</strong><br>\r\n                    {{(preferredCategories.length === 0) ? \r\n                        \"Loading...\" : \r\n                        preferredCategories.join(\", \")}}\r\n                </p>\r\n            </div>\r\n            <div class=\"info-col-details\">\r\n                <div class=\"info-wrapper basic-info-details\">\r\n                    <h3>Basic information</h3>\r\n                    <p>\r\n                        <strong>Name:</strong> {{user.name}}\r\n                    </p>\r\n                    <p>\r\n                        <strong>Email:</strong> {{user.username}}\r\n                    </p>\r\n                    <p>\r\n                        <strong>Role:</strong> {{user.role}}\r\n                    </p>\r\n                    <p>\r\n                        <strong>Biography:</strong> {{user.bio}}\r\n                    </p>\r\n                </div>\r\n                <div class=\"info-wrapper other-info-details\">\r\n                    <h3>Other information</h3>\r\n                    <p>\r\n                        <strong>Date of birth:</strong> {{user.dateOfBirth.toDateString()}}\r\n                    </p>\r\n                    <p>\r\n                        <strong>Created at:</strong> {{user.createdAt.toString()}}\r\n                    </p>\r\n                </div>\r\n            </div>\r\n        </div>\r\n    </div>\r\n</div>"
 
 /***/ },
 
@@ -33009,6 +33022,59 @@ webpackJsonp([0],{
 /***/ },
 
 /***/ 439:
+/***/ function(module, exports) {
+
+	// removed by extract-text-webpack-plugin
+
+/***/ },
+
+/***/ 446:
+/***/ function(module, exports, __webpack_require__) {
+
+	"use strict";
+	var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+	    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+	    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+	    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+	    return c > 3 && r && Object.defineProperty(target, key, r), r;
+	};
+	var __metadata = (this && this.__metadata) || function (k, v) {
+	    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+	};
+	var core_1 = __webpack_require__(4);
+	var router_1 = __webpack_require__(31);
+	var ideas_service_1 = __webpack_require__(364);
+	var UserIdeasComponent = (function () {
+	    function UserIdeasComponent(router, route, ideasService) {
+	        this.router = router;
+	        this.route = route;
+	        this.ideasService = ideasService;
+	    }
+	    UserIdeasComponent.prototype.ngOnInit = function () {
+	    };
+	    UserIdeasComponent = __decorate([
+	        core_1.Component({
+	            selector: "user-ideas",
+	            template: __webpack_require__(447),
+	            styles: [__webpack_require__(448).toString()]
+	        }), 
+	        __metadata('design:paramtypes', [router_1.Router, router_1.ActivatedRoute, ideas_service_1.IdeasService])
+	    ], UserIdeasComponent);
+	    return UserIdeasComponent;
+	}());
+	exports.UserIdeasComponent = UserIdeasComponent;
+
+
+/***/ },
+
+/***/ 447:
+/***/ function(module, exports) {
+
+	module.exports = "<div class=\"content-dashboard\">\r\n    <div class=\"title-dashboard\">\r\n        <h1>List of user's ideas</h1>\r\n        <h2>You can view the list of ideas the user has created here.</h2>\r\n    </div>\r\n</div>"
+
+/***/ },
+
+/***/ 448:
 /***/ function(module, exports) {
 
 	// removed by extract-text-webpack-plugin

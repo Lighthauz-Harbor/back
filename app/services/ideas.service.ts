@@ -89,4 +89,11 @@ export class IdeasService {
                 return JSON.parse(res.text());
             });
     }
+
+    getIdeaListFromUser(userId: string): Observable<any> {
+        return this.http.get("/api/ideas/list/" + userId)
+            .map((res: Response) => {
+                return JSON.parse(res.text());
+            });
+    }
 }
