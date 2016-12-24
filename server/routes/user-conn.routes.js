@@ -24,16 +24,12 @@ module.exports = function(router, dbDriver) {
         userSchema.sendConnectionRequest(req, res);
     });
 
-    router.put("/connections/accept", function(req, res) {
+    router.post("/connections/accept", function(req, res) {
         userSchema.acceptRequest(req, res);
     });
 
-    router.put("/connections/reject", function(req, res) {
-        userSchema.rejectRequest(req, res);
-    });
-
     router.post("/connections/remove", function(req, res) {
-        userSchema.removeConnection(req, res);
+        userSchema.removeConnectionOrRequest(req, res);
     });
 
 };
