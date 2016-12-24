@@ -178,6 +178,15 @@
 .table-info table th,
 .table-info table td {
     text-align: left;
+}.announcement {
+    margin-top: 12px;
+
+    font-size: 120%;
+    text-align: center;
+}
+
+.announcement h2 {
+    font-weight: 100;
 }.body-dashboard table {
     width: 100%;
 }

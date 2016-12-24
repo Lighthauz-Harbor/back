@@ -3,6 +3,7 @@ import { RouterModule, Routes } from "@angular/router";
 
 import { LoginComponent } from "./components/login/login.component";
 import { DashboardComponent } from "./components/dashboard/dashboard.component";
+import { PageNotFoundComponent } from "./components/not-found/not-found.component";
 
 import { UsersListComponent } from "./components/users-list/users-list.component";
 import { UserDetailsComponent } from "./components/user-details/user-details.component";
@@ -129,8 +130,13 @@ const routes: Routes = [
         component: LoginComponent
     },
     {
+        path: "",
+        redirectTo: "/dashboard",
+        pathMatch: "full"
+    },
+    {
         path: "**",
-        redirectTo: "/dashboard"
+        component: PageNotFoundComponent
     }
 ];
 

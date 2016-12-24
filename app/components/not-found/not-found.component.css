@@ -1,0 +1,10 @@
+.announcement {
+    margin-top: 12px;
+
+    font-size: 120%;
+    text-align: center;
+}
+
+.announcement h2 {
+    font-weight: 100;
+}

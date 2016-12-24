@@ -10,6 +10,7 @@ import { LoginComponent } from "./components/login/login.component";
 import { DashboardComponent } from "./components/dashboard/dashboard.component";
 import { FooterComponent } from "./components/footer/footer.component";
 import { SidebarComponent } from "./components/sidebar/sidebar.component";
+import { PageNotFoundComponent } from "./components/not-found/not-found.component";
 
 import { UsersListComponent } from "./components/users-list/users-list.component";
 import { UserDetailsComponent } from "./components/user-details/user-details.component";
@@ -53,6 +54,7 @@ import "./vendor/vendor"; // vendor.ts file
         DashboardComponent,
         FooterComponent,
         SidebarComponent,
+        PageNotFoundComponent,
         UsersListComponent,
         UserDetailsComponent,
         CreateUserComponent,

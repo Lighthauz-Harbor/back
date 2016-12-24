@@ -19558,6 +19558,7 @@ webpackJsonp([0],{
 	var dashboard_component_1 = __webpack_require__(361);
 	var footer_component_1 = __webpack_require__(433);
 	var sidebar_component_1 = __webpack_require__(437);
+	var not_found_component_1 = __webpack_require__(454);
 	var users_list_component_1 = __webpack_require__(369);
 	var user_details_component_1 = __webpack_require__(374);
 	var user_create_component_1 = __webpack_require__(378);
@@ -19599,6 +19600,7 @@ webpackJsonp([0],{
 	                dashboard_component_1.DashboardComponent,
 	                footer_component_1.FooterComponent,
 	                sidebar_component_1.SidebarComponent,
+	                not_found_component_1.PageNotFoundComponent,
 	                users_list_component_1.UsersListComponent,
 	                user_details_component_1.UserDetailsComponent,
 	                user_create_component_1.CreateUserComponent,
@@ -25917,6 +25919,7 @@ webpackJsonp([0],{
 	var router_1 = __webpack_require__(31);
 	var login_component_1 = __webpack_require__(61);
 	var dashboard_component_1 = __webpack_require__(361);
+	var not_found_component_1 = __webpack_require__(454);
 	var users_list_component_1 = __webpack_require__(369);
 	var user_details_component_1 = __webpack_require__(374);
 	var user_create_component_1 = __webpack_require__(378);
@@ -26037,8 +26040,13 @@ webpackJsonp([0],{
 	        component: login_component_1.LoginComponent
 	    },
 	    {
+	        path: "",
+	        redirectTo: "/dashboard",
+	        pathMatch: "full"
+	    },
+	    {
 	        path: "**",
-	        redirectTo: "/dashboard"
+	        component: not_found_component_1.PageNotFoundComponent
 	    }
 	];
 	var RoutingModule = (function () {
@@ -31145,7 +31153,7 @@ webpackJsonp([0],{
 /***/ 375:
 /***/ function(module, exports) {
 
-	module.exports = "<div class=\"content-dashboard\">\r\n    <div class=\"title-dashboard\">\r\n        <h1>User details: {{user.name || \"Loading...\"}}</h1>\r\n        <h2>\r\n            Read the details of the user here.<br>\r\n            To take action upon the user (view additional details or edit it), simply navigate to Actions and choose a link there.\r\n        </h2>\r\n    </div>\r\n    <div class=\"actions-dashboard\">\r\n        <h2>Actions</h2>\r\n        <ul class=\"list-actions\">\r\n            <li>\r\n                <a [routerLink]=\"['update']\">Update user information</a>\r\n            </li>\r\n            <li>\r\n                <a [routerLink]=\"['ideas']\">List user's ideas</a>\r\n            </li>\r\n            <li>\r\n                <a [routerLink]=\"['connections']\">List user's connections</a>\r\n            </li>\r\n        </ul>\r\n    </div>\r\n    <div class=\"details-dashboard\">\r\n        <h2>User information</h2>\r\n        <div class=\"body-dashboard\">\r\n            <div class=\"pic-col-details\">\r\n                <img [src]=\"user.profilePic\">\r\n                <p>\r\n                    <strong>Preferred categories:</strong><br>\r\n                    {{(preferredCategories.length === 0) ? \r\n                        \"Loading...\" : \r\n                        preferredCategories.join(\", \")}}\r\n                </p>\r\n            </div>\r\n            <div class=\"info-col-details\">\r\n                <div class=\"info-wrapper basic-info-details\">\r\n                    <h3>Basic information</h3>\r\n                    <p>\r\n                        <strong>Name:</strong> {{user.name}}\r\n                    </p>\r\n                    <p>\r\n                        <strong>Email:</strong> {{user.username}}\r\n                    </p>\r\n                    <p>\r\n                        <strong>Role:</strong> {{user.role}}\r\n                    </p>\r\n                    <p>\r\n                        <strong>Biography:</strong> {{user.bio}}\r\n                    </p>\r\n                </div>\r\n                <div class=\"info-wrapper other-info-details\">\r\n                    <h3>Other information</h3>\r\n                    <p>\r\n                        <strong>Date of birth:</strong> {{user.dateOfBirth.toDateString()}}\r\n                    </p>\r\n                    <p>\r\n                        <strong>Created at:</strong> {{user.createdAt.toString()}}\r\n                    </p>\r\n                </div>\r\n            </div>\r\n        </div>\r\n    </div>\r\n</div>"
+	module.exports = "<div class=\"content-dashboard\">\r\n    <div class=\"title-dashboard\">\r\n        <h1>User details: {{user.name || \"Loading...\"}}</h1>\r\n        <h2>\r\n            Read the details of the user here.<br>\r\n            To take action upon the user (view additional details or edit it), simply navigate to Actions and choose a link there.\r\n        </h2>\r\n    </div>\r\n    <div class=\"actions-dashboard\">\r\n        <h2>Actions</h2>\r\n        <ul class=\"list-actions\">\r\n            <li>\r\n                <a [routerLink]=\"['update']\">Update user information</a>\r\n            </li>\r\n            <li>\r\n                <a [routerLink]=\"['ideas']\">List user's ideas</a>\r\n            </li>\r\n            <li>\r\n                <a [routerLink]=\"['connections']\">List user's connections</a>\r\n            </li>\r\n            <li>\r\n                <a [routerLink]=\"['requests']\">List user's connection requests</a>\r\n            </li>\r\n        </ul>\r\n    </div>\r\n    <div class=\"details-dashboard\">\r\n        <h2>User information</h2>\r\n        <div class=\"body-dashboard\">\r\n            <div class=\"pic-col-details\">\r\n                <img [src]=\"user.profilePic\">\r\n                <p>\r\n                    <strong>Preferred categories:</strong><br>\r\n                    {{(preferredCategories.length === 0) ? \r\n                        \"Loading...\" : \r\n                        preferredCategories.join(\", \")}}\r\n                </p>\r\n            </div>\r\n            <div class=\"info-col-details\">\r\n                <div class=\"info-wrapper basic-info-details\">\r\n                    <h3>Basic information</h3>\r\n                    <p>\r\n                        <strong>Name:</strong> {{user.name}}\r\n                    </p>\r\n                    <p>\r\n                        <strong>Email:</strong> {{user.username}}\r\n                    </p>\r\n                    <p>\r\n                        <strong>Role:</strong> {{user.role}}\r\n                    </p>\r\n                    <p>\r\n                        <strong>Biography:</strong> {{user.bio}}\r\n                    </p>\r\n                </div>\r\n                <div class=\"info-wrapper other-info-details\">\r\n                    <h3>Other information</h3>\r\n                    <p>\r\n                        <strong>Date of birth:</strong> {{user.dateOfBirth.toDateString()}}\r\n                    </p>\r\n                    <p>\r\n                        <strong>Created at:</strong> {{user.createdAt.toString()}}\r\n                    </p>\r\n                </div>\r\n            </div>\r\n        </div>\r\n    </div>\r\n</div>"
 
 /***/ },
 
@@ -33214,6 +33222,58 @@ webpackJsonp([0],{
 /***/ },
 
 /***/ 452:
+/***/ function(module, exports) {
+
+	// removed by extract-text-webpack-plugin
+
+/***/ },
+
+/***/ 454:
+/***/ function(module, exports, __webpack_require__) {
+
+	"use strict";
+	var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+	    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+	    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+	    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+	    return c > 3 && r && Object.defineProperty(target, key, r), r;
+	};
+	var __metadata = (this && this.__metadata) || function (k, v) {
+	    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+	};
+	var core_1 = __webpack_require__(4);
+	var authentication_service_1 = __webpack_require__(62);
+	var PageNotFoundComponent = (function () {
+	    function PageNotFoundComponent(authService) {
+	        var _this = this;
+	        this.authService = authService;
+	        this.authService.isLoggedInObservable().subscribe(function (val) {
+	            _this.isLoggedIn = val;
+	        });
+	    }
+	    PageNotFoundComponent = __decorate([
+	        core_1.Component({
+	            selector: "not-found",
+	            template: __webpack_require__(455),
+	            styles: [__webpack_require__(456).toString()]
+	        }), 
+	        __metadata('design:paramtypes', [authentication_service_1.AuthenticationService])
+	    ], PageNotFoundComponent);
+	    return PageNotFoundComponent;
+	}());
+	exports.PageNotFoundComponent = PageNotFoundComponent;
+
+
+/***/ },
+
+/***/ 455:
+/***/ function(module, exports) {
+
+	module.exports = "<div class=\"announcement {{(isLoggedIn ? 'content-dashboard title-dashboard' : '')}}\">\r\n    <h1>Page not found.</h1>\r\n    <h2>Please check your address, or go back to Dashboard.</h2>\r\n</div>"
+
+/***/ },
+
+/***/ 456:
 /***/ function(module, exports) {
 
 	// removed by extract-text-webpack-plugin
