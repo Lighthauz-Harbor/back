@@ -3,4 +3,42 @@
         <h1>List of user's ideas</h1>
         <h2>You can view the list of ideas the user has created here.</h2>
     </div>
+
+    <div class="action-table-wrapper user-ideas-wrapper">
+        <h2>Ideas</h2>
+        <table class="table-action">
+            <thead>
+                <tr>
+                    <th>Idea's picture</th>
+                    <th>Title</th>
+                    <th>Description</th>
+                    <th>Last changed at</th>
+                </tr>
+            </thead>
+            <tbody *ngIf="ideas.length === 0">
+                <tr>
+                    <td class="table-message" colspan="4">{{message}}</td>
+                </tr>
+            </tbody>
+            <tbody *ngIf="ideas.length > 0">
+                <tr *ngFor = "let row of ideas">
+                    <td>
+                        <img [src]="row.picture">
+                    </td>
+                    <td>
+                        <a [routerLink]="['/ideas', row.id]">{{row.title}}</a>
+                    </td>
+                    <td>
+                        {{(row.description.length < 37) ?
+                            row.description :
+                            (row.description.slice(0, 37) + "...")}}
+                    </td>
+                    <td class="timestamp-col">
+                        {{row.lastChanged.toDateString()}}<br>
+                        {{row.lastChanged.toTimeString()}}
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
 </div>
