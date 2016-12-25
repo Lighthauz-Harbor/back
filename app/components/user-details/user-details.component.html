@@ -21,11 +21,12 @@
             <li>
                 <a [routerLink]="['requests']">View user's connection requests</a>
             </li>
-            <li *ngIf="!user.blocked">
-                <a [routerLink]="['deactivate']">Deactivate user</a>
-            </li>
-            <li *ngIf="user.blocked">
+            <!-- only loaded if blocked exists -->
+            <li *ngIf="blocked === true">
                 <a [routerLink]="['reactivate']">Re-activate user</a>
+            </li>
+            <li *ngIf="blocked === false">
+                <a [routerLink]="['deactivate']">Deactivate user</a>
             </li>
         </ul>
     </div>

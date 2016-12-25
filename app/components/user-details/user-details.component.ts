@@ -13,6 +13,7 @@ import { UsersService } from "../../services/users.service";
 export class UserDetailsComponent implements OnInit {
 
     private user: User = new User();
+    private blocked: boolean;
     private preferredCategories: string[] = [];
 
     constructor(
@@ -38,10 +39,12 @@ export class UserDetailsComponent implements OnInit {
                             new Date(json.createdAt));
                     }
                 });
+
             this.usersService.isDeactivatedUser(id)
                 .subscribe((json: any) => {
-                    (this.user as any).blocked = json.blocked;
+                    this.blocked = json.blocked;
                 });
+                
             this.usersService.listPreferredCategories(id)
                 .subscribe((json: any) => {
                     if (json.fail) {

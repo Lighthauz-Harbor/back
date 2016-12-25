@@ -1,21 +1,17 @@
 <div class="content-dashboard">
     <div class="title-dashboard">
-        <h1>Deactivate a user: {{name || "Loading..."}}</h1>
+        <h1>Re-activate a user: {{name || "Loading..."}}</h1>
         <h2>
             <strong>NOTE:</strong> You are working on a critical action. <strong>Please do this carefully.</strong><br>
-            In the following form, write a message to the user, explaining why they should be deactivated.<br>
-            After you submit it, an email will be sent to the user, and they will no longer be able to login.<br>
-        </h2>
-        <h2>
-            Note that when they are blocked, you will also be given an option to re-activate the user.<br>
-            When re-activated, they may log in to Lighthauz again. So, re-activate if you have a strong reason.
+            In the following form, write a message to the user, explaining why they should be activated again.<br>
+            After you submit it, an email will be sent to the user, and they will be allowed to log in again.<br>
         </h2>
     </div>
 
     <div class="form-wrapper-dashboard">
-        <form class="form-dashboard form-deactivate"
-            (ngSubmit)="onSubmitDeactivationRequest()"
-            #deactivationForm="ngForm">
+        <form class="form-dashboard form-reactivate"
+            (ngSubmit)="onSubmitReactivationRequest()"
+            #reactivationForm="ngForm">
 
             <div class="form-group">
                 <div class="form-col-2">

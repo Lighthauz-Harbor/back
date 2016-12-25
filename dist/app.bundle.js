@@ -19567,6 +19567,7 @@ webpackJsonp([0],{
 	var user_connections_component_1 = __webpack_require__(396);
 	var user_requests_component_1 = __webpack_require__(400);
 	var user_deactivate_component_1 = __webpack_require__(462);
+	var user_reactivate_component_1 = __webpack_require__(466);
 	var ideas_list_component_1 = __webpack_require__(404);
 	var idea_details_component_1 = __webpack_require__(408);
 	var idea_create_component_1 = __webpack_require__(412);
@@ -19611,6 +19612,7 @@ webpackJsonp([0],{
 	                user_connections_component_1.UserConnectionsComponent,
 	                user_requests_component_1.UserRequestsComponent,
 	                user_deactivate_component_1.DeactivateUserComponent,
+	                user_reactivate_component_1.ReactivateUserComponent,
 	                ideas_list_component_1.IdeasListComponent,
 	                idea_details_component_1.IdeaDetailsComponent,
 	                idea_create_component_1.CreateIdeaComponent,
@@ -25932,6 +25934,7 @@ webpackJsonp([0],{
 	var user_connections_component_1 = __webpack_require__(396);
 	var user_requests_component_1 = __webpack_require__(400);
 	var user_deactivate_component_1 = __webpack_require__(462);
+	var user_reactivate_component_1 = __webpack_require__(466);
 	var ideas_list_component_1 = __webpack_require__(404);
 	var idea_details_component_1 = __webpack_require__(408);
 	var idea_create_component_1 = __webpack_require__(412);
@@ -25986,6 +25989,10 @@ webpackJsonp([0],{
 	                    {
 	                        path: "deactivate",
 	                        component: user_deactivate_component_1.DeactivateUserComponent
+	                    },
+	                    {
+	                        path: "reactivate",
+	                        component: user_reactivate_component_1.ReactivateUserComponent
 	                    }
 	                ]
 	            },
@@ -31223,7 +31230,7 @@ webpackJsonp([0],{
 	            });
 	            _this.usersService.isDeactivatedUser(id)
 	                .subscribe(function (json) {
-	                _this.user.blocked = json.blocked;
+	                _this.blocked = json.blocked;
 	            });
 	            _this.usersService.listPreferredCategories(id)
 	                .subscribe(function (json) {
@@ -31259,7 +31266,7 @@ webpackJsonp([0],{
 /***/ 379:
 /***/ function(module, exports) {
 
-	module.exports = "<div class=\"content-dashboard\">\r\n    <div class=\"title-dashboard\">\r\n        <h1>User details: {{user.name || \"Loading...\"}}</h1>\r\n        <h2>\r\n            Read the details of the user here.<br>\r\n            To take action upon the user (view additional details or edit it), simply navigate to Actions and choose a link there.\r\n        </h2>\r\n    </div>\r\n    <div class=\"actions-dashboard\">\r\n        <h2>Actions</h2>\r\n        <ul class=\"list-actions\">\r\n            <li>\r\n                <a [routerLink]=\"['update']\">Update user information</a>\r\n            </li>\r\n            <li>\r\n                <a [routerLink]=\"['ideas']\">View user's ideas</a>\r\n            </li>\r\n            <li>\r\n                <a [routerLink]=\"['connections']\">View user's connections</a>\r\n            </li>\r\n            <li>\r\n                <a [routerLink]=\"['requests']\">View user's connection requests</a>\r\n            </li>\r\n            <li *ngIf=\"!user.blocked\">\r\n                <a [routerLink]=\"['deactivate']\">Deactivate user</a>\r\n            </li>\r\n            <li *ngIf=\"user.blocked\">\r\n                <a [routerLink]=\"['reactivate']\">Re-activate user</a>\r\n            </li>\r\n        </ul>\r\n    </div>\r\n    <div class=\"details-dashboard\">\r\n        <h2>User information</h2>\r\n        <div class=\"body-dashboard\">\r\n            <div class=\"pic-col-details\">\r\n                <img [src]=\"user.profilePic\">\r\n                <p>\r\n                    <strong>Preferred categories:</strong><br>\r\n                    {{(preferredCategories.length === 0) ? \r\n                        \"Loading...\" : \r\n                        preferredCategories.join(\", \")}}\r\n                </p>\r\n            </div>\r\n            <div class=\"info-col-details\">\r\n                <div class=\"info-wrapper basic-info-details\">\r\n                    <h3>Basic information</h3>\r\n                    <p>\r\n                        <strong>Name:</strong> {{user.name}}\r\n                    </p>\r\n                    <p>\r\n                        <strong>Email:</strong> {{user.username}}\r\n                    </p>\r\n                    <p>\r\n                        <strong>Role:</strong> {{user.role}}\r\n                    </p>\r\n                    <p>\r\n                        <strong>Biography:</strong> {{user.bio}}\r\n                    </p>\r\n                </div>\r\n                <div class=\"info-wrapper other-info-details\">\r\n                    <h3>Other information</h3>\r\n                    <p>\r\n                        <strong>Date of birth:</strong> {{user.dateOfBirth.toDateString()}}\r\n                    </p>\r\n                    <p>\r\n                        <strong>Created at:</strong> {{user.createdAt.toString()}}\r\n                    </p>\r\n                </div>\r\n            </div>\r\n        </div>\r\n    </div>\r\n</div>"
+	module.exports = "<div class=\"content-dashboard\">\r\n    <div class=\"title-dashboard\">\r\n        <h1>User details: {{user.name || \"Loading...\"}}</h1>\r\n        <h2>\r\n            Read the details of the user here.<br>\r\n            To take action upon the user (view additional details or edit it), simply navigate to Actions and choose a link there.\r\n        </h2>\r\n    </div>\r\n    <div class=\"actions-dashboard\">\r\n        <h2>Actions</h2>\r\n        <ul class=\"list-actions\">\r\n            <li>\r\n                <a [routerLink]=\"['update']\">Update user information</a>\r\n            </li>\r\n            <li>\r\n                <a [routerLink]=\"['ideas']\">View user's ideas</a>\r\n            </li>\r\n            <li>\r\n                <a [routerLink]=\"['connections']\">View user's connections</a>\r\n            </li>\r\n            <li>\r\n                <a [routerLink]=\"['requests']\">View user's connection requests</a>\r\n            </li>\r\n            <!-- only loaded if blocked exists -->\r\n            <li *ngIf=\"blocked === true\">\r\n                <a [routerLink]=\"['reactivate']\">Re-activate user</a>\r\n            </li>\r\n            <li *ngIf=\"blocked === false\">\r\n                <a [routerLink]=\"['deactivate']\">Deactivate user</a>\r\n            </li>\r\n        </ul>\r\n    </div>\r\n    <div class=\"details-dashboard\">\r\n        <h2>User information</h2>\r\n        <div class=\"body-dashboard\">\r\n            <div class=\"pic-col-details\">\r\n                <img [src]=\"user.profilePic\">\r\n                <p>\r\n                    <strong>Preferred categories:</strong><br>\r\n                    {{(preferredCategories.length === 0) ? \r\n                        \"Loading...\" : \r\n                        preferredCategories.join(\", \")}}\r\n                </p>\r\n            </div>\r\n            <div class=\"info-col-details\">\r\n                <div class=\"info-wrapper basic-info-details\">\r\n                    <h3>Basic information</h3>\r\n                    <p>\r\n                        <strong>Name:</strong> {{user.name}}\r\n                    </p>\r\n                    <p>\r\n                        <strong>Email:</strong> {{user.username}}\r\n                    </p>\r\n                    <p>\r\n                        <strong>Role:</strong> {{user.role}}\r\n                    </p>\r\n                    <p>\r\n                        <strong>Biography:</strong> {{user.bio}}\r\n                    </p>\r\n                </div>\r\n                <div class=\"info-wrapper other-info-details\">\r\n                    <h3>Other information</h3>\r\n                    <p>\r\n                        <strong>Date of birth:</strong> {{user.dateOfBirth.toDateString()}}\r\n                    </p>\r\n                    <p>\r\n                        <strong>Created at:</strong> {{user.createdAt.toString()}}\r\n                    </p>\r\n                </div>\r\n            </div>\r\n        </div>\r\n    </div>\r\n</div>"
 
 /***/ },
 
@@ -33507,11 +33514,75 @@ webpackJsonp([0],{
 /***/ 463:
 /***/ function(module, exports) {
 
-	module.exports = "<div class=\"content-dashboard\">\r\n    <div class=\"title-dashboard\">\r\n        <h1>Deactivate a user: {{name || \"Loading...\"}}</h1>\r\n        <h2>\r\n            <strong>NOTE:</strong> You are working on a critical action. <strong>Please do this carefully.</strong><br>\r\n            In the following form, write a message to the user, explaining why they should be deactivated.<br>\r\n            After you submit it, an email will be sent to the user, and they will no longer be able to login.<br>\r\n        </h2>\r\n    </div>\r\n\r\n    <div class=\"form-wrapper-dashboard\">\r\n        <form class=\"form-dashboard form-deactivate\"\r\n            (ngSubmit)=\"onSubmitDeactivationRequest()\"\r\n            #deactivationForm=\"ngForm\">\r\n\r\n            <div class=\"form-group\">\r\n                <div class=\"form-col-2\">\r\n                    <label for=\"description\">Message/reason: (*)</label>\r\n                    <textarea name=\"description\" [(ngModel)]=\"reason\" required></textarea>\r\n                </div>\r\n            </div>\r\n\r\n            <div class=\"form-group\">\r\n                <button type=\"submit\">Submit</button>\r\n            </div>\r\n            \r\n        </form>\r\n    </div>\r\n</div>"
+	module.exports = "<div class=\"content-dashboard\">\r\n    <div class=\"title-dashboard\">\r\n        <h1>Deactivate a user: {{name || \"Loading...\"}}</h1>\r\n        <h2>\r\n            <strong>NOTE:</strong> You are working on a critical action. <strong>Please do this carefully.</strong><br>\r\n            In the following form, write a message to the user, explaining why they should be deactivated.<br>\r\n            After you submit it, an email will be sent to the user, and they will no longer be able to login.<br>\r\n        </h2>\r\n        <h2>\r\n            Note that when they are blocked, you will also be given an option to re-activate the user.<br>\r\n            When re-activated, they may log in to Lighthauz again. So, re-activate if you have a strong reason.\r\n        </h2>\r\n    </div>\r\n\r\n    <div class=\"form-wrapper-dashboard\">\r\n        <form class=\"form-dashboard form-deactivate\"\r\n            (ngSubmit)=\"onSubmitDeactivationRequest()\"\r\n            #deactivationForm=\"ngForm\">\r\n\r\n            <div class=\"form-group\">\r\n                <div class=\"form-col-2\">\r\n                    <label for=\"description\">Message/reason: (*)</label>\r\n                    <textarea name=\"description\" [(ngModel)]=\"reason\" required></textarea>\r\n                </div>\r\n            </div>\r\n\r\n            <div class=\"form-group\">\r\n                <button type=\"submit\">Submit</button>\r\n            </div>\r\n            \r\n        </form>\r\n    </div>\r\n</div>"
 
 /***/ },
 
 /***/ 464:
+/***/ function(module, exports) {
+
+	// removed by extract-text-webpack-plugin
+
+/***/ },
+
+/***/ 466:
+/***/ function(module, exports, __webpack_require__) {
+
+	"use strict";
+	var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+	    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+	    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+	    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+	    return c > 3 && r && Object.defineProperty(target, key, r), r;
+	};
+	var __metadata = (this && this.__metadata) || function (k, v) {
+	    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+	};
+	var core_1 = __webpack_require__(4);
+	var router_1 = __webpack_require__(31);
+	var users_service_1 = __webpack_require__(363);
+	var ReactivateUserComponent = (function () {
+	    function ReactivateUserComponent(router, route, usersService) {
+	        this.router = router;
+	        this.route = route;
+	        this.usersService = usersService;
+	        this.name = "";
+	        this.id = "";
+	        this.reason = "";
+	    }
+	    ReactivateUserComponent.prototype.ngOnInit = function () {
+	        var _this = this;
+	        this.route.params.forEach(function (params) {
+	            _this.id = params["id"];
+	            _this.usersService.getName(_this.id)
+	                .subscribe(function (json) {
+	                _this.name = json.fail || json.name;
+	            });
+	        });
+	    };
+	    ReactivateUserComponent = __decorate([
+	        core_1.Component({
+	            selector: "user-reactivate",
+	            template: __webpack_require__(467),
+	            styles: [__webpack_require__(468).toString()]
+	        }), 
+	        __metadata('design:paramtypes', [router_1.Router, router_1.ActivatedRoute, users_service_1.UsersService])
+	    ], ReactivateUserComponent);
+	    return ReactivateUserComponent;
+	}());
+	exports.ReactivateUserComponent = ReactivateUserComponent;
+
+
+/***/ },
+
+/***/ 467:
+/***/ function(module, exports) {
+
+	module.exports = "<div class=\"content-dashboard\">\r\n    <div class=\"title-dashboard\">\r\n        <h1>Re-activate a user: {{name || \"Loading...\"}}</h1>\r\n        <h2>\r\n            <strong>NOTE:</strong> You are working on a critical action. <strong>Please do this carefully.</strong><br>\r\n            In the following form, write a message to the user, explaining why they should be activated again.<br>\r\n            After you submit it, an email will be sent to the user, and they will be allowed to log in again.<br>\r\n        </h2>\r\n    </div>\r\n\r\n    <div class=\"form-wrapper-dashboard\">\r\n        <form class=\"form-dashboard form-reactivate\"\r\n            (ngSubmit)=\"onSubmitReactivationRequest()\"\r\n            #reactivationForm=\"ngForm\">\r\n\r\n            <div class=\"form-group\">\r\n                <div class=\"form-col-2\">\r\n                    <label for=\"description\">Message/reason: (*)</label>\r\n                    <textarea name=\"description\" [(ngModel)]=\"reason\" required></textarea>\r\n                </div>\r\n            </div>\r\n\r\n            <div class=\"form-group\">\r\n                <button type=\"submit\">Submit</button>\r\n            </div>\r\n            \r\n        </form>\r\n    </div>\r\n</div>"
+
+/***/ },
+
+/***/ 468:
 /***/ function(module, exports) {
 
 	// removed by extract-text-webpack-plugin

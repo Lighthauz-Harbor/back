@@ -1,0 +1,35 @@
+import { Component, OnInit } from "@angular/core";
+import { Router, ActivatedRoute, Params } from "@angular/router";
+
+import { UsersService } from "../../services/users.service";
+
+@Component({
+    selector: "user-reactivate",
+    templateUrl: "./user-reactivate.component.html",
+    styles: [ require("./user-reactivate.component.css").toString() ]
+})
+export class ReactivateUserComponent implements OnInit {
+
+    private name: string = "";
+
+    private id: string = "";
+    private reason: string = "";
+
+    constructor(
+        private router: Router,
+        private route: ActivatedRoute,
+        private usersService: UsersService) {
+
+    }
+
+    ngOnInit(): void {
+        this.route.params.forEach((params: Params) => {
+            this.id = params["id"];
+            this.usersService.getName(this.id)
+                .subscribe((json: any) => {
+                    this.name = json.fail || json.name;
+                });
+        });
+    }
+
+}
