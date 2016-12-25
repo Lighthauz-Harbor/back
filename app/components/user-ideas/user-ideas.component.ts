@@ -3,6 +3,7 @@ import { Router, ActivatedRoute, Params } from "@angular/router";
 
 import { Idea } from "../../models/idea.model.app";
 
+import { UsersService } from "../../services/users.service";
 import { IdeasService } from "../../services/ideas.service";
 
 @Component({
@@ -12,20 +13,26 @@ import { IdeasService } from "../../services/ideas.service";
 })
 export class UserIdeasComponent implements OnInit {
 
+    private name: string = "";
     private ideas: Idea[] = [];
     private message: string = "Loading...";
 
     constructor(
         private router: Router,
         private route: ActivatedRoute,
+        private usersService: UsersService,
         private ideasService: IdeasService) {
 
     }
 
     ngOnInit(): void {
         this.route.params.forEach((params: Params) => {
-            let id = params["id"];
-            this.ideasService.getIdeaListFromUser(id)
+            let userId = params["id"];
+            this.usersService.getName(userId)
+                .subscribe((json: any) => {
+                    this.name = json.fail || json.name;
+                });
+            this.ideasService.getIdeaListFromUser(userId)
                 .subscribe((json: any) => {
                     if (json.fail) {
                         this.message = json.fail;

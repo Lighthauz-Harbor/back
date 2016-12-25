@@ -10,6 +10,8 @@ import { IdeasService } from "../../services/ideas.service";
 })
 export class IdeaResponsesComponent implements OnInit {
 
+    private title: string = "";
+
     private likes: any[] = [];
     private likesMessage: string = "Loading...";
     private comments: any[] = [];
@@ -25,6 +27,11 @@ export class IdeaResponsesComponent implements OnInit {
     ngOnInit(): void {
         this.route.params.forEach((params: Params) => {
             let ideaId = params["id"];
+
+            this.ideasService.getTitle(ideaId)
+                .subscribe((json: any) => {
+                    this.title = json.fail || json.title;
+                });
 
             this.ideasService.getLikes(ideaId)
                 .subscribe((json: any) => {

@@ -338,6 +338,28 @@ var UserSchema = function(dbDriver) {
             });
     };
 
+    this.getName = function(req, res) {
+        var session = this.driver.session();
+
+        session
+            .run("MATCH (u:User) WHERE u.id = {id} RETURN u.name",
+            {
+                id: req.params.id
+            })
+            .then(function(result) {
+                res.send({
+                    name: result.records[0].get("u.name")
+                });
+                session.close();
+            })
+            .catch(function(err) {
+                res.send({
+                    fail: "Failed getting user's name."
+                });
+                session.close();
+            });
+    };
+
     this.listUsers = function(req, res) {
         var session = this.driver.session();
         session

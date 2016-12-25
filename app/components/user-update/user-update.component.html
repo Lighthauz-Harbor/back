@@ -1,6 +1,11 @@
 <div class="content-dashboard">
     <div class="title-dashboard">
-        <h1>Update a user</h1>
+        <h1>
+            Update a user: 
+            {{(firstName && lastName) ?
+                (firstName + " " + lastName) :
+                "Loading..."}}
+        </h1>
         <h2>
             <strong>NOTE:</strong> Updating a user is for development purposes or other urgent matters. So use with care.
             <br>

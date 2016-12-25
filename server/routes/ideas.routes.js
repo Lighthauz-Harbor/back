@@ -28,6 +28,10 @@ module.exports = function(router, dbDriver) {
         ideaSchema.getSingle(req, res);
     });
 
+    router.get("/ideas/title/:id", function(req, res) {
+        ideaSchema.getTitle(req, res);
+    });
+
     router.get("/ideas/search/:term", function(req, res) {
         ideaSchema.searchAsAdmin(req, res);
     });

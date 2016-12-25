@@ -439,6 +439,26 @@ var IdeaSchema = function(dbDriver) {
             });
     };
 
+    this.getTitle = function(req, res) {
+        var session = this.driver.session();
+
+        session
+            .run("MATCH (i:Idea) WHERE i.id = {id} RETURN i.title",
+                { id: req.params.id })
+            .then(function(result) {
+                res.send({
+                    title: result.records[0].get("i.title")
+                });
+                session.close();
+            })
+            .catch(function(err) {
+                res.send({
+                    fail: "Failed getting idea title."
+                });
+                session.close();
+            });
+    };
+
     // helper function that will be called, in case update error occurs
     this._catchUpdateError = function(session, res) {
         res.send({

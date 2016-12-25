@@ -31,6 +31,13 @@ export class IdeasService {
             });
     }
 
+    getTitle(id: string): Observable<any> {
+        return this.http.get("/api/ideas/title/" + id)
+            .map((res: Response) => {
+                return JSON.parse(res.text());
+            });
+    }
+
     searchIdea(term: string): Observable<any> {
         return this.http.get("/api/ideas/search/" + term)
             .map((res: Response) => {

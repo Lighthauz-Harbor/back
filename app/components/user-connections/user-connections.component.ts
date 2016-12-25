@@ -12,6 +12,7 @@ import { UsersService } from "../../services/users.service";
 })
 export class UserConnectionsComponent implements OnInit {
 
+    private name: string = "";
     private connections: User[] = [];
     private message: string = "Loading...";
 
@@ -25,6 +26,10 @@ export class UserConnectionsComponent implements OnInit {
     ngOnInit(): void {
         this.route.params.forEach((params: Params) => {
             let id = params["id"];
+            this.usersService.getName(id)
+                .subscribe((json: any) => {
+                    this.name = json.fail || json.name;
+                });
             this.usersService.getConnections(id)
                 .subscribe((json: any) => {
                     if (json.fail) {

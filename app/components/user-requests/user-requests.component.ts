@@ -12,6 +12,8 @@ import { UsersService } from "../../services/users.service";
 })
 export class UserRequestsComponent implements OnInit {
 
+    private name: string = "";
+
     private requestsSent: User[] = [];
     private requestsSentMessage: string = "Loading...";
     private requestsReceived: User[] = [];
@@ -27,6 +29,10 @@ export class UserRequestsComponent implements OnInit {
     ngOnInit(): void {
         this.route.params.forEach((params: Params) => {
             let id = params["id"];
+            this.usersService.getName(id)
+                .subscribe((json: any) => {
+                    this.name = json.fail || json.name;
+                });
             this.usersService.getSentConnectionRequests(id)
                 .subscribe((json: any) => {
                     this.pushRequestsSent(json);
@@ -52,18 +58,20 @@ export class UserRequestsComponent implements OnInit {
 
     private pushRequestsSent(json: any): void {
         json.sentByUser.map((item: any) => {
-            this.requestsSent.push(new User(item.id, item.username, "user",
-                item.name, item.bio, item.profilePic,
-                new Date(0), new Date(0), new Date(item.timestamp)));
+            this.requestsSent.push(this.populateUserData(item));
         });
     }
 
     private pushRequestsReceived(json: any): void {
         json.receivedByUser.map((item: any) => {
-            this.requestsReceived.push(new User(item.id, item.username, "user",
-                item.name, item.bio, item.profilePic,
-                new Date(0), new Date(0), new Date(item.timestamp)));
+            this.requestsReceived.push(this.populateUserData(item));
         });
+    }
+
+    private populateUserData(item: any): User {
+        return new User(item.id, item.username, "user",
+            item.name, item.bio, item.profilePic,
+            new Date(0), new Date(0), new Date(item.timestamp));
     }
 
 }

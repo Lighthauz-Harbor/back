@@ -31,6 +31,13 @@ export class UsersService {
             });
     }
 
+    getName(id: string): Observable<any> {
+        return this.http.get("/api/users/name/" + id)
+            .map((res: Response) => {
+                return JSON.parse(res.text());
+            });
+    }
+
     searchUser(term: string): Observable<any> {
         return this.http.get("/api/users/search/" + term)
             .map((res: Response) => {

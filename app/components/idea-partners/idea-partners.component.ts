@@ -12,6 +12,7 @@ import { IdeasService } from "../../services/ideas.service";
 })
 export class IdeaPartnersComponent implements OnInit {
 
+    private title: string = "";
     private partners: User[] = [];
     private partnersMessage: string = "Loading...";
 
@@ -25,6 +26,12 @@ export class IdeaPartnersComponent implements OnInit {
     ngOnInit(): void {
         this.route.params.forEach((params: Params) => {
             let ideaId = params["id"];
+
+            this.ideasService.getTitle(ideaId)
+                .subscribe((json: any) => {
+                    this.title = json.fail || json.title;
+                });
+
             this.ideasService.getPartners(ideaId)
                 .subscribe((json: any) => {
 
