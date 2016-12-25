@@ -20,6 +20,18 @@ module.exports = function(router, dbDriver,
         userSchema.deserialize(id, done);
     });
 
+    // Middleware to prevent deactivated users from logging in
+    var blockMiddleware = function(req, res, next) {
+        if (req.user.blocked) {
+            req.logOut();
+            res.json({
+                fail: "Your account has been deactivated. You may not log in."
+            });
+        } else {
+            next();
+        }
+    };
+
     router.get("/loggedIn", function(req, res) {
         res.send(req.isAuthenticated() ? req.user : "0");
     });
@@ -36,6 +48,7 @@ module.exports = function(router, dbDriver,
             failureRedirect: "/user/auth/fail"
         }),
         authMiddleware,
+        blockMiddleware,
         function(req, res) {
             res.send({
                 id: req.user.id,
