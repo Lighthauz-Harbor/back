@@ -19566,6 +19566,7 @@ webpackJsonp([0],{
 	var user_ideas_component_1 = __webpack_require__(391);
 	var user_connections_component_1 = __webpack_require__(396);
 	var user_requests_component_1 = __webpack_require__(400);
+	var user_deactivate_component_1 = __webpack_require__(462);
 	var ideas_list_component_1 = __webpack_require__(404);
 	var idea_details_component_1 = __webpack_require__(408);
 	var idea_create_component_1 = __webpack_require__(412);
@@ -19609,6 +19610,7 @@ webpackJsonp([0],{
 	                user_ideas_component_1.UserIdeasComponent,
 	                user_connections_component_1.UserConnectionsComponent,
 	                user_requests_component_1.UserRequestsComponent,
+	                user_deactivate_component_1.DeactivateUserComponent,
 	                ideas_list_component_1.IdeasListComponent,
 	                idea_details_component_1.IdeaDetailsComponent,
 	                idea_create_component_1.CreateIdeaComponent,
@@ -25929,6 +25931,7 @@ webpackJsonp([0],{
 	var user_ideas_component_1 = __webpack_require__(391);
 	var user_connections_component_1 = __webpack_require__(396);
 	var user_requests_component_1 = __webpack_require__(400);
+	var user_deactivate_component_1 = __webpack_require__(462);
 	var ideas_list_component_1 = __webpack_require__(404);
 	var idea_details_component_1 = __webpack_require__(408);
 	var idea_create_component_1 = __webpack_require__(412);
@@ -25979,6 +25982,10 @@ webpackJsonp([0],{
 	                    {
 	                        path: "requests",
 	                        component: user_requests_component_1.UserRequestsComponent
+	                    },
+	                    {
+	                        path: "deactivate",
+	                        component: user_deactivate_component_1.DeactivateUserComponent
 	                    }
 	                ]
 	            },
@@ -31236,7 +31243,7 @@ webpackJsonp([0],{
 /***/ 379:
 /***/ function(module, exports) {
 
-	module.exports = "<div class=\"content-dashboard\">\r\n    <div class=\"title-dashboard\">\r\n        <h1>User details: {{user.name || \"Loading...\"}}</h1>\r\n        <h2>\r\n            Read the details of the user here.<br>\r\n            To take action upon the user (view additional details or edit it), simply navigate to Actions and choose a link there.\r\n        </h2>\r\n    </div>\r\n    <div class=\"actions-dashboard\">\r\n        <h2>Actions</h2>\r\n        <ul class=\"list-actions\">\r\n            <li>\r\n                <a [routerLink]=\"['update']\">Update user information</a>\r\n            </li>\r\n            <li>\r\n                <a [routerLink]=\"['ideas']\">View user's ideas</a>\r\n            </li>\r\n            <li>\r\n                <a [routerLink]=\"['connections']\">View user's connections</a>\r\n            </li>\r\n            <li>\r\n                <a [routerLink]=\"['requests']\">View user's connection requests</a>\r\n            </li>\r\n        </ul>\r\n    </div>\r\n    <div class=\"details-dashboard\">\r\n        <h2>User information</h2>\r\n        <div class=\"body-dashboard\">\r\n            <div class=\"pic-col-details\">\r\n                <img [src]=\"user.profilePic\">\r\n                <p>\r\n                    <strong>Preferred categories:</strong><br>\r\n                    {{(preferredCategories.length === 0) ? \r\n                        \"Loading...\" : \r\n                        preferredCategories.join(\", \")}}\r\n                </p>\r\n            </div>\r\n            <div class=\"info-col-details\">\r\n                <div class=\"info-wrapper basic-info-details\">\r\n                    <h3>Basic information</h3>\r\n                    <p>\r\n                        <strong>Name:</strong> {{user.name}}\r\n                    </p>\r\n                    <p>\r\n                        <strong>Email:</strong> {{user.username}}\r\n                    </p>\r\n                    <p>\r\n                        <strong>Role:</strong> {{user.role}}\r\n                    </p>\r\n                    <p>\r\n                        <strong>Biography:</strong> {{user.bio}}\r\n                    </p>\r\n                </div>\r\n                <div class=\"info-wrapper other-info-details\">\r\n                    <h3>Other information</h3>\r\n                    <p>\r\n                        <strong>Date of birth:</strong> {{user.dateOfBirth.toDateString()}}\r\n                    </p>\r\n                    <p>\r\n                        <strong>Created at:</strong> {{user.createdAt.toString()}}\r\n                    </p>\r\n                </div>\r\n            </div>\r\n        </div>\r\n    </div>\r\n</div>"
+	module.exports = "<div class=\"content-dashboard\">\r\n    <div class=\"title-dashboard\">\r\n        <h1>User details: {{user.name || \"Loading...\"}}</h1>\r\n        <h2>\r\n            Read the details of the user here.<br>\r\n            To take action upon the user (view additional details or edit it), simply navigate to Actions and choose a link there.\r\n        </h2>\r\n    </div>\r\n    <div class=\"actions-dashboard\">\r\n        <h2>Actions</h2>\r\n        <ul class=\"list-actions\">\r\n            <li>\r\n                <a [routerLink]=\"['update']\">Update user information</a>\r\n            </li>\r\n            <li>\r\n                <a [routerLink]=\"['ideas']\">View user's ideas</a>\r\n            </li>\r\n            <li>\r\n                <a [routerLink]=\"['connections']\">View user's connections</a>\r\n            </li>\r\n            <li>\r\n                <a [routerLink]=\"['requests']\">View user's connection requests</a>\r\n            </li>\r\n            <li>\r\n                <a [routerLink]=\"['deactivate']\">Deactivate user</a>\r\n            </li>\r\n        </ul>\r\n    </div>\r\n    <div class=\"details-dashboard\">\r\n        <h2>User information</h2>\r\n        <div class=\"body-dashboard\">\r\n            <div class=\"pic-col-details\">\r\n                <img [src]=\"user.profilePic\">\r\n                <p>\r\n                    <strong>Preferred categories:</strong><br>\r\n                    {{(preferredCategories.length === 0) ? \r\n                        \"Loading...\" : \r\n                        preferredCategories.join(\", \")}}\r\n                </p>\r\n            </div>\r\n            <div class=\"info-col-details\">\r\n                <div class=\"info-wrapper basic-info-details\">\r\n                    <h3>Basic information</h3>\r\n                    <p>\r\n                        <strong>Name:</strong> {{user.name}}\r\n                    </p>\r\n                    <p>\r\n                        <strong>Email:</strong> {{user.username}}\r\n                    </p>\r\n                    <p>\r\n                        <strong>Role:</strong> {{user.role}}\r\n                    </p>\r\n                    <p>\r\n                        <strong>Biography:</strong> {{user.bio}}\r\n                    </p>\r\n                </div>\r\n                <div class=\"info-wrapper other-info-details\">\r\n                    <h3>Other information</h3>\r\n                    <p>\r\n                        <strong>Date of birth:</strong> {{user.dateOfBirth.toDateString()}}\r\n                    </p>\r\n                    <p>\r\n                        <strong>Created at:</strong> {{user.createdAt.toString()}}\r\n                    </p>\r\n                </div>\r\n            </div>\r\n        </div>\r\n    </div>\r\n</div>"
 
 /***/ },
 
@@ -33417,6 +33424,68 @@ webpackJsonp([0],{
 /***/ },
 
 /***/ 455:
+/***/ function(module, exports) {
+
+	// removed by extract-text-webpack-plugin
+
+/***/ },
+
+/***/ 462:
+/***/ function(module, exports, __webpack_require__) {
+
+	"use strict";
+	var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+	    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+	    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+	    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+	    return c > 3 && r && Object.defineProperty(target, key, r), r;
+	};
+	var __metadata = (this && this.__metadata) || function (k, v) {
+	    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+	};
+	var core_1 = __webpack_require__(4);
+	var router_1 = __webpack_require__(31);
+	var users_service_1 = __webpack_require__(363);
+	var DeactivateUserComponent = (function () {
+	    function DeactivateUserComponent(router, route, usersService) {
+	        this.router = router;
+	        this.route = route;
+	        this.usersService = usersService;
+	        this.name = "";
+	    }
+	    DeactivateUserComponent.prototype.ngOnInit = function () {
+	        var _this = this;
+	        this.route.params.forEach(function (params) {
+	            var id = params["id"];
+	            _this.usersService.getName(id)
+	                .subscribe(function (json) {
+	                _this.name = json.fail || json.name;
+	            });
+	        });
+	    };
+	    DeactivateUserComponent = __decorate([
+	        core_1.Component({
+	            selector: "user-deactivate",
+	            template: __webpack_require__(463),
+	            styles: [__webpack_require__(464).toString()]
+	        }), 
+	        __metadata('design:paramtypes', [router_1.Router, router_1.ActivatedRoute, users_service_1.UsersService])
+	    ], DeactivateUserComponent);
+	    return DeactivateUserComponent;
+	}());
+	exports.DeactivateUserComponent = DeactivateUserComponent;
+
+
+/***/ },
+
+/***/ 463:
+/***/ function(module, exports) {
+
+	module.exports = "<div class=\"content-dashboard\">\r\n    <div class=\"title-dashboard\">\r\n        <h1>Deactivate a user: {{name || \"Loading...\"}}</h1>\r\n        <h2>\r\n            <strong>NOTE:</strong> You are working on a critical action. <strong>Please do this carefully.</strong><br>\r\n            In the following form, write a message to the user, explaining why they should be deactivated.<br>\r\n            After you submit it, an email will be sent to the user, and they will no longer be able to login.<br>\r\n        </h2>\r\n    </div>\r\n</div>"
+
+/***/ },
+
+/***/ 464:
 /***/ function(module, exports) {
 
 	// removed by extract-text-webpack-plugin

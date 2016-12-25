@@ -27,6 +27,8 @@ import { UserConnectionsComponent } from
     "./components/user-connections/user-connections.component";
 import { UserRequestsComponent } from 
     "./components/user-requests/user-requests.component";
+import { DeactivateUserComponent } from
+    "./components/user-deactivate/user-deactivate.component";
 
 import { IdeasListComponent } from
     "./components/ideas-list/ideas-list.component";
@@ -79,6 +81,7 @@ import "./vendor/vendor"; // vendor.ts file
         UserIdeasComponent,
         UserConnectionsComponent,
         UserRequestsComponent,
+        DeactivateUserComponent,
         IdeasListComponent,
         IdeaDetailsComponent,
         CreateIdeaComponent,
