@@ -1,6 +1,8 @@
 import { Component, OnInit } from "@angular/core";
 import { Router, ActivatedRoute, Params } from "@angular/router";
 
+import { User } from "../../models/user.model.app";
+
 import { IdeasService } from "../../services/ideas.service";
 
 @Component({
@@ -12,9 +14,9 @@ export class IdeaResponsesComponent implements OnInit {
 
     private title: string = "";
 
-    private likes: any[] = [];
+    private likes: User[] = [];
     private likesMessage: string = "Loading...";
-    private comments: any[] = [];
+    private comments: User[] = [];
     private commentsMessage: string = "Loading...";
 
     constructor(
@@ -65,30 +67,19 @@ export class IdeaResponsesComponent implements OnInit {
 
     private pushLikes(json: any): void {
         json.list.map((item: any) => {
-            this.likes.push({
-                user: {
-                    id: item.id,
-                    name: item.name,
-                    profilePic: item.profilePic
-                },
-                timestamp: new Date(item.timestamp)
-            });
+            this.likes.push(new User(item.id, "", "user", 
+                item.name, "", item.profilePic, 
+                new Date(0), new Date(0), new Date(item.timestamp)));
         });
     }
 
     private pushComments(json: any): void {
         json.list.map((item: any) => {
-            this.comments.push({
-                user: {
-                    id: item.author.id,
-                    name: item.author.name,
-                    profilePic: item.author.profilePic
-                },
-                comment: {
-                    text: item.comment.text,
-                    timestamp: new Date(item.comment.timestamp)
-                }
-            });
+            let user: User = new User(item.author.id, "", "user", 
+                item.author.name, "", item.author.profilePic, 
+                new Date(0), new Date(0), new Date(item.comment.timestamp));
+            (user as any).comment = item.comment.text;
+            this.comments.push(user);
         });
     }
 

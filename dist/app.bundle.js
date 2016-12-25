@@ -32752,6 +32752,7 @@ webpackJsonp([0],{
 	};
 	var core_1 = __webpack_require__(4);
 	var router_1 = __webpack_require__(31);
+	var user_model_app_1 = __webpack_require__(374);
 	var ideas_service_1 = __webpack_require__(364);
 	var IdeaResponsesComponent = (function () {
 	    function IdeaResponsesComponent(route, router, ideasService) {
@@ -32807,30 +32808,15 @@ webpackJsonp([0],{
 	    IdeaResponsesComponent.prototype.pushLikes = function (json) {
 	        var _this = this;
 	        json.list.map(function (item) {
-	            _this.likes.push({
-	                user: {
-	                    id: item.id,
-	                    name: item.name,
-	                    profilePic: item.profilePic
-	                },
-	                timestamp: new Date(item.timestamp)
-	            });
+	            _this.likes.push(new user_model_app_1.User(item.id, "", "user", item.name, "", item.profilePic, new Date(0), new Date(0), new Date(item.timestamp)));
 	        });
 	    };
 	    IdeaResponsesComponent.prototype.pushComments = function (json) {
 	        var _this = this;
 	        json.list.map(function (item) {
-	            _this.comments.push({
-	                user: {
-	                    id: item.author.id,
-	                    name: item.author.name,
-	                    profilePic: item.author.profilePic
-	                },
-	                comment: {
-	                    text: item.comment.text,
-	                    timestamp: new Date(item.comment.timestamp)
-	                }
-	            });
+	            var user = new user_model_app_1.User(item.author.id, "", "user", item.author.name, "", item.author.profilePic, new Date(0), new Date(0), new Date(item.comment.timestamp));
+	            user.comment = item.comment.text;
+	            _this.comments.push(user);
 	        });
 	    };
 	    IdeaResponsesComponent = __decorate([
@@ -32851,7 +32837,7 @@ webpackJsonp([0],{
 /***/ 421:
 /***/ function(module, exports) {
 
-	module.exports = "<div class=\"content-dashboard\">\r\n    <div class=\"title-dashboard\">\r\n        <h1>View likes &amp; comments: {{title || \"Loading...\"}}</h1>\r\n        <h2>\r\n            You can view who likes and comments on the idea in the tables below.\r\n        </h2>\r\n    </div>\r\n\r\n    <div class=\"action-table-wrapper likes-wrapper\">\r\n        <h2>Likes</h2>\r\n        <table class=\"table-action\">\r\n            <thead>\r\n                <tr>\r\n                    <th>User's picture</th>\r\n                    <th>User's name</th>\r\n                    <th class=\"timestamp-col\">Last liked at</th>\r\n                </tr>\r\n            </thead>\r\n            <tbody *ngIf=\"likes.length === 0\">\r\n                <tr>\r\n                    <td class=\"table-message\" colspan=\"3\">{{likesMessage}}</td>\r\n                </tr>\r\n            </tbody>\r\n            <tbody *ngIf=\"likes.length > 0\">\r\n                <tr *ngFor=\"let row of likes\">\r\n                    <td>\r\n                        <img [src]=\"row.user.profilePic\">\r\n                    </td>\r\n                    <td>\r\n                        <a [routerLink]=\"['/users', row.user.id]\">\r\n                            {{row.user.name}}\r\n                        </a>\r\n                    </td>\r\n                    <td class=\"timestamp-col\">\r\n                        {{row.timestamp.toDateString()}}<br>\r\n                        {{row.timestamp.toTimeString()}}\r\n                    </td>\r\n                </tr>\r\n            </tbody>\r\n        </table>\r\n    </div>\r\n\r\n    <div class=\"action-table-wrapper comments-wrapper\">\r\n        <h2>Comments</h2>\r\n        <table class=\"table-action\">\r\n            <thead>\r\n                <tr>\r\n                    <th>User picture</th>\r\n                    <th>User name</th>\r\n                    <th>Comment</th>\r\n                    <th class=\"timestamp-col\">Last modified at</th>\r\n                </tr>\r\n            </thead>\r\n            <tbody *ngIf=\"comments.length === 0\">\r\n                <tr>\r\n                    <td colspan=\"4\" class=\"table-message\">{{commentsMessage}}</td>\r\n                </tr>\r\n            </tbody>\r\n            <tbody *ngIf=\"comments.length > 0\">\r\n                <tr *ngFor=\"let row of comments\">\r\n                    <td>\r\n                        <img [src]=\"row.user.profilePic\">\r\n                    </td>\r\n                    <td>\r\n                        <a [routerLink]=\"['/users', row.user.id]\">\r\n                            {{row.user.name}}\r\n                        </a>\r\n                    </td>\r\n                    <td>\r\n                        {{row.comment.text}}\r\n                    </td>\r\n                    <td class=\"timestamp-col\">\r\n                        {{row.comment.timestamp.toDateString()}}<br>\r\n                        {{row.comment.timestamp.toTimeString()}}\r\n                    </td>\r\n                </tr>\r\n            </tbody>\r\n        </table>\r\n    </div>\r\n</div>"
+	module.exports = "<div class=\"content-dashboard\">\r\n    <div class=\"title-dashboard\">\r\n        <h1>View likes &amp; comments: {{title || \"Loading...\"}}</h1>\r\n        <h2>\r\n            You can view who likes and comments on the idea in the tables below.\r\n        </h2>\r\n    </div>\r\n\r\n    <div class=\"action-table-wrapper likes-wrapper\">\r\n        <h2>Likes</h2>\r\n        <table class=\"table-action\">\r\n            <thead>\r\n                <tr>\r\n                    <th>User's picture</th>\r\n                    <th>User's name</th>\r\n                    <th class=\"timestamp-col\">Last liked at</th>\r\n                </tr>\r\n            </thead>\r\n            <tbody *ngIf=\"likes.length === 0\">\r\n                <tr>\r\n                    <td class=\"table-message\" colspan=\"3\">{{likesMessage}}</td>\r\n                </tr>\r\n            </tbody>\r\n            <tbody *ngIf=\"likes.length > 0\">\r\n                <tr *ngFor=\"let row of likes\">\r\n                    <td>\r\n                        <img [src]=\"row.profilePic\">\r\n                    </td>\r\n                    <td>\r\n                        <a [routerLink]=\"['/users', row.id]\">\r\n                            {{row.name}}\r\n                        </a>\r\n                    </td>\r\n                    <td class=\"timestamp-col\">\r\n                        {{row.lastChanged.toDateString()}}<br>\r\n                        {{row.lastChanged.toTimeString()}}\r\n                    </td>\r\n                </tr>\r\n            </tbody>\r\n        </table>\r\n    </div>\r\n\r\n    <div class=\"action-table-wrapper comments-wrapper\">\r\n        <h2>Comments</h2>\r\n        <table class=\"table-action\">\r\n            <thead>\r\n                <tr>\r\n                    <th>User picture</th>\r\n                    <th>User name</th>\r\n                    <th>Comment</th>\r\n                    <th class=\"timestamp-col\">Last modified at</th>\r\n                </tr>\r\n            </thead>\r\n            <tbody *ngIf=\"comments.length === 0\">\r\n                <tr>\r\n                    <td colspan=\"4\" class=\"table-message\">{{commentsMessage}}</td>\r\n                </tr>\r\n            </tbody>\r\n            <tbody *ngIf=\"comments.length > 0\">\r\n                <tr *ngFor=\"let row of comments\">\r\n                    <td>\r\n                        <img [src]=\"row.profilePic\">\r\n                    </td>\r\n                    <td>\r\n                        <a [routerLink]=\"['/users', row.id]\">\r\n                            {{row.name}}\r\n                        </a>\r\n                    </td>\r\n                    <td>\r\n                        {{row.comment}}\r\n                    </td>\r\n                    <td class=\"timestamp-col\">\r\n                        {{row.lastChanged.toDateString()}}<br>\r\n                        {{row.lastChanged.toTimeString()}}\r\n                    </td>\r\n                </tr>\r\n            </tbody>\r\n        </table>\r\n    </div>\r\n</div>"
 
 /***/ },
 

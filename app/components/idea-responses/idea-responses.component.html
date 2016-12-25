@@ -24,16 +24,16 @@
             <tbody *ngIf="likes.length > 0">
                 <tr *ngFor="let row of likes">
                     <td>
-                        <img [src]="row.user.profilePic">
+                        <img [src]="row.profilePic">
                     </td>
                     <td>
-                        <a [routerLink]="['/users', row.user.id]">
-                            {{row.user.name}}
+                        <a [routerLink]="['/users', row.id]">
+                            {{row.name}}
                         </a>
                     </td>
                     <td class="timestamp-col">
-                        {{row.timestamp.toDateString()}}<br>
-                        {{row.timestamp.toTimeString()}}
+                        {{row.lastChanged.toDateString()}}<br>
+                        {{row.lastChanged.toTimeString()}}
                     </td>
                 </tr>
             </tbody>
@@ -59,19 +59,19 @@
             <tbody *ngIf="comments.length > 0">
                 <tr *ngFor="let row of comments">
                     <td>
-                        <img [src]="row.user.profilePic">
+                        <img [src]="row.profilePic">
                     </td>
                     <td>
-                        <a [routerLink]="['/users', row.user.id]">
-                            {{row.user.name}}
+                        <a [routerLink]="['/users', row.id]">
+                            {{row.name}}
                         </a>
                     </td>
                     <td>
-                        {{row.comment.text}}
+                        {{row.comment}}
                     </td>
                     <td class="timestamp-col">
-                        {{row.comment.timestamp.toDateString()}}<br>
-                        {{row.comment.timestamp.toTimeString()}}
+                        {{row.lastChanged.toDateString()}}<br>
+                        {{row.lastChanged.toTimeString()}}
                     </td>
                 </tr>
             </tbody>
