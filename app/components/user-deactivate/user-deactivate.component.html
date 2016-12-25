@@ -7,4 +7,23 @@
             After you submit it, an email will be sent to the user, and they will no longer be able to login.<br>
         </h2>
     </div>
+
+    <div class="form-wrapper-dashboard">
+        <form class="form-dashboard form-deactivate"
+            (ngSubmit)="onSubmitDeactivationRequest()"
+            #deactivationForm="ngForm">
+
+            <div class="form-group">
+                <div class="form-col-2">
+                    <label for="description">Message/reason: (*)</label>
+                    <textarea name="description" [(ngModel)]="reason" required></textarea>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <button type="submit">Submit</button>
+            </div>
+            
+        </form>
+    </div>
 </div>

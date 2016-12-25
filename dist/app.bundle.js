@@ -30670,6 +30670,12 @@ webpackJsonp([0],{
 	            return JSON.parse(res.text());
 	        });
 	    };
+	    UsersService.prototype.deactivateUser = function (id, reason) {
+	        return this.http.post("/user/auth/deactivate", { id: id, reason: reason })
+	            .map(function (res) {
+	            return JSON.parse(res.text());
+	        });
+	    };
 	    UsersService = __decorate([
 	        core_1.Injectable(), 
 	        __metadata('design:paramtypes', [http_1.Http])
@@ -33452,15 +33458,25 @@ webpackJsonp([0],{
 	        this.route = route;
 	        this.usersService = usersService;
 	        this.name = "";
+	        this.id = "";
+	        this.reason = "";
 	    }
 	    DeactivateUserComponent.prototype.ngOnInit = function () {
 	        var _this = this;
 	        this.route.params.forEach(function (params) {
-	            var id = params["id"];
-	            _this.usersService.getName(id)
+	            _this.id = params["id"];
+	            _this.usersService.getName(_this.id)
 	                .subscribe(function (json) {
 	                _this.name = json.fail || json.name;
 	            });
+	        });
+	    };
+	    DeactivateUserComponent.prototype.onSubmitDeactivationRequest = function () {
+	        var _this = this;
+	        this.usersService.deactivateUser(this.id, this.reason)
+	            .subscribe(function (json) {
+	            alert(json.message);
+	            _this.router.navigate(["/users", _this.id]);
 	        });
 	    };
 	    DeactivateUserComponent = __decorate([
@@ -33481,7 +33497,7 @@ webpackJsonp([0],{
 /***/ 463:
 /***/ function(module, exports) {
 
-	module.exports = "<div class=\"content-dashboard\">\r\n    <div class=\"title-dashboard\">\r\n        <h1>Deactivate a user: {{name || \"Loading...\"}}</h1>\r\n        <h2>\r\n            <strong>NOTE:</strong> You are working on a critical action. <strong>Please do this carefully.</strong><br>\r\n            In the following form, write a message to the user, explaining why they should be deactivated.<br>\r\n            After you submit it, an email will be sent to the user, and they will no longer be able to login.<br>\r\n        </h2>\r\n    </div>\r\n</div>"
+	module.exports = "<div class=\"content-dashboard\">\r\n    <div class=\"title-dashboard\">\r\n        <h1>Deactivate a user: {{name || \"Loading...\"}}</h1>\r\n        <h2>\r\n            <strong>NOTE:</strong> You are working on a critical action. <strong>Please do this carefully.</strong><br>\r\n            In the following form, write a message to the user, explaining why they should be deactivated.<br>\r\n            After you submit it, an email will be sent to the user, and they will no longer be able to login.<br>\r\n        </h2>\r\n    </div>\r\n\r\n    <div class=\"form-wrapper-dashboard\">\r\n        <form class=\"form-dashboard form-deactivate\"\r\n            (ngSubmit)=\"onSubmitDeactivationRequest()\"\r\n            #deactivationForm=\"ngForm\">\r\n\r\n            <div class=\"form-group\">\r\n                <div class=\"form-col-2\">\r\n                    <label for=\"description\">Message/reason: (*)</label>\r\n                    <textarea name=\"description\" [(ngModel)]=\"reason\" required></textarea>\r\n                </div>\r\n            </div>\r\n\r\n            <div class=\"form-group\">\r\n                <button type=\"submit\">Submit</button>\r\n            </div>\r\n            \r\n        </form>\r\n    </div>\r\n</div>"
 
 /***/ },
 

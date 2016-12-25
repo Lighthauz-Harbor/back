@@ -310,6 +310,82 @@ var UserSchema = function(dbDriver) {
             });
     };
 
+    this._sendDeactivationEmail = function(session, req, res, result) {
+        var name = result.records[0].get("u.name");
+        var email = result.records[0].get("u.username");
+
+        session
+            .run("MATCH (u:User) WHERE u.id = {id} \
+                SET u.blocked = true",
+                { id: req.body.id })
+            .then(function() {
+                var transporter = nodemailer.createTransport(smtpConfig);
+
+                var replyText = "Dear " + name + ",\n\n" +
+                    "We would like to inform you that your account " +
+                    "has been deactivated. This means that you will " +
+                    "not be able to login to Lighthauz, unless " + 
+                    "further notice is given.\n\n" +
+                    "Following is the reason from our administrator, " +
+                    "on why they deactivated your account:\n\n" +
+                    "\"" + req.body.reason + "\"\n\n" +
+                    "That is all from us. We hope you may understand." + "\n\n" +
+                    "Thank you for your attention." + "\n\n" +
+                    "Regards,\n\nLighthauz Harbor team.";
+
+                var mailOptions = {
+                    from: '"Lighthauz Harbor" <' + process.env.EMAIL_ADDR + '>',
+                    to: email,
+                    subject: "Your account has been deactivated.",
+                    text: replyText
+                };
+
+                transporter.sendMail(mailOptions, function(error, info) {
+                    if (error) {
+                        console.log(error);
+                        res.send({
+                            message: "The user has been deactivated, " +
+                                "but we failed sending your message " +
+                                "via email. Please resend this " +
+                                "message to ensure the email is sent."
+                        });
+                        session.close();
+                    } else {
+                        console.log("Message sent: " + info.response);
+                        res.send({
+                            message: "The user has been deactivated, " +
+                                "and your message has been sent."
+                        });
+                        session.close();
+                    }
+                });
+            })
+            .catch(function(err) {
+                res.send({
+                    message: "Failed deactivating user. Please try again."
+                });
+                session.close();
+            });
+    };
+
+    this.deactivateUser = function(req, res) {
+        var session = this.driver.session();
+        var that = this;
+
+        session
+            .run("MATCH (u:User) WHERE u.id = {id} RETURN u.name, u.username",
+                { id: req.body.id })
+            .then(function(result) {
+                that._sendDeactivationEmail(session, req, res, result);
+            })
+            .catch(function(err) {
+                res.send({
+                    message: "User is not found. Failed deactivating. Please try again."
+                });
+                session.close();
+            });
+    };
+
     this.getSingle = function(req, res) {
         var session = this.driver.session();
         session
@@ -343,9 +419,7 @@ var UserSchema = function(dbDriver) {
 
         session
             .run("MATCH (u:User) WHERE u.id = {id} RETURN u.name",
-            {
-                id: req.params.id
-            })
+            { id: req.params.id })
             .then(function(result) {
                 res.send({
                     name: result.records[0].get("u.name")

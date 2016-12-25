@@ -49,9 +49,9 @@ export class IdeasService {
         return this.http.put(
             "/api/ideas/update/" + details.id,
             details)
-                .map((res: Response) => {
-                    return JSON.parse(res.text());
-                });
+            .map((res: Response) => {
+                return JSON.parse(res.text());
+            });
     }
 
     deleteIdeas(ids: string[]): Observable<any> {

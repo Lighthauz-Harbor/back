@@ -11,6 +11,9 @@ import { UsersService } from "../../services/users.service";
 export class DeactivateUserComponent implements OnInit {
 
     private name: string = "";
+    
+    private id: string = "";
+    private reason: string = "";
 
     constructor(
         private router: Router,
@@ -21,12 +24,20 @@ export class DeactivateUserComponent implements OnInit {
 
     ngOnInit(): void {
         this.route.params.forEach((params: Params) => {
-            let id = params["id"];
-            this.usersService.getName(id)
+            this.id = params["id"];
+            this.usersService.getName(this.id)
                 .subscribe((json: any) => {
                     this.name = json.fail || json.name;
                 });
         });
+    }
+
+    onSubmitDeactivationRequest(): void {
+        this.usersService.deactivateUser(this.id, this.reason)
+            .subscribe((json: any) => {
+                alert(json.message);
+                this.router.navigate(["/users", this.id]);
+            });
     }
 
 }

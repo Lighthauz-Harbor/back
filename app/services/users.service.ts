@@ -78,7 +78,7 @@ export class UsersService {
 
     listPreferredCategories(userId: string): Observable<any> {
         return this.http.post("/api/category/prefer/list",
-        { userId })
+            { userId })
             .map((res: Response) => {
                 return JSON.parse(res.text());
             });
@@ -100,6 +100,14 @@ export class UsersService {
 
     getReceivedConnectionRequests(userId: string): Observable<any> {
         return this.http.get("/api/connections/requests/received/" + userId)
+            .map((res: Response) => {
+                return JSON.parse(res.text());
+            });
+    }
+
+    deactivateUser(id: string, reason: string): Observable<any> {
+        return this.http.post("/user/auth/deactivate",
+            { id, reason })
             .map((res: Response) => {
                 return JSON.parse(res.text());
             });

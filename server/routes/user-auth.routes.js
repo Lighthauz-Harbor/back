@@ -62,4 +62,8 @@ module.exports = function(router, dbDriver,
         userSchema.isVerified(req, res);
     });
 
+    router.post("/deactivate", function(req, res) {
+        userSchema.deactivateUser(req, res);
+    });
+
 };
