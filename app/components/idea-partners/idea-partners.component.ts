@@ -14,7 +14,7 @@ export class IdeaPartnersComponent implements OnInit {
 
     private title: string = "";
     private partners: User[] = [];
-    private partnersMessage: string = "Loading...";
+    private message: string = "Loading...";
 
     constructor(
         private route: ActivatedRoute,
@@ -36,13 +36,13 @@ export class IdeaPartnersComponent implements OnInit {
                 .subscribe((json: any) => {
 
                     if (json.fail) {
-                        this.partnersMessage = json.fail;
+                        this.message = json.fail;
                     } else {
                         this.pushPartners(json);
                         if (this.partners.length === 0) {
-                            this.partnersMessage = "There are no partners collaborating on this idea.";
+                            this.message = "There are no partners collaborating on this idea.";
                         } else {
-                            this.partnersMessage = "";
+                            this.message = "";
                         }
                     }
             });

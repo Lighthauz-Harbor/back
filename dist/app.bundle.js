@@ -32886,7 +32886,7 @@ webpackJsonp([0],{
 	        this.ideasService = ideasService;
 	        this.title = "";
 	        this.partners = [];
-	        this.partnersMessage = "Loading...";
+	        this.message = "Loading...";
 	    }
 	    IdeaPartnersComponent.prototype.ngOnInit = function () {
 	        var _this = this;
@@ -32899,15 +32899,15 @@ webpackJsonp([0],{
 	            _this.ideasService.getPartners(ideaId)
 	                .subscribe(function (json) {
 	                if (json.fail) {
-	                    _this.partnersMessage = json.fail;
+	                    _this.message = json.fail;
 	                }
 	                else {
 	                    _this.pushPartners(json);
 	                    if (_this.partners.length === 0) {
-	                        _this.partnersMessage = "There are no partners collaborating on this idea.";
+	                        _this.message = "There are no partners collaborating on this idea.";
 	                    }
 	                    else {
-	                        _this.partnersMessage = "";
+	                        _this.message = "";
 	                    }
 	                }
 	            });
@@ -32937,7 +32937,7 @@ webpackJsonp([0],{
 /***/ 425:
 /***/ function(module, exports) {
 
-	module.exports = "<div class=\"content-dashboard\">\r\n    <div class=\"title-dashboard\">\r\n        <h1>View partners for idea: {{title || \"Loading...\"}}</h1>\r\n        <h2>\r\n            You can view the partners collaborating in the business idea you selected.\r\n        </h2>\r\n    </div>\r\n\r\n    <div class=\"action-table-wrapper partners-wrapper\">\r\n        <table class=\"table-action\">\r\n            <thead>\r\n                <tr>\r\n                    <th>User's picture</th>\r\n                    <th>User's name</th>\r\n                    <th>Email</th>\r\n                    <th>Biography</th>\r\n                </tr>\r\n            </thead>\r\n            <tbody *ngIf=\"partners.length === 0\">\r\n                <tr>\r\n                    <td colspan=\"4\">{{partnersMessage}}</td>\r\n                </tr>\r\n            </tbody>\r\n            <tbody *ngIf=\"partners.length > 0\">\r\n                <tr *ngFor=\"let row of partners\">\r\n                    <td>\r\n                        <img [src]=\"row.profilePic\">\r\n                    </td>\r\n                    <td>\r\n                        <a [routerLink]=\"['/users', row.id]\">{{row.name}}</a>\r\n                    </td>\r\n                    <td>\r\n                        <a href=\"mailto:{{row.username}}\">{{row.username}}</a>\r\n                    </td>\r\n                    <td>\r\n                        {{row.bio}}\r\n                    </td>\r\n                </tr>\r\n            </tbody>\r\n        </table>\r\n    </div>\r\n</div>"
+	module.exports = "<div class=\"content-dashboard\">\r\n    <div class=\"title-dashboard\">\r\n        <h1>View partners for idea: {{title || \"Loading...\"}}</h1>\r\n        <h2>\r\n            You can view the partners collaborating in the business idea you selected.\r\n        </h2>\r\n    </div>\r\n\r\n    <div class=\"action-table-wrapper partners-wrapper\">\r\n        <table class=\"table-action\">\r\n            <thead>\r\n                <tr>\r\n                    <th>User's picture</th>\r\n                    <th>User's name</th>\r\n                    <th>Email</th>\r\n                    <th>Biography</th>\r\n                </tr>\r\n            </thead>\r\n            <tbody *ngIf=\"partners.length === 0\">\r\n                <tr>\r\n                    <td colspan=\"4\">{{message}}</td>\r\n                </tr>\r\n            </tbody>\r\n            <tbody *ngIf=\"partners.length > 0\">\r\n                <tr *ngFor=\"let row of partners\">\r\n                    <td>\r\n                        <img [src]=\"row.profilePic\">\r\n                    </td>\r\n                    <td>\r\n                        <a [routerLink]=\"['/users', row.id]\">{{row.name}}</a>\r\n                    </td>\r\n                    <td>\r\n                        <a href=\"mailto:{{row.username}}\">{{row.username}}</a>\r\n                    </td>\r\n                    <td>\r\n                        {{row.bio}}\r\n                    </td>\r\n                </tr>\r\n            </tbody>\r\n        </table>\r\n    </div>\r\n</div>"
 
 /***/ },
 
