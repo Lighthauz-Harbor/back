@@ -38,6 +38,10 @@ export class UserDetailsComponent implements OnInit {
                             new Date(json.createdAt));
                     }
                 });
+            this.usersService.isDeactivatedUser(id)
+                .subscribe((json: any) => {
+                    (this.user as any).blocked = json.blocked;
+                });
             this.usersService.listPreferredCategories(id)
                 .subscribe((json: any) => {
                     if (json.fail) {

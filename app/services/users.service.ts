@@ -113,4 +113,11 @@ export class UsersService {
             });
     }
 
+    isDeactivatedUser(id: string): Observable<any> {
+        return this.http.get("/user/auth/is-blocked/" + id)
+            .map((res: Response) => {
+                return JSON.parse(res.text());
+            });
+    }
+
 }
