@@ -386,6 +386,81 @@ var UserSchema = function(dbDriver) {
             });
     };
 
+    this._sendReactivationEmail = function(session, req, res, result) {
+        var name = result.records[0].get("u.name");
+        var email = result.records[0].get("u.username");
+
+        session
+            .run("MATCH (u:User) WHERE u.id = {id} \
+                SET u.blocked = false",
+                { id: req.body.id })
+            .then(function() {
+                var transporter = nodemailer.createTransport(smtpConfig);
+
+                var replyText = "Dear " + name + ",\n\n" +
+                    "Your account has been re-activated now. " +
+                    "This means that you will be able to log in " + 
+                    "to Lighthauz again.\n\n" +
+                    "Following is the reason from our administrator, " +
+                    "on why they restored your account:\n\n" +
+                    "\"" + req.body.reason + "\"\n\n" +
+                    "That is all from us. We hope you may understand." + "\n\n" +
+                    "Thank you for your attention." + "\n\n" +
+                    "Regards,\n\nLighthauz Harbor team.";
+
+                var mailOptions = {
+                    from: '"Lighthauz Harbor" <' + process.env.EMAIL_ADDR + '>',
+                    to: email,
+                    subject: "Your account has now been re-activated.",
+                    text: replyText
+                };
+
+                transporter.sendMail(mailOptions, function(error, info) {
+                    if (error) {
+                        console.log(error);
+                        res.send({
+                            message: "The user has been re-activated, " +
+                                "but we failed sending your message " +
+                                "via email. Please resend this " +
+                                "message to ensure the email is sent."
+                        });
+                        session.close();
+                    } else {
+                        console.log("Message sent: " + info.response);
+                        res.send({
+                            message: "The user has been re-activated, " +
+                                "and your message has been sent."
+                        });
+                        session.close();
+                    }
+                });
+            })
+            .catch(function(err) {
+                res.send({
+                    message: "Failed re-activating user. Please try again."
+                });
+                session.close();
+            });
+    };
+
+    this.reactivateUser = function(req, res) {
+        var session = this.driver.session();
+        var that = this;
+
+        session
+            .run("MATCH (u:User) WHERE u.id = {id} RETURN u.name, u.username",
+                { id: req.body.id })
+            .then(function(result) {
+                that._sendReactivationEmail(session, req, res, result);
+            })
+            .catch(function(err) {
+                res.send({
+                    message: "User is not found. Failed re-activating. Please try again."
+                });
+                session.close();
+            });
+    };
+
     this.isBlocked = function(req, res) {
         var session = this.driver.session();
 

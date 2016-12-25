@@ -113,6 +113,14 @@ export class UsersService {
             });
     }
 
+    reactivateUser(id: string, reason: string): Observable<any> {
+        return this.http.post("/user/auth/reactivate",
+            { id, reason })
+            .map((res: Response) => {
+                return JSON.parse(res.text());
+            });
+    }
+
     isDeactivatedUser(id: string): Observable<any> {
         return this.http.get("/user/auth/is-blocked/" + id)
             .map((res: Response) => {

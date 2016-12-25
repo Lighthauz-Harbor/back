@@ -32,4 +32,12 @@ export class ReactivateUserComponent implements OnInit {
         });
     }
 
+    onSubmitReactivationRequest(): void {
+        this.usersService.reactivateUser(this.id, this.reason)
+            .subscribe((json: any) => {
+                alert(json.message);
+                this.router.navigate(["/users", this.id]);
+            });
+    }
+
 }

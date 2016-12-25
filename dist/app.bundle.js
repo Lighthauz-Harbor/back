@@ -30683,6 +30683,12 @@ webpackJsonp([0],{
 	            return JSON.parse(res.text());
 	        });
 	    };
+	    UsersService.prototype.reactivateUser = function (id, reason) {
+	        return this.http.post("/user/auth/reactivate", { id: id, reason: reason })
+	            .map(function (res) {
+	            return JSON.parse(res.text());
+	        });
+	    };
 	    UsersService.prototype.isDeactivatedUser = function (id) {
 	        return this.http.get("/user/auth/is-blocked/" + id)
 	            .map(function (res) {
@@ -33558,6 +33564,14 @@ webpackJsonp([0],{
 	                .subscribe(function (json) {
 	                _this.name = json.fail || json.name;
 	            });
+	        });
+	    };
+	    ReactivateUserComponent.prototype.onSubmitReactivationRequest = function () {
+	        var _this = this;
+	        this.usersService.reactivateUser(this.id, this.reason)
+	            .subscribe(function (json) {
+	            alert(json.message);
+	            _this.router.navigate(["/users", _this.id]);
 	        });
 	    };
 	    ReactivateUserComponent = __decorate([

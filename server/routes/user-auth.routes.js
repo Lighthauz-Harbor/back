@@ -83,4 +83,8 @@ module.exports = function(router, dbDriver,
         userSchema.deactivateUser(req, res);
     });
 
+    router.post("/reactivate", function(req, res) {
+        userSchema.reactivateUser(req, res);
+    });
+
 };
