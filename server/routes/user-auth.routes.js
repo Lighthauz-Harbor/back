@@ -62,6 +62,10 @@ module.exports = function(router, dbDriver,
         userSchema.isVerified(req, res);
     });
 
+    router.get("/is-blocked/:id", function(req, res) {
+        userSchema.isBlocked(req, res);
+    });
+
     router.post("/deactivate", function(req, res) {
         userSchema.deactivateUser(req, res);
     });

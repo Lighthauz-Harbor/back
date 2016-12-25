@@ -386,6 +386,26 @@ var UserSchema = function(dbDriver) {
             });
     };
 
+    this.isBlocked = function(req, res) {
+        var session = this.driver.session();
+
+        session
+            .run("MATCH (u:User) WHERE u.id = {id} RETURN u.blocked",
+                { id: req.params.id })
+            .then(function(result) {
+                res.send({
+                    blocked: result.records[0].get("u.blocked") || false
+                });
+                session.close();
+            })
+            .catch(function(err) {
+                res.send({
+                    blocked: false
+                });
+                session.close();
+            });
+    };
+
     this.getSingle = function(req, res) {
         var session = this.driver.session();
         session
