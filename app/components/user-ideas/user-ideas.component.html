@@ -22,7 +22,7 @@
             <tbody *ngIf="ideas.length > 0">
                 <tr *ngFor = "let row of ideas">
                     <td>
-                        <img [src]="row.picture">
+                        <img [src]="row.pic">
                     </td>
                     <td>
                         <a [routerLink]="['/ideas', row.id]">{{row.title}}</a>

@@ -2,7 +2,7 @@ export class Idea {
     private _id: string;
     private _visibility: number; // 0: not published, 1: exclusive, 2: public
     private _title: string;
-    private _picture: string; // picture URL
+    private _pic: string; // picture URL
     private _description: string;
     private _background: string;
     private _problem: string;
@@ -32,7 +32,7 @@ export class Idea {
         this._id = id;
         this._visibility = info.visibility || 1;
         this._title = info.title || "";
-        this._picture = info.picture || 
+        this._pic = info.pic ||
             "http://res.cloudinary.com/lighthauz-harbor/image/upload/v1479742560/default-idea-pic_wq1dzc.png";
         this._description = info.description || "";
         this._background = info.background || "";
@@ -66,8 +66,8 @@ export class Idea {
     get title() {
         return this._title;
     }
-    get picture() {
-        return this._picture;
+    get pic() {
+        return this._pic;
     }
     get description() {
         return this._description;
@@ -142,8 +142,8 @@ export class Idea {
     set title(t: string) {
         this._title = t;
     }
-    set picture(p: string) {
-        this._picture = p;
+    set pic(p: string) {
+        this._pic = p;
     }
     set description(d: string) {
         this._description = d;
