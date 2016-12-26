@@ -24,7 +24,7 @@ module.exports = function(router, dbDriver) {
         userSchema.search(req, res);
     });
 
-    router.put("/users/update/:username", function(req, res) {
+    router.put("/users/update/:id", function(req, res) {
         userSchema.update(req, res);
     });
 

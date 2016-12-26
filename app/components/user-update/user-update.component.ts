@@ -13,10 +13,10 @@ import { ImageService } from "../../services/image.service";
 })
 export class UpdateUserComponent implements OnInit {
 
+    private id: string;
     private firstName: string;
     private lastName: string;
-    private email: string; // the new email/username
-    private oldEmail: string; // to query for the user
+    private email: string;
     private password: string;
     private repeatPassword: string;
     private dobStr: string; // to be used in the template
@@ -36,15 +36,14 @@ export class UpdateUserComponent implements OnInit {
 
     ngOnInit(): void {
         this.route.params.forEach((params: Params) => {
-            let id = params["id"];
-            this.usersService.getSingleUser(id)
+            this.id = params["id"];
+            this.usersService.getSingleUser(this.id)
                 .subscribe((json: any) => {
                     if (json.fail) {
                         alert(json.fail);
                         this.router.navigate(["/users"]);
                     } else {
                         this.email = json.username;
-                        this.oldEmail = json.username;
 
                         let name = json.name.split(" ");
                         let len = name.length;
@@ -68,9 +67,9 @@ export class UpdateUserComponent implements OnInit {
         this.dateOfBirth = new Date(this.dobStr);
 
         let reqBody: any = {
+            id: this.id,
             name: this.firstName + " " + this.lastName, 
             username: this.email,
-            oldUsername: this.oldEmail,
             password: this.password, 
             dateOfBirth: (new Date(this.dateOfBirth)).getTime(),
             bio: this.bio

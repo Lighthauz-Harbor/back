@@ -30620,7 +30620,7 @@ webpackJsonp([0],{
 	            .map(this.parseJSON);
 	    };
 	    UserService.prototype.updateUser = function (details) {
-	        return this.http.put("/api/users/update/" + details.oldUsername, details)
+	        return this.http.put("/api/users/update/" + details.id, details)
 	            .map(this.parseJSON);
 	    };
 	    UserService.prototype.deleteUsers = function (ids) {
@@ -30814,7 +30814,7 @@ webpackJsonp([0],{
 /***/ 366:
 /***/ function(module, exports) {
 
-	module.exports = "<div class=\"content-dashboard\">\r\n    <div class=\"title-dashboard\">\r\n        <h1>Dashboard</h1>\r\n        <h2>View recent users, ideas, and reports.</h2>\r\n    </div>\r\n\r\n    <div class=\"info-dashboard\">\r\n        <div class=\"info-group\">\r\n            <div class=\"info-col-1 user-info\">\r\n                <div class=\"pic-info\">\r\n                    <i class=\"fa fa-user fa-5x\"></i>\r\n                    <h3>User info</h3>\r\n                </div>\r\n                <div class=\"stat-info\">\r\n                    <p><span class=\"activity-stat\">{{ userActivity < 0 ? \"ERR\" : userActivity }}</span> user activities</p>\r\n                    <p><span class=\"total-stat\">{{ totalUsers < 0 ? \"ERR\" : totalUsers }}</span> total users</p>\r\n                </div>\r\n            </div>\r\n\r\n            <div class=\"info-col-1 idea-info\">\r\n                <div class=\"pic-info\">\r\n                    <i class=\"fa fa-lightbulb-o fa-5x\"></i>\r\n                    <h3>Idea info</h3>\r\n                </div>\r\n                <div class=\"stat-info\">\r\n                    <p><span class=\"activity-stat\">{{ ideasToday < 0 ? \"ERR\" : ideasToday }}</span> ideas today</p>\r\n                    <p><span class=\"total-stat\">{{ totalIdeas < 0 ? \"ERR\" : totalIdeas }}</span> total ideas</p>\r\n                </div>\r\n            </div> \r\n        </div>\r\n\r\n        <div class=\"info-group\">\r\n            <div class=\"info-col-2 reports-info\">\r\n                <div class=\"heading-info\">\r\n                    <h3><i class=\"fa fa-files-o\"></i> Recent Reports</h3>\r\n                </div>\r\n\r\n                <div class=\"table-info\">\r\n                    <table>\r\n                        <thead>\r\n                            <tr>\r\n                                <th>Report title</th>\r\n                                <th>User / reporter</th>\r\n                                <th>Last submitted at</th>\r\n                            </tr>\r\n                        </thead>\r\n                        <tbody *ngIf=\"reportsList.length <= 0\">\r\n                            <tr>\r\n                                <td class=\"table-message\" colspan=\"3\">\r\n                                    {{ message || \"Loading...\" }}\r\n                                </td>\r\n                            </tr>\r\n                        </tbody>\r\n                        <tbody *ngIf=\"reportsList.length > 0\">\r\n                            <tr *ngFor=\"let report of reportsList\">\r\n                                <td>{{ report.title }}</td>\r\n                                <td>{{ report.author }}</td>\r\n                                <td>{{ report.createdAt.toDateString() }}</td>\r\n                            </tr>\r\n                        </tbody>\r\n                    </table>\r\n                </div>\r\n            </div>\r\n        </div>\r\n    </div>\r\n</div>"
+	module.exports = "<div class=\"content-dashboard\">\r\n    <div class=\"title-dashboard\">\r\n        <h1>Dashboard</h1>\r\n        <h2>View recent users, ideas, and reports.</h2>\r\n    </div>\r\n\r\n    <div class=\"info-dashboard\">\r\n        <div class=\"info-group\">\r\n            <div class=\"info-col-1 user-info\">\r\n                <div class=\"pic-info\">\r\n                    <i class=\"fa fa-user fa-5x\"></i>\r\n                    <h3>User info</h3>\r\n                </div>\r\n                <div class=\"stat-info\">\r\n                    <p><span class=\"activity-stat\">{{ userActivity < 0 ? \"ERR\" : userActivity }}</span> user activities</p>\r\n                    <p><span class=\"total-stat\">{{ totalUsers < 0 ? \"ERR\" : totalUsers }}</span> total users</p>\r\n                </div>\r\n            </div>\r\n\r\n            <div class=\"info-col-1 idea-info\">\r\n                <div class=\"pic-info\">\r\n                    <i class=\"fa fa-lightbulb-o fa-5x\"></i>\r\n                    <h3>Idea info</h3>\r\n                </div>\r\n                <div class=\"stat-info\">\r\n                    <p><span class=\"activity-stat\">{{ ideasToday < 0 ? \"ERR\" : ideasToday }}</span> ideas today (made/edited)</p>\r\n                    <p><span class=\"total-stat\">{{ totalIdeas < 0 ? \"ERR\" : totalIdeas }}</span> total ideas</p>\r\n                </div>\r\n            </div> \r\n        </div>\r\n\r\n        <div class=\"info-group\">\r\n            <div class=\"info-col-2 reports-info\">\r\n                <div class=\"heading-info\">\r\n                    <h3><i class=\"fa fa-files-o\"></i> Recent Reports</h3>\r\n                </div>\r\n\r\n                <div class=\"table-info\">\r\n                    <table>\r\n                        <thead>\r\n                            <tr>\r\n                                <th>Report title</th>\r\n                                <th>User / reporter</th>\r\n                                <th>Last submitted at</th>\r\n                            </tr>\r\n                        </thead>\r\n                        <tbody *ngIf=\"reportsList.length <= 0\">\r\n                            <tr>\r\n                                <td class=\"table-message\" colspan=\"3\">\r\n                                    {{ message || \"Loading...\" }}\r\n                                </td>\r\n                            </tr>\r\n                        </tbody>\r\n                        <tbody *ngIf=\"reportsList.length > 0\">\r\n                            <tr *ngFor=\"let report of reportsList\">\r\n                                <td>{{ report.title }}</td>\r\n                                <td>{{ report.author }}</td>\r\n                                <td>{{ report.createdAt.toDateString() }}</td>\r\n                            </tr>\r\n                        </tbody>\r\n                    </table>\r\n                </div>\r\n            </div>\r\n        </div>\r\n    </div>\r\n</div>"
 
 /***/ },
 
@@ -31430,8 +31430,8 @@ webpackJsonp([0],{
 	    UpdateUserComponent.prototype.ngOnInit = function () {
 	        var _this = this;
 	        this.route.params.forEach(function (params) {
-	            var id = params["id"];
-	            _this.usersService.getSingleUser(id)
+	            _this.id = params["id"];
+	            _this.usersService.getSingleUser(_this.id)
 	                .subscribe(function (json) {
 	                if (json.fail) {
 	                    alert(json.fail);
@@ -31439,7 +31439,6 @@ webpackJsonp([0],{
 	                }
 	                else {
 	                    _this.email = json.username;
-	                    _this.oldEmail = json.username;
 	                    var name_1 = json.name.split(" ");
 	                    var len = name_1.length;
 	                    _this.firstName = name_1[0];
@@ -31459,9 +31458,9 @@ webpackJsonp([0],{
 	        // update this.dateOfBirth after being changed from the template
 	        this.dateOfBirth = new Date(this.dobStr);
 	        var reqBody = {
+	            id: this.id,
 	            name: this.firstName + " " + this.lastName,
 	            username: this.email,
-	            oldUsername: this.oldEmail,
 	            password: this.password,
 	            dateOfBirth: (new Date(this.dateOfBirth)).getTime(),
 	            bio: this.bio

@@ -598,15 +598,15 @@ var UserSchema = function(dbDriver) {
         if (req.body.password === "") { // password is unchanged
             if (req.body.profilePic) { // profile picture is changed
                 session
-                    .run("MATCH (u:User) WHERE u.username = {oldUsername} \
+                    .run("MATCH (u:User) WHERE u.id = {id} \
                         SET u.name = {name}, \
                             u.username = {username}, \
                             u.dateOfBirth = {dateOfBirth}, \
                             u.bio = {bio}, \
                             u.profilePic = {profilePic}",
                             {
+                                id: req.body.id,
                                 name: req.body.name,
-                                oldUsername: req.body.oldUsername,
                                 username: req.body.username,
                                 dateOfBirth: req.body.dateOfBirth,
                                 bio: req.body.bio,
@@ -626,14 +626,14 @@ var UserSchema = function(dbDriver) {
                     }); 
             } else { // profile picture remains unchanged
                 session
-                    .run("MATCH (u:User) WHERE u.username = {oldUsername} \
+                    .run("MATCH (u:User) WHERE u.id = {id} \
                         SET u.name = {name}, \
                             u.username = {username}, \
                             u.dateOfBirth = {dateOfBirth}, \
                             u.bio = {bio}",
                             {
+                                id: req.body.id,
                                 name: req.body.name,
-                                oldUsername: req.body.oldUsername,
                                 username: req.body.username,
                                 dateOfBirth: req.body.dateOfBirth,
                                 bio: req.body.bio
@@ -654,7 +654,7 @@ var UserSchema = function(dbDriver) {
         } else { // change password
             if (req.body.profilePic) { // profile picture is changed
                 session
-                    .run("MATCH (u:User) WHERE u.username = {oldUsername} \
+                    .run("MATCH (u:User) WHERE u.id = {id} \
                         SET u.name = {name}, \
                             u.username = {username}, \
                             u.dateOfBirth = {dateOfBirth}, \
@@ -662,8 +662,8 @@ var UserSchema = function(dbDriver) {
                             u.password = {password}, \
                             u.profilePic = {profilePic}", 
                             {
+                                id: req.body.id,
                                 name: req.body.name,
-                                oldUsername: req.body.oldUsername,
                                 username: req.body.username,
                                 password: this._generateHash(req.body.password),
                                 dateOfBirth: req.body.dateOfBirth,
@@ -684,15 +684,15 @@ var UserSchema = function(dbDriver) {
                     });
             } else { // profile picture is unchanged
                 session
-                    .run("MATCH (u:User) WHERE u.username = {oldUsername} \
+                    .run("MATCH (u:User) WHERE u.id = {id} \
                         SET u.name = {name}, \
                             u.username = {username}, \
                             u.dateOfBirth = {dateOfBirth}, \
                             u.bio = {bio}, \
                             u.password = {password}", 
                             {
+                                id: req.body.id,
                                 name: req.body.name,
-                                oldUsername: req.body.oldUsername,
                                 username: req.body.username,
                                 password: this._generateHash(req.body.password),
                                 dateOfBirth: req.body.dateOfBirth,

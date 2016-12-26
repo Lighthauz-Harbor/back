@@ -37,7 +37,7 @@ export class UserService {
 
     updateUser(details: any): Observable<any> {
         return this.http.put(
-            `/api/users/update/${details.oldUsername}`, 
+            `/api/users/update/${details.id}`, 
             details)
                 .map(this.parseJSON);
     }
