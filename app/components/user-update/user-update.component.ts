@@ -11,8 +11,7 @@ import {ImageService} from "../../services/image.service";
 export class UpdateUserComponent implements OnInit {
 
     private id: string;
-    private firstName: string;
-    private lastName: string;
+    private fullName: string;
     private email: string;
     private password: string;
     private repeatPassword: string;
@@ -41,11 +40,7 @@ export class UpdateUserComponent implements OnInit {
                         this.router.navigate(["/users"]);
                     } else {
                         this.email = json.username;
-
-                        let name = json.name.split(" ");
-                        let len = name.length;
-                        this.firstName = name[0];
-                        this.lastName = name[len - 1];
+                        this.fullName = json.name;
 
                         this.dateOfBirth = new Date(json.dateOfBirth);
                         this.dobStr = this.dateOfBirth.toISOString().slice(0, 10);
@@ -65,7 +60,7 @@ export class UpdateUserComponent implements OnInit {
 
         let reqBody: any = {
             id: this.id,
-            name: this.firstName + " " + this.lastName, 
+            name: this.fullName, 
             username: this.email,
             password: this.password, 
             dateOfBirth: (new Date(this.dateOfBirth)).getTime(),
