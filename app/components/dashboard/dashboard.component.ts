@@ -2,9 +2,9 @@ import { Component, OnInit } from "@angular/core";
 
 import { Report } from "../../models/report.model.app";
 
-import { UsersService } from "../../services/users.service";
-import { IdeasService } from "../../services/ideas.service";
-import { ReportsService } from "../../services/reports.service";
+import { UserService } from "../../services/user.service";
+import { IdeaService } from "../../services/idea.service";
+import { ReportService } from "../../services/report.service";
 
 @Component({
     selector: "dashboard",
@@ -22,9 +22,9 @@ export class DashboardComponent implements OnInit {
     private reportsList: Report[] = [];
 
     constructor(
-        private usersService: UsersService,
-        private ideasService: IdeasService,
-        private reportsService: ReportsService) {
+        private usersService: UserService,
+        private ideasService: IdeaService,
+        private reportsService: ReportService) {
 
     }
 

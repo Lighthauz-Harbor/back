@@ -3,8 +3,8 @@ import { Router, ActivatedRoute, Params } from "@angular/router";
 
 import { Idea } from "../../models/idea.model.app";
 
-import { UsersService } from "../../services/users.service";
-import { IdeasService } from "../../services/ideas.service";
+import { UserService } from "../../services/user.service";
+import { IdeaService } from "../../services/idea.service";
 
 @Component({
     selector: "user-ideas",
@@ -20,8 +20,8 @@ export class UserIdeasComponent implements OnInit {
     constructor(
         private router: Router,
         private route: ActivatedRoute,
-        private usersService: UsersService,
-        private ideasService: IdeasService) {
+        private usersService: UserService,
+        private ideasService: IdeaService) {
 
     }
 

@@ -4,7 +4,7 @@ import { Router, ActivatedRoute, Params } from "@angular/router";
 import { Idea } from "../../models/idea.model.app";
 import { User } from "../../models/user.model.app";
 
-import { IdeasService } from "../../services/ideas.service";
+import { IdeaService } from "../../services/idea.service";
 
 @Component({
     selector: "idea-details",
@@ -19,14 +19,14 @@ export class IdeaDetailsComponent implements OnInit {
     constructor(
         private route: ActivatedRoute,
         private router: Router,
-        private ideasService: IdeasService) {
+        private ideaService: IdeaService) {
 
     }
 
     ngOnInit(): void {
         this.route.params.forEach((params: Params) => {
             let id = params["id"];
-            this.ideasService.getSingleIdea(id)
+            this.ideaService.getSingleIdea(id)
                 .subscribe((json: any) => {
                     if (json.fail) {
                         alert(json.fail);

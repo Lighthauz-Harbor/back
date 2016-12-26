@@ -3,7 +3,7 @@ import { Router } from "@angular/router";
 
 import { User } from "../../models/user.model.app";
 
-import { UsersService } from "../../services/users.service";
+import { UserService } from "../../services/user.service";
 import { ImageService } from "../../services/image.service";
 
 @Component({
@@ -26,7 +26,7 @@ export class CreateUserComponent {
 
     constructor(
         private router: Router,
-        private usersService: UsersService,
+        private usersService: UserService,
         private imageService: ImageService) {
 
    } 

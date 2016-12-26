@@ -7,7 +7,7 @@ import { PageNotFoundComponent } from
     "./components/not-found/not-found.component";
 
 import { UsersListComponent } from
-    "./components/users-list/users-list.component";
+    "./components/user-list/user-list.component";
 import { UserDetailsComponent } from
     "./components/user-details/user-details.component";
 import { CreateUserComponent } from
@@ -25,8 +25,8 @@ import { DeactivateUserComponent } from
 import { ReactivateUserComponent } from
     "./components/user-reactivate/user-reactivate.component";
 
-import { IdeasListComponent } from
-    "./components/ideas-list/ideas-list.component";
+import { IdeaListComponent } from
+    "./components/idea-list/idea-list.component";
 import { IdeaDetailsComponent } from
     "./components/idea-details/idea-details.component";
 import { CreateIdeaComponent } from
@@ -39,7 +39,7 @@ import { IdeaPartnersComponent } from
     "./components/idea-partners/idea-partners.component";
 
 import { ReportsListComponent } from
-    "./components/reports-list/reports-list.component";
+    "./components/report-list/report-list.component";
 import { ViewReportComponent } from
     "./components/report-view/report-view.component";
 import { ReplyToReportComponent } from
@@ -106,7 +106,7 @@ const routes: Routes = [
         children: [
             {
                 path: "",
-                component: IdeasListComponent
+                component: IdeaListComponent
             },
             {
                 path: "create",

@@ -2,19 +2,19 @@ import { Component, OnInit } from "@angular/core";
 
 import { Report } from "../../models/report.model.app";
 
-import { ReportsService } from "../../services/reports.service";
+import { ReportService } from "../../services/report.service";
 
 @Component({
-    selector: "reports-list",
-    templateUrl: "./reports-list.component.html",
-    styles: [ require("./reports-list.component.css").toString() ]
+    selector: "report-list",
+    templateUrl: "report-list.component.html",
+    styles: [ require("./report-list.component.css").toString() ]
 })
 export class ReportsListComponent implements OnInit {
 
     private list: Report[] = [];
     private message: string = "";
 
-    constructor(private reportsService: ReportsService) {
+    constructor(private reportService: ReportService) {
 
     }
 
@@ -26,7 +26,7 @@ export class ReportsListComponent implements OnInit {
         // renew list every load
         this.list = [];
 
-        this.reportsService.getList().subscribe((json: any) => {
+        this.reportService.getList().subscribe((json: any) => {
             if (json.fail) {
                 this.message = json.fail;
             } else if (json.reports.length === 0) {

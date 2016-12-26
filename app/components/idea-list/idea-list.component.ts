@@ -2,20 +2,20 @@ import { Component, OnInit } from "@angular/core";
 
 import { Idea } from "../../models/idea.model.app";
 
-import { IdeasService } from "../../services/ideas.service";
+import { IdeaService } from "../../services/idea.service";
 
 @Component({
-    selector: "ideas-list",
-    templateUrl: "./ideas-list.component.html",
-    styles: [ require("./ideas-list.component.css").toString() ]
+    selector: "idea-list",
+    templateUrl: "idea-list.component.html",
+    styles: [ require("./idea-list.component.css").toString() ]
 })
-export class IdeasListComponent implements OnInit {
+export class IdeaListComponent implements OnInit {
 
     private list: Idea[] = [];
     private toggleAll: boolean = false;
     private message: string = "";
 
-    constructor(private ideasService: IdeasService) {
+    constructor(private ideaService: IdeaService) {
 
     }
 
@@ -27,7 +27,7 @@ export class IdeasListComponent implements OnInit {
         // renew list every load
         this.list = [];
 
-        this.ideasService.getList().subscribe((json: any) => {
+        this.ideaService.getList().subscribe((json: any) => {
             if (json.fail) {
                 this.message = json.fail;
             } else if (json.results.length === 0) {
@@ -59,7 +59,7 @@ export class IdeasListComponent implements OnInit {
         // renew list every load
         this.list = [];
 
-        this.ideasService.searchIdea(term)
+        this.ideaService.searchIdea(term)
             .subscribe((result: any) => {
                 if (result.fail) {
                     this.message = result.fail;
@@ -103,7 +103,7 @@ export class IdeasListComponent implements OnInit {
         if (selectedIds.length === 0) {
             alert("Please select the ideas to delete first!");
         } else {
-            this.ideasService.deleteIdeas(selectedIds)
+            this.ideaService.deleteIdeas(selectedIds)
                 .subscribe((json: any) => {
                     alert(json.message);
                     this.loadIdeasList();

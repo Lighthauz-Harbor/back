@@ -3,12 +3,12 @@ import { Component, OnInit } from "@angular/core";
 import { Observable } from "rxjs";
 
 import { User } from "../../models/user.model.app";
-import { UsersService } from "../../services/users.service";
+import { UserService } from "../../services/user.service";
 
 @Component({
-    selector: "users-list",
-    templateUrl: "./users-list.component.html",
-    styles: [ require("./users-list.component.css").toString() ]
+    selector: "user-list",
+    templateUrl: "user-list.component.html",
+    styles: [ require("./user-list.component.css").toString() ]
 })
 export class UsersListComponent implements OnInit {
 
@@ -16,7 +16,7 @@ export class UsersListComponent implements OnInit {
     private toggleAll: boolean = false;
     private message: string = "";
 
-    constructor(private usersService: UsersService) {
+    constructor(private usersService: UserService) {
 
     }
 

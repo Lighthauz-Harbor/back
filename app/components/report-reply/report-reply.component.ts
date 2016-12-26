@@ -3,7 +3,7 @@ import { Router, ActivatedRoute, Params } from "@angular/router";
 
 import { Report } from "../../models/report.model.app";
 
-import { ReportsService } from "../../services/reports.service";
+import { ReportService } from "../../services/report.service";
 
 @Component({
     selector: "reply-to-report",
@@ -22,14 +22,14 @@ export class ReplyToReportComponent implements OnInit {
     constructor(
         private route: ActivatedRoute,
         private router: Router, 
-        private reportsService: ReportsService) {
+        private reportService: ReportService) {
 
     }
 
     ngOnInit(): void {
         this.route.params.forEach((params: Params) => {
             let id = params["id"];
-            this.reportsService.getSingle(id)
+            this.reportService.getSingle(id)
                 .subscribe((json: any) => {
                     if (json.fail) {
                         alert(json.fail);
@@ -49,7 +49,7 @@ export class ReplyToReportComponent implements OnInit {
     onSubmitReply(): void {
         this.report.solved = this.solved === "Yes";
 
-        this.reportsService.replyToReport(
+        this.reportService.replyToReport(
                 this.report.id, this.report.reply, this.report.solved)
             .subscribe((result: any) => {
                 alert(result.message);

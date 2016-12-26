@@ -3,7 +3,7 @@ import { Router, ActivatedRoute, Params } from "@angular/router";
 
 import { User } from "../../models/user.model.app";
 
-import { IdeasService } from "../../services/ideas.service";
+import { IdeaService } from "../../services/idea.service";
 
 @Component({
     selector: "idea-responses",
@@ -22,7 +22,7 @@ export class IdeaResponsesComponent implements OnInit {
     constructor(
         private route: ActivatedRoute,
         private router: Router,
-        private ideasService: IdeasService) {
+        private ideaService: IdeaService) {
 
     }
 
@@ -30,12 +30,12 @@ export class IdeaResponsesComponent implements OnInit {
         this.route.params.forEach((params: Params) => {
             let ideaId = params["id"];
 
-            this.ideasService.getTitle(ideaId)
+            this.ideaService.getTitle(ideaId)
                 .subscribe((json: any) => {
                     this.title = json.fail || json.title;
                 });
 
-            this.ideasService.getLikes(ideaId)
+            this.ideaService.getLikes(ideaId)
                 .subscribe((json: any) => {
                     if (json.fail) {
                         this.likesMessage = json.fail;
@@ -49,7 +49,7 @@ export class IdeaResponsesComponent implements OnInit {
                     }
                 });
 
-            this.ideasService.getComments(ideaId)
+            this.ideaService.getComments(ideaId)
                 .subscribe((json: any) => {
                     if (json.fail) {
                         this.commentsMessage = json.fail;

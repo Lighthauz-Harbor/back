@@ -1,7 +1,7 @@
 import { Component, OnInit } from "@angular/core";
 import { Router, ActivatedRoute, Params } from "@angular/router";
 
-import { UsersService } from "../../services/users.service";
+import { UserService } from "../../services/user.service";
 
 @Component({
     selector: "user-deactivate",
@@ -18,7 +18,7 @@ export class DeactivateUserComponent implements OnInit {
     constructor(
         private router: Router,
         private route: ActivatedRoute,
-        private usersService: UsersService) {
+        private usersService: UserService) {
 
     }
 

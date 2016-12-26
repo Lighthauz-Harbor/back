@@ -13,8 +13,8 @@ import { SidebarComponent } from "./components/sidebar/sidebar.component";
 import { PageNotFoundComponent } from 
     "./components/not-found/not-found.component";
 
-import { UsersListComponent } from     
-    "./components/users-list/users-list.component";
+import { UsersListComponent } from
+    "./components/user-list/user-list.component";
 import { UserDetailsComponent } from 
     "./components/user-details/user-details.component";
 import { CreateUserComponent } from 
@@ -32,8 +32,8 @@ import { DeactivateUserComponent } from
 import { ReactivateUserComponent } from
     "./components/user-reactivate/user-reactivate.component";
 
-import { IdeasListComponent } from
-    "./components/ideas-list/ideas-list.component";
+import { IdeaListComponent } from
+    "./components/idea-list/idea-list.component";
 import { IdeaDetailsComponent } from
     "./components/idea-details/idea-details.component";
 import { CreateIdeaComponent } from
@@ -46,7 +46,7 @@ import { IdeaPartnersComponent } from
     "./components/idea-partners/idea-partners.component";
 
 import { ReportsListComponent } from
-    "./components/reports-list/reports-list.component";
+    "./components/report-list/report-list.component";
 import { ViewReportComponent } from
     "./components/report-view/report-view.component";
 import { ReplyToReportComponent } from
@@ -54,10 +54,10 @@ import { ReplyToReportComponent } from
 
 import { AuthenticationGuard } from "./services/authentication.guard";
 import { AuthenticationService } from "./services/authentication.service";
-import { UsersService } from "./services/users.service";
-import { IdeasService } from "./services/ideas.service";
+import { UserService } from "./services/user.service";
+import { IdeaService } from "./services/idea.service";
 import { ImageService } from "./services/image.service";
-import { ReportsService } from "./services/reports.service";
+import { ReportService } from "./services/report.service";
 
 import "./vendor/vendor"; // vendor.ts file
 
@@ -85,7 +85,7 @@ import "./vendor/vendor"; // vendor.ts file
         UserRequestsComponent,
         DeactivateUserComponent,
         ReactivateUserComponent,
-        IdeasListComponent,
+        IdeaListComponent,
         IdeaDetailsComponent,
         CreateIdeaComponent,
         UpdateIdeaComponent,
@@ -98,10 +98,10 @@ import "./vendor/vendor"; // vendor.ts file
     providers: [ 
         AuthenticationGuard,
         AuthenticationService,
-        UsersService,
-        IdeasService,
+        UserService,
+        IdeaService,
         ImageService,
-        ReportsService,
+        ReportService,
     ],
     bootstrap: [ AppComponent ]
 })

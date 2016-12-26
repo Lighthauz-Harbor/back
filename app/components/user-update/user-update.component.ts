@@ -3,7 +3,7 @@ import { Router, ActivatedRoute, Params } from "@angular/router";
 
 import { User } from "../../models/user.model.app";
 
-import { UsersService } from "../../services/users.service";
+import { UserService } from "../../services/user.service";
 import { ImageService } from "../../services/image.service";
 
 @Component({
@@ -29,7 +29,7 @@ export class UpdateUserComponent implements OnInit {
     constructor(
         private route: ActivatedRoute,
         private router: Router,
-        private usersService: UsersService,
+        private usersService: UserService,
         private imageService: ImageService) {
 
     }

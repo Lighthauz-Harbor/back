@@ -1,7 +1,7 @@
 import { Component } from "@angular/core";
 import { Router } from "@angular/router";
 
-import { IdeasService } from "../../services/ideas.service";
+import { IdeaService } from "../../services/idea.service";
 import { ImageService } from "../../services/image.service";
 
 @Component({
@@ -39,7 +39,7 @@ export class CreateIdeaComponent {
 
     constructor(
         private router: Router,
-        private ideasService: IdeasService,
+        private ideaService: IdeaService,
         private imageService: ImageService) {
 
     }
@@ -107,7 +107,7 @@ export class CreateIdeaComponent {
     }
 
     private requestToCreate(reqBody: any) {
-        this.ideasService.createIdea(reqBody).subscribe((res: any) => {
+        this.ideaService.createIdea(reqBody).subscribe((res: any) => {
             alert(res.message);
             this.router.navigate(["/ideas"]);
         });

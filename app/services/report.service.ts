@@ -4,7 +4,7 @@ import { Http, Headers, Response } from "@angular/http";
 import { Observable } from "rxjs";
 
 @Injectable()
-export class ReportsService {
+export class ReportService {
 
     constructor(private http: Http) {
 

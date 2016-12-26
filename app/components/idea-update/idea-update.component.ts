@@ -3,7 +3,7 @@ import { Router, ActivatedRoute, Params } from "@angular/router";
 
 import { Idea } from "../../models/idea.model.app";
 
-import { IdeasService } from "../../services/ideas.service";
+import { IdeaService } from "../../services/idea.service";
 import { ImageService } from "../../services/image.service";
 
 @Component({
@@ -46,7 +46,7 @@ export class UpdateIdeaComponent implements OnInit {
     constructor(
         private route: ActivatedRoute,
         private router: Router,
-        private ideasService: IdeasService,
+        private ideaService: IdeaService,
         private imageService: ImageService) {
 
     }
@@ -54,7 +54,7 @@ export class UpdateIdeaComponent implements OnInit {
     ngOnInit(): void {
         this.route.params.forEach((params: Params) => {
             this.id = params["id"];
-            this.ideasService.getSingleIdea(this.id)
+            this.ideaService.getSingleIdea(this.id)
                 .subscribe((json: any) => {
                     if (json.fail) {
                         alert(json.fail);
@@ -156,7 +156,7 @@ export class UpdateIdeaComponent implements OnInit {
     }
 
     private requestToUpdate(reqBody: any) {
-        this.ideasService.updateIdea(reqBody).subscribe((result: any) => {
+        this.ideaService.updateIdea(reqBody).subscribe((result: any) => {
             alert(result.message);
             this.router.navigate(["/ideas"]);
         });

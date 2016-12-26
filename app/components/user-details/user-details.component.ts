@@ -3,7 +3,7 @@ import { Router, ActivatedRoute, Params } from "@angular/router";
 
 import { User } from "../../models/user.model.app";
 
-import { UsersService } from "../../services/users.service";
+import { UserService } from "../../services/user.service";
 
 @Component({
     selector: "user-details",
@@ -19,7 +19,7 @@ export class UserDetailsComponent implements OnInit {
     constructor(
         private route: ActivatedRoute,
         private router: Router,
-        private usersService: UsersService) {
+        private usersService: UserService) {
 
     }
 
