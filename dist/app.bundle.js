@@ -28316,12 +28316,12 @@ webpackJsonp([0],{
 	var forms_1 = __webpack_require__(25);
 	var http_1 = __webpack_require__(29);
 	var routing_module_1 = __webpack_require__(30);
-	var app_component_1 = __webpack_require__(450);
-	var header_component_1 = __webpack_require__(454);
+	var app_component_1 = __webpack_require__(446);
+	var header_component_1 = __webpack_require__(450);
 	var login_component_1 = __webpack_require__(61);
 	var dashboard_component_1 = __webpack_require__(362);
-	var footer_component_1 = __webpack_require__(458);
-	var sidebar_component_1 = __webpack_require__(462);
+	var footer_component_1 = __webpack_require__(454);
+	var sidebar_component_1 = __webpack_require__(458);
 	var not_found_component_1 = __webpack_require__(370);
 	var user_list_component_1 = __webpack_require__(374);
 	var user_details_component_1 = __webpack_require__(379);
@@ -28329,24 +28329,24 @@ webpackJsonp([0],{
 	var user_update_component_1 = __webpack_require__(388);
 	var user_ideas_component_1 = __webpack_require__(392);
 	var user_connections_component_1 = __webpack_require__(397);
-	var user_deactivate_component_1 = __webpack_require__(405);
-	var user_reactivate_component_1 = __webpack_require__(409);
-	var idea_list_component_1 = __webpack_require__(413);
-	var idea_details_component_1 = __webpack_require__(417);
-	var idea_create_component_1 = __webpack_require__(421);
-	var idea_update_component_1 = __webpack_require__(425);
-	var idea_responses_component_1 = __webpack_require__(429);
-	var idea_partners_component_1 = __webpack_require__(433);
-	var report_list_component_1 = __webpack_require__(437);
-	var report_view_component_1 = __webpack_require__(441);
-	var report_reply_component_1 = __webpack_require__(445);
-	var authentication_guard_1 = __webpack_require__(449);
+	var user_deactivate_component_1 = __webpack_require__(401);
+	var user_reactivate_component_1 = __webpack_require__(405);
+	var idea_list_component_1 = __webpack_require__(409);
+	var idea_details_component_1 = __webpack_require__(413);
+	var idea_create_component_1 = __webpack_require__(417);
+	var idea_update_component_1 = __webpack_require__(421);
+	var idea_responses_component_1 = __webpack_require__(425);
+	var idea_partners_component_1 = __webpack_require__(429);
+	var report_list_component_1 = __webpack_require__(433);
+	var report_view_component_1 = __webpack_require__(437);
+	var report_reply_component_1 = __webpack_require__(441);
+	var authentication_guard_1 = __webpack_require__(445);
 	var authentication_service_1 = __webpack_require__(62);
 	var user_service_1 = __webpack_require__(364);
 	var idea_service_1 = __webpack_require__(365);
 	var image_service_1 = __webpack_require__(384);
 	var report_service_1 = __webpack_require__(366);
-	__webpack_require__(466); // vendor.ts file
+	__webpack_require__(462); // vendor.ts file
 	var AppModule = (function () {
 	    function AppModule() {
 	    }
@@ -36237,18 +36237,18 @@ webpackJsonp([0],{
 	var user_update_component_1 = __webpack_require__(388);
 	var user_ideas_component_1 = __webpack_require__(392);
 	var user_connections_component_1 = __webpack_require__(397);
-	var user_deactivate_component_1 = __webpack_require__(405);
-	var user_reactivate_component_1 = __webpack_require__(409);
-	var idea_list_component_1 = __webpack_require__(413);
-	var idea_details_component_1 = __webpack_require__(417);
-	var idea_create_component_1 = __webpack_require__(421);
-	var idea_update_component_1 = __webpack_require__(425);
-	var idea_responses_component_1 = __webpack_require__(429);
-	var idea_partners_component_1 = __webpack_require__(433);
-	var report_list_component_1 = __webpack_require__(437);
-	var report_view_component_1 = __webpack_require__(441);
-	var report_reply_component_1 = __webpack_require__(445);
-	var authentication_guard_1 = __webpack_require__(449);
+	var user_deactivate_component_1 = __webpack_require__(401);
+	var user_reactivate_component_1 = __webpack_require__(405);
+	var idea_list_component_1 = __webpack_require__(409);
+	var idea_details_component_1 = __webpack_require__(413);
+	var idea_create_component_1 = __webpack_require__(417);
+	var idea_update_component_1 = __webpack_require__(421);
+	var idea_responses_component_1 = __webpack_require__(425);
+	var idea_partners_component_1 = __webpack_require__(429);
+	var report_list_component_1 = __webpack_require__(433);
+	var report_view_component_1 = __webpack_require__(437);
+	var report_reply_component_1 = __webpack_require__(441);
+	var authentication_guard_1 = __webpack_require__(445);
 	var routes = [
 	    {
 	        path: "dashboard",
@@ -43661,7 +43661,7 @@ webpackJsonp([0],{
 
 /***/ },
 
-/***/ 405:
+/***/ 401:
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -43709,8 +43709,8 @@ webpackJsonp([0],{
 	DeactivateUserComponent = __decorate([
 	    core_1.Component({
 	        selector: "user-deactivate",
-	        template: __webpack_require__(406),
-	        styles: [__webpack_require__(407).toString()]
+	        template: __webpack_require__(402),
+	        styles: [__webpack_require__(403).toString()]
 	    }),
 	    __metadata("design:paramtypes", [router_1.Router,
 	        router_1.ActivatedRoute,
@@ -43721,21 +43721,21 @@ webpackJsonp([0],{
 
 /***/ },
 
-/***/ 406:
+/***/ 402:
 /***/ function(module, exports) {
 
 	module.exports = "<div class=\"content-dashboard\">\r\n    <div class=\"title-dashboard\">\r\n        <h1>Deactivate a user: {{name || \"Loading...\"}}</h1>\r\n        <h2>\r\n            <strong>NOTE:</strong> You are working on a critical action. <strong>Please do this carefully.</strong><br>\r\n            In the following form, write a message to the user, explaining why they should be deactivated.<br>\r\n            After you submit it, an email will be sent to the user, and they will no longer be able to login.<br>\r\n        </h2>\r\n        <h2>\r\n            Note that when they are blocked, you will also be given an option to re-activate the user.<br>\r\n            When re-activated, they may log in to Lighthauz again. So, re-activate if you have a strong reason.\r\n        </h2>\r\n    </div>\r\n\r\n    <div class=\"form-wrapper-dashboard\">\r\n        <form class=\"form-dashboard form-deactivate\"\r\n            (ngSubmit)=\"onSubmitDeactivationRequest()\"\r\n            #deactivationForm=\"ngForm\">\r\n\r\n            <div class=\"form-group\">\r\n                <div class=\"form-col-2\">\r\n                    <label for=\"description\">Message/reason: (*)</label>\r\n                    <textarea name=\"description\" [(ngModel)]=\"reason\" required></textarea>\r\n                </div>\r\n            </div>\r\n\r\n            <div class=\"form-group\">\r\n                <button type=\"submit\">Submit</button>\r\n            </div>\r\n            \r\n        </form>\r\n    </div>\r\n</div>"
 
 /***/ },
 
-/***/ 407:
+/***/ 403:
 /***/ function(module, exports) {
 
 	// removed by extract-text-webpack-plugin
 
 /***/ },
 
-/***/ 409:
+/***/ 405:
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -43783,8 +43783,8 @@ webpackJsonp([0],{
 	ReactivateUserComponent = __decorate([
 	    core_1.Component({
 	        selector: "user-reactivate",
-	        template: __webpack_require__(410),
-	        styles: [__webpack_require__(411).toString()]
+	        template: __webpack_require__(406),
+	        styles: [__webpack_require__(407).toString()]
 	    }),
 	    __metadata("design:paramtypes", [router_1.Router,
 	        router_1.ActivatedRoute,
@@ -43795,21 +43795,21 @@ webpackJsonp([0],{
 
 /***/ },
 
-/***/ 410:
+/***/ 406:
 /***/ function(module, exports) {
 
 	module.exports = "<div class=\"content-dashboard\">\r\n    <div class=\"title-dashboard\">\r\n        <h1>Re-activate a user: {{name || \"Loading...\"}}</h1>\r\n        <h2>\r\n            <strong>NOTE:</strong> You are working on a critical action. <strong>Please do this carefully.</strong><br>\r\n            In the following form, write a message to the user, explaining why they should be activated again.<br>\r\n            After you submit it, an email will be sent to the user, and they will be allowed to log in again.<br>\r\n        </h2>\r\n    </div>\r\n\r\n    <div class=\"form-wrapper-dashboard\">\r\n        <form class=\"form-dashboard form-reactivate\"\r\n            (ngSubmit)=\"onSubmitReactivationRequest()\"\r\n            #reactivationForm=\"ngForm\">\r\n\r\n            <div class=\"form-group\">\r\n                <div class=\"form-col-2\">\r\n                    <label for=\"description\">Message/reason: (*)</label>\r\n                    <textarea name=\"description\" [(ngModel)]=\"reason\" required></textarea>\r\n                </div>\r\n            </div>\r\n\r\n            <div class=\"form-group\">\r\n                <button type=\"submit\">Submit</button>\r\n            </div>\r\n            \r\n        </form>\r\n    </div>\r\n</div>"
 
 /***/ },
 
-/***/ 411:
+/***/ 407:
 /***/ function(module, exports) {
 
 	// removed by extract-text-webpack-plugin
 
 /***/ },
 
-/***/ 413:
+/***/ 409:
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -43924,8 +43924,8 @@ webpackJsonp([0],{
 	IdeaListComponent = __decorate([
 	    core_1.Component({
 	        selector: "idea-list",
-	        template: __webpack_require__(414),
-	        styles: [__webpack_require__(415).toString()]
+	        template: __webpack_require__(410),
+	        styles: [__webpack_require__(411).toString()]
 	    }),
 	    __metadata("design:paramtypes", [idea_service_1.IdeaService])
 	], IdeaListComponent);
@@ -43934,21 +43934,21 @@ webpackJsonp([0],{
 
 /***/ },
 
-/***/ 414:
+/***/ 410:
 /***/ function(module, exports) {
 
 	module.exports = "<div class=\"content-dashboard\">\r\n    <div class=\"title-dashboard\">\r\n        <h1>List of Ideas</h1>\r\n        <h2>Click on a idea's name to read and edit its data.<br>\r\n            Click the checkboxes to select multiple ideas and delete them.<br>\r\n            You can also search for a idea. Empty the box and press Enter to view the complete list again.</h2>\r\n    </div>\r\n\r\n    <div class=\"panel-dashboard\">\r\n        <a routerLink=\"/ideas/create\" class=\"btn-create\">Create idea</a>\r\n        <a (click)=\"deleteSelectedIdeas()\" class=\"btn-delete\">Delete idea(s)</a>\r\n        <input #searchIdea type=\"text\"\r\n            name=\"search-idea\"\r\n            class=\"search-panel\"\r\n            placeholder=\"Search idea title and press Enter.\"\r\n            (keyup.enter)=\"search(searchIdea.value)\">\r\n    </div>\r\n\r\n    <div class=\"body-dashboard\">\r\n        <table>\r\n            <thead>\r\n                <tr>\r\n                    <th>\r\n                        <input type=\"checkbox\"\r\n                            class=\"cb-toggle-all\"\r\n                            [checked]=\"toggleAll\"\r\n                            (change)=\"toggleAllIdeas()\">\r\n                    </th>\r\n                    <th>Idea title</th>\r\n                    <th>Description</th>\r\n                    <th>Author</th>\r\n                    <th>Last modified at</th>\r\n                </tr>\r\n            </thead>\r\n            <tbody *ngIf=\"list.length <= 0\">\r\n                <tr>\r\n                    <td class=\"table-message\" colspan=\"5\">\r\n                        {{message}}\r\n                    </td>\r\n                </tr>\r\n            </tbody>\r\n            <tbody *ngIf=\"list.length > 0\">\r\n                <tr *ngFor=\"let idea of list\">\r\n                    <td>\r\n                        <input type=\"checkbox\" \r\n                            class=\"cb-select\"\r\n                            [(ngModel)]=\"idea.selected\"\r\n                            (change)=\"cancelToggleAll()\">\r\n                    </td>\r\n                    <td>\r\n                        <a [routerLink]=\"[idea.id]\">\r\n                            {{idea.title}}\r\n                        </a>\r\n                    </td>\r\n                    <td>\r\n                        {{idea.description.length < 37 ?\r\n                            idea.description :\r\n                            (idea.description.slice(0, 37) + \"...\")}}\r\n                    </td>\r\n                    <td>\r\n                        <a [routerLink]=\"['/users', idea.author.id]\">\r\n                            {{idea.author.name}}\r\n                        </a>\r\n                    </td>\r\n                    <td>{{idea.lastChanged.toDateString()}}</td>\r\n                </tr>\r\n            </tbody>\r\n        </table>\r\n    </div>\r\n</div>"
 
 /***/ },
 
-/***/ 415:
+/***/ 411:
 /***/ function(module, exports) {
 
 	// removed by extract-text-webpack-plugin
 
 /***/ },
 
-/***/ 417:
+/***/ 413:
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -44023,8 +44023,8 @@ webpackJsonp([0],{
 	IdeaDetailsComponent = __decorate([
 	    core_1.Component({
 	        selector: "idea-details",
-	        template: __webpack_require__(418),
-	        styles: [__webpack_require__(419).toString()]
+	        template: __webpack_require__(414),
+	        styles: [__webpack_require__(415).toString()]
 	    }),
 	    __metadata("design:paramtypes", [router_1.ActivatedRoute,
 	        router_1.Router,
@@ -44035,21 +44035,21 @@ webpackJsonp([0],{
 
 /***/ },
 
-/***/ 418:
+/***/ 414:
 /***/ function(module, exports) {
 
 	module.exports = "<div class=\"content-dashboard\">\r\n    <div class=\"title-dashboard\">\r\n        <h1>Idea details: {{idea.title || \"Loading...\"}}</h1>\r\n        <h2>\r\n            Read the details of the business idea here.<br>\r\n            To take action upon the idea (view additional details or edit it), simply navigate to Actions and choose a link there.\r\n        </h2>\r\n    </div>\r\n\r\n    <div class=\"actions-dashboard\">\r\n        <h2>Actions</h2>\r\n        <ul class=\"list-actions\">\r\n            <li>\r\n                <a [routerLink]=\"['update']\">Update idea information</a>\r\n            </li>\r\n            <li>\r\n                <a [routerLink]=\"['responses']\">View likes and comments</a>\r\n            </li>\r\n            <li>\r\n                <a [routerLink]=\"['partners']\">View partners</a>\r\n            </li>\r\n        </ul>\r\n    </div>\r\n\r\n    <div class=\"details-dashboard\">\r\n        <h2>Business idea information</h2>\r\n        <div class=\"body-dashboard\">\r\n            <div class=\"pic-col-details\">\r\n                <img [src]=\"idea.pic\" alt=\"Idea picture\">\r\n                <p>\r\n                    <strong>Category:</strong> {{idea.category || \"Loading...\"}}\r\n                </p>\r\n            </div>\r\n            <div class=\"info-col-details\">\r\n                <div class=\"info-wrapper basic-info-details\">\r\n                    <h3>Basic information</h3>\r\n                    <p>\r\n                        <strong>Visibility:</strong> \r\n                        {{(idea.visibility === 0) ? \r\n                            \"Not published\" : \r\n                            (idea.visibility === 1) ? \"Exclusive\" : \r\n                                \"Public\"}}\r\n                    </p>\r\n                    <p>\r\n                        <strong>Title:</strong> \r\n                        {{idea.title}}\r\n                    </p>\r\n                    <p>\r\n                        <strong>Description:</strong> \r\n                        {{idea.description}}\r\n                    </p>\r\n                    <p>\r\n                        <strong>Background:</strong> \r\n                        {{idea.background}}\r\n                    </p>\r\n                    <p>\r\n                        <strong>Problem:</strong> \r\n                        {{idea.problem}}\r\n                    </p>\r\n                    <p>\r\n                        <strong>Solution:</strong> \r\n                        {{idea.solution}}\r\n                    </p>\r\n                </div>\r\n                <div class=\"info-wrapper extra-info-details\">\r\n                    <h3>Extra information:</h3>\r\n                    <p>\r\n                        <strong>Extra Link:</strong> \r\n                        {{idea.extraLink || \"No extra link\"}}\r\n                    </p>\r\n                </div>\r\n                <div class=\"info-wrapper bmc-details\">\r\n                    <h3>Business model canvas:</h3>\r\n                    <p>\r\n                        <strong>Value Proposition:</strong> \r\n                        {{idea.valueProposition}}\r\n                    </p>\r\n                    <p>\r\n                        <strong>Customer Segments:</strong> \r\n                        {{idea.customerSegments}}\r\n                    </p>\r\n                    <p>\r\n                        <strong>Customer Relationship:</strong> \r\n                        {{idea.customerRelationships}}\r\n                    </p>\r\n                    <p>\r\n                        <strong>Channels:</strong> \r\n                        {{idea.channels}}\r\n                    </p>\r\n                    <p>\r\n                        <strong>Key Activities:</strong> \r\n                        {{idea.keyActivities}}\r\n                    </p>\r\n                    <p>\r\n                        <strong>Key Resources:</strong> \r\n                        {{idea.keyResources}}\r\n                    </p>\r\n                    <p>\r\n                        <strong>Key Partners:</strong> \r\n                        {{idea.keyPartners}}\r\n                    </p>\r\n                    <p>\r\n                        <strong>Cost Structure:</strong> \r\n                        {{idea.costStructure}}\r\n                    </p>\r\n                    <p>\r\n                        <strong>Revenue Streams:</strong> \r\n                        {{idea.revenueStreams}}\r\n                    </p>\r\n                </div>\r\n                <div class=\"info-wrapper swot-details\">\r\n                    <h3>SWOT analysis:</h3>\r\n                    <p>\r\n                        <strong>Strengths:</strong> \r\n                        {{idea.strengths}}\r\n                    </p>\r\n                    <p>\r\n                        <strong>Weaknesses:</strong> \r\n                        {{idea.weaknesses}}\r\n                    </p>\r\n                    <p>\r\n                        <strong>Opportunities:</strong> \r\n                        {{idea.opportunities}}\r\n                    </p>\r\n                    <p>\r\n                        <strong>Threats:</strong> \r\n                        {{idea.threats}}\r\n                    </p>\r\n                </div>\r\n                <div class=\"info-wrapper other-info-details\">\r\n                    <h3>Other information</h3>\r\n                    <p>\r\n                        <strong>Author:</strong> \r\n                        (You can view their pic and more info by clicking their name)\r\n                    </p>\r\n                    <ul class=\"list-detail\">\r\n                        <li>Name: <a [routerLink]=\"['/users', author.id]\">{{author.name}}</a></li>\r\n                        <li>Email: <a href=\"mailto:{{author.username}}\">{{author.username}}</a></li>\r\n                        <li>Biography: {{author.bio}}</li>\r\n                    </ul>\r\n                    <p>\r\n                        <strong>Last modified at:</strong> \r\n                        {{idea.lastChanged.toString()}}\r\n                    </p>\r\n                </div>\r\n            </div>\r\n        </div>\r\n    </div>\r\n</div>"
 
 /***/ },
 
-/***/ 419:
+/***/ 415:
 /***/ function(module, exports) {
 
 	// removed by extract-text-webpack-plugin
 
 /***/ },
 
-/***/ 421:
+/***/ 417:
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -44177,8 +44177,8 @@ webpackJsonp([0],{
 	CreateIdeaComponent = __decorate([
 	    core_1.Component({
 	        selector: "idea-create",
-	        template: __webpack_require__(422),
-	        styles: [__webpack_require__(423).toString()]
+	        template: __webpack_require__(418),
+	        styles: [__webpack_require__(419).toString()]
 	    }),
 	    __metadata("design:paramtypes", [router_1.Router,
 	        idea_service_1.IdeaService,
@@ -44189,21 +44189,21 @@ webpackJsonp([0],{
 
 /***/ },
 
-/***/ 422:
+/***/ 418:
 /***/ function(module, exports) {
 
 	module.exports = "<div class=\"content-dashboard\">\r\n    <div class=\"title-dashboard\">\r\n        <h1>Create an idea</h1>\r\n        <h2>\r\n            <strong>NOTE:</strong> Creating an idea is for development purposes or other urgent matters. So use with care.\r\n            <br>\r\n            Enter the details below to create an new idea. Fields marked with (*) are <strong>required.</strong>\r\n        </h2>\r\n    </div>\r\n\r\n    <div class=\"form-wrapper-dashboard\">\r\n        <form class=\"form-dashboard form-idea\" (ngSubmit)=\"onSubmitIdea()\" #ideaForm=\"ngForm\">\r\n\r\n            <div class=\"basic-info-form\">\r\n                <h2>Basic information</h2>\r\n\r\n                <div class=\"form-group\">\r\n                    <div class=\"form-col-1\">\r\n                        <label for=\"title\">Title: (*)</label>\r\n                        <input type=\"text\" name=\"title\" [(ngModel)]=\"title\" required>\r\n                    </div>\r\n                    <div class=\"form-col-1\">\r\n                        <label for=\"category\">Category: (*)</label>\r\n                        <input type=\"text\" name=\"category\" [(ngModel)]=\"category\" required>\r\n                    </div>\r\n                </div>\r\n\r\n                <div class=\"form-group\">\r\n                    <div class=\"form-col-1\">\r\n                        <label for=\"visibility\">Visibility: (*)</label>\r\n                        <select name=\"visibility\"\r\n                            [(ngModel)]=\"visibility\"\r\n                            required>\r\n                            <option *ngFor=\"let v of visibilityChoices\"\r\n                                [value]=\"v\">{{v}}</option>\r\n                        </select>\r\n                    </div>\r\n                    <div class=\"form-col-1\">\r\n                        <label for=\"author\">Author's email - <em>must be an existing user</em>: (*)</label>\r\n                        <input type=\"text\" name=\"author\" [(ngModel)]=\"author\" required>\r\n                    </div>\r\n                </div>\r\n\r\n                <div class=\"form-group\">\r\n                    <div class=\"form-col-2\">\r\n                        <label for=\"description\">Description: (*)</label>\r\n                        <textarea name=\"description\" [(ngModel)]=\"description\" required></textarea>\r\n                    </div>\r\n                </div>\r\n\r\n                <div class=\"form-group\">\r\n                    <div class=\"form-col-2\">\r\n                        <label for=\"background\">Background: (*)</label>\r\n                        <textarea name=\"background\" [(ngModel)]=\"background\" required></textarea>\r\n                    </div>\r\n                </div>\r\n\r\n                <div class=\"form-group\">\r\n                    <div class=\"form-col-1\">\r\n                        <label for=\"problem\">Problem: (*)</label>\r\n                        <textarea name=\"problem\" [(ngModel)]=\"problem\" required></textarea>\r\n                    </div>\r\n                    <div class=\"form-col-1\">\r\n                        <label for=\"solution\">Solution: (*)</label>\r\n                        <textarea name=\"solution\" [(ngModel)]=\"solution\" required></textarea> \r\n                    </div>\r\n                </div>\r\n            </div>\r\n\r\n            <div class=\"extra-info-form\">\r\n                <h2>Extra information (optional)</h2>\r\n\r\n                <div class=\"form-group\">\r\n                    <div class=\"form-col-1\">\r\n                        <label for=\"extraLink\">Extra link: (in valid URL format)</label>\r\n                        <input type=\"text\" name=\"extraLink\" [(ngModel)]=\"extraLink\">\r\n                    </div>\r\n                    <div class=\"form-col-1\">\r\n                        <label for=\"pic\">Idea logo / picture: (optional)</label>\r\n                        <input type=\"file\" name=\"pic\" (change)=\"fileChangeEvent($event)\">\r\n                    </div>\r\n                </div>\r\n            </div> \r\n\r\n            <div class=\"swot-form\">\r\n                <h2>SWOT Analysis</h2>\r\n\r\n                <div class=\"form-group\">\r\n                    <div class=\"form-col-1\">\r\n                        <label for=\"strengths\">Strengths: (*)</label>\r\n                        <textarea name=\"strengths\" [(ngModel)]=\"strengths\" required></textarea>\r\n                    </div>\r\n                    <div class=\"form-col-1\">\r\n                        <label for=\"weaknesses\">Weaknesses: (*)</label>\r\n                        <textarea name=\"weaknesses\" [(ngModel)]=\"weaknesses\" required></textarea> \r\n                    </div>\r\n                </div>\r\n\r\n                <div class=\"form-group\">\r\n                    <div class=\"form-col-1\">\r\n                        <label for=\"opportunities\">Opportunities: (*)</label>\r\n                        <textarea name=\"opportunities\" [(ngModel)]=\"opportunities\" required></textarea>\r\n                    </div>\r\n                    <div class=\"form-col-1\">\r\n                        <label for=\"threats\">Threats: (*)</label>\r\n                        <textarea name=\"threats\" [(ngModel)]=\"threats\" required></textarea> \r\n                    </div>\r\n                </div> \r\n            </div>\r\n\r\n            <div class=\"bmc-form\">\r\n                <h2>Business Model Canvas</h2>\r\n\r\n                <div class=\"form-group\">\r\n                    <div class=\"form-col-2\">\r\n                        <label for=\"valueProposition\">Value proposition: (*)</label>\r\n                        <textarea name=\"valueProposition\" [(ngModel)]=\"valueProposition\" required></textarea>\r\n                    </div>\r\n                </div>\r\n\r\n                <div class=\"form-group\">\r\n                    <div class=\"form-col-1\">\r\n                        <label for=\"customerSegments\">Customer segments: (*)</label>\r\n                        <textarea name=\"customerSegments\" [(ngModel)]=\"customerSegments\" required></textarea>\r\n                    </div>\r\n                    <div class=\"form-col-1\">\r\n                        <label for=\"customerRelationships\">Customer relationships: (*)</label>\r\n                        <textarea name=\"customerRelationships\" [(ngModel)]=\"customerRelationships\" required></textarea>\r\n                    </div>\r\n                </div>\r\n\r\n                <div class=\"form-group\">\r\n                    <div class=\"form-col-1\">\r\n                        <label for=\"channels\">Channels: (*)</label>\r\n                        <textarea name=\"channels\" [(ngModel)]=\"channels\" required></textarea>\r\n                    </div>\r\n                    <div class=\"form-col-1\">\r\n                        <label for=\"keyActivities\">Key activities: (*)</label>\r\n                        <textarea name=\"keyActivities\" [(ngModel)]=\"keyActivities\" required></textarea>\r\n                    </div>\r\n                </div>\r\n\r\n                <div class=\"form-group\">\r\n                    <div class=\"form-col-1\">\r\n                        <label for=\"keyResources\">Key resources: (*)</label>\r\n                        <textarea name=\"keyResources\" [(ngModel)]=\"keyResources\" required></textarea>\r\n                    </div>\r\n                    <div class=\"form-col-1\">\r\n                        <label for=\"keyPartners\">Key partners: (*)</label>\r\n                        <textarea name=\"keyPartners\" [(ngModel)]=\"keyPartners\" required></textarea>\r\n                    </div>\r\n                </div>\r\n\r\n                <div class=\"form-group\">\r\n                    <div class=\"form-col-1\">\r\n                        <label for=\"costStructure\">Cost structure: (*)</label>\r\n                        <textarea name=\"costStructure\" [(ngModel)]=\"costStructure\" required></textarea>\r\n                    </div>\r\n                    <div class=\"form-col-1\">\r\n                        <label for=\"revenueStreams\">Revenue streams: (*)</label>\r\n                        <textarea name=\"revenueStreams\" [(ngModel)]=\"revenueStreams\" required></textarea>\r\n                    </div>\r\n                </div>\r\n            </div>\r\n\r\n            <div class=\"submit-form\">\r\n                <div class=\"form-group\">\r\n                    <button type=\"submit\">Submit</button>\r\n                </div>\r\n            </div>\r\n\r\n        </form>\r\n    </div>\r\n</div>"
 
 /***/ },
 
-/***/ 423:
+/***/ 419:
 /***/ function(module, exports) {
 
 	// removed by extract-text-webpack-plugin
 
 /***/ },
 
-/***/ 425:
+/***/ 421:
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -44370,8 +44370,8 @@ webpackJsonp([0],{
 	UpdateIdeaComponent = __decorate([
 	    core_1.Component({
 	        selector: "idea-update",
-	        template: __webpack_require__(426),
-	        styles: [__webpack_require__(427).toString()]
+	        template: __webpack_require__(422),
+	        styles: [__webpack_require__(423).toString()]
 	    }),
 	    __metadata("design:paramtypes", [router_1.ActivatedRoute,
 	        router_1.Router,
@@ -44383,21 +44383,21 @@ webpackJsonp([0],{
 
 /***/ },
 
-/***/ 426:
+/***/ 422:
 /***/ function(module, exports) {
 
 	module.exports = "<div class=\"content-dashboard\">\r\n    <div class=\"title-dashboard\">\r\n        <h1>Update an idea: {{title || \"Loading...\"}}</h1>\r\n        <h2>\r\n            <strong>NOTE:</strong> Updating an idea is for development purposes or other urgent matters. So use with care.\r\n            <br>\r\n            Enter the details below to update an new idea. Fields marked with (*) are <strong>required.</strong>\r\n            <br>\r\n            Only edit the fields you want to update, leave the rest untouched.\r\n        </h2>\r\n    </div>\r\n\r\n    <div class=\"form-wrapper-dashboard\">\r\n        <form class=\"form-dashboard form-idea\" (ngSubmit)=\"onSubmitIdea()\" #ideaForm=\"ngForm\">\r\n\r\n            <div class=\"basic-info-form\">\r\n                <h2>Basic information</h2>\r\n\r\n                <div class=\"form-group\">\r\n                    <div class=\"form-col-1\">\r\n                        <label for=\"title\">Title: (*)</label>\r\n                        <input type=\"text\" name=\"title\" [(ngModel)]=\"title\" required>\r\n                    </div>\r\n                    <div class=\"form-col-1\">\r\n                        <label for=\"category\">Category: (*)</label>\r\n                        <input type=\"text\" name=\"category\" [(ngModel)]=\"category\" required>\r\n                    </div>\r\n                </div>\r\n\r\n                <div class=\"form-group\">\r\n                    <div class=\"form-col-1\">\r\n                        <label for=\"visibility\">Visibility: (*)</label>\r\n                        <select name=\"visibility\"\r\n                            [(ngModel)]=\"visibility\"\r\n                            required>\r\n                            <option *ngFor=\"let v of visibilityChoices\"\r\n                                [value]=\"v\">{{v}}</option>\r\n                        </select>\r\n                    </div>\r\n                    <div class=\"form-col-1\">\r\n                        <label for=\"author\">Author's email - <em>must be an existing user</em>: (*)</label>\r\n                        <input type=\"text\" name=\"author\" [(ngModel)]=\"author\" required>\r\n                    </div>\r\n                </div>\r\n\r\n                <div class=\"form-group\">\r\n                    <div class=\"form-col-2\">\r\n                        <label for=\"description\">Description: (*)</label>\r\n                        <textarea name=\"description\" [(ngModel)]=\"description\" required></textarea>\r\n                    </div>\r\n                </div>\r\n\r\n                <div class=\"form-group\">\r\n                    <div class=\"form-col-2\">\r\n                        <label for=\"background\">Background: (*)</label>\r\n                        <textarea name=\"background\" [(ngModel)]=\"background\" required></textarea>\r\n                    </div>\r\n                </div>\r\n\r\n                <div class=\"form-group\">\r\n                    <div class=\"form-col-1\">\r\n                        <label for=\"problem\">Problem: (*)</label>\r\n                        <textarea name=\"problem\" [(ngModel)]=\"problem\" required></textarea>\r\n                    </div>\r\n                    <div class=\"form-col-1\">\r\n                        <label for=\"solution\">Solution: (*)</label>\r\n                        <textarea name=\"solution\" [(ngModel)]=\"solution\" required></textarea> \r\n                    </div>\r\n                </div>\r\n            </div>\r\n\r\n            <div class=\"extra-info-form\">\r\n                <h2>Extra information (optional)</h2>\r\n\r\n                <div class=\"form-group\">\r\n                    <div class=\"form-col-1\">\r\n                        <label for=\"extraLink\">Extra link: (in valid URL format)</label>\r\n                        <input type=\"text\" name=\"extraLink\" [(ngModel)]=\"extraLink\">\r\n                    </div>\r\n                    <div class=\"form-col-1\">\r\n                        <label for=\"pic\">Idea logo / picture: (optional)</label>\r\n                        <input type=\"file\" name=\"pic\" (change)=\"fileChangeEvent($event)\">\r\n                    </div>\r\n                </div>\r\n            </div> \r\n\r\n            <div class=\"swot-form\">\r\n                <h2>SWOT Analysis</h2>\r\n\r\n                <div class=\"form-group\">\r\n                    <div class=\"form-col-1\">\r\n                        <label for=\"strengths\">Strengths: (*)</label>\r\n                        <textarea name=\"strengths\" [(ngModel)]=\"strengths\" required></textarea>\r\n                    </div>\r\n                    <div class=\"form-col-1\">\r\n                        <label for=\"weaknesses\">Weaknesses: (*)</label>\r\n                        <textarea name=\"weaknesses\" [(ngModel)]=\"weaknesses\" required></textarea> \r\n                    </div>\r\n                </div>\r\n\r\n                <div class=\"form-group\">\r\n                    <div class=\"form-col-1\">\r\n                        <label for=\"opportunities\">Opportunities: (*)</label>\r\n                        <textarea name=\"opportunities\" [(ngModel)]=\"opportunities\" required></textarea>\r\n                    </div>\r\n                    <div class=\"form-col-1\">\r\n                        <label for=\"threats\">Threats: (*)</label>\r\n                        <textarea name=\"threats\" [(ngModel)]=\"threats\" required></textarea> \r\n                    </div>\r\n                </div> \r\n            </div>\r\n\r\n            <div class=\"bmc-form\">\r\n                <h2>Business Model Canvas</h2>\r\n\r\n                <div class=\"form-group\">\r\n                    <div class=\"form-col-2\">\r\n                        <label for=\"valueProposition\">Value proposition: (*)</label>\r\n                        <textarea name=\"valueProposition\" [(ngModel)]=\"valueProposition\" required></textarea>\r\n                    </div>\r\n                </div>\r\n\r\n                <div class=\"form-group\">\r\n                    <div class=\"form-col-1\">\r\n                        <label for=\"customerSegments\">Customer segments: (*)</label>\r\n                        <textarea name=\"customerSegments\" [(ngModel)]=\"customerSegments\" required></textarea>\r\n                    </div>\r\n                    <div class=\"form-col-1\">\r\n                        <label for=\"customerRelationships\">Customer relationships: (*)</label>\r\n                        <textarea name=\"customerRelationships\" [(ngModel)]=\"customerRelationships\" required></textarea>\r\n                    </div>\r\n                </div>\r\n\r\n                <div class=\"form-group\">\r\n                    <div class=\"form-col-1\">\r\n                        <label for=\"channels\">Channels: (*)</label>\r\n                        <textarea name=\"channels\" [(ngModel)]=\"channels\" required></textarea>\r\n                    </div>\r\n                    <div class=\"form-col-1\">\r\n                        <label for=\"keyActivities\">Key activities: (*)</label>\r\n                        <textarea name=\"keyActivities\" [(ngModel)]=\"keyActivities\" required></textarea>\r\n                    </div>\r\n                </div>\r\n\r\n                <div class=\"form-group\">\r\n                    <div class=\"form-col-1\">\r\n                        <label for=\"keyResources\">Key resources: (*)</label>\r\n                        <textarea name=\"keyResources\" [(ngModel)]=\"keyResources\" required></textarea>\r\n                    </div>\r\n                    <div class=\"form-col-1\">\r\n                        <label for=\"keyPartners\">Key partners: (*)</label>\r\n                        <textarea name=\"keyPartners\" [(ngModel)]=\"keyPartners\" required></textarea>\r\n                    </div>\r\n                </div>\r\n\r\n                <div class=\"form-group\">\r\n                    <div class=\"form-col-1\">\r\n                        <label for=\"costStructure\">Cost structure: (*)</label>\r\n                        <textarea name=\"costStructure\" [(ngModel)]=\"costStructure\" required></textarea>\r\n                    </div>\r\n                    <div class=\"form-col-1\">\r\n                        <label for=\"revenueStreams\">Revenue streams: (*)</label>\r\n                        <textarea name=\"revenueStreams\" [(ngModel)]=\"revenueStreams\" required></textarea>\r\n                    </div>\r\n                </div>\r\n            </div>\r\n\r\n            <div class=\"submit-form\">\r\n                <div class=\"form-group\">\r\n                    <button type=\"submit\">Submit</button>\r\n                </div>\r\n            </div>\r\n\r\n        </form>\r\n    </div>\r\n</div>"
 
 /***/ },
 
-/***/ 427:
+/***/ 423:
 /***/ function(module, exports) {
 
 	// removed by extract-text-webpack-plugin
 
 /***/ },
 
-/***/ 429:
+/***/ 425:
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -44484,8 +44484,8 @@ webpackJsonp([0],{
 	IdeaResponsesComponent = __decorate([
 	    core_1.Component({
 	        selector: "idea-responses",
-	        template: __webpack_require__(430),
-	        styles: [__webpack_require__(431).toString()]
+	        template: __webpack_require__(426),
+	        styles: [__webpack_require__(427).toString()]
 	    }),
 	    __metadata("design:paramtypes", [router_1.ActivatedRoute,
 	        router_1.Router,
@@ -44496,21 +44496,21 @@ webpackJsonp([0],{
 
 /***/ },
 
-/***/ 430:
+/***/ 426:
 /***/ function(module, exports) {
 
 	module.exports = "<div class=\"content-dashboard\">\r\n    <div class=\"title-dashboard\">\r\n        <h1>View likes &amp; comments: {{title || \"Loading...\"}}</h1>\r\n        <h2>\r\n            You can view who likes and comments on the idea in the tables below.\r\n        </h2>\r\n    </div>\r\n\r\n    <div class=\"action-table-wrapper likes-wrapper\">\r\n        <h2>Likes</h2>\r\n        <table class=\"table-action\">\r\n            <thead>\r\n                <tr>\r\n                    <th>User's picture</th>\r\n                    <th>User's name</th>\r\n                    <th class=\"timestamp-col\">Last liked at</th>\r\n                </tr>\r\n            </thead>\r\n            <tbody *ngIf=\"likes.length === 0\">\r\n                <tr>\r\n                    <td class=\"table-message\" colspan=\"3\">{{likesMessage}}</td>\r\n                </tr>\r\n            </tbody>\r\n            <tbody *ngIf=\"likes.length > 0\">\r\n                <tr *ngFor=\"let row of likes\">\r\n                    <td>\r\n                        <img [src]=\"row.profilePic\">\r\n                    </td>\r\n                    <td>\r\n                        <a [routerLink]=\"['/users', row.id]\">\r\n                            {{row.name}}\r\n                        </a>\r\n                    </td>\r\n                    <td class=\"timestamp-col\">\r\n                        {{row.lastChanged.toDateString()}}<br>\r\n                        {{row.lastChanged.toTimeString()}}\r\n                    </td>\r\n                </tr>\r\n            </tbody>\r\n        </table>\r\n    </div>\r\n\r\n    <div class=\"action-table-wrapper comments-wrapper\">\r\n        <h2>Comments</h2>\r\n        <table class=\"table-action\">\r\n            <thead>\r\n                <tr>\r\n                    <th>User picture</th>\r\n                    <th>User name</th>\r\n                    <th>Comment</th>\r\n                    <th class=\"timestamp-col\">Last modified at</th>\r\n                </tr>\r\n            </thead>\r\n            <tbody *ngIf=\"comments.length === 0\">\r\n                <tr>\r\n                    <td colspan=\"4\" class=\"table-message\">{{commentsMessage}}</td>\r\n                </tr>\r\n            </tbody>\r\n            <tbody *ngIf=\"comments.length > 0\">\r\n                <tr *ngFor=\"let row of comments\">\r\n                    <td>\r\n                        <img [src]=\"row.profilePic\">\r\n                    </td>\r\n                    <td>\r\n                        <a [routerLink]=\"['/users', row.id]\">\r\n                            {{row.name}}\r\n                        </a>\r\n                    </td>\r\n                    <td>\r\n                        {{row.comment}}\r\n                    </td>\r\n                    <td class=\"timestamp-col\">\r\n                        {{row.lastChanged.toDateString()}}<br>\r\n                        {{row.lastChanged.toTimeString()}}\r\n                    </td>\r\n                </tr>\r\n            </tbody>\r\n        </table>\r\n    </div>\r\n</div>"
 
 /***/ },
 
-/***/ 431:
+/***/ 427:
 /***/ function(module, exports) {
 
 	// removed by extract-text-webpack-plugin
 
 /***/ },
 
-/***/ 433:
+/***/ 429:
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -44572,8 +44572,8 @@ webpackJsonp([0],{
 	IdeaPartnersComponent = __decorate([
 	    core_1.Component({
 	        selector: "idea-partners",
-	        template: __webpack_require__(434),
-	        styles: [__webpack_require__(435).toString()]
+	        template: __webpack_require__(430),
+	        styles: [__webpack_require__(431).toString()]
 	    }),
 	    __metadata("design:paramtypes", [router_1.ActivatedRoute,
 	        router_1.Router,
@@ -44584,21 +44584,21 @@ webpackJsonp([0],{
 
 /***/ },
 
-/***/ 434:
+/***/ 430:
 /***/ function(module, exports) {
 
 	module.exports = "<div class=\"content-dashboard\">\r\n    <div class=\"title-dashboard\">\r\n        <h1>View partners for idea: {{title || \"Loading...\"}}</h1>\r\n        <h2>\r\n            You can view the partners collaborating in the business idea you selected.\r\n        </h2>\r\n    </div>\r\n\r\n    <div class=\"action-table-wrapper partners-wrapper\">\r\n        <table class=\"table-action\">\r\n            <thead>\r\n                <tr>\r\n                    <th>User's picture</th>\r\n                    <th>User's name</th>\r\n                    <th>Email</th>\r\n                    <th>Biography</th>\r\n                </tr>\r\n            </thead>\r\n            <tbody *ngIf=\"partners.length === 0\">\r\n                <tr>\r\n                    <td colspan=\"4\">{{message}}</td>\r\n                </tr>\r\n            </tbody>\r\n            <tbody *ngIf=\"partners.length > 0\">\r\n                <tr *ngFor=\"let row of partners\">\r\n                    <td>\r\n                        <img [src]=\"row.profilePic\">\r\n                    </td>\r\n                    <td>\r\n                        <a [routerLink]=\"['/users', row.id]\">{{row.name}}</a>\r\n                    </td>\r\n                    <td>\r\n                        <a href=\"mailto:{{row.username}}\">{{row.username}}</a>\r\n                    </td>\r\n                    <td>\r\n                        {{row.bio}}\r\n                    </td>\r\n                </tr>\r\n            </tbody>\r\n        </table>\r\n    </div>\r\n</div>"
 
 /***/ },
 
-/***/ 435:
+/***/ 431:
 /***/ function(module, exports) {
 
 	// removed by extract-text-webpack-plugin
 
 /***/ },
 
-/***/ 437:
+/***/ 433:
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -44655,8 +44655,8 @@ webpackJsonp([0],{
 	ReportsListComponent = __decorate([
 	    core_1.Component({
 	        selector: "report-list",
-	        template: __webpack_require__(438),
-	        styles: [__webpack_require__(439).toString()]
+	        template: __webpack_require__(434),
+	        styles: [__webpack_require__(435).toString()]
 	    }),
 	    __metadata("design:paramtypes", [report_service_1.ReportService])
 	], ReportsListComponent);
@@ -44665,21 +44665,21 @@ webpackJsonp([0],{
 
 /***/ },
 
-/***/ 438:
+/***/ 434:
 /***/ function(module, exports) {
 
 	module.exports = "<div class=\"content-dashboard\">\r\n    <div class=\"title-dashboard\">\r\n        <h1>List of reports</h1>\r\n        <h2>\r\n            Following are the list of unsolved reports. Solved reports will not be shown here.<br>\r\n            Click on the report's title to view its description. Click on the reporter's email to reply to their reports. You <strong>cannot</strong> delete reports.\r\n        </h2>\r\n    </div>\r\n    <div class=\"body-dashboard\">\r\n        <table>\r\n            <thead>\r\n                <tr>\r\n                    <th>Report title</th>\r\n                    <th>User / reporter</th>\r\n                    <th>Last submitted at</th>\r\n                </tr>\r\n            </thead>\r\n            <tbody *ngIf=\"list.length <= 0\">\r\n                <tr>\r\n                    <td class=\"table-message\" colspan=\"3\">\r\n                        {{message || \"Loading...\"}}\r\n                    </td>\r\n                </tr>\r\n            </tbody>\r\n            <tbody *ngIf=\"list.length > 0\">\r\n                <tr *ngFor=\"let report of list\">\r\n                    <td>\r\n                        <a [routerLink]=\"[report.id]\">\r\n                            {{report.title}}\r\n                        </a>\r\n                    </td>\r\n                    <td>\r\n                        <a [routerLink]=\"['/users', report.author.id]\">\r\n                            {{report.author.name}}\r\n                        </a>\r\n                    </td>\r\n                    <td>{{report.createdAt.toDateString()}}</td>\r\n                </tr>\r\n            </tbody>\r\n        </table>\r\n    </div>\r\n</div>"
 
 /***/ },
 
-/***/ 439:
+/***/ 435:
 /***/ function(module, exports) {
 
 	// removed by extract-text-webpack-plugin
 
 /***/ },
 
-/***/ 441:
+/***/ 437:
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -44734,8 +44734,8 @@ webpackJsonp([0],{
 	ViewReportComponent = __decorate([
 	    core_1.Component({
 	        selector: "view-report",
-	        template: __webpack_require__(442),
-	        styles: [__webpack_require__(443).toString()]
+	        template: __webpack_require__(438),
+	        styles: [__webpack_require__(439).toString()]
 	    }),
 	    __metadata("design:paramtypes", [router_1.ActivatedRoute,
 	        router_1.Router,
@@ -44746,21 +44746,21 @@ webpackJsonp([0],{
 
 /***/ },
 
-/***/ 442:
+/***/ 438:
 /***/ function(module, exports) {
 
 	module.exports = "<div class=\"content-dashboard\">\r\n    <div class=\"title-dashboard\">\r\n        <h1>Report Details</h1>\r\n        <h2>\r\n            Read the description below, and take action for the problems stated within.<br>\r\n            After that, reply to this report, about how you solved those problems.<br>\r\n            The reply will be directly sent to the user's email.\r\n        </h2>\r\n    </div>\r\n\r\n    <div class=\"body-dashboard\">\r\n        <p>\r\n            <strong>Title: </strong> {{report.title}}\r\n        </p>\r\n        <p>\r\n            <strong>Reporter: </strong> {{author.name}}\r\n        </p>\r\n        <p>\r\n            <strong>Report type (User or Idea): </strong> {{report.type}}\r\n        </p>\r\n        <p>\r\n            <strong>User's message:</strong><br>\r\n            {{report.message}}\r\n        </p>\r\n        <p>\r\n            <strong>Administrator's reply:</strong><br>\r\n            {{report.reply === \"\" ? \"No reply has been sent yet.\" : report.reply}}\r\n        </p>\r\n        <p>\r\n            <strong>Solved: </strong> {{report.solved ? \"Already solved.\" : \"Not solved yet.\"}}\r\n        </p>\r\n    </div>\r\n\r\n    <a class=\"button-reply\" [routerLink]=\"['reply']\">Reply to report</a>\r\n</div>"
 
 /***/ },
 
-/***/ 443:
+/***/ 439:
 /***/ function(module, exports) {
 
 	// removed by extract-text-webpack-plugin
 
 /***/ },
 
-/***/ 445:
+/***/ 441:
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -44824,8 +44824,8 @@ webpackJsonp([0],{
 	ReplyToReportComponent = __decorate([
 	    core_1.Component({
 	        selector: "reply-to-report",
-	        template: __webpack_require__(446),
-	        styles: [__webpack_require__(447).toString()]
+	        template: __webpack_require__(442),
+	        styles: [__webpack_require__(443).toString()]
 	    }),
 	    __metadata("design:paramtypes", [router_1.ActivatedRoute,
 	        router_1.Router,
@@ -44836,21 +44836,21 @@ webpackJsonp([0],{
 
 /***/ },
 
-/***/ 446:
+/***/ 442:
 /***/ function(module, exports) {
 
 	module.exports = "<div class=\"content-dashboard\">\r\n    <div class=\"title-dashboard\">\r\n        <h1>Reply to report</h1>\r\n        <h2>\r\n            Reply to the following report in the provided text area.<br>\r\n            In the reply, describe about how you fixed the problem.<br>\r\n            Once you submit this reply, the report along with its reply will be sent to the user's email.<br>\r\n            Fields marked with (*) are required.\r\n        </h2>\r\n    </div>\r\n\r\n    <div class=\"form-wrapper-dashboard\">\r\n        <form class=\"form-dashboard form-report\" (ngSubmit)=\"onSubmitReply()\" #reportForm=\"ngForm\">\r\n\r\n            <div class=\"form-group\">\r\n                <p>\r\n                    <strong>Title: </strong> {{report.title}}\r\n                </p>\r\n                <p>\r\n                    <strong>Reported by: </strong> {{author.name}} \r\n                </p>\r\n                <p>\r\n                    <strong>Report type: </strong> {{report.type}}\r\n                </p>\r\n            </div>\r\n            \r\n            <div class=\"form-group\">\r\n                <div class=\"form-col-2\">\r\n                    <label for=\"message\">User's message:</label>\r\n                    <textarea class=\"report-textarea\" \r\n                        name=\"message\" \r\n                        [(ngModel)]=\"report.message\" \r\n                        disabled></textarea>\r\n                </div>\r\n            </div>\r\n\r\n            <div class=\"form-group\">\r\n                <div class=\"form-col-2\">\r\n                    <label for=\"reply\">Adminstrator's reply: (*)</label>\r\n                    <textarea class=\"report-textarea\" \r\n                        name=\"reply\"\r\n                        [(ngModel)]=\"report.reply\"\r\n                        required></textarea>\r\n                </div>\r\n            </div>\r\n\r\n            <div class=\"form-group\">\r\n                <div class=\"form-col-1\">\r\n                    <label for=\"solved\">Solved: (*)</label>\r\n                    <select name=\"solved\" \r\n                        [(ngModel)]=\"solved\"\r\n                        required>\r\n                        <option *ngFor=\"let s of solvedChoices\" \r\n                            [value]=\"s\">{{s}}</option>\r\n                    </select>\r\n                </div>\r\n            </div>\r\n\r\n            <div class=\"form-group\">\r\n                <button type=\"submit\">Reply</button>\r\n            </div>\r\n\r\n        </form>\r\n    </div>\r\n</div>"
 
 /***/ },
 
-/***/ 447:
+/***/ 443:
 /***/ function(module, exports) {
 
 	// removed by extract-text-webpack-plugin
 
 /***/ },
 
-/***/ 449:
+/***/ 445:
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -44892,7 +44892,7 @@ webpackJsonp([0],{
 
 /***/ },
 
-/***/ 450:
+/***/ 446:
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -44920,9 +44920,9 @@ webpackJsonp([0],{
 	AppComponent = __decorate([
 	    core_1.Component({
 	        selector: "admin-app",
-	        template: __webpack_require__(451),
+	        template: __webpack_require__(447),
 	        styles: [
-	            __webpack_require__(452).toString()
+	            __webpack_require__(448).toString()
 	        ]
 	    }),
 	    __metadata("design:paramtypes", [authentication_service_1.AuthenticationService])
@@ -44932,21 +44932,21 @@ webpackJsonp([0],{
 
 /***/ },
 
-/***/ 451:
+/***/ 447:
 /***/ function(module, exports) {
 
 	module.exports = "<div class=\"container\">\r\n    <div class=\"header\">\r\n        <lh-header></lh-header>\r\n    </div>\r\n    <div class=\"content\">\r\n        <div *ngIf=\"isLoggedIn\" class=\"sidebar-wrapper\">\r\n            <sidebar></sidebar>\r\n        </div>\r\n        <router-outlet></router-outlet>\r\n        <div class=\"clearfix\"></div>\r\n    </div>\r\n    <div *ngIf=\"!isLoggedIn\" class=\"footer\">\r\n        <lh-footer></lh-footer>\r\n    </div>\r\n</div>"
 
 /***/ },
 
-/***/ 452:
+/***/ 448:
 /***/ function(module, exports) {
 
 	// removed by extract-text-webpack-plugin
 
 /***/ },
 
-/***/ 454:
+/***/ 450:
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -44983,9 +44983,9 @@ webpackJsonp([0],{
 	HeaderComponent = __decorate([
 	    core_1.Component({
 	        selector: "lh-header",
-	        template: __webpack_require__(455),
+	        template: __webpack_require__(451),
 	        styles: [
-	            __webpack_require__(456).toString()
+	            __webpack_require__(452).toString()
 	        ]
 	    }),
 	    __metadata("design:paramtypes", [router_1.Router,
@@ -44996,10 +44996,56 @@ webpackJsonp([0],{
 
 /***/ },
 
-/***/ 455:
+/***/ 451:
 /***/ function(module, exports) {
 
 	module.exports = "<header id=\"header\">\r\n    <div class=\"nav-left\">\r\n        <a routerLink=\"/\" class=\"home-link\">L I G H T H A U Z</a> \r\n    </div>\r\n    <nav class=\"nav-right\">\r\n        <div *ngIf=\"isLoggedIn\">\r\n            <a class=\"btn-nav\" (click)=\"logout()\">Sign out</a>\r\n        </div>\r\n        <div *ngIf=\"!isLoggedIn\">\r\n            <a routerLink=\"/login\" class=\"btn-nav\">Sign in</a>\r\n        </div>\r\n    </nav>\r\n    <div class=\"clearfix\"></div>\r\n</header>"
+
+/***/ },
+
+/***/ 452:
+/***/ function(module, exports) {
+
+	// removed by extract-text-webpack-plugin
+
+/***/ },
+
+/***/ 454:
+/***/ function(module, exports, __webpack_require__) {
+
+	"use strict";
+	var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+	    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+	    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+	    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+	    return c > 3 && r && Object.defineProperty(target, key, r), r;
+	};
+	var __metadata = (this && this.__metadata) || function (k, v) {
+	    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+	};
+	var core_1 = __webpack_require__(4);
+	var FooterComponent = (function () {
+	    function FooterComponent() {
+	    }
+	    return FooterComponent;
+	}());
+	FooterComponent = __decorate([
+	    core_1.Component({
+	        selector: "lh-footer",
+	        template: __webpack_require__(455),
+	        styles: [__webpack_require__(456).toString()]
+	    }),
+	    __metadata("design:paramtypes", [])
+	], FooterComponent);
+	exports.FooterComponent = FooterComponent;
+
+
+/***/ },
+
+/***/ 455:
+/***/ function(module, exports) {
+
+	module.exports = "<footer class=\"lh-footer\">\r\n    <p>Copyright &copy; 2016 - Lighthauz. All rights reserved.</p>\r\n</footer>"
 
 /***/ },
 
@@ -45024,52 +45070,6 @@ webpackJsonp([0],{
 	    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 	};
 	var core_1 = __webpack_require__(4);
-	var FooterComponent = (function () {
-	    function FooterComponent() {
-	    }
-	    return FooterComponent;
-	}());
-	FooterComponent = __decorate([
-	    core_1.Component({
-	        selector: "lh-footer",
-	        template: __webpack_require__(459),
-	        styles: [__webpack_require__(460).toString()]
-	    }),
-	    __metadata("design:paramtypes", [])
-	], FooterComponent);
-	exports.FooterComponent = FooterComponent;
-
-
-/***/ },
-
-/***/ 459:
-/***/ function(module, exports) {
-
-	module.exports = "<footer class=\"lh-footer\">\r\n    <p>Copyright &copy; 2016 - Lighthauz. All rights reserved.</p>\r\n</footer>"
-
-/***/ },
-
-/***/ 460:
-/***/ function(module, exports) {
-
-	// removed by extract-text-webpack-plugin
-
-/***/ },
-
-/***/ 462:
-/***/ function(module, exports, __webpack_require__) {
-
-	"use strict";
-	var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
-	    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
-	    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
-	    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
-	    return c > 3 && r && Object.defineProperty(target, key, r), r;
-	};
-	var __metadata = (this && this.__metadata) || function (k, v) {
-	    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
-	};
-	var core_1 = __webpack_require__(4);
 	var SidebarComponent = (function () {
 	    function SidebarComponent() {
 	    }
@@ -45078,8 +45078,8 @@ webpackJsonp([0],{
 	SidebarComponent = __decorate([
 	    core_1.Component({
 	        selector: "sidebar",
-	        template: __webpack_require__(463),
-	        styles: [__webpack_require__(464).toString()]
+	        template: __webpack_require__(459),
+	        styles: [__webpack_require__(460).toString()]
 	    }),
 	    __metadata("design:paramtypes", [])
 	], SidebarComponent);
@@ -45088,14 +45088,14 @@ webpackJsonp([0],{
 
 /***/ },
 
-/***/ 463:
+/***/ 459:
 /***/ function(module, exports) {
 
 	module.exports = "<div class=\"sidebar\">\r\n    <a class=\"link-sidebar\" routerLink=\"/dashboard\" routerLinkActive=\"active-sidebar\">\r\n        <span class=\"icon-link-sidebar\"><i class=\"fa fa-home\" aria-hidden=\"true\"></i></span>\r\n        <span class=\"text-link-sidebar\">Dashboard</span>\r\n    </a>\r\n    <a class=\"link-sidebar\" routerLink=\"/users\" routerLinkActive=\"active-sidebar\">\r\n        <span class=\"icon-link-sidebar\"><i class=\"fa fa-users\" aria-hidden=\"true\"></i></span>\r\n        <span class=\"text-link-sidebar\">Users</span>\r\n    </a>\r\n    <a class=\"link-sidebar\" routerLink=\"/ideas\" routerLinkActive=\"active-sidebar\">\r\n        <span class=\"icon-link-sidebar\"><i class=\"fa fa-lightbulb-o\" aria-hidden=\"true\"></i></span>\r\n        <span class=\"text-link-sidebar\">Ideas</span>\r\n    </a>\r\n    <a class=\"link-sidebar\" routerLink=\"/reports\" routerLinkActive=\"active-sidebar\">\r\n        <span class=\"icon-link-sidebar\"><i class=\"fa fa-flag\" aria-hidden=\"true\"></i></span>\r\n        <span class=\"text-link-sidebar\">Reports</span>\r\n    </a>\r\n\r\n    <div class=\"copyright\">\r\n        <p>Copyright &copy; 2016 - Lighthauz. All rights reserved.</p>\r\n    </div>\r\n</div>"
 
 /***/ },
 
-/***/ 464:
+/***/ 460:
 /***/ function(module, exports) {
 
 	// removed by extract-text-webpack-plugin

@@ -1050,7 +1050,7 @@ var UserSchema = function(dbDriver) {
     this.removeConnectionOrRequest = function(req, res) {
         var session = this.driver.session();
         session
-            .run("MATCH (from:User)-[c:CONNECT]->(to:User) \
+            .run("MATCH (from:User)-[c:CONNECT]-(to:User) \
                 WHERE from.id = {fromId} AND to.id = {toId} \
                 DELETE c",
                 {
