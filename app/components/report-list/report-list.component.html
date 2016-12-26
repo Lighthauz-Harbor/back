@@ -18,7 +18,7 @@
             <tbody *ngIf="list.length <= 0">
                 <tr>
                     <td class="table-message" colspan="3">
-                        {{ message || "Loading..." }}
+                        {{message || "Loading..."}}
                     </td>
                 </tr>
             </tbody>
@@ -26,15 +26,15 @@
                 <tr *ngFor="let report of list">
                     <td>
                         <a [routerLink]="[report.id]">
-                            {{ report.title }}
+                            {{report.title}}
                         </a>
                     </td>
                     <td>
                         <a href="mailto:{{report.author}}">
-                            {{ report.author }}
+                            {{report.author}}
                         </a>
                     </td>
-                    <td>{{ report.createdAt.toDateString() }}</td>
+                    <td>{{report.createdAt.toDateString()}}</td>
                 </tr>
             </tbody>
         </table>

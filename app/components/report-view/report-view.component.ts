@@ -14,6 +14,7 @@ export class ViewReportComponent implements OnInit {
 
     // initialized using default values (must not be null)
     private report: Report = new Report();
+    private author: string = "";
 
     constructor(
         private route: ActivatedRoute,
@@ -37,7 +38,7 @@ export class ViewReportComponent implements OnInit {
                             new Date(json.createdAt));*/
                         this.report.id = id;
                         this.report.title = json.title;
-                        this.report.author = json.author;
+                        this.author = json.author;
                         this.report.message = json.message;
                         this.report.reply = json.reply;
                         this.report.solved = json.solved;

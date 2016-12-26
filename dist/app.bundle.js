@@ -30450,7 +30450,9 @@ webpackJsonp([0],{
 	            }
 	            else {
 	                json.reports.map(function (report) {
-	                    _this.reportsList.push(new report_model_app_1.Report(report.id, report.title, report.author, "", "", false, "", new Date(report.createdAt)));
+	                    var reportObj = new report_model_app_1.Report(report.id, report.title, "", "", false, "", new Date(report.createdAt));
+	                    reportObj.author = report.author;
+	                    _this.reportsList.push(reportObj);
 	                });
 	            }
 	        });
@@ -30475,10 +30477,9 @@ webpackJsonp([0],{
 
 	"use strict";
 	var Report = (function () {
-	    function Report(id, title, author, message, reply, solved, type, createdAt) {
+	    function Report(id, title, message, reply, solved, type, createdAt) {
 	        if (id === void 0) { id = ""; }
 	        if (title === void 0) { title = ""; }
-	        if (author === void 0) { author = ""; }
 	        if (message === void 0) { message = ""; }
 	        if (reply === void 0) { reply = ""; }
 	        if (solved === void 0) { solved = false; }
@@ -30486,7 +30487,6 @@ webpackJsonp([0],{
 	        if (createdAt === void 0) { createdAt = new Date(0); }
 	        this._id = id;
 	        this._title = title;
-	        this._author = author;
 	        this._message = message;
 	        this._reply = reply;
 	        this._solved = solved;
@@ -30509,16 +30509,6 @@ webpackJsonp([0],{
 	        },
 	        set: function (t) {
 	            this._title = t;
-	        },
-	        enumerable: true,
-	        configurable: true
-	    });
-	    Object.defineProperty(Report.prototype, "author", {
-	        get: function () {
-	            return this._author;
-	        },
-	        set: function (a) {
-	            this._author = a;
 	        },
 	        enumerable: true,
 	        configurable: true
@@ -33089,7 +33079,9 @@ webpackJsonp([0],{
 	            }
 	            else {
 	                json.reports.map(function (report) {
-	                    _this.list.push(new report_model_app_1.Report(report.id, report.title, report.author, "", "", false, "", new Date(report.createdAt)));
+	                    var reportObj = new report_model_app_1.Report(report.id, report.title, "", "", false, "", new Date(report.createdAt));
+	                    reportObj.author = report.author;
+	                    _this.list.push(reportObj);
 	                });
 	            }
 	        });
@@ -33112,7 +33104,7 @@ webpackJsonp([0],{
 /***/ 437:
 /***/ function(module, exports) {
 
-	module.exports = "<div class=\"content-dashboard\">\r\n    <div class=\"title-dashboard\">\r\n        <h1>List of reports</h1>\r\n        <h2>\r\n            Following are the list of unsolved reports. Solved reports will not be shown here.<br>\r\n            Click on the report's title to view its description. Click on the reporter's email to reply to their reports. You <strong>cannot</strong> delete reports.\r\n        </h2>\r\n    </div>\r\n    <div class=\"body-dashboard\">\r\n        <table>\r\n            <thead>\r\n                <tr>\r\n                    <th>Report title</th>\r\n                    <th>Reporter's email</th>\r\n                    <th>Last submitted at</th>\r\n                </tr>\r\n            </thead>\r\n            <tbody *ngIf=\"list.length <= 0\">\r\n                <tr>\r\n                    <td class=\"table-message\" colspan=\"3\">\r\n                        {{ message || \"Loading...\" }}\r\n                    </td>\r\n                </tr>\r\n            </tbody>\r\n            <tbody *ngIf=\"list.length > 0\">\r\n                <tr *ngFor=\"let report of list\">\r\n                    <td>\r\n                        <a [routerLink]=\"[report.id]\">\r\n                            {{ report.title }}\r\n                        </a>\r\n                    </td>\r\n                    <td>\r\n                        <a href=\"mailto:{{report.author}}\">\r\n                            {{ report.author }}\r\n                        </a>\r\n                    </td>\r\n                    <td>{{ report.createdAt.toDateString() }}</td>\r\n                </tr>\r\n            </tbody>\r\n        </table>\r\n    </div>\r\n</div>"
+	module.exports = "<div class=\"content-dashboard\">\r\n    <div class=\"title-dashboard\">\r\n        <h1>List of reports</h1>\r\n        <h2>\r\n            Following are the list of unsolved reports. Solved reports will not be shown here.<br>\r\n            Click on the report's title to view its description. Click on the reporter's email to reply to their reports. You <strong>cannot</strong> delete reports.\r\n        </h2>\r\n    </div>\r\n    <div class=\"body-dashboard\">\r\n        <table>\r\n            <thead>\r\n                <tr>\r\n                    <th>Report title</th>\r\n                    <th>Reporter's email</th>\r\n                    <th>Last submitted at</th>\r\n                </tr>\r\n            </thead>\r\n            <tbody *ngIf=\"list.length <= 0\">\r\n                <tr>\r\n                    <td class=\"table-message\" colspan=\"3\">\r\n                        {{message || \"Loading...\"}}\r\n                    </td>\r\n                </tr>\r\n            </tbody>\r\n            <tbody *ngIf=\"list.length > 0\">\r\n                <tr *ngFor=\"let report of list\">\r\n                    <td>\r\n                        <a [routerLink]=\"[report.id]\">\r\n                            {{report.title}}\r\n                        </a>\r\n                    </td>\r\n                    <td>\r\n                        <a href=\"mailto:{{report.author}}\">\r\n                            {{report.author}}\r\n                        </a>\r\n                    </td>\r\n                    <td>{{report.createdAt.toDateString()}}</td>\r\n                </tr>\r\n            </tbody>\r\n        </table>\r\n    </div>\r\n</div>"
 
 /***/ },
 
@@ -33147,6 +33139,7 @@ webpackJsonp([0],{
 	        this.reportService = reportService;
 	        // initialized using default values (must not be null)
 	        this.report = new report_model_app_1.Report();
+	        this.author = "";
 	    }
 	    ViewReportComponent.prototype.ngOnInit = function () {
 	        var _this = this;
@@ -33165,7 +33158,7 @@ webpackJsonp([0],{
 	                        new Date(json.createdAt));*/
 	                    _this.report.id = id;
 	                    _this.report.title = json.title;
-	                    _this.report.author = json.author;
+	                    _this.author = json.author;
 	                    _this.report.message = json.message;
 	                    _this.report.reply = json.reply;
 	                    _this.report.solved = json.solved;
@@ -33193,7 +33186,7 @@ webpackJsonp([0],{
 /***/ 441:
 /***/ function(module, exports) {
 
-	module.exports = "<div class=\"content-dashboard\">\r\n    <div class=\"title-dashboard\">\r\n        <h1>Report Details</h1>\r\n        <h2>\r\n            Read the description below, and take action for the problems stated within.<br>\r\n            After that, reply to this report, about how you solved those problems.<br>\r\n            The reply will be directly sent to the user's email.\r\n        </h2>\r\n    </div>\r\n\r\n    <div class=\"body-dashboard\">\r\n        <p>\r\n            <strong>Title: </strong> {{ report.title }}\r\n        </p>\r\n        <p>\r\n            <strong>Reporter: </strong> {{ report.author }}\r\n        </p>\r\n        <p>\r\n            <strong>Report type (User or Idea): </strong> {{ report.type }}\r\n        </p>\r\n        <p>\r\n            <strong>User's message:</strong><br>\r\n            {{ report.message }}\r\n        </p>\r\n        <p>\r\n            <strong>Administrator's reply:</strong><br>\r\n            {{ report.reply === \"\" ? \"No reply has been sent yet.\" : report.reply }}\r\n        </p>\r\n        <p>\r\n            <strong>Solved: </strong> {{ report.solved ? \"Already solved.\" : \"Not solved yet.\" }}\r\n        </p>\r\n    </div>\r\n\r\n    <a class=\"button-reply\" [routerLink]=\"['reply']\">Reply to report</a>\r\n</div>"
+	module.exports = "<div class=\"content-dashboard\">\r\n    <div class=\"title-dashboard\">\r\n        <h1>Report Details</h1>\r\n        <h2>\r\n            Read the description below, and take action for the problems stated within.<br>\r\n            After that, reply to this report, about how you solved those problems.<br>\r\n            The reply will be directly sent to the user's email.\r\n        </h2>\r\n    </div>\r\n\r\n    <div class=\"body-dashboard\">\r\n        <p>\r\n            <strong>Title: </strong> {{ report.title }}\r\n        </p>\r\n        <p>\r\n            <strong>Reporter: </strong> {{ author }}\r\n        </p>\r\n        <p>\r\n            <strong>Report type (User or Idea): </strong> {{ report.type }}\r\n        </p>\r\n        <p>\r\n            <strong>User's message:</strong><br>\r\n            {{ report.message }}\r\n        </p>\r\n        <p>\r\n            <strong>Administrator's reply:</strong><br>\r\n            {{ report.reply === \"\" ? \"No reply has been sent yet.\" : report.reply }}\r\n        </p>\r\n        <p>\r\n            <strong>Solved: </strong> {{ report.solved ? \"Already solved.\" : \"Not solved yet.\" }}\r\n        </p>\r\n    </div>\r\n\r\n    <a class=\"button-reply\" [routerLink]=\"['reply']\">Reply to report</a>\r\n</div>"
 
 /***/ },
 
@@ -33229,6 +33222,7 @@ webpackJsonp([0],{
 	        // initialize using default values first
 	        // (its values will be set during `ngOnInit()`)
 	        this.report = new report_model_app_1.Report();
+	        this.author = "";
 	        this.solvedChoices = ["No", "Yes"];
 	    }
 	    ReplyToReportComponent.prototype.ngOnInit = function () {
@@ -33244,10 +33238,10 @@ webpackJsonp([0],{
 	                else {
 	                    _this.report.id = id;
 	                    _this.report.title = json.title;
-	                    _this.report.author = json.author;
 	                    _this.report.type = json.type;
 	                    _this.report.message = json.message;
 	                    _this.report.reply = json.reply;
+	                    _this.author = json.author;
 	                }
 	            });
 	        });
@@ -33279,7 +33273,7 @@ webpackJsonp([0],{
 /***/ 445:
 /***/ function(module, exports) {
 
-	module.exports = "<div class=\"content-dashboard\">\r\n    <div class=\"title-dashboard\">\r\n        <h1>Reply to report</h1>\r\n        <h2>\r\n            Reply to the following report in the provided text area.<br>\r\n            In the reply, describe about how you fixed the problem.<br>\r\n            Once you submit this reply, the report along with its reply will be sent to the user's email.<br>\r\n            Fields marked with (*) are required.\r\n        </h2>\r\n    </div>\r\n\r\n    <div class=\"form-wrapper-dashboard\">\r\n        <form class=\"form-dashboard form-report\" (ngSubmit)=\"onSubmitReply()\" #reportForm=\"ngForm\">\r\n\r\n            <div class=\"form-group\">\r\n                <p>\r\n                    <strong>Title: </strong> {{report.title}}\r\n                </p>\r\n                <p>\r\n                    <strong>Reported by: </strong> {{report.author}}\r\n                </p>\r\n                <p>\r\n                    <strong>Report type: </strong> {{report.type}}\r\n                </p>\r\n            </div>\r\n            \r\n            <div class=\"form-group\">\r\n                <div class=\"form-col-2\">\r\n                    <label for=\"message\">User's message:</label>\r\n                    <textarea class=\"report-textarea\" \r\n                        name=\"message\" \r\n                        [(ngModel)]=\"report.message\" \r\n                        disabled></textarea>\r\n                </div>\r\n            </div>\r\n\r\n            <div class=\"form-group\">\r\n                <div class=\"form-col-2\">\r\n                    <label for=\"reply\">Adminstrator's reply: (*)</label>\r\n                    <textarea class=\"report-textarea\" \r\n                        name=\"reply\"\r\n                        [(ngModel)]=\"report.reply\"\r\n                        required></textarea>\r\n                </div>\r\n            </div>\r\n\r\n            <div class=\"form-group\">\r\n                <div class=\"form-col-1\">\r\n                    <label for=\"solved\">Solved: (*)</label>\r\n                    <select name=\"solved\" \r\n                        [(ngModel)]=\"solved\"\r\n                        required>\r\n                        <option *ngFor=\"let s of solvedChoices\" \r\n                            [value]=\"s\">{{s}}</option>\r\n                    </select>\r\n                </div>\r\n            </div>\r\n\r\n            <div class=\"form-group\">\r\n                <button type=\"submit\">Reply</button>\r\n            </div>\r\n\r\n        </form>\r\n    </div>\r\n</div>"
+	module.exports = "<div class=\"content-dashboard\">\r\n    <div class=\"title-dashboard\">\r\n        <h1>Reply to report</h1>\r\n        <h2>\r\n            Reply to the following report in the provided text area.<br>\r\n            In the reply, describe about how you fixed the problem.<br>\r\n            Once you submit this reply, the report along with its reply will be sent to the user's email.<br>\r\n            Fields marked with (*) are required.\r\n        </h2>\r\n    </div>\r\n\r\n    <div class=\"form-wrapper-dashboard\">\r\n        <form class=\"form-dashboard form-report\" (ngSubmit)=\"onSubmitReply()\" #reportForm=\"ngForm\">\r\n\r\n            <div class=\"form-group\">\r\n                <p>\r\n                    <strong>Title: </strong> {{report.title}}\r\n                </p>\r\n                <p>\r\n                    <strong>Reported by: </strong> {{author}}\r\n                </p>\r\n                <p>\r\n                    <strong>Report type: </strong> {{report.type}}\r\n                </p>\r\n            </div>\r\n            \r\n            <div class=\"form-group\">\r\n                <div class=\"form-col-2\">\r\n                    <label for=\"message\">User's message:</label>\r\n                    <textarea class=\"report-textarea\" \r\n                        name=\"message\" \r\n                        [(ngModel)]=\"report.message\" \r\n                        disabled></textarea>\r\n                </div>\r\n            </div>\r\n\r\n            <div class=\"form-group\">\r\n                <div class=\"form-col-2\">\r\n                    <label for=\"reply\">Adminstrator's reply: (*)</label>\r\n                    <textarea class=\"report-textarea\" \r\n                        name=\"reply\"\r\n                        [(ngModel)]=\"report.reply\"\r\n                        required></textarea>\r\n                </div>\r\n            </div>\r\n\r\n            <div class=\"form-group\">\r\n                <div class=\"form-col-1\">\r\n                    <label for=\"solved\">Solved: (*)</label>\r\n                    <select name=\"solved\" \r\n                        [(ngModel)]=\"solved\"\r\n                        required>\r\n                        <option *ngFor=\"let s of solvedChoices\" \r\n                            [value]=\"s\">{{s}}</option>\r\n                    </select>\r\n                </div>\r\n            </div>\r\n\r\n            <div class=\"form-group\">\r\n                <button type=\"submit\">Reply</button>\r\n            </div>\r\n\r\n        </form>\r\n    </div>\r\n</div>"
 
 /***/ },
 

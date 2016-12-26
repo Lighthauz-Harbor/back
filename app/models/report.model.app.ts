@@ -2,7 +2,6 @@ export class Report {
 
     private _id: string;
     private _title: string;
-    private _author: string; // in the form of email
     private _message: string;
     private _reply: string;
     private _solved: boolean;
@@ -12,7 +11,6 @@ export class Report {
     constructor(
         id: string = "",
         title: string = "",
-        author: string = "",
         message: string = "",
         reply: string = "",
         solved: boolean = false,
@@ -21,7 +19,6 @@ export class Report {
 
         this._id = id;
         this._title = title;
-        this._author = author;
         this._message = message;
         this._reply = reply;
         this._solved = solved;
@@ -34,9 +31,6 @@ export class Report {
     }
     get title() {
         return this._title;
-    }
-    get author() {
-        return this._author;
     }
     get createdAt() {
         return this._createdAt;
@@ -59,9 +53,6 @@ export class Report {
     }
     set title(t: string) {
         this._title = t;
-    }
-    set author(a: string) {
-        this._author = a;
     }
     set createdAt(c: Date) {
         this._createdAt = c;

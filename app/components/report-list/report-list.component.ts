@@ -33,15 +33,16 @@ export class ReportsListComponent implements OnInit {
                 this.message = "There are no unsolved reports, so far.";
             } else {
                 json.reports.map((report: any) => {
-                    this.list.push(new Report(
+                    let reportObj = new Report(
                         report.id,
                         report.title,
-                        report.author,
                         "",
                         "",
                         false,
                         "",
-                        new Date(report.createdAt)));
+                        new Date(report.createdAt));
+                    (reportObj as any).author = report.author;
+                    this.list.push(reportObj);
                 });
             }
         });
