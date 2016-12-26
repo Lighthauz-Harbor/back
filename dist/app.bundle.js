@@ -31613,7 +31613,7 @@ webpackJsonp([0],{
 	                title: item.title,
 	                description: item.description,
 	                picture: item.pic,
-	            }, {}, {}, "", item.category, new Date(item.timestamp)));
+	            }, {}, {}, item.category, new Date(item.timestamp)));
 	        });
 	    };
 	    UserIdeasComponent = __decorate([
@@ -31636,12 +31636,11 @@ webpackJsonp([0],{
 
 	"use strict";
 	var Idea = (function () {
-	    function Idea(id, info, bmc, swot, author, category, lastChanged) {
+	    function Idea(id, info, bmc, swot, category, lastChanged) {
 	        if (id === void 0) { id = ""; }
 	        if (info === void 0) { info = {}; }
 	        if (bmc === void 0) { bmc = {}; }
 	        if (swot === void 0) { swot = {}; }
-	        if (author === void 0) { author = ""; }
 	        if (category === void 0) { category = ""; }
 	        if (lastChanged === void 0) { lastChanged = new Date(0); }
 	        this._id = id;
@@ -31667,7 +31666,6 @@ webpackJsonp([0],{
 	        this._weaknesses = swot.weaknesses || "";
 	        this._opportunities = swot.opportunities || "";
 	        this._threats = swot.threats || "";
-	        this._author = author;
 	        this._category = category;
 	        this._lastChanged = lastChanged;
 	        this._selected = false;
@@ -31888,16 +31886,6 @@ webpackJsonp([0],{
 	        },
 	        set: function (t) {
 	            this._threats = t;
-	        },
-	        enumerable: true,
-	        configurable: true
-	    });
-	    Object.defineProperty(Idea.prototype, "author", {
-	        get: function () {
-	            return this._author;
-	        },
-	        set: function (a) {
-	            this._author = a;
 	        },
 	        enumerable: true,
 	        configurable: true
@@ -32327,10 +32315,12 @@ webpackJsonp([0],{
 	            else {
 	                // load the ideas into the list
 	                json.results.map(function (result) {
-	                    _this.list.push(new idea_model_app_1.Idea(result.id, {
+	                    var idea = new idea_model_app_1.Idea(result.id, {
 	                        title: result.title,
 	                        description: result.description
-	                    }, {}, {}, result.author, "", result.lastChanged));
+	                    }, {}, {}, "", result.lastChanged);
+	                    idea.author = result.author;
+	                    _this.list.push(idea);
 	                });
 	            }
 	        });
@@ -32358,7 +32348,7 @@ webpackJsonp([0],{
 	                    _this.list.push(new idea_model_app_1.Idea(i.id, {
 	                        title: i.title,
 	                        description: i.description
-	                    }, {}, {}, i.author, "", i.lastChanged));
+	                    }, {}, {}, "", i.lastChanged));
 	                });
 	            }
 	        });
@@ -32481,7 +32471,7 @@ webpackJsonp([0],{
 	                        weaknesses: json.idea.weaknesses,
 	                        opportunities: json.idea.opportunities,
 	                        threats: json.idea.threats,
-	                    }, json.author.email, json.category, new Date(json.timestamp));
+	                    }, json.category, new Date(json.timestamp));
 	                    _this.author = new user_model_app_1.User(json.author.id, json.author.email, "user", json.author.name, json.author.bio);
 	                }
 	            });

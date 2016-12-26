@@ -35,16 +35,16 @@ export class IdeaListComponent implements OnInit {
             } else {
                 // load the ideas into the list
                 json.results.map((result: any) => {
-                    this.list.push(
-                        new Idea(result.id, {
+                    let idea: Idea = new Idea(result.id, {
                             title: result.title,
                             description: result.description
-                        }, 
-                        {}, 
-                        {}, 
-                        result.author, 
-                        "", 
-                        result.lastChanged));
+                        },
+                        {},
+                        {},
+                        "",
+                        result.lastChanged);
+                    (idea as any).author = result.author;
+                    this.list.push(idea);
                 });
             }
         });
@@ -73,8 +73,7 @@ export class IdeaListComponent implements OnInit {
                                 description: i.description
                             }, 
                             {}, 
-                            {}, 
-                            i.author, 
+                            {},
                             "", 
                             i.lastChanged));
                     });

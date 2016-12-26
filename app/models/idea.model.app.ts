@@ -21,13 +21,11 @@ export class Idea {
     private _weaknesses: string;
     private _opportunities: string;
     private _threats: string;
-    private _author: string; // author's username / email
     private _category: string;
     private _lastChanged: Date;
     private _selected: boolean; // for selection in users list table
 
     constructor(id: string = "", info: any = {}, bmc: any = {}, swot: any = {},
-        author: string = "", 
         category: string = "",
         lastChanged: Date = new Date(0)) {
 
@@ -54,7 +52,6 @@ export class Idea {
         this._weaknesses = swot.weaknesses || "";
         this._opportunities = swot.opportunities || "";
         this._threats = swot.threats || "";
-        this._author = author;
         this._category = category;
         this._lastChanged = lastChanged;
         this._selected = false;
@@ -125,9 +122,6 @@ export class Idea {
     }
     get threats() {
         return this._threats;
-    }
-    get author() {
-        return this._author;
     }
     get category() {
         return this._category;
@@ -204,9 +198,6 @@ export class Idea {
     }
     set threats(t: string) {
         this._threats = t;
-    }
-    set author(a: string) {
-        this._author = a;
     }
     set category(c: string) {
         this._category = c;

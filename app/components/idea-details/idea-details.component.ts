@@ -61,7 +61,6 @@ export class IdeaDetailsComponent implements OnInit {
                                 opportunities: json.idea.opportunities,
                                 threats: json.idea.threats,
                             },
-                            json.author.email,
                             json.category,
                             new Date(json.timestamp));
                         
