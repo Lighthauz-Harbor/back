@@ -1,10 +1,7 @@
-import { Component } from "@angular/core";
-import { Router } from "@angular/router";
-
-import { User } from "../../models/user.model.app";
-
-import { UserService } from "../../services/user.service";
-import { ImageService } from "../../services/image.service";
+import {Component} from "@angular/core";
+import {Router} from "@angular/router";
+import {UserService} from "../../services/user.service";
+import {ImageService} from "../../services/image.service";
 
 @Component({
     selector: "user-create",

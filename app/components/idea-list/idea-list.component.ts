@@ -1,8 +1,6 @@
-import { Component, OnInit } from "@angular/core";
-
-import { Idea } from "../../models/idea.model.app";
-
-import { IdeaService } from "../../services/idea.service";
+import {Component, OnInit} from "@angular/core";
+import {Idea} from "../../models/idea.model.app";
+import {IdeaService} from "../../services/idea.service";
 
 @Component({
     selector: "idea-list",

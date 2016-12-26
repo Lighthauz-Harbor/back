@@ -1,10 +1,7 @@
-import { Component, OnInit } from "@angular/core";
-import { Router, ActivatedRoute, Params } from "@angular/router";
-
-import { User } from "../../models/user.model.app";
-
-import { UserService } from "../../services/user.service";
-import { ImageService } from "../../services/image.service";
+import {Component, OnInit} from "@angular/core";
+import {Router, ActivatedRoute, Params} from "@angular/router";
+import {UserService} from "../../services/user.service";
+import {ImageService} from "../../services/image.service";
 
 @Component({
     selector: "user-update",

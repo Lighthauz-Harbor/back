@@ -1,9 +1,6 @@
-import { Component, OnInit } from "@angular/core";
-
-import { Observable } from "rxjs";
-
-import { User } from "../../models/user.model.app";
-import { UserService } from "../../services/user.service";
+import {Component, OnInit} from "@angular/core";
+import {User} from "../../models/user.model.app";
+import {UserService} from "../../services/user.service";
 
 @Component({
     selector: "user-list",

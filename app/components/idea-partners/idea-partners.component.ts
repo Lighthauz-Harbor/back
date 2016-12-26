@@ -1,9 +1,7 @@
-import { Component, OnInit } from "@angular/core";
-import { Router, ActivatedRoute, Params } from "@angular/router";
-
-import { User } from "../../models/user.model.app";
-
-import { IdeaService } from "../../services/idea.service";
+import {Component, OnInit} from "@angular/core";
+import {Router, ActivatedRoute, Params} from "@angular/router";
+import {User} from "../../models/user.model.app";
+import {IdeaService} from "../../services/idea.service";
 
 @Component({
     selector: "idea-partners",

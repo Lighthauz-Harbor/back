@@ -1,10 +1,8 @@
-import { Component, OnInit } from "@angular/core";
-
-import { Report } from "../../models/report.model.app";
-
-import { UserService } from "../../services/user.service";
-import { IdeaService } from "../../services/idea.service";
-import { ReportService } from "../../services/report.service";
+import {Component, OnInit} from "@angular/core";
+import {Report} from "../../models/report.model.app";
+import {UserService} from "../../services/user.service";
+import {IdeaService} from "../../services/idea.service";
+import {ReportService} from "../../services/report.service";
 
 @Component({
     selector: "dashboard",

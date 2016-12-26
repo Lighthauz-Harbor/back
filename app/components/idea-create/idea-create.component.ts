@@ -1,8 +1,7 @@
-import { Component } from "@angular/core";
-import { Router } from "@angular/router";
-
-import { IdeaService } from "../../services/idea.service";
-import { ImageService } from "../../services/image.service";
+import {Component} from "@angular/core";
+import {Router} from "@angular/router";
+import {IdeaService} from "../../services/idea.service";
+import {ImageService} from "../../services/image.service";
 
 @Component({
     selector: "idea-create",

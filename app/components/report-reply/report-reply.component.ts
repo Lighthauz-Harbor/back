@@ -1,9 +1,7 @@
-import { Component, OnInit } from "@angular/core";
-import { Router, ActivatedRoute, Params } from "@angular/router";
-
-import { Report } from "../../models/report.model.app";
-
-import { ReportService } from "../../services/report.service";
+import {Component, OnInit} from "@angular/core";
+import {Router, ActivatedRoute, Params} from "@angular/router";
+import {Report} from "../../models/report.model.app";
+import {ReportService} from "../../services/report.service";
 
 @Component({
     selector: "reply-to-report",
