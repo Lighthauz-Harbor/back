@@ -545,7 +545,7 @@ var UserSchema = function(dbDriver) {
                             username: record.get("u.username"),
                             profilePic: record.get("u.profilePic"),
                             bio: record.get("u.bio"),
-                            createdAt: record.get("u.createdAt")
+                            createdAt: Number(record.get("u.createdAt"))
                         };
                     })
                 });
@@ -578,7 +578,7 @@ var UserSchema = function(dbDriver) {
                             username: record.get("u.username"),
                             profilePic: record.get("u.profilePic"),
                             bio: record.get("u.bio"),
-                            createdAt: record.get("u.createdAt")
+                            createdAt: Number(record.get("u.createdAt"))
                         };
                     })
                 });
@@ -793,7 +793,7 @@ var UserSchema = function(dbDriver) {
                             email: record.get("to.username"),
                             bio: record.get("to.bio"),
                             profilePic: record.get("to.profilePic"),
-                            timestamp: record.get("c.lastChanged")
+                            timestamp: Number(record.get("c.lastChanged"))
                         };
                     })
                 });

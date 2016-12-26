@@ -89,7 +89,7 @@ var ReportSchema = function(dbDriver) {
                                 name: report.get("author.name"),
                                 email: report.get("author.username")
                             },
-                            createdAt: report.get("report.createdAt")
+                            createdAt: Number(report.get("report.createdAt"))
                         };
                     })
                 });
@@ -125,7 +125,7 @@ var ReportSchema = function(dbDriver) {
                                 name: report.get("author.name"),
                                 email: report.get("author.username")
                             },
-                            createdAt: report.get("report.createdAt")
+                            createdAt: Number(report.get("report.createdAt"))
                         };
                     })
                 });
@@ -166,7 +166,7 @@ var ReportSchema = function(dbDriver) {
                         name: record.get("author.name"),
                         email: record.get("author.username")
                     },
-                    createdAt: record.get("report.createdAt")
+                    createdAt: Number(record.get("report.createdAt"))
                 });
                 session.close();
             })

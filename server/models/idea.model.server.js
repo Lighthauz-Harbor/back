@@ -364,7 +364,7 @@ var IdeaSchema = function(dbDriver) {
                                     name: record.get("u.name")
                                 },
                                 category: record.get("c.name"),
-                                lastChanged: record.get("m.lastChanged")
+                                lastChanged: Number(record.get("m.lastChanged"))
                             };
                         })
                     });
@@ -402,7 +402,7 @@ var IdeaSchema = function(dbDriver) {
                                     name: record.get("u.name"),
                                 },
                                 category: record.get("c.name"),
-                                lastChanged: record.get("m.lastChanged")
+                                lastChanged: Number(record.get("m.lastChanged"))
                             };
                         })
                     });
@@ -426,18 +426,19 @@ var IdeaSchema = function(dbDriver) {
                 u.profilePic, c.name, m.lastChanged",
                 { ideaId: req.params.id })
             .then(function(result) {
+                var record = result.records[0];
                 res.send({
-                    idea: result.records[0].get("i").properties,
+                    idea: record.get("i").properties,
                     author: {
-                        id: result.records[0].get("u.id"),
-                        name: result.records[0].get("u.name"),
-                        email: result.records[0].get("u.username"),
-                        bio: result.records[0].get("u.bio"),
-                        profilePic: result.records[0].get("u.profilePic")
+                        id: record.get("u.id"),
+                        name: record.get("u.name"),
+                        email: record.get("u.username"),
+                        bio: record.get("u.bio"),
+                        profilePic: record.get("u.profilePic")
                     },
-                    visibility: neo4jInt(result.records[0].get("i.visibility")).toNumber(),
-                    category: result.records[0].get("c.name"),
-                    timestamp: result.records[0].get("m.lastChanged")
+                    visibility: neo4jInt(record.get("i.visibility")).toNumber(),
+                    category: record.get("c.name"),
+                    timestamp: Number(record.get("m.lastChanged"))
                 });
                 session.close();
             })
@@ -785,7 +786,7 @@ var IdeaSchema = function(dbDriver) {
                             description: idea.get("i.description"),
                             pic: idea.get("i.pic"),
                             category: idea.get("c.name"),
-                            timestamp: idea.get("m.lastChanged"),
+                            timestamp: Number(idea.get("m.lastChanged")),
                             type: idea.get("m.createdAt") === idea.get("m.lastChanged") ? "create" : "update",
                         };
                     })

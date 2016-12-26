@@ -37,9 +37,10 @@ module.exports = function(router, dbDriver) {
                             },
                             visibility: neo4jInt(post.get("i.visibility"))
                                         .toNumber(),
-                            type: post.get("m.createdAt") === 
-                                post.get("m.lastChanged") ? "create" : "update",
-                            timestamp: post.get("m.lastChanged")
+                            type: Number(post.get("m.createdAt")) ===
+                                Number(post.get("m.lastChanged")) ?
+                                "create" : "update",
+                            timestamp: Number(post.get("m.lastChanged"))
                         };
                     })
                 });
