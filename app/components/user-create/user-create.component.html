@@ -12,13 +12,9 @@
         <form class="form-dashboard form-user" (ngSubmit)="onSubmitUser()" #userForm="ngForm">
 
             <div class="form-group">
-                <div class="form-col-1">
-                    <label for="firstName">First name: (*)</label>
-                    <input type="text" name="firstName" [(ngModel)]="firstName" required>
-                </div>
-                <div class="form-col-1">
-                    <label for="lastName">Last name: (*)</label>
-                    <input type="text" name="lastName" [(ngModel)]="lastName" required>
+                <div class="form-col-2">
+                    <label for="fullName">Full name: (*)</label>
+                    <input type="text" name="fullName" [(ngModel)]="fullName" required>
                 </div>
             </div>
 

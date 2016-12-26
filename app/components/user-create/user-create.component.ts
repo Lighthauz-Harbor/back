@@ -10,8 +10,7 @@ import {ImageService} from "../../services/image.service";
 })
 export class CreateUserComponent {
 
-    private firstName: string;
-    private lastName: string;
+    private fullName: string;
     private email: string;
     private password: string;
     private repeatPassword: string;
@@ -32,7 +31,7 @@ export class CreateUserComponent {
         if (this.isValidInput()) {
             // create request body
             let reqBody: any = {
-                name: this.firstName + " " + this.lastName, 
+                name: this.fullName, 
                 username: this.email, 
                 password: this.password, 
                 dateOfBirth: (new Date(this.dateOfBirth)).toISOString().slice(0, 10), 
