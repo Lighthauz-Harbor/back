@@ -19597,13 +19597,16 @@ webpackJsonp([0],{
 	                routing_module_1.RoutingModule
 	            ],
 	            declarations: [
+	                /** The base component */
 	                app_component_1.AppComponent,
+	                /** Basic UI components */
 	                header_component_1.HeaderComponent,
 	                login_component_1.LoginComponent,
 	                dashboard_component_1.DashboardComponent,
 	                footer_component_1.FooterComponent,
 	                sidebar_component_1.SidebarComponent,
 	                not_found_component_1.PageNotFoundComponent,
+	                /** User management components */
 	                user_list_component_1.UsersListComponent,
 	                user_details_component_1.UserDetailsComponent,
 	                user_create_component_1.CreateUserComponent,
@@ -19613,12 +19616,14 @@ webpackJsonp([0],{
 	                user_requests_component_1.UserRequestsComponent,
 	                user_deactivate_component_1.DeactivateUserComponent,
 	                user_reactivate_component_1.ReactivateUserComponent,
+	                /** Idea management components */
 	                idea_list_component_1.IdeaListComponent,
 	                idea_details_component_1.IdeaDetailsComponent,
 	                idea_create_component_1.CreateIdeaComponent,
 	                idea_update_component_1.UpdateIdeaComponent,
 	                idea_responses_component_1.IdeaResponsesComponent,
 	                idea_partners_component_1.IdeaPartnersComponent,
+	                /** Report management components */
 	                report_list_component_1.ReportsListComponent,
 	                report_view_component_1.ViewReportComponent,
 	                report_reply_component_1.ReplyToReportComponent,

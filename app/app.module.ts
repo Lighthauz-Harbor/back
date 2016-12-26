@@ -43,14 +43,17 @@ import "./vendor/vendor"; // vendor.ts file
         HttpModule,
         RoutingModule
     ],
-    declarations: [ 
+    declarations: [
+        /** The base component */
         AppComponent,
+        /** Basic UI components */
         HeaderComponent,
         LoginComponent,
         DashboardComponent,
         FooterComponent,
         SidebarComponent,
         PageNotFoundComponent,
+        /** User management components */
         UsersListComponent,
         UserDetailsComponent,
         CreateUserComponent,
@@ -60,12 +63,14 @@ import "./vendor/vendor"; // vendor.ts file
         UserRequestsComponent,
         DeactivateUserComponent,
         ReactivateUserComponent,
+        /** Idea management components */
         IdeaListComponent,
         IdeaDetailsComponent,
         CreateIdeaComponent,
         UpdateIdeaComponent,
         IdeaResponsesComponent,
         IdeaPartnersComponent,
+        /** Report management components */
         ReportsListComponent,
         ViewReportComponent,
         ReplyToReportComponent,
