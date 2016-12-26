@@ -21,6 +21,10 @@ export class IdeaDetailsComponent implements OnInit {
         private router: Router,
         private ideaService: IdeaService) {
 
+        // loading animation before image is loaded
+        this.idea.pic = 
+            "https://res.cloudinary.com/lighthauz-harbor/image/upload/v1482734274/hourglass.gif";
+
     }
 
     ngOnInit(): void {
@@ -36,7 +40,7 @@ export class IdeaDetailsComponent implements OnInit {
                             {
                                 visibility: json.visibility,
                                 title: json.idea.title,
-                                picture: json.idea.pic,
+                                pic: json.idea.pic,
                                 description: json.idea.description,
                                 background: json.idea.background,
                                 problem: json.idea.problem,

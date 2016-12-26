@@ -21,6 +21,9 @@ export class UserDetailsComponent implements OnInit {
         private router: Router,
         private usersService: UserService) {
 
+        this.user.profilePic = 
+            "https://res.cloudinary.com/lighthauz-harbor/image/upload/v1482734274/hourglass.gif";
+
     }
 
     ngOnInit(): void {

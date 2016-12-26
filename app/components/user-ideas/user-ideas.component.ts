@@ -56,7 +56,7 @@ export class UserIdeasComponent implements OnInit {
                     {
                         title: item.title,
                         description: item.description,
-                        picture: item.pic,
+                        pic: item.pic
                     }, {}, {},
                     item.category, new Date(item.timestamp)));
             });
