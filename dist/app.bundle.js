@@ -19574,7 +19574,7 @@ webpackJsonp([0],{
 	var idea_update_component_1 = __webpack_require__(424);
 	var idea_responses_component_1 = __webpack_require__(428);
 	var idea_partners_component_1 = __webpack_require__(432);
-	var reports_list_component_1 = __webpack_require__(436);
+	var report_list_component_1 = __webpack_require__(436);
 	var report_view_component_1 = __webpack_require__(440);
 	var report_reply_component_1 = __webpack_require__(444);
 	var authentication_guard_1 = __webpack_require__(448);
@@ -19582,7 +19582,7 @@ webpackJsonp([0],{
 	var user_service_1 = __webpack_require__(363);
 	var idea_service_1 = __webpack_require__(364);
 	var image_service_1 = __webpack_require__(383);
-	var report_service_1 = __webpack_require__(470);
+	var report_service_1 = __webpack_require__(365);
 	__webpack_require__(465); // vendor.ts file
 	var AppModule = (function () {
 	    function AppModule() {
@@ -19619,7 +19619,7 @@ webpackJsonp([0],{
 	                idea_update_component_1.UpdateIdeaComponent,
 	                idea_responses_component_1.IdeaResponsesComponent,
 	                idea_partners_component_1.IdeaPartnersComponent,
-	                reports_list_component_1.ReportsListComponent,
+	                report_list_component_1.ReportsListComponent,
 	                report_view_component_1.ViewReportComponent,
 	                report_reply_component_1.ReplyToReportComponent,
 	            ],
@@ -25941,7 +25941,7 @@ webpackJsonp([0],{
 	var idea_update_component_1 = __webpack_require__(424);
 	var idea_responses_component_1 = __webpack_require__(428);
 	var idea_partners_component_1 = __webpack_require__(432);
-	var reports_list_component_1 = __webpack_require__(436);
+	var report_list_component_1 = __webpack_require__(436);
 	var report_view_component_1 = __webpack_require__(440);
 	var report_reply_component_1 = __webpack_require__(444);
 	var authentication_guard_1 = __webpack_require__(448);
@@ -26039,7 +26039,7 @@ webpackJsonp([0],{
 	        children: [
 	            {
 	                path: "",
-	                component: reports_list_component_1.ReportsListComponent
+	                component: report_list_component_1.ReportsListComponent
 	            },
 	            {
 	                path: ":id",
@@ -30399,7 +30399,7 @@ webpackJsonp([0],{
 	var report_model_app_1 = __webpack_require__(362);
 	var user_service_1 = __webpack_require__(363);
 	var idea_service_1 = __webpack_require__(364);
-	var report_service_1 = __webpack_require__(470);
+	var report_service_1 = __webpack_require__(365);
 	var DashboardComponent = (function () {
 	    function DashboardComponent(usersService, ideasService, reportsService) {
 	        this.usersService = usersService;
@@ -30601,99 +30601,70 @@ webpackJsonp([0],{
 	    }
 	    UserService.prototype.createUser = function (details) {
 	        return this.http.post("/api/users/create", details)
-	            .map(function (res) {
-	            return JSON.parse(res.text());
-	        });
+	            .map(this.parseJSON);
 	    };
 	    UserService.prototype.getList = function () {
 	        return this.http.get("/api/users/list")
-	            .map(function (res) {
-	            return JSON.parse(res.text());
-	        });
+	            .map(this.parseJSON);
 	    };
 	    UserService.prototype.getSingleUser = function (id) {
 	        return this.http.get("/api/users/get/" + id)
-	            .map(function (res) {
-	            return JSON.parse(res.text());
-	        });
+	            .map(this.parseJSON);
 	    };
 	    UserService.prototype.getName = function (id) {
 	        return this.http.get("/api/users/name/" + id)
-	            .map(function (res) {
-	            return JSON.parse(res.text());
-	        });
+	            .map(this.parseJSON);
 	    };
 	    UserService.prototype.searchUser = function (term) {
 	        return this.http.get("/api/users/search/" + term)
-	            .map(function (res) {
-	            return JSON.parse(res.text());
-	        });
+	            .map(this.parseJSON);
 	    };
 	    UserService.prototype.updateUser = function (details) {
 	        return this.http.put("/api/users/update/" + details.oldUsername, details)
-	            .map(function (res) {
-	            return JSON.parse(res.text());
-	        });
+	            .map(this.parseJSON);
 	    };
 	    UserService.prototype.deleteUsers = function (ids) {
 	        return this.http.post("/api/users/delete", { ids: ids })
-	            .map(function (res) {
-	            return JSON.parse(res.text());
-	        });
+	            .map(this.parseJSON);
 	    };
 	    UserService.prototype.getTotalUsersCount = function () {
 	        return this.http.get("/api/users/total-users")
-	            .map(function (res) {
-	            return JSON.parse(res.text());
-	        });
+	            .map(this.parseJSON);
 	    };
 	    UserService.prototype.getUserActivityCount = function () {
 	        return this.http.get("/api/users/activity-count")
-	            .map(function (res) {
-	            return JSON.parse(res.text());
-	        });
+	            .map(this.parseJSON);
 	    };
 	    UserService.prototype.listPreferredCategories = function (userId) {
 	        return this.http.post("/api/category/prefer/list", { userId: userId })
-	            .map(function (res) {
-	            return JSON.parse(res.text());
-	        });
+	            .map(this.parseJSON);
 	    };
 	    UserService.prototype.getConnections = function (userId) {
 	        return this.http.get("/api/connections/" + userId)
-	            .map(function (res) {
-	            return JSON.parse(res.text());
-	        });
+	            .map(this.parseJSON);
 	    };
 	    UserService.prototype.getSentConnectionRequests = function (userId) {
 	        return this.http.get("/api/connections/requests/sent/" + userId)
-	            .map(function (res) {
-	            return JSON.parse(res.text());
-	        });
+	            .map(this.parseJSON);
 	    };
 	    UserService.prototype.getReceivedConnectionRequests = function (userId) {
 	        return this.http.get("/api/connections/requests/received/" + userId)
-	            .map(function (res) {
-	            return JSON.parse(res.text());
-	        });
+	            .map(this.parseJSON);
 	    };
 	    UserService.prototype.deactivateUser = function (id, reason) {
 	        return this.http.post("/user/auth/deactivate", { id: id, reason: reason })
-	            .map(function (res) {
-	            return JSON.parse(res.text());
-	        });
+	            .map(this.parseJSON);
 	    };
 	    UserService.prototype.reactivateUser = function (id, reason) {
 	        return this.http.post("/user/auth/reactivate", { id: id, reason: reason })
-	            .map(function (res) {
-	            return JSON.parse(res.text());
-	        });
+	            .map(this.parseJSON);
 	    };
 	    UserService.prototype.isDeactivatedUser = function (id) {
 	        return this.http.get("/user/auth/is-blocked/" + id)
-	            .map(function (res) {
-	            return JSON.parse(res.text());
-	        });
+	            .map(this.parseJSON);
+	    };
+	    UserService.prototype.parseJSON = function (res) {
+	        return JSON.parse(res.text());
 	    };
 	    UserService = __decorate([
 	        core_1.Injectable(), 
@@ -30727,81 +30698,58 @@ webpackJsonp([0],{
 	    }
 	    IdeaService.prototype.createIdea = function (details) {
 	        return this.http.post("/api/ideas/create", details)
-	            .map(function (res) {
-	            return JSON.parse(res.text());
-	        });
+	            .map(this.parseJSON);
 	    };
 	    IdeaService.prototype.getList = function () {
 	        return this.http.get("/api/ideas/list")
-	            .map(function (res) {
-	            return JSON.parse(res.text());
-	        });
+	            .map(this.parseJSON);
 	    };
 	    IdeaService.prototype.getSingleIdea = function (id) {
 	        return this.http.get("/api/ideas/get/" + id)
-	            .map(function (res) {
-	            return JSON.parse(res.text());
-	        });
+	            .map(this.parseJSON);
 	    };
 	    IdeaService.prototype.getTitle = function (id) {
 	        return this.http.get("/api/ideas/title/" + id)
-	            .map(function (res) {
-	            return JSON.parse(res.text());
-	        });
+	            .map(this.parseJSON);
 	    };
 	    IdeaService.prototype.searchIdea = function (term) {
 	        return this.http.get("/api/ideas/search/" + term)
-	            .map(function (res) {
-	            return JSON.parse(res.text());
-	        });
+	            .map(this.parseJSON);
 	    };
 	    IdeaService.prototype.updateIdea = function (details) {
 	        return this.http.put("/api/ideas/update/" + details.id, details)
-	            .map(function (res) {
-	            return JSON.parse(res.text());
-	        });
+	            .map(this.parseJSON);
 	    };
 	    IdeaService.prototype.deleteIdeas = function (ids) {
 	        return this.http.post("/api/ideas/delete", { ids: ids })
-	            .map(function (res) {
-	            return JSON.parse(res.text());
-	        });
+	            .map(this.parseJSON);
 	    };
 	    IdeaService.prototype.getTotalIdeasCount = function () {
 	        return this.http.get("/api/ideas/total-ideas")
-	            .map(function (res) {
-	            return JSON.parse(res.text());
-	        });
+	            .map(this.parseJSON);
 	    };
 	    IdeaService.prototype.getTodayCount = function () {
 	        return this.http.get("/api/ideas/today/count")
-	            .map(function (res) {
-	            return JSON.parse(res.text());
-	        });
+	            .map(this.parseJSON);
 	    };
 	    IdeaService.prototype.getLikes = function (ideaId) {
 	        return this.http.get("/api/like/list/" + ideaId)
-	            .map(function (res) {
-	            return JSON.parse(res.text());
-	        });
+	            .map(this.parseJSON);
 	    };
 	    IdeaService.prototype.getComments = function (ideaId) {
 	        return this.http.get("/api/comment/list/" + ideaId)
-	            .map(function (res) {
-	            return JSON.parse(res.text());
-	        });
+	            .map(this.parseJSON);
 	    };
 	    IdeaService.prototype.getPartners = function (ideaId) {
 	        return this.http.get("/api/ideas/partners/" + ideaId)
-	            .map(function (res) {
-	            return JSON.parse(res.text());
-	        });
+	            .map(this.parseJSON);
 	    };
 	    IdeaService.prototype.getIdeaListFromUser = function (userId) {
 	        return this.http.get("/api/ideas/list/" + userId)
-	            .map(function (res) {
-	            return JSON.parse(res.text());
-	        });
+	            .map(this.parseJSON);
+	    };
+	    IdeaService.prototype.parseJSON = function (res) {
+	        return JSON.parse(res.text());
 	    };
 	    IdeaService = __decorate([
 	        core_1.Injectable(), 
@@ -30810,6 +30758,55 @@ webpackJsonp([0],{
 	    return IdeaService;
 	}());
 	exports.IdeaService = IdeaService;
+
+
+/***/ },
+
+/***/ 365:
+/***/ function(module, exports, __webpack_require__) {
+
+	"use strict";
+	var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+	    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+	    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+	    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+	    return c > 3 && r && Object.defineProperty(target, key, r), r;
+	};
+	var __metadata = (this && this.__metadata) || function (k, v) {
+	    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+	};
+	var core_1 = __webpack_require__(4);
+	var http_1 = __webpack_require__(29);
+	var ReportService = (function () {
+	    function ReportService(http) {
+	        this.http = http;
+	    }
+	    ReportService.prototype.getList = function () {
+	        return this.http.get("/api/reports/list")
+	            .map(this.parseJSON);
+	    };
+	    ReportService.prototype.getRecent = function () {
+	        return this.http.get("/api/reports/recent")
+	            .map(this.parseJSON);
+	    };
+	    ReportService.prototype.getSingle = function (id) {
+	        return this.http.get("/api/reports/get/" + id)
+	            .map(this.parseJSON);
+	    };
+	    ReportService.prototype.replyToReport = function (id, reply, solved) {
+	        return this.http.put("/api/reports/reply/" + id, { reply: reply, solved: solved })
+	            .map(this.parseJSON);
+	    };
+	    ReportService.prototype.parseJSON = function (res) {
+	        return JSON.parse(res.text());
+	    };
+	    ReportService = __decorate([
+	        core_1.Injectable(), 
+	        __metadata('design:paramtypes', [http_1.Http])
+	    ], ReportService);
+	    return ReportService;
+	}());
+	exports.ReportService = ReportService;
 
 
 /***/ },
@@ -33075,10 +33072,10 @@ webpackJsonp([0],{
 	};
 	var core_1 = __webpack_require__(4);
 	var report_model_app_1 = __webpack_require__(362);
-	var report_service_1 = __webpack_require__(470);
+	var report_service_1 = __webpack_require__(365);
 	var ReportsListComponent = (function () {
-	    function ReportsListComponent(reportsService) {
-	        this.reportsService = reportsService;
+	    function ReportsListComponent(reportService) {
+	        this.reportService = reportService;
 	        this.list = [];
 	        this.message = "";
 	    }
@@ -33089,7 +33086,7 @@ webpackJsonp([0],{
 	        var _this = this;
 	        // renew list every load
 	        this.list = [];
-	        this.reportsService.getList().subscribe(function (json) {
+	        this.reportService.getList().subscribe(function (json) {
 	            if (json.fail) {
 	                _this.message = json.fail;
 	            }
@@ -33105,7 +33102,7 @@ webpackJsonp([0],{
 	    };
 	    ReportsListComponent = __decorate([
 	        core_1.Component({
-	            selector: "reports-list",
+	            selector: "report-list",
 	            template: __webpack_require__(437),
 	            styles: [__webpack_require__(438).toString()]
 	        }), 
@@ -33148,12 +33145,12 @@ webpackJsonp([0],{
 	var core_1 = __webpack_require__(4);
 	var router_1 = __webpack_require__(31);
 	var report_model_app_1 = __webpack_require__(362);
-	var report_service_1 = __webpack_require__(470);
+	var report_service_1 = __webpack_require__(365);
 	var ViewReportComponent = (function () {
-	    function ViewReportComponent(route, router, reportsService) {
+	    function ViewReportComponent(route, router, reportService) {
 	        this.route = route;
 	        this.router = router;
-	        this.reportsService = reportsService;
+	        this.reportService = reportService;
 	        // initialized using default values (must not be null)
 	        this.report = new report_model_app_1.Report();
 	    }
@@ -33161,7 +33158,7 @@ webpackJsonp([0],{
 	        var _this = this;
 	        this.route.params.forEach(function (params) {
 	            var id = params["id"];
-	            _this.reportsService.getSingle(id)
+	            _this.reportService.getSingle(id)
 	                .subscribe(function (json) {
 	                if (json.fail) {
 	                    alert(json.fail);
@@ -33229,7 +33226,7 @@ webpackJsonp([0],{
 	var core_1 = __webpack_require__(4);
 	var router_1 = __webpack_require__(31);
 	var report_model_app_1 = __webpack_require__(362);
-	var report_service_1 = __webpack_require__(470);
+	var report_service_1 = __webpack_require__(365);
 	var ReplyToReportComponent = (function () {
 	    function ReplyToReportComponent(route, router, reportService) {
 	        this.route = route;
@@ -33546,60 +33543,6 @@ webpackJsonp([0],{
 /***/ function(module, exports) {
 
 	// removed by extract-text-webpack-plugin
-
-/***/ },
-
-/***/ 470:
-/***/ function(module, exports, __webpack_require__) {
-
-	"use strict";
-	var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
-	    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
-	    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
-	    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
-	    return c > 3 && r && Object.defineProperty(target, key, r), r;
-	};
-	var __metadata = (this && this.__metadata) || function (k, v) {
-	    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
-	};
-	var core_1 = __webpack_require__(4);
-	var http_1 = __webpack_require__(29);
-	var ReportService = (function () {
-	    function ReportService(http) {
-	        this.http = http;
-	    }
-	    ReportService.prototype.getList = function () {
-	        return this.http.get("/api/reports/list")
-	            .map(function (res) {
-	            return JSON.parse(res.text());
-	        });
-	    };
-	    ReportService.prototype.getRecent = function () {
-	        return this.http.get("/api/reports/recent")
-	            .map(function (res) {
-	            return JSON.parse(res.text());
-	        });
-	    };
-	    ReportService.prototype.getSingle = function (id) {
-	        return this.http.get("/api/reports/get/" + id)
-	            .map(function (res) {
-	            return JSON.parse(res.text());
-	        });
-	    };
-	    ReportService.prototype.replyToReport = function (id, reply, solved) {
-	        return this.http.put(("/api/reports/reply/" + id), { reply: reply, solved: solved })
-	            .map(function (res) {
-	            return JSON.parse(res.text());
-	        });
-	    };
-	    ReportService = __decorate([
-	        core_1.Injectable(), 
-	        __metadata('design:paramtypes', [http_1.Http])
-	    ], ReportService);
-	    return ReportService;
-	}());
-	exports.ReportService = ReportService;
-
 
 /***/ }
 

@@ -12,31 +12,27 @@ export class ReportService {
 
     getList(): Observable<any> {
         return this.http.get("/api/reports/list")
-            .map((res: Response) => {
-                return JSON.parse(res.text());
-            });
+            .map(this.parseJSON);
     }
 
     getRecent(): Observable<any> {
         return this.http.get("/api/reports/recent")
-            .map((res: Response) => {
-                return JSON.parse(res.text());
-            });
+            .map(this.parseJSON);
     }
 
     getSingle(id: string): Observable<any> {
-        return this.http.get("/api/reports/get/" + id)
-            .map((res: Response) => {
-                return JSON.parse(res.text());
-            });
+        return this.http.get(`/api/reports/get/${id}`)
+            .map(this.parseJSON);
     }
 
     replyToReport(id: string, reply: string, solved: boolean): Observable<any> {
-        return this.http.put(("/api/reports/reply/" + id), 
+        return this.http.put(`/api/reports/reply/${id}`, 
             { reply, solved })
-            .map((res: Response) => {
-                return JSON.parse(res.text());
-            });
+            .map(this.parseJSON);
+    }
+
+    private parseJSON(res: Response): Object {
+        return JSON.parse(res.text());
     }
 
 }
