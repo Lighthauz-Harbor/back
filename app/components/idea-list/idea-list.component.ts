@@ -13,7 +13,7 @@ export class IdeaListComponent implements OnInit {
 
     private list: Idea[] = [];
     private toggleAll: boolean = false;
-    private message: string = "";
+    private message: string = "Loading...";
 
     constructor(private ideaService: IdeaService) {
 
@@ -34,16 +34,13 @@ export class IdeaListComponent implements OnInit {
                 this.message = "No ideas have been created, yet.";
             } else {
                 // load the ideas into the list
-                json.results.map((result: any) => {
-                    let idea: Idea = new Idea(result.id, {
-                            title: result.title,
-                            description: result.description
-                        },
-                        {},
-                        {},
-                        "",
-                        result.lastChanged);
-                    (idea as any).author = result.author;
+                json.results.map((record: any) => {
+                    let idea: Idea = new Idea();
+                    idea.id = record.idea.id;
+                    idea.title = record.idea.title;
+                    idea.description = record.idea.description;
+                    idea.lastChanged = new Date(record.lastChanged);
+                    (idea as any).author = record.author;
                     this.list.push(idea);
                 });
             }
@@ -60,22 +57,20 @@ export class IdeaListComponent implements OnInit {
         this.list = [];
 
         this.ideaService.searchIdea(term)
-            .subscribe((result: any) => {
-                if (result.fail) {
-                    this.message = result.fail;
-                } else if (result.results.length === 0) {
+            .subscribe((json: any) => {
+                if (json.fail) {
+                    this.message = json.fail;
+                } else if (json.results.length === 0) {
                     this.message = "Idea not found. Please try again.";
                 } else {
-                    result.results.map((i: any) => {
-                        this.list.push(
-                            new Idea(i.id, {
-                                title: i.title,
-                                description: i.description
-                            }, 
-                            {}, 
-                            {},
-                            "", 
-                            i.lastChanged));
+                    json.results.map((record: any) => {
+                        let idea: Idea = new Idea();
+                        idea.id = record.idea.id;
+                        idea.title = record.idea.title;
+                        idea.description = record.idea.description;
+                        idea.lastChanged = new Date(record.lastChanged);
+                        (idea as any).author = record.author;
+                        this.list.push(idea);
                     });
                 }
             });

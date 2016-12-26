@@ -32295,7 +32295,7 @@ webpackJsonp([0],{
 	        this.ideaService = ideaService;
 	        this.list = [];
 	        this.toggleAll = false;
-	        this.message = "";
+	        this.message = "Loading...";
 	    }
 	    IdeaListComponent.prototype.ngOnInit = function () {
 	        this.loadIdeasList();
@@ -32313,12 +32313,13 @@ webpackJsonp([0],{
 	            }
 	            else {
 	                // load the ideas into the list
-	                json.results.map(function (result) {
-	                    var idea = new idea_model_app_1.Idea(result.id, {
-	                        title: result.title,
-	                        description: result.description
-	                    }, {}, {}, "", result.lastChanged);
-	                    idea.author = result.author;
+	                json.results.map(function (record) {
+	                    var idea = new idea_model_app_1.Idea();
+	                    idea.id = record.idea.id;
+	                    idea.title = record.idea.title;
+	                    idea.description = record.idea.description;
+	                    idea.lastChanged = new Date(record.lastChanged);
+	                    idea.author = record.author;
 	                    _this.list.push(idea);
 	                });
 	            }
@@ -32335,19 +32336,22 @@ webpackJsonp([0],{
 	        // renew list every load
 	        this.list = [];
 	        this.ideaService.searchIdea(term)
-	            .subscribe(function (result) {
-	            if (result.fail) {
-	                _this.message = result.fail;
+	            .subscribe(function (json) {
+	            if (json.fail) {
+	                _this.message = json.fail;
 	            }
-	            else if (result.results.length === 0) {
+	            else if (json.results.length === 0) {
 	                _this.message = "Idea not found. Please try again.";
 	            }
 	            else {
-	                result.results.map(function (i) {
-	                    _this.list.push(new idea_model_app_1.Idea(i.id, {
-	                        title: i.title,
-	                        description: i.description
-	                    }, {}, {}, "", i.lastChanged));
+	                json.results.map(function (record) {
+	                    var idea = new idea_model_app_1.Idea();
+	                    idea.id = record.idea.id;
+	                    idea.title = record.idea.title;
+	                    idea.description = record.idea.description;
+	                    idea.lastChanged = new Date(record.lastChanged);
+	                    idea.author = record.author;
+	                    _this.list.push(idea);
 	                });
 	            }
 	        });
@@ -32398,7 +32402,7 @@ webpackJsonp([0],{
 /***/ 413:
 /***/ function(module, exports) {
 
-	module.exports = "<div class=\"content-dashboard\">\r\n    <div class=\"title-dashboard\">\r\n        <h1>List of Ideas</h1>\r\n        <h2>Click on a idea's name to read and edit its data.<br>\r\n            Click the checkboxes to select multiple ideas and delete them.<br>\r\n            You can also search for a idea. Empty the box and press Enter to view the complete list again.</h2>\r\n    </div>\r\n\r\n    <div class=\"panel-dashboard\">\r\n        <a routerLink=\"/ideas/create\" class=\"btn-create\">Create idea</a>\r\n        <a (click)=\"deleteSelectedIdeas()\" class=\"btn-delete\">Delete idea(s)</a>\r\n        <input #searchIdea type=\"text\"\r\n            name=\"search-idea\"\r\n            class=\"search-panel\"\r\n            placeholder=\"Search idea title and press Enter.\"\r\n            (keyup.enter)=\"search(searchIdea.value)\">\r\n    </div>\r\n\r\n    <div class=\"body-dashboard\">\r\n        <table>\r\n            <thead>\r\n                <tr>\r\n                    <th>\r\n                        <input type=\"checkbox\"\r\n                            class=\"cb-toggle-all\"\r\n                            [checked]=\"toggleAll\"\r\n                            (change)=\"toggleAllIdeas()\">\r\n                    </th>\r\n                    <th>Idea title</th>\r\n                    <th>Description</th>\r\n                    <th>Author</th>\r\n                    <th>Last modified at</th>\r\n                </tr>\r\n            </thead>\r\n            <tbody *ngIf=\"list.length <= 0\">\r\n                <tr>\r\n                    <td class=\"table-message\" colspan=\"5\">\r\n                        {{message || \"Loading...\"}}\r\n                    </td>\r\n                </tr>\r\n            </tbody>\r\n            <tbody *ngIf=\"list.length > 0\">\r\n                <tr *ngFor=\"let idea of list\">\r\n                    <td>\r\n                        <input type=\"checkbox\" \r\n                            class=\"cb-select\"\r\n                            [(ngModel)]=\"idea.selected\"\r\n                            (change)=\"cancelToggleAll()\">\r\n                    </td>\r\n                    <td>\r\n                        <a [routerLink]=\"[idea.id]\">\r\n                            {{idea.title}}\r\n                        </a>\r\n                    </td>\r\n                    <td>\r\n                        {{idea.description.length < 37 ?\r\n                            idea.description :\r\n                            (idea.description.slice(0, 37) + \"...\")}}\r\n                    </td>\r\n                    <td>\r\n                        <a href=\"mailto:{{idea.author}}\">\r\n                            {{idea.author}}\r\n                        </a>\r\n                    </td>\r\n                    <td>{{idea.lastChanged}}</td>\r\n                </tr>\r\n            </tbody>\r\n        </table>\r\n    </div>\r\n</div>"
+	module.exports = "<div class=\"content-dashboard\">\r\n    <div class=\"title-dashboard\">\r\n        <h1>List of Ideas</h1>\r\n        <h2>Click on a idea's name to read and edit its data.<br>\r\n            Click the checkboxes to select multiple ideas and delete them.<br>\r\n            You can also search for a idea. Empty the box and press Enter to view the complete list again.</h2>\r\n    </div>\r\n\r\n    <div class=\"panel-dashboard\">\r\n        <a routerLink=\"/ideas/create\" class=\"btn-create\">Create idea</a>\r\n        <a (click)=\"deleteSelectedIdeas()\" class=\"btn-delete\">Delete idea(s)</a>\r\n        <input #searchIdea type=\"text\"\r\n            name=\"search-idea\"\r\n            class=\"search-panel\"\r\n            placeholder=\"Search idea title and press Enter.\"\r\n            (keyup.enter)=\"search(searchIdea.value)\">\r\n    </div>\r\n\r\n    <div class=\"body-dashboard\">\r\n        <table>\r\n            <thead>\r\n                <tr>\r\n                    <th>\r\n                        <input type=\"checkbox\"\r\n                            class=\"cb-toggle-all\"\r\n                            [checked]=\"toggleAll\"\r\n                            (change)=\"toggleAllIdeas()\">\r\n                    </th>\r\n                    <th>Idea title</th>\r\n                    <th>Description</th>\r\n                    <th>Author</th>\r\n                    <th>Last modified at</th>\r\n                </tr>\r\n            </thead>\r\n            <tbody *ngIf=\"list.length <= 0\">\r\n                <tr>\r\n                    <td class=\"table-message\" colspan=\"5\">\r\n                        {{message}}\r\n                    </td>\r\n                </tr>\r\n            </tbody>\r\n            <tbody *ngIf=\"list.length > 0\">\r\n                <tr *ngFor=\"let idea of list\">\r\n                    <td>\r\n                        <input type=\"checkbox\" \r\n                            class=\"cb-select\"\r\n                            [(ngModel)]=\"idea.selected\"\r\n                            (change)=\"cancelToggleAll()\">\r\n                    </td>\r\n                    <td>\r\n                        <a [routerLink]=\"[idea.id]\">\r\n                            {{idea.title}}\r\n                        </a>\r\n                    </td>\r\n                    <td>\r\n                        {{idea.description.length < 37 ?\r\n                            idea.description :\r\n                            (idea.description.slice(0, 37) + \"...\")}}\r\n                    </td>\r\n                    <td>\r\n                        <a [routerLink]=\"['/users', idea.author.id]\">\r\n                            {{idea.author.name}}\r\n                        </a>\r\n                    </td>\r\n                    <td>{{idea.lastChanged.toDateString()}}</td>\r\n                </tr>\r\n            </tbody>\r\n        </table>\r\n    </div>\r\n</div>"
 
 /***/ },
 

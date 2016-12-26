@@ -265,19 +265,24 @@ var IdeaSchema = function(dbDriver) {
         // m.lastChanged: "modified at"
         session
             .run("MATCH (i:Idea)<-[m:MAKE]-(u:User) RETURN \
-                i.id, i.title, i.description, u.username, m.lastChanged \
+                i.id, i.title, i.description, \
+                u.id, u.name, u.username, m.lastChanged \
                 ORDER BY m.lastChanged DESC")
             .then(function(result) {
                 res.send({
                     results: result.records.map(function(record) {
                         return {
-                            id: record.get("i.id"),
-                            title: record.get("i.title"),
-                            description: record.get("i.description"),
-                            author: record.get("u.username"),
-                            lastChanged: (
-                                new Date(record.get("m.lastChanged"))
-                            ).toDateString(),
+                            idea: {
+                                id: record.get("i.id"),
+                                title: record.get("i.title"),
+                                description: record.get("i.description")
+                            },
+                            author: {
+                                id: record.get("u.id"),
+                                name: record.get("u.name"),
+                                email: record.get("u.username")
+                            },
+                            lastChanged: Number(record.get("m.lastChanged"))
                         };
                     })
                 });
@@ -298,19 +303,24 @@ var IdeaSchema = function(dbDriver) {
             .run("MATCH (u:User)-[m:MAKE]->(i:Idea) \
                 WHERE i.title =~ {titleRegex} \
                 RETURN i.id, i.title, i.description, \
-                m.lastChanged, u.username ORDER BY i.title ASC",
+                u.id, u.name, u.username, m.lastChanged \
+                ORDER BY i.title ASC",
                 { titleRegex: titleRegex })
             .then(function(result) {
                 res.send({
                     results: result.records.map(function(record) {
                         return {
-                            id: record.get("i.id"),
-                            title: record.get("i.title"),
-                            description: record.get("i.description"),
-                            author: record.get("u.username"),
-                            lastChanged: (
-                                new Date(record.get("m.lastChanged"))
-                            ).toDateString(),
+                            idea: {
+                                id: record.get("i.id"),
+                                title: record.get("i.title"),
+                                description: record.get("i.description")
+                            },
+                            author: {
+                                id: record.get("u.id"),
+                                name: record.get("u.name"),
+                                email: record.get("u.username")
+                            },
+                            lastChanged: Number(record.get("m.lastChanged"))
                         };
                     })
                 });
