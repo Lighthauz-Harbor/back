@@ -716,15 +716,32 @@ var UserSchema = function(dbDriver) {
 
     this.deleteUsers = function(req, res) {
         var session = this.driver.session();
+
+        // delete user's ideas first
         session
-            .run("MATCH (u:User)-[:MAKE]->(i:Idea) \
-                WHERE u.id IN {ids} DETACH DELETE i, u",
+            .run("MATCH (u:User)-[m:MAKE]->(i:Idea) \
+                WHERE u.id IN {ids} \
+                DETACH DELETE i",
                 { ids: req.body.ids })
-            .then(function(result) {
-                res.send({
-                    message: "Successfully deleted user(s), along with their data."
-                });
-                session.close();
+            .then(function() {
+                // then delete the user themself
+                session
+                    .run("MATCH (u:User) WHERE u.id IN {ids} \
+                        DETACH DELETE u", { ids: req.body.ids })
+                    .then(function() {
+                        res.send({
+                            message: "Successfully deleted user(s), " +
+                                "along with their data."
+                        });
+                        session.close();
+                    })
+                    .catch(function(err) {
+                        res.send({
+                            message: "Successfully deleted the users' ideas, " +
+                                "but not the users' data. Please try again."
+                        });
+                        session.close();
+                    });
             })
             .catch(function(err) {
                 res.send({

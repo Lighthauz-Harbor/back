@@ -87,6 +87,8 @@ export class UsersListComponent implements OnInit {
             return user.id;
         });
 
+        console.log(selectedIds);
+
         if (selectedIds.length === 0) {
             alert("Please select the users to delete first!");
         } else {
