@@ -15,7 +15,7 @@ export class ReplyToReportComponent implements OnInit {
     // initialize using default values first
     // (its values will be set during `ngOnInit()`)
     private report: Report = new Report();
-    private author: string = "";
+    private author: any = { name: "", email: "" };
 
     private solved: string;
     private solvedChoices: string[] = ["No", "Yes"];
@@ -37,11 +37,12 @@ export class ReplyToReportComponent implements OnInit {
                         this.router.navigate(["/reports"]);
                     } else {
                         this.report.id = id;
-                        this.report.title = json.title;
-                        this.report.type = json.type;
-                        this.report.message = json.message;
-                        this.report.reply = json.reply;
-                        this.author = json.author;
+                        this.report.title = json.report.title;
+                        this.report.type = json.report.type;
+                        this.report.message = json.report.message;
+                        this.report.reply = json.report.reply;
+                        this.author.name = json.author.name;
+                        this.author.email = json.author.email;
                     }
                 });
         });

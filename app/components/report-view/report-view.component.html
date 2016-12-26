@@ -10,24 +10,24 @@
 
     <div class="body-dashboard">
         <p>
-            <strong>Title: </strong> {{ report.title }}
+            <strong>Title: </strong> {{report.title}}
         </p>
         <p>
-            <strong>Reporter: </strong> {{ author }}
+            <strong>Reporter: </strong> {{author.name}}
         </p>
         <p>
-            <strong>Report type (User or Idea): </strong> {{ report.type }}
+            <strong>Report type (User or Idea): </strong> {{report.type}}
         </p>
         <p>
             <strong>User's message:</strong><br>
-            {{ report.message }}
+            {{report.message}}
         </p>
         <p>
             <strong>Administrator's reply:</strong><br>
-            {{ report.reply === "" ? "No reply has been sent yet." : report.reply }}
+            {{report.reply === "" ? "No reply has been sent yet." : report.reply}}
         </p>
         <p>
-            <strong>Solved: </strong> {{ report.solved ? "Already solved." : "Not solved yet." }}
+            <strong>Solved: </strong> {{report.solved ? "Already solved." : "Not solved yet."}}
         </p>
     </div>
 

@@ -54,7 +54,11 @@
                         <tbody *ngIf="reportsList.length > 0">
                             <tr *ngFor="let report of reportsList">
                                 <td>{{ report.title }}</td>
-                                <td>{{ report.author }}</td>
+                                <td>
+                                    <a [routerLink]="['/users', report.author.id]">
+                                        {{ report.author.name }}
+                                    </a>
+                                </td>
                                 <td>{{ report.createdAt.toDateString() }}</td>
                             </tr>
                         </tbody>

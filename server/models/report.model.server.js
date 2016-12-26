@@ -73,16 +73,22 @@ var ReportSchema = function(dbDriver) {
         session
             .run("MATCH (author:User)-[report:REPORT]->(target) \
                 WHERE report.solved = false \
-                RETURN author.username, report.id, \
-                report.title, report.createdAt \
+                RETURN author.id, author.name, author.username, \
+                report.id, report.title, report.createdAt \
                 ORDER BY report.createdAt DESC")
             .then(function(result) {
                 res.send({
                     reports: result.records.map(function(report) {
                         return {
-                            id: report.get("report.id"),
-                            title: report.get("report.title"),
-                            author: report.get("author.username"),
+                            report: {
+                                id: report.get("report.id"),
+                                title: report.get("report.title")
+                            },
+                            author: {
+                                id: report.get("author.id"),
+                                name: report.get("author.name"),
+                                email: report.get("author.username")
+                            },
                             createdAt: report.get("report.createdAt")
                         };
                     })
@@ -103,16 +109,22 @@ var ReportSchema = function(dbDriver) {
         session
             .run("MATCH (author:User)-[report:REPORT]->(target) \
                 WHERE report.solved = false \
-                RETURN author.username, report.id, \
-                report.title, report.createdAt \
+                RETURN author.id, author.name, author.username, \
+                report.id, report.title, report.createdAt \
                 ORDER BY report.createdAt DESC LIMIT 4")
             .then(function(result) {
                 res.send({
-                    reports: result.records.map(function(report) {
+                    list: result.records.map(function(report) {
                         return {
-                            id: report.get("report.id"),
-                            title: report.get("report.title"),
-                            author: report.get("author.username"),
+                            report: {
+                                id: report.get("report.id"),
+                                title: report.get("report.title")
+                            },
+                            author: {
+                                id: report.get("author.id"),
+                                name: report.get("author.name"),
+                                email: report.get("author.username")
+                            },
                             createdAt: report.get("report.createdAt")
                         };
                     })
@@ -133,21 +145,28 @@ var ReportSchema = function(dbDriver) {
         session
             .run("MATCH (author:User)-[report:REPORT]->(target) \
                 WHERE report.id = {id} \
-                RETURN report.title, author.username, \
-                toString(labels(target)[0]), report.message, \
+                RETURN author.id, author.name, author.username, \
+                report.title, toString(labels(target)[0]), report.message, \
                 report.reply, report.solved, report.createdAt",
                 {
                     id: req.params.id
                 })
             .then(function(result) {
+                var record = result.records[0];
                 res.send({
-                    title: result.records[0].get("report.title"),
-                    author: result.records[0].get("author.username"),
-                    type: result.records[0].get("toString(labels(target)[0])"),
-                    message: result.records[0].get("report.message"),
-                    reply: result.records[0].get("report.reply"),
-                    solved: result.records[0].get("report.solved"),
-                    createdAt: result.records[0].get("report.createdAt")
+                    report: {
+                        title: record.get("report.title"),
+                        type: record.get("toString(labels(target)[0])"),
+                        message: record.get("report.message"),
+                        reply: record.get("report.reply"),
+                        solved: record.get("report.solved")
+                    },
+                    author: {
+                        id: record.get("author.id"),
+                        name: record.get("author.name"),
+                        email: record.get("author.username")
+                    },
+                    createdAt: record.get("report.createdAt")
                 });
                 session.close();
             })
@@ -174,9 +193,10 @@ var ReportSchema = function(dbDriver) {
                     solved: req.body.solved
                 })
             .then(function(result) {
-                var authorName = result.records[0].get("author.name");
-                var authorEmail = result.records[0].get("author.username");
-                var message = result.records[0].get("report.message");
+                var record = result.records[0];
+                var authorName = record.get("author.name");
+                var authorEmail = record.get("author.username");
+                var message = record.get("report.message");
 
                 var transporter = nodemailer.createTransport(smtpConfig);
 

@@ -11,7 +11,7 @@
             <thead>
                 <tr>
                     <th>Report title</th>
-                    <th>Reporter's email</th>
+                    <th>User / reporter</th>
                     <th>Last submitted at</th>
                 </tr>
             </thead>
@@ -30,8 +30,8 @@
                         </a>
                     </td>
                     <td>
-                        <a href="mailto:{{report.author}}">
-                            {{report.author}}
+                        <a [routerLink]="['/users', report.author.id]">
+                            {{report.author.name}}
                         </a>
                     </td>
                     <td>{{report.createdAt.toDateString()}}</td>

@@ -62,19 +62,19 @@ export class DashboardComponent implements OnInit {
         this.reportsService.getRecent().subscribe((json: any) => {
             if (json.fail) {
                 this.message = json.fail;
-            } else if (json.reports.length === 0) {
+            } else if (json.list.length === 0) {
                 this.message = "There are no unsolved reports, so far.";
             } else {
-                json.reports.map((report: any) => {
-                    let reportObj = new Report(
-                        report.id,
-                        report.title,
-                        "",
-                        "",
-                        false,
-                        "",
-                        new Date(report.createdAt));
-                    (reportObj as any).author = report.author;
+                json.list.map((record: any) => {
+                    let reportObj: Report = new Report();
+                    reportObj.id = record.report.id;
+                    reportObj.title = record.report.title;
+                    reportObj.createdAt = new Date(record.createdAt);
+                    (reportObj as any).author = {
+                        id: record.author.id,
+                        name: record.author.name,
+                        email: record.author.email
+                    };
                     this.reportsList.push(reportObj);
                 });
             }

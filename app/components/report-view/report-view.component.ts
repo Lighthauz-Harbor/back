@@ -14,7 +14,7 @@ export class ViewReportComponent implements OnInit {
 
     // initialized using default values (must not be null)
     private report: Report = new Report();
-    private author: string = "";
+    private author: any = { name: "", email: "" };
 
     constructor(
         private route: ActivatedRoute,
@@ -32,18 +32,15 @@ export class ViewReportComponent implements OnInit {
                         alert(json.fail);
                         this.router.navigate(["/reports"]);
                     } else {
-                        /*this.report = new Report(id, 
-                            json.title, json.author, json.message, 
-                            "", json.solved, json.type, 
-                            new Date(json.createdAt));*/
                         this.report.id = id;
-                        this.report.title = json.title;
-                        this.author = json.author;
-                        this.report.message = json.message;
-                        this.report.reply = json.reply;
-                        this.report.solved = json.solved;
-                        this.report.type = json.type;
+                        this.report.title = json.report.title;
+                        this.report.message = json.report.message;
+                        this.report.reply = json.report.reply;
+                        this.report.solved = json.report.solved;
+                        this.report.type = json.report.type;
                         this.report.createdAt = new Date(json.createdAt);
+                        this.author.name = json.author.name;
+                        this.author.email = json.author.email;
                     }
                 });
         });
