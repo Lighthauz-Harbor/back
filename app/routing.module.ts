@@ -9,7 +9,6 @@ import {CreateUserComponent} from "./components/user-create/user-create.componen
 import {UpdateUserComponent} from "./components/user-update/user-update.component";
 import {UserIdeasComponent} from "./components/user-ideas/user-ideas.component";
 import {UserConnectionsComponent} from "./components/user-connections/user-connections.component";
-import {UserRequestsComponent} from "./components/user-requests/user-requests.component";
 import {DeactivateUserComponent} from "./components/user-deactivate/user-deactivate.component";
 import {ReactivateUserComponent} from "./components/user-reactivate/user-reactivate.component";
 import {IdeaListComponent} from "./components/idea-list/idea-list.component";
@@ -59,10 +58,6 @@ const routes: Routes = [
                     {
                         path: "connections",
                         component: UserConnectionsComponent
-                    },
-                    {
-                        path: "requests",
-                        component: UserRequestsComponent
                     },
                     {
                         path: "deactivate",

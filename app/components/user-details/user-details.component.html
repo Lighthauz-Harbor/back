@@ -18,9 +18,6 @@
             <li>
                 <a [routerLink]="['connections']">View user's connections</a>
             </li>
-            <li>
-                <a [routerLink]="['requests']">View user's connection requests</a>
-            </li>
             <!-- only loaded if blocked exists -->
             <li *ngIf="blocked === true">
                 <a [routerLink]="['reactivate']">Re-activate user</a>
