@@ -9,12 +9,13 @@ var IdeaSchema = function(dbDriver) {
 
     this._createInDb = function(session, createQuery, result, req, res) {
         var authorId = result.records[0].get(0);
+        var ideaId = uuid.v4();
         session
             .run(createQuery, {
                 authorId: authorId,
                 categoryName: req.body.category,
                 createdAt: (new Date()).getTime(),
-                ideaId: uuid.v4(),
+                ideaId: ideaId,
                 title: req.body.title,
                 description: req.body.description,
                 visibility: neo4jInt(req.body.visibility),
@@ -40,6 +41,7 @@ var IdeaSchema = function(dbDriver) {
             })
             .then(function() {
                 res.send({
+                    id: ideaId,
                     message: "Successfully created idea."
                 });
                 session.close();
