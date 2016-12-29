@@ -3,6 +3,7 @@ export class User {
     private _id: string;
     private _name: string;
     private _username: string;
+    private _password: string;
     private _role: string;
     private _bio: string;
 
@@ -39,6 +40,8 @@ export class User {
         this._createdAt = createdAt;
         this._lastChanged = lastChanged;
 
+        this._password = "";
+
         // to initialize the user's list
         this._selected = false; 
     }
@@ -61,6 +64,14 @@ export class User {
 
     set username(newUsername: string) {
         this._username = newUsername;
+    }
+
+    get password(): string {
+        return this._password;
+    }
+
+    set password(newPassword: string) {
+        this._password = newPassword;
     }
 
     get role(): string {

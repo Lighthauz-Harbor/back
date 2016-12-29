@@ -1,5 +1,8 @@
 import {Component} from "@angular/core";
 import {Router} from "@angular/router";
+
+import {User} from "../../models/user.model.app";
+
 import {UserService} from "../../services/user.service";
 import {ImageService} from "../../services/image.service";
 
@@ -10,12 +13,8 @@ import {ImageService} from "../../services/image.service";
 })
 export class CreateUserComponent {
 
-    private fullName: string;
-    private email: string;
-    private password: string;
+    private user: User = new User();
     private repeatPassword: string;
-    private dateOfBirth: Date;
-    private bio: string;
 
     private profilePicImg: any;
     private profilePicFile: Array<File> = [];
@@ -29,15 +28,9 @@ export class CreateUserComponent {
 
     onSubmitUser(): void {
         if (this.isValidInput()) {
-            // create request body
-            let reqBody: any = {
-                name: this.fullName, 
-                username: this.email, 
-                password: this.password, 
-                dateOfBirth: (new Date(this.dateOfBirth)).toISOString().slice(0, 10), 
-                bio: this.bio,
-                role: "user"
-            };
+            this.user.role = "user";
+            let {name, username, password, dateOfBirth, bio, role} = this.user;
+            let reqBody: any = {name, username, password, dateOfBirth, bio, role};
 
             // upload profile picture first
             if (this.profilePicFile.length === 1) {
@@ -87,7 +80,7 @@ export class CreateUserComponent {
     }
 
     private isValidInput(): boolean {
-        if (this.password !== this.repeatPassword) {
+        if (this.user.password !== this.repeatPassword) {
             alert("Both passwords must be the same. Please input again.");
             return false;
         }
@@ -107,7 +100,7 @@ export class CreateUserComponent {
 
     private isEligibleAge(): boolean {
         let today = new Date();
-        let dob = new Date(this.dateOfBirth);
+        let dob = new Date(this.user.dateOfBirth);
         let age = today.getFullYear() - dob.getFullYear();
         let month = today.getMonth() - dob.getMonth();
 

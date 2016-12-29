@@ -14,21 +14,21 @@
             <div class="form-group">
                 <div class="form-col-2">
                     <label for="fullName">Full name: (*)</label>
-                    <input type="text" name="fullName" [(ngModel)]="fullName" required>
+                    <input type="text" name="fullName" [(ngModel)]="user.name" required>
                 </div>
             </div>
 
             <div class="form-group">
                 <div class="form-col-2">
                     <label for="email">Email - must be a valid email format: (*)</label>
-                    <input type="email" name="email" [(ngModel)]="email" required>
+                    <input type="email" name="email" [(ngModel)]="user.username" required>
                 </div>
             </div>
 
             <div class="form-group">
                 <div class="form-col-2">
                     <label for="password">Password: (*)</label>
-                    <input type="password" name="password" [(ngModel)]="password" required>
+                    <input type="password" name="password" [(ngModel)]="user.password" required>
                 </div>
             </div>
 
@@ -42,14 +42,14 @@
             <div class="form-group">
                 <div class="form-col-2">
                     <label for="dateOfBirth">Date of birth: (*)</label>
-                    <input type="date" name="dateOfBirth" [(ngModel)]="dateOfBirth" required> 
+                    <input type="date" name="dateOfBirth" [(ngModel)]="user.dateOfBirth" required> 
                 </div>
             </div>
 
             <div class="form-group">
                 <div class="form-col-2">
                     <label for="bio">Short bio that describes user: (optional)</label>
-                    <input type="text" name="bio" [(ngModel)]="bio">
+                    <input type="text" name="bio" [(ngModel)]="user.bio">
                 </div>
             </div>
 

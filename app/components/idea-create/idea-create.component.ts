@@ -1,5 +1,8 @@
 import {Component} from "@angular/core";
 import {Router} from "@angular/router";
+
+import {Idea} from "../../models/idea.model.app";
+
 import {IdeaService} from "../../services/idea.service";
 import {ImageService} from "../../services/image.service";
 
@@ -9,30 +12,12 @@ import {ImageService} from "../../services/image.service";
     styles: [ require("./idea-create.component.css").toString() ]
 })
 export class CreateIdeaComponent {
-    private title: string;
-    private category: string;
+    
+    private idea: Idea = new Idea();
     private author: string; // username or email
-    private description: string;
     private visibility: string;
     private visibilityChoices: string[] = ["Not published", "Exclusive", "Public"];
-    private background: string;
-    private problem: string;
-    private solution: string;
-    private extraLink: string;
-    private strengths: string;
-    private weaknesses: string;
-    private opportunities: string;
-    private threats: string;
-    private valueProposition: string;
-    private customerSegments: string;
-    private customerRelationships: string;
-    private channels: string;
-    private keyActivities: string;
-    private keyResources: string;
-    private keyPartners: string;
-    private costStructure: string;
-    private revenueStreams: string;
-
+    
     private picImg: any;
     private picFile: Array<File> = [];
 
@@ -49,32 +34,22 @@ export class CreateIdeaComponent {
             let visibilityFlag = this.visibilityChoices
                 .indexOf(this.visibility);
 
-            // the request body or data to save
-            let reqBody: any = {
-                title: this.title,
-                category: this.category,
-                author: this.author,
-                description: this.description,
-                visibility: visibilityFlag,
-                background: this.background,
-                problem: this.problem,
-                solution: this.solution,
-                extraLink: this.extraLink || "",
-                strengths: this.strengths,
-                weaknesses: this.weaknesses,
-                opportunities: this.opportunities,
-                threats: this.threats,
-                valueProposition: this.valueProposition,
-                customerSegments: this.customerSegments,
-                customerRelationships: this.customerRelationships,
-                channels: this.channels,
-                keyActivities: this.keyActivities,
-                keyResources: this.keyResources,
-                keyPartners: this.keyPartners,
-                costStructure: this.costStructure,
-                revenueStreams: this.revenueStreams,
-            };
+            let {title, category, description, background,
+                problem, solution, extraLink, strengths,
+                weaknesses, opportunities, threats, valueProposition,
+                customerSegments, customerRelationships, channels, 
+                keyActivities, keyResources, keyPartners, costStructure, 
+                revenueStreams} = this.idea;
 
+            // the request body or data to save
+            let reqBody: any = {title, category, author: this.author, 
+                description, visibility: visibilityFlag, background,
+                problem, solution, extraLink, strengths,
+                weaknesses, opportunities, threats, valueProposition,
+                customerSegments, customerRelationships, channels,
+                keyActivities, keyResources, keyPartners, costStructure,
+                revenueStreams};
+            
             // upload idea picture first
             if (this.picFile.length === 1) {
                 let file: File = this.picFile[0];
@@ -141,7 +116,7 @@ export class CreateIdeaComponent {
             "$", "i"
         );
 
-        if (this.extraLink && !this.extraLink.match(urlRegex)) {
+        if (this.idea.extraLink && !this.idea.extraLink.match(urlRegex)) {
             alert("Extra link is not a valid URL. Please try again.");
             return false;
         }

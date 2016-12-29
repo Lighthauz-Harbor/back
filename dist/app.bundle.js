@@ -42640,6 +42640,7 @@ webpackJsonp([0],{
 	        this._dateOfBirth = dateOfBirth;
 	        this._createdAt = createdAt;
 	        this._lastChanged = lastChanged;
+	        this._password = "";
 	        // to initialize the user's list
 	        this._selected = false;
 	    }
@@ -42666,6 +42667,16 @@ webpackJsonp([0],{
 	        },
 	        set: function (newUsername) {
 	            this._username = newUsername;
+	        },
+	        enumerable: true,
+	        configurable: true
+	    });
+	    Object.defineProperty(User.prototype, "password", {
+	        get: function () {
+	            return this._password;
+	        },
+	        set: function (newPassword) {
+	            this._password = newPassword;
 	        },
 	        enumerable: true,
 	        configurable: true
@@ -42868,6 +42879,7 @@ webpackJsonp([0],{
 	};
 	var core_1 = __webpack_require__(4);
 	var router_1 = __webpack_require__(31);
+	var user_model_app_1 = __webpack_require__(375);
 	var user_service_1 = __webpack_require__(364);
 	var image_service_1 = __webpack_require__(384);
 	var CreateUserComponent = (function () {
@@ -42875,20 +42887,15 @@ webpackJsonp([0],{
 	        this.router = router;
 	        this.usersService = usersService;
 	        this.imageService = imageService;
+	        this.user = new user_model_app_1.User();
 	        this.profilePicFile = [];
 	    }
 	    CreateUserComponent.prototype.onSubmitUser = function () {
 	        var _this = this;
 	        if (this.isValidInput()) {
-	            // create request body
-	            var reqBody_1 = {
-	                name: this.fullName,
-	                username: this.email,
-	                password: this.password,
-	                dateOfBirth: (new Date(this.dateOfBirth)).toISOString().slice(0, 10),
-	                bio: this.bio,
-	                role: "user"
-	            };
+	            this.user.role = "user";
+	            var _a = this.user, name_1 = _a.name, username = _a.username, password = _a.password, dateOfBirth = _a.dateOfBirth, bio = _a.bio, role = _a.role;
+	            var reqBody_1 = { name: name_1, username: username, password: password, dateOfBirth: dateOfBirth, bio: bio, role: role };
 	            // upload profile picture first
 	            if (this.profilePicFile.length === 1) {
 	                var file = this.profilePicFile[0];
@@ -42936,7 +42943,7 @@ webpackJsonp([0],{
 	        this.profilePicFile = fileInput.target.files;
 	    };
 	    CreateUserComponent.prototype.isValidInput = function () {
-	        if (this.password !== this.repeatPassword) {
+	        if (this.user.password !== this.repeatPassword) {
 	            alert("Both passwords must be the same. Please input again.");
 	            return false;
 	        }
@@ -42952,7 +42959,7 @@ webpackJsonp([0],{
 	    };
 	    CreateUserComponent.prototype.isEligibleAge = function () {
 	        var today = new Date();
-	        var dob = new Date(this.dateOfBirth);
+	        var dob = new Date(this.user.dateOfBirth);
 	        var age = today.getFullYear() - dob.getFullYear();
 	        var month = today.getMonth() - dob.getMonth();
 	        if (month < 0 ||
@@ -43020,7 +43027,7 @@ webpackJsonp([0],{
 /***/ 385:
 /***/ function(module, exports) {
 
-	module.exports = "<div class=\"content-dashboard\">\r\n    <div class=\"title-dashboard\">\r\n        <h1>Create a user</h1>\r\n        <h2>\r\n            <strong>NOTE:</strong> Creating a user is for development purposes or other urgent matters. So use with care.\r\n            <br>\r\n            Enter the details below to create a new user. Fields marked with (*) are <strong>required.</strong>\r\n        </h2>\r\n    </div>\r\n\r\n    <div class=\"form-wrapper-dashboard\">\r\n        <form class=\"form-dashboard form-user\" (ngSubmit)=\"onSubmitUser()\" #userForm=\"ngForm\">\r\n\r\n            <div class=\"form-group\">\r\n                <div class=\"form-col-2\">\r\n                    <label for=\"fullName\">Full name: (*)</label>\r\n                    <input type=\"text\" name=\"fullName\" [(ngModel)]=\"fullName\" required>\r\n                </div>\r\n            </div>\r\n\r\n            <div class=\"form-group\">\r\n                <div class=\"form-col-2\">\r\n                    <label for=\"email\">Email - must be a valid email format: (*)</label>\r\n                    <input type=\"email\" name=\"email\" [(ngModel)]=\"email\" required>\r\n                </div>\r\n            </div>\r\n\r\n            <div class=\"form-group\">\r\n                <div class=\"form-col-2\">\r\n                    <label for=\"password\">Password: (*)</label>\r\n                    <input type=\"password\" name=\"password\" [(ngModel)]=\"password\" required>\r\n                </div>\r\n            </div>\r\n\r\n            <div class=\"form-group\">\r\n                <div class=\"form-col-2\">\r\n                    <label for=\"repeatPassword\">Repeat password: (*)</label>\r\n                    <input type=\"password\" name=\"repeatPassword\" [(ngModel)]=\"repeatPassword\" required>\r\n                </div>\r\n            </div>\r\n\r\n            <div class=\"form-group\">\r\n                <div class=\"form-col-2\">\r\n                    <label for=\"dateOfBirth\">Date of birth: (*)</label>\r\n                    <input type=\"date\" name=\"dateOfBirth\" [(ngModel)]=\"dateOfBirth\" required> \r\n                </div>\r\n            </div>\r\n\r\n            <div class=\"form-group\">\r\n                <div class=\"form-col-2\">\r\n                    <label for=\"bio\">Short bio that describes user: (optional)</label>\r\n                    <input type=\"text\" name=\"bio\" [(ngModel)]=\"bio\">\r\n                </div>\r\n            </div>\r\n\r\n            <div class=\"form-group\">\r\n                <div class=\"form-col-1\">\r\n                    <label for=\"profilePic\">Profile picture: (optional)</label>\r\n                    <input type=\"file\" name=\"profilePic\" (change)=\"fileChangeEvent($event)\">\r\n                </div>\r\n            </div>\r\n\r\n            <div class=\"form-group\">\r\n                <button type=\"submit\">Submit</button>\r\n            </div>\r\n\r\n        </form>\r\n    </div>\r\n</div>"
+	module.exports = "<div class=\"content-dashboard\">\r\n    <div class=\"title-dashboard\">\r\n        <h1>Create a user</h1>\r\n        <h2>\r\n            <strong>NOTE:</strong> Creating a user is for development purposes or other urgent matters. So use with care.\r\n            <br>\r\n            Enter the details below to create a new user. Fields marked with (*) are <strong>required.</strong>\r\n        </h2>\r\n    </div>\r\n\r\n    <div class=\"form-wrapper-dashboard\">\r\n        <form class=\"form-dashboard form-user\" (ngSubmit)=\"onSubmitUser()\" #userForm=\"ngForm\">\r\n\r\n            <div class=\"form-group\">\r\n                <div class=\"form-col-2\">\r\n                    <label for=\"fullName\">Full name: (*)</label>\r\n                    <input type=\"text\" name=\"fullName\" [(ngModel)]=\"user.name\" required>\r\n                </div>\r\n            </div>\r\n\r\n            <div class=\"form-group\">\r\n                <div class=\"form-col-2\">\r\n                    <label for=\"email\">Email - must be a valid email format: (*)</label>\r\n                    <input type=\"email\" name=\"email\" [(ngModel)]=\"user.username\" required>\r\n                </div>\r\n            </div>\r\n\r\n            <div class=\"form-group\">\r\n                <div class=\"form-col-2\">\r\n                    <label for=\"password\">Password: (*)</label>\r\n                    <input type=\"password\" name=\"password\" [(ngModel)]=\"user.password\" required>\r\n                </div>\r\n            </div>\r\n\r\n            <div class=\"form-group\">\r\n                <div class=\"form-col-2\">\r\n                    <label for=\"repeatPassword\">Repeat password: (*)</label>\r\n                    <input type=\"password\" name=\"repeatPassword\" [(ngModel)]=\"repeatPassword\" required>\r\n                </div>\r\n            </div>\r\n\r\n            <div class=\"form-group\">\r\n                <div class=\"form-col-2\">\r\n                    <label for=\"dateOfBirth\">Date of birth: (*)</label>\r\n                    <input type=\"date\" name=\"dateOfBirth\" [(ngModel)]=\"user.dateOfBirth\" required> \r\n                </div>\r\n            </div>\r\n\r\n            <div class=\"form-group\">\r\n                <div class=\"form-col-2\">\r\n                    <label for=\"bio\">Short bio that describes user: (optional)</label>\r\n                    <input type=\"text\" name=\"bio\" [(ngModel)]=\"user.bio\">\r\n                </div>\r\n            </div>\r\n\r\n            <div class=\"form-group\">\r\n                <div class=\"form-col-1\">\r\n                    <label for=\"profilePic\">Profile picture: (optional)</label>\r\n                    <input type=\"file\" name=\"profilePic\" (change)=\"fileChangeEvent($event)\">\r\n                </div>\r\n            </div>\r\n\r\n            <div class=\"form-group\">\r\n                <button type=\"submit\">Submit</button>\r\n            </div>\r\n\r\n        </form>\r\n    </div>\r\n</div>"
 
 /***/ },
 
@@ -43618,7 +43625,7 @@ webpackJsonp([0],{
 	                        _this.message = "This user has no connections, yet.";
 	                    }
 	                    else {
-	                        _this.message = "This user has some connections, though. :D";
+	                        _this.message = "";
 	                    }
 	                }
 	            });
@@ -44064,6 +44071,7 @@ webpackJsonp([0],{
 	};
 	var core_1 = __webpack_require__(4);
 	var router_1 = __webpack_require__(31);
+	var idea_model_app_1 = __webpack_require__(393);
 	var idea_service_1 = __webpack_require__(365);
 	var image_service_1 = __webpack_require__(384);
 	var CreateIdeaComponent = (function () {
@@ -44071,6 +44079,7 @@ webpackJsonp([0],{
 	        this.router = router;
 	        this.ideaService = ideaService;
 	        this.imageService = imageService;
+	        this.idea = new idea_model_app_1.Idea();
 	        this.visibilityChoices = ["Not published", "Exclusive", "Public"];
 	        this.picFile = [];
 	    }
@@ -44080,31 +44089,15 @@ webpackJsonp([0],{
 	            // assign visibility to a number flag
 	            var visibilityFlag = this.visibilityChoices
 	                .indexOf(this.visibility);
+	            var _a = this.idea, title = _a.title, category = _a.category, description = _a.description, background = _a.background, problem = _a.problem, solution = _a.solution, extraLink = _a.extraLink, strengths = _a.strengths, weaknesses = _a.weaknesses, opportunities = _a.opportunities, threats = _a.threats, valueProposition = _a.valueProposition, customerSegments = _a.customerSegments, customerRelationships = _a.customerRelationships, channels = _a.channels, keyActivities = _a.keyActivities, keyResources = _a.keyResources, keyPartners = _a.keyPartners, costStructure = _a.costStructure, revenueStreams = _a.revenueStreams;
 	            // the request body or data to save
-	            var reqBody_1 = {
-	                title: this.title,
-	                category: this.category,
-	                author: this.author,
-	                description: this.description,
-	                visibility: visibilityFlag,
-	                background: this.background,
-	                problem: this.problem,
-	                solution: this.solution,
-	                extraLink: this.extraLink || "",
-	                strengths: this.strengths,
-	                weaknesses: this.weaknesses,
-	                opportunities: this.opportunities,
-	                threats: this.threats,
-	                valueProposition: this.valueProposition,
-	                customerSegments: this.customerSegments,
-	                customerRelationships: this.customerRelationships,
-	                channels: this.channels,
-	                keyActivities: this.keyActivities,
-	                keyResources: this.keyResources,
-	                keyPartners: this.keyPartners,
-	                costStructure: this.costStructure,
-	                revenueStreams: this.revenueStreams,
-	            };
+	            var reqBody_1 = { title: title, category: category, author: this.author,
+	                description: description, visibility: visibilityFlag, background: background,
+	                problem: problem, solution: solution, extraLink: extraLink, strengths: strengths,
+	                weaknesses: weaknesses, opportunities: opportunities, threats: threats, valueProposition: valueProposition,
+	                customerSegments: customerSegments, customerRelationships: customerRelationships, channels: channels,
+	                keyActivities: keyActivities, keyResources: keyResources, keyPartners: keyPartners, costStructure: costStructure,
+	                revenueStreams: revenueStreams };
 	            // upload idea picture first
 	            if (this.picFile.length === 1) {
 	                var file = this.picFile[0];
@@ -44166,7 +44159,7 @@ webpackJsonp([0],{
 	            "(?::\\d{2,5})?" +
 	            "(?:[/?#]\\S*)?" +
 	            "$", "i");
-	        if (this.extraLink && !this.extraLink.match(urlRegex)) {
+	        if (this.idea.extraLink && !this.idea.extraLink.match(urlRegex)) {
 	            alert("Extra link is not a valid URL. Please try again.");
 	            return false;
 	        }
@@ -44192,7 +44185,7 @@ webpackJsonp([0],{
 /***/ 418:
 /***/ function(module, exports) {
 
-	module.exports = "<div class=\"content-dashboard\">\r\n    <div class=\"title-dashboard\">\r\n        <h1>Create an idea</h1>\r\n        <h2>\r\n            <strong>NOTE:</strong> Creating an idea is for development purposes or other urgent matters. So use with care.\r\n            <br>\r\n            Enter the details below to create an new idea. Fields marked with (*) are <strong>required.</strong>\r\n        </h2>\r\n    </div>\r\n\r\n    <div class=\"form-wrapper-dashboard\">\r\n        <form class=\"form-dashboard form-idea\" (ngSubmit)=\"onSubmitIdea()\" #ideaForm=\"ngForm\">\r\n\r\n            <div class=\"basic-info-form\">\r\n                <h2>Basic information</h2>\r\n\r\n                <div class=\"form-group\">\r\n                    <div class=\"form-col-1\">\r\n                        <label for=\"title\">Title: (*)</label>\r\n                        <input type=\"text\" name=\"title\" [(ngModel)]=\"title\" required>\r\n                    </div>\r\n                    <div class=\"form-col-1\">\r\n                        <label for=\"category\">Category: (*)</label>\r\n                        <input type=\"text\" name=\"category\" [(ngModel)]=\"category\" required>\r\n                    </div>\r\n                </div>\r\n\r\n                <div class=\"form-group\">\r\n                    <div class=\"form-col-1\">\r\n                        <label for=\"visibility\">Visibility: (*)</label>\r\n                        <select name=\"visibility\"\r\n                            [(ngModel)]=\"visibility\"\r\n                            required>\r\n                            <option *ngFor=\"let v of visibilityChoices\"\r\n                                [value]=\"v\">{{v}}</option>\r\n                        </select>\r\n                    </div>\r\n                    <div class=\"form-col-1\">\r\n                        <label for=\"author\">Author's email - <em>must be an existing user</em>: (*)</label>\r\n                        <input type=\"text\" name=\"author\" [(ngModel)]=\"author\" required>\r\n                    </div>\r\n                </div>\r\n\r\n                <div class=\"form-group\">\r\n                    <div class=\"form-col-2\">\r\n                        <label for=\"description\">Description: (*)</label>\r\n                        <textarea name=\"description\" [(ngModel)]=\"description\" required></textarea>\r\n                    </div>\r\n                </div>\r\n\r\n                <div class=\"form-group\">\r\n                    <div class=\"form-col-2\">\r\n                        <label for=\"background\">Background: (*)</label>\r\n                        <textarea name=\"background\" [(ngModel)]=\"background\" required></textarea>\r\n                    </div>\r\n                </div>\r\n\r\n                <div class=\"form-group\">\r\n                    <div class=\"form-col-1\">\r\n                        <label for=\"problem\">Problem: (*)</label>\r\n                        <textarea name=\"problem\" [(ngModel)]=\"problem\" required></textarea>\r\n                    </div>\r\n                    <div class=\"form-col-1\">\r\n                        <label for=\"solution\">Solution: (*)</label>\r\n                        <textarea name=\"solution\" [(ngModel)]=\"solution\" required></textarea> \r\n                    </div>\r\n                </div>\r\n            </div>\r\n\r\n            <div class=\"extra-info-form\">\r\n                <h2>Extra information (optional)</h2>\r\n\r\n                <div class=\"form-group\">\r\n                    <div class=\"form-col-1\">\r\n                        <label for=\"extraLink\">Extra link: (in valid URL format)</label>\r\n                        <input type=\"text\" name=\"extraLink\" [(ngModel)]=\"extraLink\">\r\n                    </div>\r\n                    <div class=\"form-col-1\">\r\n                        <label for=\"pic\">Idea logo / picture: (optional)</label>\r\n                        <input type=\"file\" name=\"pic\" (change)=\"fileChangeEvent($event)\">\r\n                    </div>\r\n                </div>\r\n            </div> \r\n\r\n            <div class=\"swot-form\">\r\n                <h2>SWOT Analysis</h2>\r\n\r\n                <div class=\"form-group\">\r\n                    <div class=\"form-col-1\">\r\n                        <label for=\"strengths\">Strengths: (*)</label>\r\n                        <textarea name=\"strengths\" [(ngModel)]=\"strengths\" required></textarea>\r\n                    </div>\r\n                    <div class=\"form-col-1\">\r\n                        <label for=\"weaknesses\">Weaknesses: (*)</label>\r\n                        <textarea name=\"weaknesses\" [(ngModel)]=\"weaknesses\" required></textarea> \r\n                    </div>\r\n                </div>\r\n\r\n                <div class=\"form-group\">\r\n                    <div class=\"form-col-1\">\r\n                        <label for=\"opportunities\">Opportunities: (*)</label>\r\n                        <textarea name=\"opportunities\" [(ngModel)]=\"opportunities\" required></textarea>\r\n                    </div>\r\n                    <div class=\"form-col-1\">\r\n                        <label for=\"threats\">Threats: (*)</label>\r\n                        <textarea name=\"threats\" [(ngModel)]=\"threats\" required></textarea> \r\n                    </div>\r\n                </div> \r\n            </div>\r\n\r\n            <div class=\"bmc-form\">\r\n                <h2>Business Model Canvas</h2>\r\n\r\n                <div class=\"form-group\">\r\n                    <div class=\"form-col-2\">\r\n                        <label for=\"valueProposition\">Value proposition: (*)</label>\r\n                        <textarea name=\"valueProposition\" [(ngModel)]=\"valueProposition\" required></textarea>\r\n                    </div>\r\n                </div>\r\n\r\n                <div class=\"form-group\">\r\n                    <div class=\"form-col-1\">\r\n                        <label for=\"customerSegments\">Customer segments: (*)</label>\r\n                        <textarea name=\"customerSegments\" [(ngModel)]=\"customerSegments\" required></textarea>\r\n                    </div>\r\n                    <div class=\"form-col-1\">\r\n                        <label for=\"customerRelationships\">Customer relationships: (*)</label>\r\n                        <textarea name=\"customerRelationships\" [(ngModel)]=\"customerRelationships\" required></textarea>\r\n                    </div>\r\n                </div>\r\n\r\n                <div class=\"form-group\">\r\n                    <div class=\"form-col-1\">\r\n                        <label for=\"channels\">Channels: (*)</label>\r\n                        <textarea name=\"channels\" [(ngModel)]=\"channels\" required></textarea>\r\n                    </div>\r\n                    <div class=\"form-col-1\">\r\n                        <label for=\"keyActivities\">Key activities: (*)</label>\r\n                        <textarea name=\"keyActivities\" [(ngModel)]=\"keyActivities\" required></textarea>\r\n                    </div>\r\n                </div>\r\n\r\n                <div class=\"form-group\">\r\n                    <div class=\"form-col-1\">\r\n                        <label for=\"keyResources\">Key resources: (*)</label>\r\n                        <textarea name=\"keyResources\" [(ngModel)]=\"keyResources\" required></textarea>\r\n                    </div>\r\n                    <div class=\"form-col-1\">\r\n                        <label for=\"keyPartners\">Key partners: (*)</label>\r\n                        <textarea name=\"keyPartners\" [(ngModel)]=\"keyPartners\" required></textarea>\r\n                    </div>\r\n                </div>\r\n\r\n                <div class=\"form-group\">\r\n                    <div class=\"form-col-1\">\r\n                        <label for=\"costStructure\">Cost structure: (*)</label>\r\n                        <textarea name=\"costStructure\" [(ngModel)]=\"costStructure\" required></textarea>\r\n                    </div>\r\n                    <div class=\"form-col-1\">\r\n                        <label for=\"revenueStreams\">Revenue streams: (*)</label>\r\n                        <textarea name=\"revenueStreams\" [(ngModel)]=\"revenueStreams\" required></textarea>\r\n                    </div>\r\n                </div>\r\n            </div>\r\n\r\n            <div class=\"submit-form\">\r\n                <div class=\"form-group\">\r\n                    <button type=\"submit\">Submit</button>\r\n                </div>\r\n            </div>\r\n\r\n        </form>\r\n    </div>\r\n</div>"
+	module.exports = "<div class=\"content-dashboard\">\r\n    <div class=\"title-dashboard\">\r\n        <h1>Create an idea</h1>\r\n        <h2>\r\n            <strong>NOTE:</strong> Creating an idea is for development purposes or other urgent matters. So use with care.\r\n            <br>\r\n            Enter the details below to create an new idea. Fields marked with (*) are <strong>required.</strong>\r\n        </h2>\r\n    </div>\r\n\r\n    <div class=\"form-wrapper-dashboard\">\r\n        <form class=\"form-dashboard form-idea\" (ngSubmit)=\"onSubmitIdea()\" #ideaForm=\"ngForm\">\r\n\r\n            <div class=\"basic-info-form\">\r\n                <h2>Basic information</h2>\r\n\r\n                <div class=\"form-group\">\r\n                    <div class=\"form-col-1\">\r\n                        <label for=\"title\">Title: (*)</label>\r\n                        <input type=\"text\" name=\"title\" [(ngModel)]=\"idea.title\" required>\r\n                    </div>\r\n                    <div class=\"form-col-1\">\r\n                        <label for=\"category\">Category: (*)</label>\r\n                        <input type=\"text\" name=\"category\" [(ngModel)]=\"idea.category\" required>\r\n                    </div>\r\n                </div>\r\n\r\n                <div class=\"form-group\">\r\n                    <div class=\"form-col-1\">\r\n                        <label for=\"visibility\">Visibility: (*)</label>\r\n                        <select name=\"visibility\"\r\n                            [(ngModel)]=\"visibility\"\r\n                            required>\r\n                            <option *ngFor=\"let v of visibilityChoices\"\r\n                                [value]=\"v\">{{v}}</option>\r\n                        </select>\r\n                    </div>\r\n                    <div class=\"form-col-1\">\r\n                        <label for=\"author\">Author's email - <em>must be an existing user</em>: (*)</label>\r\n                        <input type=\"text\" name=\"author\" [(ngModel)]=\"author\" required>\r\n                    </div>\r\n                </div>\r\n\r\n                <div class=\"form-group\">\r\n                    <div class=\"form-col-2\">\r\n                        <label for=\"description\">Description: (*)</label>\r\n                        <textarea name=\"description\" [(ngModel)]=\"idea.description\" required></textarea>\r\n                    </div>\r\n                </div>\r\n\r\n                <div class=\"form-group\">\r\n                    <div class=\"form-col-2\">\r\n                        <label for=\"background\">Background: (*)</label>\r\n                        <textarea name=\"background\" [(ngModel)]=\"idea.background\" required></textarea>\r\n                    </div>\r\n                </div>\r\n\r\n                <div class=\"form-group\">\r\n                    <div class=\"form-col-1\">\r\n                        <label for=\"problem\">Problem: (*)</label>\r\n                        <textarea name=\"problem\" [(ngModel)]=\"idea.problem\" required></textarea>\r\n                    </div>\r\n                    <div class=\"form-col-1\">\r\n                        <label for=\"solution\">Solution: (*)</label>\r\n                        <textarea name=\"solution\" [(ngModel)]=\"idea.solution\" required></textarea> \r\n                    </div>\r\n                </div>\r\n            </div>\r\n\r\n            <div class=\"extra-info-form\">\r\n                <h2>Extra information (optional)</h2>\r\n\r\n                <div class=\"form-group\">\r\n                    <div class=\"form-col-1\">\r\n                        <label for=\"extraLink\">Extra link: (in valid URL format)</label>\r\n                        <input type=\"text\" name=\"extraLink\" [(ngModel)]=\"idea.extraLink\">\r\n                    </div>\r\n                    <div class=\"form-col-1\">\r\n                        <label for=\"pic\">Idea logo / picture: (optional)</label>\r\n                        <input type=\"file\" name=\"pic\" (change)=\"fileChangeEvent($event)\">\r\n                    </div>\r\n                </div>\r\n            </div> \r\n\r\n            <div class=\"swot-form\">\r\n                <h2>SWOT Analysis</h2>\r\n\r\n                <div class=\"form-group\">\r\n                    <div class=\"form-col-1\">\r\n                        <label for=\"strengths\">Strengths: (*)</label>\r\n                        <textarea name=\"strengths\" [(ngModel)]=\"idea.strengths\" required></textarea>\r\n                    </div>\r\n                    <div class=\"form-col-1\">\r\n                        <label for=\"weaknesses\">Weaknesses: (*)</label>\r\n                        <textarea name=\"weaknesses\" [(ngModel)]=\"idea.weaknesses\" required></textarea> \r\n                    </div>\r\n                </div>\r\n\r\n                <div class=\"form-group\">\r\n                    <div class=\"form-col-1\">\r\n                        <label for=\"opportunities\">Opportunities: (*)</label>\r\n                        <textarea name=\"opportunities\" [(ngModel)]=\"idea.opportunities\" required></textarea>\r\n                    </div>\r\n                    <div class=\"form-col-1\">\r\n                        <label for=\"threats\">Threats: (*)</label>\r\n                        <textarea name=\"threats\" [(ngModel)]=\"idea.threats\" required></textarea> \r\n                    </div>\r\n                </div> \r\n            </div>\r\n\r\n            <div class=\"bmc-form\">\r\n                <h2>Business Model Canvas</h2>\r\n\r\n                <div class=\"form-group\">\r\n                    <div class=\"form-col-2\">\r\n                        <label for=\"valueProposition\">Value proposition: (*)</label>\r\n                        <textarea name=\"valueProposition\" [(ngModel)]=\"idea.valueProposition\" required></textarea>\r\n                    </div>\r\n                </div>\r\n\r\n                <div class=\"form-group\">\r\n                    <div class=\"form-col-1\">\r\n                        <label for=\"customerSegments\">Customer segments: (*)</label>\r\n                        <textarea name=\"customerSegments\" [(ngModel)]=\"idea.customerSegments\" required></textarea>\r\n                    </div>\r\n                    <div class=\"form-col-1\">\r\n                        <label for=\"customerRelationships\">Customer relationships: (*)</label>\r\n                        <textarea name=\"customerRelationships\" [(ngModel)]=\"idea.customerRelationships\" required></textarea>\r\n                    </div>\r\n                </div>\r\n\r\n                <div class=\"form-group\">\r\n                    <div class=\"form-col-1\">\r\n                        <label for=\"channels\">Channels: (*)</label>\r\n                        <textarea name=\"channels\" [(ngModel)]=\"idea.channels\" required></textarea>\r\n                    </div>\r\n                    <div class=\"form-col-1\">\r\n                        <label for=\"keyActivities\">Key activities: (*)</label>\r\n                        <textarea name=\"keyActivities\" [(ngModel)]=\"idea.keyActivities\" required></textarea>\r\n                    </div>\r\n                </div>\r\n\r\n                <div class=\"form-group\">\r\n                    <div class=\"form-col-1\">\r\n                        <label for=\"keyResources\">Key resources: (*)</label>\r\n                        <textarea name=\"keyResources\" [(ngModel)]=\"idea.keyResources\" required></textarea>\r\n                    </div>\r\n                    <div class=\"form-col-1\">\r\n                        <label for=\"keyPartners\">Key partners: (*)</label>\r\n                        <textarea name=\"keyPartners\" [(ngModel)]=\"idea.keyPartners\" required></textarea>\r\n                    </div>\r\n                </div>\r\n\r\n                <div class=\"form-group\">\r\n                    <div class=\"form-col-1\">\r\n                        <label for=\"costStructure\">Cost structure: (*)</label>\r\n                        <textarea name=\"costStructure\" [(ngModel)]=\"idea.costStructure\" required></textarea>\r\n                    </div>\r\n                    <div class=\"form-col-1\">\r\n                        <label for=\"revenueStreams\">Revenue streams: (*)</label>\r\n                        <textarea name=\"revenueStreams\" [(ngModel)]=\"idea.revenueStreams\" required></textarea>\r\n                    </div>\r\n                </div>\r\n            </div>\r\n\r\n            <div class=\"submit-form\">\r\n                <div class=\"form-group\">\r\n                    <button type=\"submit\">Submit</button>\r\n                </div>\r\n            </div>\r\n\r\n        </form>\r\n    </div>\r\n</div>"
 
 /***/ },
 

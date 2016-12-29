@@ -17,11 +17,11 @@
                 <div class="form-group">
                     <div class="form-col-1">
                         <label for="title">Title: (*)</label>
-                        <input type="text" name="title" [(ngModel)]="title" required>
+                        <input type="text" name="title" [(ngModel)]="idea.title" required>
                     </div>
                     <div class="form-col-1">
                         <label for="category">Category: (*)</label>
-                        <input type="text" name="category" [(ngModel)]="category" required>
+                        <input type="text" name="category" [(ngModel)]="idea.category" required>
                     </div>
                 </div>
 
@@ -44,25 +44,25 @@
                 <div class="form-group">
                     <div class="form-col-2">
                         <label for="description">Description: (*)</label>
-                        <textarea name="description" [(ngModel)]="description" required></textarea>
+                        <textarea name="description" [(ngModel)]="idea.description" required></textarea>
                     </div>
                 </div>
 
                 <div class="form-group">
                     <div class="form-col-2">
                         <label for="background">Background: (*)</label>
-                        <textarea name="background" [(ngModel)]="background" required></textarea>
+                        <textarea name="background" [(ngModel)]="idea.background" required></textarea>
                     </div>
                 </div>
 
                 <div class="form-group">
                     <div class="form-col-1">
                         <label for="problem">Problem: (*)</label>
-                        <textarea name="problem" [(ngModel)]="problem" required></textarea>
+                        <textarea name="problem" [(ngModel)]="idea.problem" required></textarea>
                     </div>
                     <div class="form-col-1">
                         <label for="solution">Solution: (*)</label>
-                        <textarea name="solution" [(ngModel)]="solution" required></textarea> 
+                        <textarea name="solution" [(ngModel)]="idea.solution" required></textarea> 
                     </div>
                 </div>
             </div>
@@ -73,7 +73,7 @@
                 <div class="form-group">
                     <div class="form-col-1">
                         <label for="extraLink">Extra link: (in valid URL format)</label>
-                        <input type="text" name="extraLink" [(ngModel)]="extraLink">
+                        <input type="text" name="extraLink" [(ngModel)]="idea.extraLink">
                     </div>
                     <div class="form-col-1">
                         <label for="pic">Idea logo / picture: (optional)</label>
@@ -88,22 +88,22 @@
                 <div class="form-group">
                     <div class="form-col-1">
                         <label for="strengths">Strengths: (*)</label>
-                        <textarea name="strengths" [(ngModel)]="strengths" required></textarea>
+                        <textarea name="strengths" [(ngModel)]="idea.strengths" required></textarea>
                     </div>
                     <div class="form-col-1">
                         <label for="weaknesses">Weaknesses: (*)</label>
-                        <textarea name="weaknesses" [(ngModel)]="weaknesses" required></textarea> 
+                        <textarea name="weaknesses" [(ngModel)]="idea.weaknesses" required></textarea> 
                     </div>
                 </div>
 
                 <div class="form-group">
                     <div class="form-col-1">
                         <label for="opportunities">Opportunities: (*)</label>
-                        <textarea name="opportunities" [(ngModel)]="opportunities" required></textarea>
+                        <textarea name="opportunities" [(ngModel)]="idea.opportunities" required></textarea>
                     </div>
                     <div class="form-col-1">
                         <label for="threats">Threats: (*)</label>
-                        <textarea name="threats" [(ngModel)]="threats" required></textarea> 
+                        <textarea name="threats" [(ngModel)]="idea.threats" required></textarea> 
                     </div>
                 </div> 
             </div>
@@ -114,51 +114,51 @@
                 <div class="form-group">
                     <div class="form-col-2">
                         <label for="valueProposition">Value proposition: (*)</label>
-                        <textarea name="valueProposition" [(ngModel)]="valueProposition" required></textarea>
+                        <textarea name="valueProposition" [(ngModel)]="idea.valueProposition" required></textarea>
                     </div>
                 </div>
 
                 <div class="form-group">
                     <div class="form-col-1">
                         <label for="customerSegments">Customer segments: (*)</label>
-                        <textarea name="customerSegments" [(ngModel)]="customerSegments" required></textarea>
+                        <textarea name="customerSegments" [(ngModel)]="idea.customerSegments" required></textarea>
                     </div>
                     <div class="form-col-1">
                         <label for="customerRelationships">Customer relationships: (*)</label>
-                        <textarea name="customerRelationships" [(ngModel)]="customerRelationships" required></textarea>
+                        <textarea name="customerRelationships" [(ngModel)]="idea.customerRelationships" required></textarea>
                     </div>
                 </div>
 
                 <div class="form-group">
                     <div class="form-col-1">
                         <label for="channels">Channels: (*)</label>
-                        <textarea name="channels" [(ngModel)]="channels" required></textarea>
+                        <textarea name="channels" [(ngModel)]="idea.channels" required></textarea>
                     </div>
                     <div class="form-col-1">
                         <label for="keyActivities">Key activities: (*)</label>
-                        <textarea name="keyActivities" [(ngModel)]="keyActivities" required></textarea>
+                        <textarea name="keyActivities" [(ngModel)]="idea.keyActivities" required></textarea>
                     </div>
                 </div>
 
                 <div class="form-group">
                     <div class="form-col-1">
                         <label for="keyResources">Key resources: (*)</label>
-                        <textarea name="keyResources" [(ngModel)]="keyResources" required></textarea>
+                        <textarea name="keyResources" [(ngModel)]="idea.keyResources" required></textarea>
                     </div>
                     <div class="form-col-1">
                         <label for="keyPartners">Key partners: (*)</label>
-                        <textarea name="keyPartners" [(ngModel)]="keyPartners" required></textarea>
+                        <textarea name="keyPartners" [(ngModel)]="idea.keyPartners" required></textarea>
                     </div>
                 </div>
 
                 <div class="form-group">
                     <div class="form-col-1">
                         <label for="costStructure">Cost structure: (*)</label>
-                        <textarea name="costStructure" [(ngModel)]="costStructure" required></textarea>
+                        <textarea name="costStructure" [(ngModel)]="idea.costStructure" required></textarea>
                     </div>
                     <div class="form-col-1">
                         <label for="revenueStreams">Revenue streams: (*)</label>
-                        <textarea name="revenueStreams" [(ngModel)]="revenueStreams" required></textarea>
+                        <textarea name="revenueStreams" [(ngModel)]="idea.revenueStreams" required></textarea>
                     </div>
                 </div>
             </div>
