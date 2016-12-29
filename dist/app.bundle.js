@@ -42265,14 +42265,6 @@ webpackJsonp([0],{
 	        return this.http.get("/api/connections/" + userId)
 	            .map(this.parseJSON);
 	    };
-	    UserService.prototype.getSentConnectionRequests = function (userId) {
-	        return this.http.get("/api/connections/requests/sent/" + userId)
-	            .map(this.parseJSON);
-	    };
-	    UserService.prototype.getReceivedConnectionRequests = function (userId) {
-	        return this.http.get("/api/connections/requests/received/" + userId)
-	            .map(this.parseJSON);
-	    };
 	    UserService.prototype.deactivateUser = function (id, reason) {
 	        return this.http.post("/user/auth/deactivate", { id: id, reason: reason })
 	            .map(this.parseJSON);

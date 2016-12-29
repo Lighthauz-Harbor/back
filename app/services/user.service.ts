@@ -68,16 +68,6 @@ export class UserService {
             .map(this.parseJSON);
     }
 
-    getSentConnectionRequests(userId: string): Observable<any> {
-        return this.http.get(`/api/connections/requests/sent/${userId}`)
-            .map(this.parseJSON);
-    }
-
-    getReceivedConnectionRequests(userId: string): Observable<any> {
-        return this.http.get(`/api/connections/requests/received/${userId}`)
-            .map(this.parseJSON);
-    }
-
     deactivateUser(id: string, reason: string): Observable<any> {
         return this.http.post("/user/auth/deactivate",
             { id, reason })
