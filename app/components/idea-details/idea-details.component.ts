@@ -34,34 +34,30 @@ export class IdeaDetailsComponent implements OnInit {
                         alert(json.fail);
                         this.router.navigate(["/ideas"]);
                     } else {
+                        let extraLink = json.idea.extraLink;
+                        if (!extraLink.includes("http://") && !extraLink.includes("https://")) {
+                            extraLink = "http://" + extraLink;
+                        }
+
+                        let {title, pic, description, background, problem, solution} = json.idea;
+                        let {valueProposition, customerSegments, customerRelationships, 
+                            channels, keyActivities, keyResources, keyPartners, 
+                            costStructure, revenueStreams} = json.idea;
+                        let {strengths, weaknesses, opportunities, threats} = json.idea;
+
                         this.idea = new Idea(id, 
                             {
                                 visibility: json.visibility,
-                                title: json.idea.title,
-                                pic: json.idea.pic,
-                                description: json.idea.description,
-                                background: json.idea.background,
-                                problem: json.idea.problem,
-                                solution: json.idea.solution,
-                                extraLink: json.idea.extraLink,
+                                title, pic, description, background,
+                                problem, solution, extraLink
                             },
                             {
-                                valueProposition: json.idea.valueProposition,
-                                customerSegments: json.idea.customerSegments,
-                                customerRelationships: 
-                                    json.idea.customerRelationships,
-                                channels: json.idea.channels,
-                                keyActivities: json.idea.keyActivities,
-                                keyResources: json.idea.keyResources,
-                                keyPartners: json.idea.keyPartners,
-                                costStructure: json.idea.costStructure,
-                                revenueStreams: json.idea.revenueStreams,
+                                valueProposition, customerSegments, customerRelationships,
+                                channels, keyActivities, keyResources, keyPartners,
+                                costStructure, revenueStreams
                             },
                             {
-                                strengths: json.idea.strengths,
-                                weaknesses: json.idea.weaknesses,
-                                opportunities: json.idea.opportunities,
-                                threats: json.idea.threats,
+                                strengths, weaknesses, opportunities, threats
                             },
                             json.category,
                             new Date(json.timestamp));

@@ -66,7 +66,8 @@
                     <h3>Extra information:</h3>
                     <p>
                         <strong>Extra Link:</strong> 
-                        {{idea.extraLink || "No extra link"}}
+                        <span *ngIf="!idea.extraLink">No extra link.</span>
+                        <span *ngIf="idea.extraLink"><a [href]="idea.extraLink">{{idea.extraLink}}</a></span>
                     </p>
                 </div>
                 <div class="info-wrapper bmc-details">
