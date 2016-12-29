@@ -17,18 +17,18 @@ export class UserConnectionsComponent implements OnInit {
     constructor(
         private router: Router,
         private route: ActivatedRoute,
-        private usersService: UserService) {
+        private userService: UserService) {
 
     }
 
     ngOnInit(): void {
         this.route.params.forEach((params: Params) => {
             let id = params["id"];
-            this.usersService.getName(id)
+            this.userService.getName(id)
                 .subscribe((json: any) => {
                     this.name = json.fail || json.name;
                 });
-            this.usersService.getConnections(id)
+            this.userService.getConnections(id)
                 .subscribe((json: any) => {
                     if (json.fail) {
                         this.message = json.fail;

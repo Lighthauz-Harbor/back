@@ -18,19 +18,19 @@ export class UserIdeasComponent implements OnInit {
     constructor(
         private router: Router,
         private route: ActivatedRoute,
-        private usersService: UserService,
-        private ideasService: IdeaService) {
+        private userService: UserService,
+        private ideaService: IdeaService) {
 
     }
 
     ngOnInit(): void {
         this.route.params.forEach((params: Params) => {
             let userId = params["id"];
-            this.usersService.getName(userId)
+            this.userService.getName(userId)
                 .subscribe((json: any) => {
                     this.name = json.fail || json.name;
                 });
-            this.ideasService.getIdeaListFromUser(userId)
+            this.ideaService.getIdeaListFromUser(userId)
                 .subscribe((json: any) => {
                     if (json.fail) {
                         this.message = json.fail;

@@ -20,9 +20,9 @@ export class DashboardComponent implements OnInit {
     private reportsList: Report[] = [];
 
     constructor(
-        private usersService: UserService,
-        private ideasService: IdeaService,
-        private reportsService: ReportService) {
+        private userService: UserService,
+        private ideaService: IdeaService,
+        private reportService: ReportService) {
 
     }
 
@@ -33,31 +33,31 @@ export class DashboardComponent implements OnInit {
     }
 
     private getUserInfo(): void {
-        this.usersService.getUserActivityCount()
+        this.userService.getUserActivityCount()
             .subscribe((json: any) => {
                 this.userActivity = json.count;
             });
 
-        this.usersService.getTotalUsersCount()
+        this.userService.getTotalUsersCount()
             .subscribe((json: any) => {
                 this.totalUsers = json.count;
             });
     }
 
     private getIdeaInfo(): void {
-        this.ideasService.getTodayCount()
+        this.ideaService.getTodayCount()
             .subscribe((json: any) => {
                 this.ideasToday = json.count;
             });
 
-        this.ideasService.getTotalIdeasCount()
+        this.ideaService.getTotalIdeasCount()
             .subscribe((json: any) => {
                 this.totalIdeas = json.count;
             });
     }
 
     private loadRecentReports(): void {
-        this.reportsService.getRecent().subscribe((json: any) => {
+        this.reportService.getRecent().subscribe((json: any) => {
             if (json.fail) {
                 this.message = json.fail;
             } else if (json.list.length === 0) {

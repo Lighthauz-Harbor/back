@@ -23,7 +23,7 @@ export class UpdateUserComponent implements OnInit {
     constructor(
         private route: ActivatedRoute,
         private router: Router,
-        private usersService: UserService,
+        private userService: UserService,
         private imageService: ImageService) {
 
     }
@@ -31,7 +31,7 @@ export class UpdateUserComponent implements OnInit {
     ngOnInit(): void {
         this.route.params.forEach((params: Params) => {
             this.user.id = params["id"];
-            this.usersService.getSingleUser(this.user.id)
+            this.userService.getSingleUser(this.user.id)
                 .subscribe((json: any) => {
                     if (json.fail) {
                         alert(json.fail);
@@ -93,7 +93,7 @@ export class UpdateUserComponent implements OnInit {
     }
 
     private requestToUpdate(reqBody: any) {
-        this.usersService.updateUser(reqBody).subscribe(result => {
+        this.userService.updateUser(reqBody).subscribe(result => {
             alert(result.message);
             this.router.navigate(["/users"]);
         });

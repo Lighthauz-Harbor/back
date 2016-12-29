@@ -17,14 +17,14 @@ export class DeactivateUserComponent implements OnInit {
     constructor(
         private router: Router,
         private route: ActivatedRoute,
-        private usersService: UserService) {
+        private userService: UserService) {
 
     }
 
     ngOnInit(): void {
         this.route.params.forEach((params: Params) => {
             this.id = params["id"];
-            this.usersService.getName(this.id)
+            this.userService.getName(this.id)
                 .subscribe((json: any) => {
                     this.name = json.fail || json.name;
                 });
@@ -32,7 +32,7 @@ export class DeactivateUserComponent implements OnInit {
     }
 
     onSubmitDeactivationRequest(): void {
-        this.usersService.deactivateUser(this.id, this.reason)
+        this.userService.deactivateUser(this.id, this.reason)
             .subscribe((json: any) => {
                 alert(json.message);
                 this.router.navigate(["/users", this.id]);

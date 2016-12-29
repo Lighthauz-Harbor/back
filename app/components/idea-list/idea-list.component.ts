@@ -18,10 +18,10 @@ export class IdeaListComponent implements OnInit {
     }
 
     ngOnInit(): void {
-        this.loadIdeasList();
+        this.loadIdeaList();
     }
 
-    private loadIdeasList(): void {
+    private loadIdeaList(): void {
         // renew list every load
         this.list = [];
 
@@ -46,11 +46,11 @@ export class IdeaListComponent implements OnInit {
     }
 
     search(term: string): void {
-        if (term === "") this.loadIdeasList();
-        else this.loadIdeasListByTerm(term);
+        if (term === "") this.loadIdeaList();
+        else this.loadIdeaListByTerm(term);
     }
 
-    private loadIdeasListByTerm(term: string): void {
+    private loadIdeaListByTerm(term: string): void {
         // renew list every load
         this.list = [];
 
@@ -98,7 +98,7 @@ export class IdeaListComponent implements OnInit {
             this.ideaService.deleteIdeas(selectedIds)
                 .subscribe((json: any) => {
                     alert(json.message);
-                    this.loadIdeasList();
+                    this.loadIdeaList();
                 });
         }
     }

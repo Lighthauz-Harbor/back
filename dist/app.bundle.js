@@ -28371,7 +28371,7 @@ webpackJsonp([0],{
 	            sidebar_component_1.SidebarComponent,
 	            not_found_component_1.PageNotFoundComponent,
 	            /** User management components */
-	            user_list_component_1.UsersListComponent,
+	            user_list_component_1.UserListComponent,
 	            user_details_component_1.UserDetailsComponent,
 	            user_create_component_1.CreateUserComponent,
 	            user_update_component_1.UpdateUserComponent,
@@ -28387,8 +28387,8 @@ webpackJsonp([0],{
 	            idea_responses_component_1.IdeaResponsesComponent,
 	            idea_partners_component_1.IdeaPartnersComponent,
 	            /** Report management components */
-	            report_list_component_1.ReportsListComponent,
-	            report_view_component_1.ViewReportComponent,
+	            report_list_component_1.ReportListComponent,
+	            report_view_component_1.ReportDetailsComponent,
 	            report_reply_component_1.ReplyToReportComponent,
 	        ],
 	        providers: [
@@ -36261,7 +36261,7 @@ webpackJsonp([0],{
 	        children: [
 	            {
 	                path: "",
-	                component: user_list_component_1.UsersListComponent
+	                component: user_list_component_1.UserListComponent
 	            },
 	            {
 	                path: "create",
@@ -36339,14 +36339,14 @@ webpackJsonp([0],{
 	        children: [
 	            {
 	                path: "",
-	                component: report_list_component_1.ReportsListComponent
+	                component: report_list_component_1.ReportListComponent
 	            },
 	            {
 	                path: ":id",
 	                children: [
 	                    {
 	                        path: "",
-	                        component: report_view_component_1.ViewReportComponent
+	                        component: report_view_component_1.ReportDetailsComponent
 	                    },
 	                    {
 	                        path: "reply",
@@ -42024,10 +42024,10 @@ webpackJsonp([0],{
 	var idea_service_1 = __webpack_require__(365);
 	var report_service_1 = __webpack_require__(366);
 	var DashboardComponent = (function () {
-	    function DashboardComponent(usersService, ideasService, reportsService) {
-	        this.usersService = usersService;
-	        this.ideasService = ideasService;
-	        this.reportsService = reportsService;
+	    function DashboardComponent(userService, ideaService, reportService) {
+	        this.userService = userService;
+	        this.ideaService = ideaService;
+	        this.reportService = reportService;
 	        this.message = "";
 	        this.userActivity = 0;
 	        this.totalUsers = 0;
@@ -42042,29 +42042,29 @@ webpackJsonp([0],{
 	    };
 	    DashboardComponent.prototype.getUserInfo = function () {
 	        var _this = this;
-	        this.usersService.getUserActivityCount()
+	        this.userService.getUserActivityCount()
 	            .subscribe(function (json) {
 	            _this.userActivity = json.count;
 	        });
-	        this.usersService.getTotalUsersCount()
+	        this.userService.getTotalUsersCount()
 	            .subscribe(function (json) {
 	            _this.totalUsers = json.count;
 	        });
 	    };
 	    DashboardComponent.prototype.getIdeaInfo = function () {
 	        var _this = this;
-	        this.ideasService.getTodayCount()
+	        this.ideaService.getTodayCount()
 	            .subscribe(function (json) {
 	            _this.ideasToday = json.count;
 	        });
-	        this.ideasService.getTotalIdeasCount()
+	        this.ideaService.getTotalIdeasCount()
 	            .subscribe(function (json) {
 	            _this.totalIdeas = json.count;
 	        });
 	    };
 	    DashboardComponent.prototype.loadRecentReports = function () {
 	        var _this = this;
-	        this.reportsService.getRecent().subscribe(function (json) {
+	        this.reportService.getRecent().subscribe(function (json) {
 	            if (json.fail) {
 	                _this.message = json.fail;
 	            }
@@ -42507,21 +42507,21 @@ webpackJsonp([0],{
 	var core_1 = __webpack_require__(4);
 	var user_model_app_1 = __webpack_require__(375);
 	var user_service_1 = __webpack_require__(364);
-	var UsersListComponent = (function () {
-	    function UsersListComponent(usersService) {
-	        this.usersService = usersService;
+	var UserListComponent = (function () {
+	    function UserListComponent(userService) {
+	        this.userService = userService;
 	        this.list = [];
 	        this.toggleAll = false;
 	        this.message = "";
 	    }
-	    UsersListComponent.prototype.ngOnInit = function () {
-	        this.loadUsersList();
+	    UserListComponent.prototype.ngOnInit = function () {
+	        this.loadUserList();
 	    };
-	    UsersListComponent.prototype.loadUsersList = function () {
+	    UserListComponent.prototype.loadUserList = function () {
 	        var _this = this;
 	        // renew list every load (esp. in case of deletion)
 	        this.list = [];
-	        this.usersService.getList().subscribe(function (json) {
+	        this.userService.getList().subscribe(function (json) {
 	            if (json.fail) {
 	                _this.message = json.fail;
 	            }
@@ -42537,17 +42537,17 @@ webpackJsonp([0],{
 	            }
 	        });
 	    };
-	    UsersListComponent.prototype.search = function (term) {
+	    UserListComponent.prototype.search = function (term) {
 	        if (term === "")
-	            this.loadUsersList();
+	            this.loadUserList();
 	        else
-	            this.loadUsersListByTerm(term);
+	            this.loadUserListByTerm(term);
 	    };
-	    UsersListComponent.prototype.loadUsersListByTerm = function (term) {
+	    UserListComponent.prototype.loadUserListByTerm = function (term) {
 	        var _this = this;
 	        // renew list every load
 	        this.list = [];
-	        this.usersService.searchUser(term).subscribe(function (json) {
+	        this.userService.searchUser(term).subscribe(function (json) {
 	            if (json.fail) {
 	                _this.message = json.fail;
 	            }
@@ -42563,17 +42563,17 @@ webpackJsonp([0],{
 	            }
 	        });
 	    };
-	    UsersListComponent.prototype.toggleAllUsers = function () {
+	    UserListComponent.prototype.toggleAllUsers = function () {
 	        var _this = this;
 	        this.toggleAll = !this.toggleAll;
 	        this.list.map(function (row) {
 	            row.selected = _this.toggleAll;
 	        });
 	    };
-	    UsersListComponent.prototype.cancelToggleAll = function () {
+	    UserListComponent.prototype.cancelToggleAll = function () {
 	        this.toggleAll = false;
 	    };
-	    UsersListComponent.prototype.deleteSelectedUsers = function () {
+	    UserListComponent.prototype.deleteSelectedUsers = function () {
 	        var _this = this;
 	        var selectedIds = this.list.filter(function (row) {
 	            return row.selected;
@@ -42585,24 +42585,24 @@ webpackJsonp([0],{
 	            alert("Please select the users to delete first!");
 	        }
 	        else {
-	            this.usersService.deleteUsers(selectedIds)
+	            this.userService.deleteUsers(selectedIds)
 	                .subscribe(function (json) {
 	                alert(json.message);
-	                _this.loadUsersList(); // reload the users list
+	                _this.loadUserList(); // reload the users list
 	            });
 	        }
 	    };
-	    return UsersListComponent;
+	    return UserListComponent;
 	}());
-	UsersListComponent = __decorate([
+	UserListComponent = __decorate([
 	    core_1.Component({
 	        selector: "user-list",
 	        template: __webpack_require__(376),
 	        styles: [__webpack_require__(377).toString()]
 	    }),
 	    __metadata("design:paramtypes", [user_service_1.UserService])
-	], UsersListComponent);
-	exports.UsersListComponent = UsersListComponent;
+	], UserListComponent);
+	exports.UserListComponent = UserListComponent;
 
 
 /***/ },
@@ -42785,10 +42785,10 @@ webpackJsonp([0],{
 	var user_model_app_1 = __webpack_require__(375);
 	var user_service_1 = __webpack_require__(364);
 	var UserDetailsComponent = (function () {
-	    function UserDetailsComponent(route, router, usersService) {
+	    function UserDetailsComponent(route, router, userService) {
 	        this.route = route;
 	        this.router = router;
-	        this.usersService = usersService;
+	        this.userService = userService;
 	        this.user = new user_model_app_1.User();
 	        this.preferredCategories = [];
 	        this.user.profilePic =
@@ -42798,7 +42798,7 @@ webpackJsonp([0],{
 	        var _this = this;
 	        this.route.params.forEach(function (params) {
 	            var id = params["id"];
-	            _this.usersService.getSingleUser(id)
+	            _this.userService.getSingleUser(id)
 	                .subscribe(function (json) {
 	                if (json.fail) {
 	                    alert(json.fail);
@@ -42808,11 +42808,11 @@ webpackJsonp([0],{
 	                    _this.user = new user_model_app_1.User(json.id, json.username, json.role, json.name, json.bio, json.profilePic, new Date(json.dateOfBirth), new Date(json.createdAt));
 	                }
 	            });
-	            _this.usersService.isDeactivatedUser(id)
+	            _this.userService.isDeactivatedUser(id)
 	                .subscribe(function (json) {
 	                _this.blocked = json.blocked;
 	            });
-	            _this.usersService.listPreferredCategories(id)
+	            _this.userService.listPreferredCategories(id)
 	                .subscribe(function (json) {
 	                if (json.fail) {
 	                    _this.preferredCategories.push("Failed to load.");
@@ -42878,9 +42878,9 @@ webpackJsonp([0],{
 	var user_service_1 = __webpack_require__(364);
 	var image_service_1 = __webpack_require__(384);
 	var CreateUserComponent = (function () {
-	    function CreateUserComponent(router, usersService, imageService) {
+	    function CreateUserComponent(router, userService, imageService) {
 	        this.router = router;
-	        this.usersService = usersService;
+	        this.userService = userService;
 	        this.imageService = imageService;
 	        this.user = new user_model_app_1.User();
 	        this.profilePicFile = [];
@@ -42922,7 +42922,7 @@ webpackJsonp([0],{
 	    };
 	    CreateUserComponent.prototype.requestToCreate = function (reqBody) {
 	        var _this = this;
-	        this.usersService.createUser(reqBody).subscribe(function (result) {
+	        this.userService.createUser(reqBody).subscribe(function (result) {
 	            // matching result string with that from the API
 	            if (result.fail) {
 	                alert(result.fail);
@@ -43052,10 +43052,10 @@ webpackJsonp([0],{
 	var user_service_1 = __webpack_require__(364);
 	var image_service_1 = __webpack_require__(384);
 	var UpdateUserComponent = (function () {
-	    function UpdateUserComponent(route, router, usersService, imageService) {
+	    function UpdateUserComponent(route, router, userService, imageService) {
 	        this.route = route;
 	        this.router = router;
-	        this.usersService = usersService;
+	        this.userService = userService;
 	        this.imageService = imageService;
 	        this.user = new user_model_app_1.User();
 	        this.profilePicFile = [];
@@ -43064,7 +43064,7 @@ webpackJsonp([0],{
 	        var _this = this;
 	        this.route.params.forEach(function (params) {
 	            _this.user.id = params["id"];
-	            _this.usersService.getSingleUser(_this.user.id)
+	            _this.userService.getSingleUser(_this.user.id)
 	                .subscribe(function (json) {
 	                if (json.fail) {
 	                    alert(json.fail);
@@ -43122,7 +43122,7 @@ webpackJsonp([0],{
 	    };
 	    UpdateUserComponent.prototype.requestToUpdate = function (reqBody) {
 	        var _this = this;
-	        this.usersService.updateUser(reqBody).subscribe(function (result) {
+	        this.userService.updateUser(reqBody).subscribe(function (result) {
 	            alert(result.message);
 	            _this.router.navigate(["/users"]);
 	        });
@@ -43200,11 +43200,11 @@ webpackJsonp([0],{
 	var user_service_1 = __webpack_require__(364);
 	var idea_service_1 = __webpack_require__(365);
 	var UserIdeasComponent = (function () {
-	    function UserIdeasComponent(router, route, usersService, ideasService) {
+	    function UserIdeasComponent(router, route, userService, ideaService) {
 	        this.router = router;
 	        this.route = route;
-	        this.usersService = usersService;
-	        this.ideasService = ideasService;
+	        this.userService = userService;
+	        this.ideaService = ideaService;
 	        this.name = "";
 	        this.ideas = [];
 	        this.message = "Loading...";
@@ -43213,11 +43213,11 @@ webpackJsonp([0],{
 	        var _this = this;
 	        this.route.params.forEach(function (params) {
 	            var userId = params["id"];
-	            _this.usersService.getName(userId)
+	            _this.userService.getName(userId)
 	                .subscribe(function (json) {
 	                _this.name = json.fail || json.name;
 	            });
-	            _this.ideasService.getIdeaListFromUser(userId)
+	            _this.ideaService.getIdeaListFromUser(userId)
 	                .subscribe(function (json) {
 	                if (json.fail) {
 	                    _this.message = json.fail;
@@ -43590,10 +43590,10 @@ webpackJsonp([0],{
 	var user_model_app_1 = __webpack_require__(375);
 	var user_service_1 = __webpack_require__(364);
 	var UserConnectionsComponent = (function () {
-	    function UserConnectionsComponent(router, route, usersService) {
+	    function UserConnectionsComponent(router, route, userService) {
 	        this.router = router;
 	        this.route = route;
-	        this.usersService = usersService;
+	        this.userService = userService;
 	        this.name = "";
 	        this.connections = [];
 	        this.message = "Loading...";
@@ -43602,11 +43602,11 @@ webpackJsonp([0],{
 	        var _this = this;
 	        this.route.params.forEach(function (params) {
 	            var id = params["id"];
-	            _this.usersService.getName(id)
+	            _this.userService.getName(id)
 	                .subscribe(function (json) {
 	                _this.name = json.fail || json.name;
 	            });
-	            _this.usersService.getConnections(id)
+	            _this.userService.getConnections(id)
 	                .subscribe(function (json) {
 	                if (json.fail) {
 	                    _this.message = json.fail;
@@ -43677,10 +43677,10 @@ webpackJsonp([0],{
 	var router_1 = __webpack_require__(31);
 	var user_service_1 = __webpack_require__(364);
 	var DeactivateUserComponent = (function () {
-	    function DeactivateUserComponent(router, route, usersService) {
+	    function DeactivateUserComponent(router, route, userService) {
 	        this.router = router;
 	        this.route = route;
-	        this.usersService = usersService;
+	        this.userService = userService;
 	        this.name = "";
 	        this.id = "";
 	        this.reason = "";
@@ -43689,7 +43689,7 @@ webpackJsonp([0],{
 	        var _this = this;
 	        this.route.params.forEach(function (params) {
 	            _this.id = params["id"];
-	            _this.usersService.getName(_this.id)
+	            _this.userService.getName(_this.id)
 	                .subscribe(function (json) {
 	                _this.name = json.fail || json.name;
 	            });
@@ -43697,7 +43697,7 @@ webpackJsonp([0],{
 	    };
 	    DeactivateUserComponent.prototype.onSubmitDeactivationRequest = function () {
 	        var _this = this;
-	        this.usersService.deactivateUser(this.id, this.reason)
+	        this.userService.deactivateUser(this.id, this.reason)
 	            .subscribe(function (json) {
 	            alert(json.message);
 	            _this.router.navigate(["/users", _this.id]);
@@ -43751,10 +43751,10 @@ webpackJsonp([0],{
 	var router_1 = __webpack_require__(31);
 	var user_service_1 = __webpack_require__(364);
 	var ReactivateUserComponent = (function () {
-	    function ReactivateUserComponent(router, route, usersService) {
+	    function ReactivateUserComponent(router, route, userService) {
 	        this.router = router;
 	        this.route = route;
-	        this.usersService = usersService;
+	        this.userService = userService;
 	        this.name = "";
 	        this.id = "";
 	        this.reason = "";
@@ -43763,7 +43763,7 @@ webpackJsonp([0],{
 	        var _this = this;
 	        this.route.params.forEach(function (params) {
 	            _this.id = params["id"];
-	            _this.usersService.getName(_this.id)
+	            _this.userService.getName(_this.id)
 	                .subscribe(function (json) {
 	                _this.name = json.fail || json.name;
 	            });
@@ -43771,7 +43771,7 @@ webpackJsonp([0],{
 	    };
 	    ReactivateUserComponent.prototype.onSubmitReactivationRequest = function () {
 	        var _this = this;
-	        this.usersService.reactivateUser(this.id, this.reason)
+	        this.userService.reactivateUser(this.id, this.reason)
 	            .subscribe(function (json) {
 	            alert(json.message);
 	            _this.router.navigate(["/users", _this.id]);
@@ -43832,9 +43832,9 @@ webpackJsonp([0],{
 	        this.message = "Loading...";
 	    }
 	    IdeaListComponent.prototype.ngOnInit = function () {
-	        this.loadIdeasList();
+	        this.loadIdeaList();
 	    };
-	    IdeaListComponent.prototype.loadIdeasList = function () {
+	    IdeaListComponent.prototype.loadIdeaList = function () {
 	        var _this = this;
 	        // renew list every load
 	        this.list = [];
@@ -43861,11 +43861,11 @@ webpackJsonp([0],{
 	    };
 	    IdeaListComponent.prototype.search = function (term) {
 	        if (term === "")
-	            this.loadIdeasList();
+	            this.loadIdeaList();
 	        else
-	            this.loadIdeasListByTerm(term);
+	            this.loadIdeaListByTerm(term);
 	    };
-	    IdeaListComponent.prototype.loadIdeasListByTerm = function (term) {
+	    IdeaListComponent.prototype.loadIdeaListByTerm = function (term) {
 	        var _this = this;
 	        // renew list every load
 	        this.list = [];
@@ -43914,7 +43914,7 @@ webpackJsonp([0],{
 	            this.ideaService.deleteIdeas(selectedIds)
 	                .subscribe(function (json) {
 	                alert(json.message);
-	                _this.loadIdeasList();
+	                _this.loadIdeaList();
 	            });
 	        }
 	    };
@@ -44577,16 +44577,16 @@ webpackJsonp([0],{
 	var core_1 = __webpack_require__(4);
 	var report_model_app_1 = __webpack_require__(363);
 	var report_service_1 = __webpack_require__(366);
-	var ReportsListComponent = (function () {
-	    function ReportsListComponent(reportService) {
+	var ReportListComponent = (function () {
+	    function ReportListComponent(reportService) {
 	        this.reportService = reportService;
 	        this.list = [];
 	        this.message = "";
 	    }
-	    ReportsListComponent.prototype.ngOnInit = function () {
-	        this.loadReportsList();
+	    ReportListComponent.prototype.ngOnInit = function () {
+	        this.loadReportList();
 	    };
-	    ReportsListComponent.prototype.loadReportsList = function () {
+	    ReportListComponent.prototype.loadReportList = function () {
 	        var _this = this;
 	        // renew list every load
 	        this.list = [];
@@ -44613,17 +44613,17 @@ webpackJsonp([0],{
 	            }
 	        });
 	    };
-	    return ReportsListComponent;
+	    return ReportListComponent;
 	}());
-	ReportsListComponent = __decorate([
+	ReportListComponent = __decorate([
 	    core_1.Component({
 	        selector: "report-list",
 	        template: __webpack_require__(434),
 	        styles: [__webpack_require__(435).toString()]
 	    }),
 	    __metadata("design:paramtypes", [report_service_1.ReportService])
-	], ReportsListComponent);
-	exports.ReportsListComponent = ReportsListComponent;
+	], ReportListComponent);
+	exports.ReportListComponent = ReportListComponent;
 
 
 /***/ },
@@ -44659,8 +44659,8 @@ webpackJsonp([0],{
 	var router_1 = __webpack_require__(31);
 	var report_model_app_1 = __webpack_require__(363);
 	var report_service_1 = __webpack_require__(366);
-	var ViewReportComponent = (function () {
-	    function ViewReportComponent(route, router, reportService) {
+	var ReportDetailsComponent = (function () {
+	    function ReportDetailsComponent(route, router, reportService) {
 	        this.route = route;
 	        this.router = router;
 	        this.reportService = reportService;
@@ -44668,7 +44668,7 @@ webpackJsonp([0],{
 	        this.report = new report_model_app_1.Report();
 	        this.author = { name: "", email: "" };
 	    }
-	    ViewReportComponent.prototype.ngOnInit = function () {
+	    ReportDetailsComponent.prototype.ngOnInit = function () {
 	        var _this = this;
 	        this.route.params.forEach(function (params) {
 	            var id = params["id"];
@@ -44692,9 +44692,9 @@ webpackJsonp([0],{
 	            });
 	        });
 	    };
-	    return ViewReportComponent;
+	    return ReportDetailsComponent;
 	}());
-	ViewReportComponent = __decorate([
+	ReportDetailsComponent = __decorate([
 	    core_1.Component({
 	        selector: "view-report",
 	        template: __webpack_require__(438),
@@ -44703,8 +44703,8 @@ webpackJsonp([0],{
 	    __metadata("design:paramtypes", [router_1.ActivatedRoute,
 	        router_1.Router,
 	        report_service_1.ReportService])
-	], ViewReportComponent);
-	exports.ViewReportComponent = ViewReportComponent;
+	], ReportDetailsComponent);
+	exports.ReportDetailsComponent = ReportDetailsComponent;
 
 
 /***/ },

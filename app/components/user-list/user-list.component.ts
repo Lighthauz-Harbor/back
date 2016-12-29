@@ -7,25 +7,25 @@ import {UserService} from "../../services/user.service";
     templateUrl: "user-list.component.html",
     styles: [ require("./user-list.component.css").toString() ]
 })
-export class UsersListComponent implements OnInit {
+export class UserListComponent implements OnInit {
 
     private list: User[] = [];
     private toggleAll: boolean = false;
     private message: string = "";
 
-    constructor(private usersService: UserService) {
+    constructor(private userService: UserService) {
 
     }
 
     ngOnInit(): void {
-        this.loadUsersList();
+        this.loadUserList();
     }
 
-    private loadUsersList(): void {
+    private loadUserList(): void {
         // renew list every load (esp. in case of deletion)
         this.list = []; 
 
-        this.usersService.getList().subscribe((json: any) => {
+        this.userService.getList().subscribe((json: any) => {
             if (json.fail) {
                 this.message = json.fail;
             } else if (json.results.length === 0) {
@@ -43,15 +43,15 @@ export class UsersListComponent implements OnInit {
     }
 
     search(term: string): void {
-        if (term === "") this.loadUsersList();
-        else this.loadUsersListByTerm(term);
+        if (term === "") this.loadUserList();
+        else this.loadUserListByTerm(term);
     }
 
-    private loadUsersListByTerm(term: string): void {
+    private loadUserListByTerm(term: string): void {
         // renew list every load
         this.list = [];
 
-        this.usersService.searchUser(term).subscribe((json: any) => {
+        this.userService.searchUser(term).subscribe((json: any) => {
             if (json.fail) {
                 this.message = json.fail;
             } else if (json.results.length === 0) {
@@ -92,10 +92,10 @@ export class UsersListComponent implements OnInit {
         if (selectedIds.length === 0) {
             alert("Please select the users to delete first!");
         } else {
-            this.usersService.deleteUsers(selectedIds)
+            this.userService.deleteUsers(selectedIds)
                 .subscribe((json: any) => {
                     alert(json.message);
-                    this.loadUsersList(); // reload the users list
+                    this.loadUserList(); // reload the users list
                 });
         }
     }

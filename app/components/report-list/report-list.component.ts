@@ -7,7 +7,7 @@ import {ReportService} from "../../services/report.service";
     templateUrl: "report-list.component.html",
     styles: [ require("./report-list.component.css").toString() ]
 })
-export class ReportsListComponent implements OnInit {
+export class ReportListComponent implements OnInit {
 
     private list: Report[] = [];
     private message: string = "";
@@ -17,10 +17,10 @@ export class ReportsListComponent implements OnInit {
     }
 
     ngOnInit(): void {
-        this.loadReportsList();
+        this.loadReportList();
     }
 
-    private loadReportsList(): void {
+    private loadReportList(): void {
         // renew list every load
         this.list = [];
 

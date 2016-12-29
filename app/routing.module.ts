@@ -3,7 +3,7 @@ import {RouterModule, Routes} from "@angular/router";
 import {LoginComponent} from "./components/login/login.component";
 import {DashboardComponent} from "./components/dashboard/dashboard.component";
 import {PageNotFoundComponent} from "./components/not-found/not-found.component";
-import {UsersListComponent} from "./components/user-list/user-list.component";
+import {UserListComponent} from "./components/user-list/user-list.component";
 import {UserDetailsComponent} from "./components/user-details/user-details.component";
 import {CreateUserComponent} from "./components/user-create/user-create.component";
 import {UpdateUserComponent} from "./components/user-update/user-update.component";
@@ -17,8 +17,8 @@ import {CreateIdeaComponent} from "./components/idea-create/idea-create.componen
 import {UpdateIdeaComponent} from "./components/idea-update/idea-update.component";
 import {IdeaResponsesComponent} from "./components/idea-responses/idea-responses.component";
 import {IdeaPartnersComponent} from "./components/idea-partners/idea-partners.component";
-import {ReportsListComponent} from "./components/report-list/report-list.component";
-import {ViewReportComponent} from "./components/report-view/report-view.component";
+import {ReportListComponent} from "./components/report-list/report-list.component";
+import {ReportDetailsComponent} from "./components/report-view/report-view.component";
 import {ReplyToReportComponent} from "./components/report-reply/report-reply.component";
 import {AuthenticationGuard} from "./services/authentication.guard";
 
@@ -34,7 +34,7 @@ const routes: Routes = [
         children: [
             {
                 path: "",
-                component: UsersListComponent
+                component: UserListComponent
             },
             {
                 path: "create",
@@ -112,14 +112,14 @@ const routes: Routes = [
         children: [
             {
                 path: "",
-                component: ReportsListComponent
+                component: ReportListComponent
             },
             {
                 path: ":id",
                 children: [
                     {
                         path: "",
-                        component: ViewReportComponent
+                        component: ReportDetailsComponent
                     },
                     {
                         path: "reply",

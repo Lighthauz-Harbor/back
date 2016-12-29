@@ -17,7 +17,7 @@ export class UserDetailsComponent implements OnInit {
     constructor(
         private route: ActivatedRoute,
         private router: Router,
-        private usersService: UserService) {
+        private userService: UserService) {
 
         this.user.profilePic = 
             "https://res.cloudinary.com/lighthauz-harbor/image/upload/v1482734274/hourglass.gif";
@@ -27,7 +27,7 @@ export class UserDetailsComponent implements OnInit {
     ngOnInit(): void {
         this.route.params.forEach((params: Params) => {
             let id = params["id"];
-            this.usersService.getSingleUser(id)
+            this.userService.getSingleUser(id)
                 .subscribe((json: any) => {
                     if (json.fail) {
                         alert(json.fail);
@@ -41,12 +41,12 @@ export class UserDetailsComponent implements OnInit {
                     }
                 });
 
-            this.usersService.isDeactivatedUser(id)
+            this.userService.isDeactivatedUser(id)
                 .subscribe((json: any) => {
                     this.blocked = json.blocked;
                 });
                 
-            this.usersService.listPreferredCategories(id)
+            this.userService.listPreferredCategories(id)
                 .subscribe((json: any) => {
                     if (json.fail) {
                         this.preferredCategories.push("Failed to load.");

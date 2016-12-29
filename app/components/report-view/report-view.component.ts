@@ -8,7 +8,7 @@ import {ReportService} from "../../services/report.service";
     templateUrl: "./report-view.component.html",
     styles: [ require("./report-view.component.css").toString() ]
 })
-export class ViewReportComponent implements OnInit {
+export class ReportDetailsComponent implements OnInit {
 
     // initialized using default values (must not be null)
     private report: Report = new Report();

@@ -21,7 +21,7 @@ export class CreateUserComponent {
 
     constructor(
         private router: Router,
-        private usersService: UserService,
+        private userService: UserService,
         private imageService: ImageService) {
 
    } 
@@ -63,7 +63,7 @@ export class CreateUserComponent {
     }
 
     private requestToCreate(reqBody: any) {
-        this.usersService.createUser(reqBody).subscribe(result => {
+        this.userService.createUser(reqBody).subscribe(result => {
             // matching result string with that from the API
             if (result.fail) {
                 alert(result.fail);
