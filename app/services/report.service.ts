@@ -30,7 +30,7 @@ export class ReportService {
             .map(this.parseJSON);
     }
 
-    private parseJSON(res: Response): Object {
+    private parseJSON(res: Response): any {
         return JSON.parse(res.text());
     }
 
