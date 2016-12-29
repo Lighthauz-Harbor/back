@@ -50,6 +50,10 @@ export class User {
         return this._id;
     }
 
+    set id(i: string) {
+        this._id = i;
+    }
+
     get name(): string {
         return this._name;
     }

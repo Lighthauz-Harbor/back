@@ -1,5 +1,8 @@
 import {Component, OnInit} from "@angular/core";
 import {Router, ActivatedRoute, Params} from "@angular/router";
+
+import {User} from "../../models/user.model.app";
+
 import {UserService} from "../../services/user.service";
 import {ImageService} from "../../services/image.service";
 
@@ -10,14 +13,9 @@ import {ImageService} from "../../services/image.service";
 })
 export class UpdateUserComponent implements OnInit {
 
-    private id: string;
-    private fullName: string;
-    private email: string;
-    private password: string;
+    private user: User = new User();
     private repeatPassword: string;
     private dobStr: string; // to be used in the template
-    private dateOfBirth: Date; 
-    private bio: string;
     
     private profilePicImg: any;
     private profilePicFile: Array<File> = [];
@@ -32,22 +30,23 @@ export class UpdateUserComponent implements OnInit {
 
     ngOnInit(): void {
         this.route.params.forEach((params: Params) => {
-            this.id = params["id"];
-            this.usersService.getSingleUser(this.id)
+            this.user.id = params["id"];
+            this.usersService.getSingleUser(this.user.id)
                 .subscribe((json: any) => {
                     if (json.fail) {
                         alert(json.fail);
                         this.router.navigate(["/users"]);
                     } else {
-                        this.email = json.username;
-                        this.fullName = json.name;
+                        let {username, name, dateOfBirth, bio} = json;
+                        this.user.username = username;
+                        this.user.name = name;
 
-                        this.dateOfBirth = new Date(json.dateOfBirth);
-                        this.dobStr = this.dateOfBirth.toISOString().slice(0, 10);
-                        this.bio = json.bio;
+                        this.user.dateOfBirth = new Date(dateOfBirth);
+                        this.dobStr = this.user.dateOfBirth.toISOString().slice(0, 10);
+                        this.user.bio = bio;
 
                         // empty the password fields first
-                        this.password = "";
+                        this.user.password = "";
                         this.repeatPassword = "";
                     }
                 });
@@ -56,16 +55,10 @@ export class UpdateUserComponent implements OnInit {
 
     onSubmitUser(): void {
         // update this.dateOfBirth after being changed from the template
-        this.dateOfBirth = new Date(this.dobStr);
+        let dateOfBirth = (new Date(this.dobStr)).getTime();
 
-        let reqBody: any = {
-            id: this.id,
-            name: this.fullName, 
-            username: this.email,
-            password: this.password, 
-            dateOfBirth: (new Date(this.dateOfBirth)).getTime(),
-            bio: this.bio
-        };
+        let {id, name, username, password, bio} = this.user;
+        let reqBody: any = {id, name, username, password, dateOfBirth, bio};
 
         if (this.profilePicFile.length === 1) {
             let file: File = this.profilePicFile[0];
@@ -107,7 +100,7 @@ export class UpdateUserComponent implements OnInit {
     }
 
     private isValidInput(): boolean {
-        if (this.password !== this.repeatPassword) {
+        if (this.user.password !== this.repeatPassword) {
             alert("Both passwords must be the same. Please input again.");
             return false;
         }
@@ -122,7 +115,7 @@ export class UpdateUserComponent implements OnInit {
 
     private isEligibleAge(): boolean {
         let today = new Date();
-        let dob = new Date(this.dateOfBirth);
+        let dob = new Date(this.user.dateOfBirth);
         let age = today.getFullYear() - dob.getFullYear();
         let month = today.getMonth() - dob.getMonth();
 

@@ -1,7 +1,7 @@
 <div class="content-dashboard">
     <div class="title-dashboard">
         <h1>
-            Update a user: {{fullName || "Loading..."}}
+            Update a user: {{user.name || "Loading..."}}
         </h1>
         <h2>
             <strong>NOTE:</strong> Updating a user is for development purposes or other urgent matters. So use with care.
@@ -18,21 +18,21 @@
             <div class="form-group">
                 <div class="form-col-2">
                     <label for="fullName">Full name: (*)</label>
-                    <input type="text" name="fullName" [(ngModel)]="fullName" required>
+                    <input type="text" name="fullName" [(ngModel)]="user.name" required>
                 </div>
             </div>
 
             <div class="form-group">
                 <div class="form-col-2">
                     <label for="email">Email - must be a valid email format: (*)</label>
-                    <input type="email" name="email" [(ngModel)]="email" required>
+                    <input type="email" name="email" [(ngModel)]="user.username" required>
                 </div>
             </div>
 
             <div class="form-group">
                 <div class="form-col-2">
                     <label for="password">Password: (leave empty if unchanged)</label>
-                    <input type="password" name="password" [(ngModel)]="password">
+                    <input type="password" name="password" [(ngModel)]="user.password">
                 </div>
             </div>
 
@@ -53,7 +53,7 @@
             <div class="form-group">
                 <div class="form-col-2">
                     <label for="bio">Short bio that describes user: (optional)</label>
-                    <input type="text" name="bio" [(ngModel)]="bio">
+                    <input type="text" name="bio" [(ngModel)]="user.bio">
                 </div>
             </div>
 

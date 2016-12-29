@@ -1,5 +1,8 @@
 import {Component, OnInit} from "@angular/core";
 import {Router, ActivatedRoute, Params} from "@angular/router";
+
+import {Idea} from "../../models/idea.model.app";
+
 import {IdeaService} from "../../services/idea.service";
 import {ImageService} from "../../services/image.service";
 
@@ -10,32 +13,12 @@ import {ImageService} from "../../services/image.service";
 })
 export class UpdateIdeaComponent implements OnInit {
 
-    private id: string;
-    private title: string;
+    private idea: Idea = new Idea();
     private oldCategory: string; // category before changed
-    private category: string;
     private oldAuthor: string; // author before changed
     private author: string; // username or email
-    private description: string;
     private visibility: string;
     private visibilityChoices: string[] = ["Not published", "Exclusive", "Public"];
-    private background: string;
-    private problem: string;
-    private solution: string;
-    private extraLink: string;
-    private strengths: string;
-    private weaknesses: string;
-    private opportunities: string;
-    private threats: string;
-    private valueProposition: string;
-    private customerSegments: string;
-    private customerRelationships: string;
-    private channels: string;
-    private keyActivities: string;
-    private keyResources: string;
-    private keyPartners: string;
-    private costStructure: string;
-    private revenueStreams: string;
 
     private picImg: any;
     private picFile: Array<File> = [];
@@ -50,8 +33,8 @@ export class UpdateIdeaComponent implements OnInit {
 
     ngOnInit(): void {
         this.route.params.forEach((params: Params) => {
-            this.id = params["id"];
-            this.ideaService.getSingleIdea(this.id)
+            this.idea.id = params["id"];
+            this.ideaService.getSingleIdea(this.idea.id)
                 .subscribe((json: any) => {
                     if (json.fail) {
                         alert(json.fail);
@@ -59,33 +42,32 @@ export class UpdateIdeaComponent implements OnInit {
                     } else {
                         this.oldAuthor = json.author.email;
                         this.author = json.author.email;
-
                         this.oldCategory = json.category;
-                        this.category = json.category;
+                        this.idea.category = json.category;
 
                         this.visibility = this.visibilityChoices[json.visibility];
 
-                        this.title = json.idea.title;
-                        this.description = json.idea.description;
-                        this.background = json.idea.background;
-                        this.problem = json.idea.problem;
-                        this.solution = json.idea.solution;
-                        this.extraLink = json.idea.extraLink;
+                        this.idea.title = json.idea.title;
+                        this.idea.description = json.idea.description;
+                        this.idea.background = json.idea.background;
+                        this.idea.problem = json.idea.problem;
+                        this.idea.solution = json.idea.solution;
+                        this.idea.extraLink = json.idea.extraLink;
 
-                        this.strengths = json.idea.strengths;
-                        this.weaknesses = json.idea.weaknesses;
-                        this.opportunities = json.idea.opportunities;
-                        this.threats = json.idea.threats;
+                        this.idea.strengths = json.idea.strengths;
+                        this.idea.weaknesses = json.idea.weaknesses;
+                        this.idea.opportunities = json.idea.opportunities;
+                        this.idea.threats = json.idea.threats;
 
-                        this.valueProposition = json.idea.valueProposition;
-                        this.customerSegments = json.idea.customerSegments;
-                        this.customerRelationships = json.idea.customerRelationships;
-                        this.channels = json.idea.channels;
-                        this.keyActivities = json.idea.keyActivities;
-                        this.keyResources = json.idea.keyResources;
-                        this.keyPartners = json.idea.keyPartners;
-                        this.costStructure = json.idea.costStructure;
-                        this.revenueStreams = json.idea.revenueStreams;
+                        this.idea.valueProposition = json.idea.valueProposition;
+                        this.idea.customerSegments = json.idea.customerSegments;
+                        this.idea.customerRelationships = json.idea.customerRelationships;
+                        this.idea.channels = json.idea.channels;
+                        this.idea.keyActivities = json.idea.keyActivities;
+                        this.idea.keyResources = json.idea.keyResources;
+                        this.idea.keyPartners = json.idea.keyPartners;
+                        this.idea.costStructure = json.idea.costStructure;
+                        this.idea.revenueStreams = json.idea.revenueStreams;
                     }
                 });
         });
@@ -97,32 +79,21 @@ export class UpdateIdeaComponent implements OnInit {
             let visibilityFlag = this.visibilityChoices
                 .indexOf(this.visibility);
 
+            let {id, title, category, description,
+                background, problem, solution, extraLink,
+                strengths, weaknesses, opportunities, threats,
+                valueProposition, customerSegments, customerRelationships,
+                channels, keyActivities, keyResources, keyPartners,
+                costStructure, revenueStreams} = this.idea;
+
             let reqBody: any = {
-                id: this.id,
-                title: this.title,
-                oldCategory: this.oldCategory,
-                category: this.category,
-                oldAuthor: this.oldAuthor,
-                author: this.author,
-                description: this.description,
-                visibility: visibilityFlag,
-                background: this.background,
-                problem: this.problem,
-                solution: this.solution,
-                extraLink: this.extraLink || "",
-                strengths: this.strengths,
-                weaknesses: this.weaknesses,
-                opportunities: this.opportunities,
-                threats: this.threats,
-                valueProposition: this.valueProposition,
-                customerSegments: this.customerSegments,
-                customerRelationships: this.customerRelationships,
-                channels: this.channels,
-                keyActivities: this.keyActivities,
-                keyResources: this.keyResources,
-                keyPartners: this.keyPartners,
-                costStructure: this.costStructure,
-                revenueStreams: this.revenueStreams,
+                id, title, oldCategory: this.oldCategory, category,
+                oldAuthor: this.oldAuthor, author: this.author, description,
+                visibility: visibilityFlag, background, problem, solution,
+                extraLink, strengths, weaknesses, opportunities, threats,
+                valueProposition, customerSegments, customerRelationships,
+                channels, keyActivities, keyResources, keyPartners,
+                costStructure, revenueStreams
             };
 
             if (this.picFile.length === 1) {
@@ -188,7 +159,7 @@ export class UpdateIdeaComponent implements OnInit {
             "$", "i"
         );
 
-        if (this.extraLink && !this.extraLink.match(urlRegex)) {
+        if (this.idea.extraLink && !this.idea.extraLink.match(urlRegex)) {
             alert("Extra link is not a valid URL. Please try again.");
             return false;
         }
