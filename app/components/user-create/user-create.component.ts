@@ -67,7 +67,7 @@ export class CreateUserComponent {
                 this.requestToCreate(reqBody);
             }
         }
-}
+    }
 
     private requestToCreate(reqBody: any) {
         this.usersService.createUser(reqBody).subscribe(result => {

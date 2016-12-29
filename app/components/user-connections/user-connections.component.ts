@@ -37,7 +37,7 @@ export class UserConnectionsComponent implements OnInit {
                         if (this.connections.length === 0) {
                             this.message = "This user has no connections, yet.";
                         } else {
-                            this.message = "This user has some connections, though. :D";
+                            this.message = "";
                         }
                     }
                 });
