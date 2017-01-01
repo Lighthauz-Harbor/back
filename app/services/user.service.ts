@@ -52,8 +52,8 @@ export class UserService {
             .map(this.parseJSON);
     }
 
-    getActivityCount(): Observable<any> {
-        return this.http.get("/api/users/activity-count")
+    getNewUsersCount(): Observable<any> {
+        return this.http.get("/api/users/new-users")
             .map(this.parseJSON);
     }
 

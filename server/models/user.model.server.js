@@ -770,14 +770,20 @@ var UserSchema = function(dbDriver) {
             });
     };
 
-    this.getActivityCount = function(req, res) {
+    this.getNewUsersCount = function(req, res) {
         var session = this.driver.session();
         
         session
-            .run("MATCH (:User)-[r]->() RETURN count(r)")
+            .run("MATCH (u:User) \
+                WHERE u.createdAt >= {today} \
+                RETURN count(u)",
+                {
+                    // exactly today's date, at 00:00
+                    today: (new Date((new Date()).toDateString())).getTime()
+                })
             .then(function(result) {
                 res.send({
-                    count: neo4jInt(result.records[0].get("count(r)")).toNumber()
+                    count: neo4jInt(result.records[0].get("count(u)")).toNumber()
                 });
                 session.close();
             })
