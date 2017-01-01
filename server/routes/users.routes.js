@@ -37,7 +37,7 @@ module.exports = function(router, dbDriver) {
     });
 
     router.get("/users/activity-count", function(req, res) {
-        userSchema.getUserActivityCount(req, res);
+        userSchema.getActivityCount(req, res);
     });
 
 };

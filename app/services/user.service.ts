@@ -52,7 +52,7 @@ export class UserService {
             .map(this.parseJSON);
     }
 
-    getUserActivityCount(): Observable<any> {
+    getActivityCount(): Observable<any> {
         return this.http.get("/api/users/activity-count")
             .map(this.parseJSON);
     }

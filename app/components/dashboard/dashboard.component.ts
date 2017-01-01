@@ -33,7 +33,7 @@ export class DashboardComponent implements OnInit {
     }
 
     private getUserInfo(): void {
-        this.userService.getUserActivityCount()
+        this.userService.getActivityCount()
             .subscribe((json: any) => {
                 this.userActivity = json.count;
             });

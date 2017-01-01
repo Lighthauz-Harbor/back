@@ -770,7 +770,7 @@ var UserSchema = function(dbDriver) {
             });
     };
 
-    this.getUserActivityCount = function(req, res) {
+    this.getActivityCount = function(req, res) {
         var session = this.driver.session();
         
         session
