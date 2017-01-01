@@ -45008,7 +45008,7 @@ webpackJsonp([0],{
 /***/ 455:
 /***/ function(module, exports) {
 
-	module.exports = "<footer class=\"lh-footer\">\r\n    <p>Copyright &copy; 2016 - Lighthauz. All rights reserved.</p>\r\n</footer>"
+	module.exports = "<footer class=\"lh-footer\">\r\n    <p>Copyright &copy; 2016-2017 by Lighthauz. All rights reserved.</p>\r\n</footer>"
 
 /***/ },
 
@@ -45054,7 +45054,7 @@ webpackJsonp([0],{
 /***/ 459:
 /***/ function(module, exports) {
 
-	module.exports = "<div class=\"sidebar\">\r\n    <a class=\"link-sidebar\" routerLink=\"/dashboard\" routerLinkActive=\"active-sidebar\">\r\n        <span class=\"icon-link-sidebar\"><i class=\"fa fa-home\" aria-hidden=\"true\"></i></span>\r\n        <span class=\"text-link-sidebar\">Dashboard</span>\r\n    </a>\r\n    <a class=\"link-sidebar\" routerLink=\"/users\" routerLinkActive=\"active-sidebar\">\r\n        <span class=\"icon-link-sidebar\"><i class=\"fa fa-users\" aria-hidden=\"true\"></i></span>\r\n        <span class=\"text-link-sidebar\">Users</span>\r\n    </a>\r\n    <a class=\"link-sidebar\" routerLink=\"/ideas\" routerLinkActive=\"active-sidebar\">\r\n        <span class=\"icon-link-sidebar\"><i class=\"fa fa-lightbulb-o\" aria-hidden=\"true\"></i></span>\r\n        <span class=\"text-link-sidebar\">Ideas</span>\r\n    </a>\r\n    <a class=\"link-sidebar\" routerLink=\"/reports\" routerLinkActive=\"active-sidebar\">\r\n        <span class=\"icon-link-sidebar\"><i class=\"fa fa-flag\" aria-hidden=\"true\"></i></span>\r\n        <span class=\"text-link-sidebar\">Reports</span>\r\n    </a>\r\n\r\n    <div class=\"copyright\">\r\n        <p>Copyright &copy; 2016 - Lighthauz. All rights reserved.</p>\r\n    </div>\r\n</div>"
+	module.exports = "<div class=\"sidebar\">\r\n    <a class=\"link-sidebar\" routerLink=\"/dashboard\" routerLinkActive=\"active-sidebar\">\r\n        <span class=\"icon-link-sidebar\"><i class=\"fa fa-home\" aria-hidden=\"true\"></i></span>\r\n        <span class=\"text-link-sidebar\">Dashboard</span>\r\n    </a>\r\n    <a class=\"link-sidebar\" routerLink=\"/users\" routerLinkActive=\"active-sidebar\">\r\n        <span class=\"icon-link-sidebar\"><i class=\"fa fa-users\" aria-hidden=\"true\"></i></span>\r\n        <span class=\"text-link-sidebar\">Users</span>\r\n    </a>\r\n    <a class=\"link-sidebar\" routerLink=\"/ideas\" routerLinkActive=\"active-sidebar\">\r\n        <span class=\"icon-link-sidebar\"><i class=\"fa fa-lightbulb-o\" aria-hidden=\"true\"></i></span>\r\n        <span class=\"text-link-sidebar\">Ideas</span>\r\n    </a>\r\n    <a class=\"link-sidebar\" routerLink=\"/reports\" routerLinkActive=\"active-sidebar\">\r\n        <span class=\"icon-link-sidebar\"><i class=\"fa fa-flag\" aria-hidden=\"true\"></i></span>\r\n        <span class=\"text-link-sidebar\">Reports</span>\r\n    </a>\r\n\r\n    <div class=\"copyright\">\r\n        <p>Copyright &copy; 2016-2017 by Lighthauz. All rights reserved.</p>\r\n    </div>\r\n</div>"
 
 /***/ },
 
