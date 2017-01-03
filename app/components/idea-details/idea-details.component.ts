@@ -35,7 +35,8 @@ export class IdeaDetailsComponent implements OnInit {
                         this.router.navigate(["/ideas"]);
                     } else {
                         let extraLink = json.idea.extraLink;
-                        if (!extraLink.includes("http://") && !extraLink.includes("https://")) {
+                        if (extraLink != "" && 
+                            !extraLink.includes("http://") && !extraLink.includes("https://")) {
                             extraLink = "http://" + extraLink;
                         }
 
