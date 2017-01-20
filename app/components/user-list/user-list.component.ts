@@ -81,22 +81,34 @@ export class UserListComponent implements OnInit {
     }
 
     deleteSelectedUsers(): void {
-        let selectedIds = this.list.filter((row) => {
+        let selectedNames = this.list.filter((row) => {
             return row.selected;
         }).map((user) => {
-            return user.id;
-        });
+            return `${user.name}: ${user.username}`;
+        }).join("\n");
 
-        console.log(selectedIds);
+        let confirmText = "The following users will be deleted. Are you sure? " + 
+            "(Press OK to delete)\n\n" +
+            selectedNames;
 
-        if (selectedIds.length === 0) {
-            alert("Please select the users to delete first!");
+        if (confirm(confirmText)) {
+            let selectedIds = this.list.filter((row) => {
+                return row.selected;
+            }).map((user) => {
+                return user.id;
+            });
+
+            if (selectedIds.length === 0) {
+                alert("Please select the users to delete first!");
+            } else {
+                this.userService.deleteUsers(selectedIds)
+                    .subscribe((json: any) => {
+                        alert(json.message);
+                        this.loadUserList(); // reload the users list
+                    });
+            }
         } else {
-            this.userService.deleteUsers(selectedIds)
-                .subscribe((json: any) => {
-                    alert(json.message);
-                    this.loadUserList(); // reload the users list
-                });
+            alert("No users are deleted.");
         }
     }
 }
