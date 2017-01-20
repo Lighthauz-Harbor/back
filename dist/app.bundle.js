@@ -43914,20 +43914,33 @@ webpackJsonp([0],{
 	    };
 	    IdeaListComponent.prototype.deleteSelectedIdeas = function () {
 	        var _this = this;
-	        var selectedIds = this.list.filter(function (row) {
+	        var selectedTitles = this.list.filter(function (row) {
 	            return row.selected;
 	        }).map(function (idea) {
-	            return idea.id;
-	        });
-	        if (selectedIds.length === 0) {
-	            alert("Please select the ideas to delete first!");
+	            return "" + idea.title;
+	        }).join("\n");
+	        var confirmText = "The following ideas will be deleted. Are you sure? " +
+	            "(Press OK to delete)\n\n" +
+	            selectedTitles;
+	        if (confirm(confirmText)) {
+	            var selectedIds = this.list.filter(function (row) {
+	                return row.selected;
+	            }).map(function (idea) {
+	                return idea.id;
+	            });
+	            if (selectedIds.length === 0) {
+	                alert("Please select the ideas to delete first!");
+	            }
+	            else {
+	                this.ideaService.deleteIdeas(selectedIds)
+	                    .subscribe(function (json) {
+	                    alert(json.message);
+	                    _this.loadIdeaList();
+	                });
+	            }
 	        }
 	        else {
-	            this.ideaService.deleteIdeas(selectedIds)
-	                .subscribe(function (json) {
-	                alert(json.message);
-	                _this.loadIdeaList();
-	            });
+	            alert("No ideas are deleted.");
 	        }
 	    };
 	    return IdeaListComponent;

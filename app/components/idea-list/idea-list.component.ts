@@ -86,20 +86,34 @@ export class IdeaListComponent implements OnInit {
     }
 
     deleteSelectedIdeas(): void {
-        let selectedIds = this.list.filter((row) => {
+        let selectedTitles = this.list.filter((row) => {
             return row.selected;
         }).map((idea) => {
-            return idea.id;
-        });
+            return `${idea.title}`;
+        }).join("\n");
 
-        if (selectedIds.length === 0) {
-            alert("Please select the ideas to delete first!");
+        let confirmText = "The following ideas will be deleted. Are you sure? " +
+            "(Press OK to delete)\n\n" +
+            selectedTitles;
+
+        if (confirm(confirmText)) {
+            let selectedIds = this.list.filter((row) => {
+                return row.selected;
+            }).map((idea) => {
+                return idea.id;
+            });
+
+            if (selectedIds.length === 0) {
+                alert("Please select the ideas to delete first!");
+            } else {
+                this.ideaService.deleteIdeas(selectedIds)
+                    .subscribe((json: any) => {
+                        alert(json.message);
+                        this.loadIdeaList();
+                    });
+            }
         } else {
-            this.ideaService.deleteIdeas(selectedIds)
-                .subscribe((json: any) => {
-                    alert(json.message);
-                    this.loadIdeaList();
-                });
+            alert("No ideas are deleted.");
         }
     }
 }
